@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121116"/>
+      <stop offset="100%" stop-color="#0c0c10"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="520" fill="url(#bg)"/>
+
+  <!-- section label -->
+  <text x="40" y="46" font-family="'Segoe UI', Verdana, sans-serif" font-weight="600" font-size="13" letter-spacing="5" fill="#c9a961">FEATURED PROJECTS</text>
+  <line x1="40" y1="60" x2="1160" y2="60" stroke="#2a2830" stroke-width="1"/>
+
+  <!-- card template: 2 columns x 3 rows on a 1120-wide grid, gutter 24 -->
+  <!-- card 1: nova-drift -->
+  <g transform="translate(40,84)">
+    <rect width="548" height="128" rx="12" fill="#141319" stroke="#a5d9ff" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="30" cy="30" r="6" fill="#7ee8ff" filter="url(#glow)"/>
+    <text x="50" y="36" font-family="'Cascadia Code','Consolas',monospace" font-weight="600" font-size="19" fill="#eae7de">nova-drift</text>
+    <text x="30" y="66" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">Endless-arcade space-tunnel dodger. Three.js, real bloom,</text>
+    <text x="30" y="86" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">power-ups, and a fully synthesized soundtrack.</text>
+    <text x="30" y="112" font-family="'Cascadia Code','Consolas',monospace" font-size="12" letter-spacing="1" fill="#7ee8ff" opacity="0.8">THREE.JS · WEBGL · NO BUILD STEP</text>
+  </g>
+
+  <!-- card 2: kalp-animasyon -->
+  <g transform="translate(612,84)">
+    <rect width="548" height="128" rx="12" fill="#141319" stroke="#ff5fd1" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="30" cy="30" r="6" fill="#ff5fd1" filter="url(#glow)"/>
+    <text x="50" y="36" font-family="'Cascadia Code','Consolas',monospace" font-weight="600" font-size="19" fill="#eae7de">kalp-animasyon</text>
+    <text x="30" y="66" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">"My Universe" — a glowing 3D heart woven from light in</text>
+    <text x="30" y="86" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">a living starfield, magenta → violet → gold.</text>
+    <text x="30" y="112" font-family="'Cascadia Code','Consolas',monospace" font-size="12" letter-spacing="1" fill="#ff9fe0" opacity="0.8">THREE.JS · BLOOM · GENERATIVE ART</text>
+  </g>
+
+  <!-- card 3: mcp-vet -->
+  <g transform="translate(40,232)">
+    <rect width="548" height="128" rx="12" fill="#141319" stroke="#8effc2" stroke-opacity="0.35" stroke-width="1.2"/>
+    <circle cx="30" cy="30" r="6" fill="#8effc2" filter="url(#glow)"/>
+    <text x="50" y="36" font-family="'Cascadia Code','Consolas',monospace" font-weight="600" font-size="19" fill="#eae7de">mcp-vet</text>
+    <text x="30" y="66" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">A Claude Code skill that vets MCP servers before install —</text>
+    <text x="30" y="86" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">flags inflated star counts, reads the source first.</text>
+    <text x="30" y="112" font-family="'Cascadia Code','Consolas',monospace" font-size="12" letter-spacing="1" fill="#8effc2" opacity="0.8">CLAUDE CODE SKILL · SECURITY</text>
+  </g>
+
+  <!-- card 4: nvidia-nim-mcp -->
+  <g transform="translate(612,232)">
+    <rect width="548" height="128" rx="12" fill="#141319" stroke="#76b900" stroke-opacity="0.4" stroke-width="1.2"/>
+    <circle cx="30" cy="30" r="6" fill="#a6ff4d" filter="url(#glow)"/>
+    <text x="50" y="36" font-family="'Cascadia Code','Consolas',monospace" font-weight="600" font-size="19" fill="#eae7de">nvidia-nim-mcp</text>
+    <text x="30" y="66" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">Free-tier NVIDIA NIM models for Claude Code — image gen,</text>
+    <text x="30" y="86" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">translation, vision, embeddings, with automatic fallback.</text>
+    <text x="30" y="112" font-family="'Cascadia Code','Consolas',monospace" font-size="12" letter-spacing="1" fill="#a6ff4d" opacity="0.8">MCP SERVER · $0 · PYTHON</text>
+  </g>
+
+  <!-- card 5: mini-creative-toolkit (full width) -->
+  <g transform="translate(40,380)">
+    <rect width="1120" height="108" rx="12" fill="#141319" stroke="#ffd76d" stroke-opacity="0.4" stroke-width="1.2"/>
+    <circle cx="30" cy="30" r="6" fill="#ffd76d" filter="url(#glow)"/>
+    <text x="50" y="36" font-family="'Cascadia Code','Consolas',monospace" font-weight="600" font-size="19" fill="#eae7de">mini-creative-toolkit</text>
+    <text x="30" y="66" font-family="'Segoe UI', Verdana, sans-serif" font-size="14" fill="#a19eb0">Local CPU-only image/video MCP toolkit — bg removal, resize, gifs, thumbnails, and one genuinely free image generator. No API keys, no GPU, no paid dependency.</text>
+    <text x="30" y="92" font-family="'Cascadia Code','Consolas',monospace" font-size="12" letter-spacing="1" fill="#ffd76d" opacity="0.8">MCP SERVER · REMBG · FFMPEG · PYTEST</text>
+  </g>
+</svg>

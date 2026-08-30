@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="80%">
+      <stop offset="0%" stop-color="#16151b"/>
+      <stop offset="55%" stop-color="#0e0d12"/>
+      <stop offset="100%" stop-color="#0c0c10"/>
+    </radialGradient>
+    <linearGradient id="nameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f2efe6"/>
+      <stop offset="55%" stop-color="#e7dcc0"/>
+      <stop offset="100%" stop-color="#c9a961"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="380" fill="url(#bg)"/>
+
+  <!-- constellation: 5 project nodes converging on a center point -->
+  <g stroke-width="1.3" opacity="0.55">
+    <line x1="600" y1="120" x2="210" y2="60"  stroke="#a5d9ff"/>
+    <line x1="600" y1="120" x2="990" y2="60"  stroke="#ff5fd1"/>
+    <line x1="600" y1="120" x2="150" y2="200" stroke="#8effc2"/>
+    <line x1="600" y1="120" x2="1050" y2="200" stroke="#76b900"/>
+    <line x1="600" y1="120" x2="600" y2="220" stroke="#ffd76d"/>
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="210" cy="60"  r="4.5" fill="#a5d9ff"/>
+    <circle cx="990" cy="60"  r="4.5" fill="#ff5fd1"/>
+    <circle cx="150" cy="200" r="4.5" fill="#8effc2"/>
+    <circle cx="1050" cy="200" r="4.5" fill="#76b900"/>
+    <circle cx="600" cy="220" r="4.5" fill="#ffd76d"/>
+    <circle cx="600" cy="120" r="6" fill="#c9a961"/>
+  </g>
+
+  <!-- eyebrow -->
+  <text x="600" y="182" text-anchor="middle" font-family="'Segoe UI', Verdana, sans-serif" font-weight="600" font-size="13" letter-spacing="6" fill="#c9a961" opacity="0.85">HOBBY DEVELOPER · A FEW PROJECTS AT A TIME</text>
+
+  <!-- name -->
+  <text x="600" y="262" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="400" font-size="72" fill="url(#nameGrad)" filter="url(#softglow)" letter-spacing="1">Furki Özkan</text>
+
+  <!-- tagline -->
+  <text x="600" y="304" text-anchor="middle" font-family="'Segoe UI', Verdana, sans-serif" font-size="18" fill="#c7c2b6" opacity="0.85">Web sitelerinden oyunlara, video araçlarından Claude Code eklentilerine — canı ne çekerse.</text>
+
+  <!-- hairline + handle -->
+  <line x1="440" y1="336" x2="760" y2="336" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="600" y="360" text-anchor="middle" font-family="'Cascadia Code','Consolas',monospace" font-size="13" letter-spacing="2" fill="#8a8378">github.com/Furkiozknn</text>
+</svg>

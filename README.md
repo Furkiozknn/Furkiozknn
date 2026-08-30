@@ -1,37 +1,40 @@
 <p align="center">
-  <img src="https://www.gitskins.com/api/section/hero?username=furkiozknn&theme=neon" alt="Furki Özkan profile hero" />
+  <img src="assets/hero.svg" alt="Furki Özkan" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://www.gitskins.com/api/section/about?username=furkiozknn&theme=neon" alt="About Furki Özkan" />
+  <img src="https://img.shields.io/badge/JavaScript-f2efe6?style=flat-square&logo=javascript&logoColor=0c0c10" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Three.js-f2efe6?style=flat-square&logo=threedotjs&logoColor=0c0c10" alt="Three.js">
+  <img src="https://img.shields.io/badge/Python-f2efe6?style=flat-square&logo=python&logoColor=0c0c10" alt="Python">
+  <img src="https://img.shields.io/badge/uv-f2efe6?style=flat-square&logo=uv&logoColor=0c0c10" alt="uv">
+  <img src="https://img.shields.io/badge/Claude_Code-f2efe6?style=flat-square&logo=claude&logoColor=0c0c10" alt="Claude Code">
+  <img src="https://img.shields.io/badge/Godot-f2efe6?style=flat-square&logo=godotengine&logoColor=0c0c10" alt="Godot">
+  <img src="https://img.shields.io/badge/ffmpeg-f2efe6?style=flat-square&logo=ffmpeg&logoColor=0c0c10" alt="ffmpeg">
+</p>
+
+<p align="center"><i>Sabit bir stack yok — canım ne çekerse: bir gece bir web sitesi, ertesi gün bir tarayıcı oyunu, ondan sonra bir Claude Code eklentisi.</i></p>
+
+<br>
+
+<p align="center">
+  <img src="assets/projects.svg" alt="Featured projects" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://www.gitskins.com/api/section/stack?username=furkiozknn&theme=neon" alt="Language stack" />
+  <a href="https://furkiozknn.github.io/nova-drift/">nova-drift</a> · 
+  <a href="https://furkiozknn.github.io/kalp-animasyon/">kalp-animasyon</a> · 
+  <a href="https://github.com/Furkiozknn/mcp-vet">mcp-vet</a> · 
+  <a href="https://github.com/Furkiozknn/nvidia-nim-mcp">nvidia-nim-mcp</a> · 
+  <a href="https://github.com/Furkiozknn/mini-creative-toolkit">mini-creative-toolkit</a>
 </p>
 
-## 📊 GitHub Stats
+<br>
 
 <p align="center">
-  <img src="https://www.gitskins.com/api/section/stats?username=furkiozknn&theme=neon" alt="GitHub Stats" />
+  <a href="https://github.com/Furkiozknn">
+    <img src="https://img.shields.io/badge/GitHub-0c0c10?style=for-the-badge&logo=github&logoColor=f2efe6" alt="GitHub">
+  </a>
+  <a href="https://twitter.com/imfurki">
+    <img src="https://img.shields.io/badge/Twitter-0c0c10?style=for-the-badge&logo=x&logoColor=f2efe6" alt="Twitter">
+  </a>
 </p>
-
-<p align="center">
-  <img src="https://www.gitskins.com/api/section/projects?username=furkiozknn&theme=neon" alt="furkiozknn featured projects" />
-</p>
-
-<p align="center">
-  <img src="https://www.gitskins.com/api/section/highlights?username=furkiozknn&theme=neon" alt="furkiozknn highlights" />
-</p>
-
-## 🤝 Connect With Me
-
-<p align="center">
-  <img src="https://www.gitskins.com/api/section/social?username=furkiozknn&theme=neon&x=imfurki" alt="furkiozknn social links" />
-</p>
-
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/furkiozknn) [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/imfurki)
-
----
-
-<p align="center">Profile README generated with <a href="https://www.gitskins.com/readme-generator">GitSkins</a></p>
