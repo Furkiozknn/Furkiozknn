@@ -1,6 +1,6 @@
 # AI Creative Platform — Lab Status
 
-**Bu dosya, her yeni oturumun/devamın ilk okuması gereken dosyadır.** Mevcut ekosistem durumu, aktif işler, ve "kaldığımız yer" burada tutulur. Diğer lab dosyaları: [`BACKLOG.md`](./BACKLOG.md) (fikir/araştırma/teknik borç), [`DECISIONS.md`](./DECISIONS.md) (mimari kararlar, ADR), [`TECH-RADAR.md`](./TECH-RADAR.md) (teknoloji değerlendirmeleri), [`shared/gateway_poll.py`](./shared/gateway_poll.py) (vendored ortak modül, ADR-008).
+**Bu dosya, her yeni oturumun/devamın ilk okuması gereken dosyadır.** Mevcut ekosistem durumu, aktif işler, ve "kaldığımız yer" burada tutulur. Diğer lab dosyaları: [`BACKLOG.md`](./BACKLOG.md) (fikir/araştırma/teknik borç), [`DECISIONS.md`](./DECISIONS.md) (mimari kararlar, ADR), [`TECH-RADAR.md`](./TECH-RADAR.md) (teknoloji değerlendirmeleri), [`DESIGN-SYSTEM.md`](./DESIGN-SYSTEM.md) (ürün UX/tasarım sistemi araştırması), [`shared/gateway_poll.py`](./shared/gateway_poll.py) (vendored ortak modül, ADR-008).
 
 Son güncelleme: 2026-08-31
 
