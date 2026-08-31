@@ -19,13 +19,13 @@ Son güncelleme: 2026-08-31
 | [`mini-creative-toolkit`](https://github.com/Furkiozknn/mini-creative-toolkit) | Yerel, CPU-only görsel/video araçları (MCP server) | ✅ **PR #1 kullanıcı tarafından merge edildi** (`master`'da, CI yeşil) | ✅ 25/25 test, Reviewer denetiminden geçti, rembg lisans düzeltmesi (ADR-009) dahil |
 | [`nvidia-nim-mcp`](https://github.com/Furkiozknn/nvidia-nim-mcp) | NVIDIA NIM ücretsiz katman modellerini Claude Code'a bağlayan MCP server | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ 40/40 test, Reviewer denetiminde bulunan sınırsız eşzamanlılık düzeltmesi dahil |
 | [`mcp-vet`](https://github.com/Furkiozknn/mcp-vet) | MCP server keşfi/doğrulama Claude Code skill'i + bağımsız CLI | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ 30/30 test, Reviewer denetiminden geçti (temiz, sadece kozmetik not) |
-| [`kalp-animasyon`](https://github.com/Furkiozknn/kalp-animasyon) | Three.js sanat parçası (kişisel/hediye) | ✅ PR #1 açık, CI yeşil | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (XSS yüzeyi doğrulandı temiz) |
+| [`kalp-animasyon`](https://github.com/Furkiozknn/kalp-animasyon) | Three.js sanat parçası (kişisel/hediye) | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (XSS yüzeyi doğrulandı temiz) |
 | [`nova-drift`](https://github.com/Furkiozknn/nova-drift) | Three.js tarayıcı oyunu | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (seeded RNG additive doğrulandı) |
 
-**Bekleyen kullanıcı aksiyonu:** Üç repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — bkz. `DECISIONS.md` ADR-007):
+**Bekleyen kullanıcı aksiyonu:** 5 eski PR'ın tamamı (mini-creative-toolkit, nvidia-nim-mcp, mcp-vet, kalp-animasyon, nova-drift) kullanıcı tarafından merge edildi ✅. Kalan tek aksiyon: üç repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — bkz. `DECISIONS.md` ADR-007):
 - `model-comparison-harness` (kod hazır, yerelde 3 commit push bekliyor)
 - `asset-provenance-toolkit` (kod hazır, yerelde 1 commit push bekliyor)
-- `ai-workflow-engine` (kod hazır, yerelde 1 commit push bekliyor)
+- `ai-workflow-engine` (kod hazır, yerelde 2 commit push bekliyor)
 
 Aynı blokaj gelecekteki her yeni repo için de geçerli olacak; her seferinde tek tek sormak yerine, birikimli bir liste tutulur (yukarıdaki iki madde).
 
