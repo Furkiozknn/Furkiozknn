@@ -6,6 +6,23 @@ Format: **ADR-NNN: Başlık** — Tarih, Durum (Kabul edildi / Reddedildi / Değ
 
 ---
 
+## ADR-011: `research/lab/*` asla `main`'e merge edilmez — kalıcı olarak sadece `claude/ai-creative-platform-research-fwh2vt` branch'inde yaşar
+
+**Tarih:** 2026-08-31 · **Durum:** Kabul edildi (kullanıcı kararı)
+
+**Bağlam:** `Furkiozknn/Furkiozknn` reposu, kullanıcının **halka açık GitHub profil reposu**. PR #2, tüm araştırma içeriğini (sentez dokümanları + `research/raw/*.md` + bu lab altyapısı — `STATUS.md`/`DECISIONS.md`/`BACKLOG.md`/`TECH-RADAR.md`/`DESIGN-SYSTEM.md`/`shared/gateway_poll.py`) `main`'e taşımayı öneriyordu. Kullanıcı, PR'ı **merge etmeden kapattı** ve şu ayrımı yaptı: "güvenli" araştırma içeriği (README linki, sentez dokümanları, 5 `research/raw/*.md` dosyası) doğrudan `main`'e ayrı commit'ler halinde uygulandı; ama `research/lab/*` — "iç planlama/ADR/backlog/tech-radar içeriği, halka açık profil reposu için değil" — bilinçli olarak `main`'in dışında bırakıldı.
+
+**Karar:** `research/lab/*` dizini (bu dosya dahil) bir daha asla `main`'e merge edilmeye çalışılmayacak. Bu dizin, ekosistemin R&D lab'inin **sürekli çalışma alanı** olarak `claude/ai-creative-platform-research-fwh2vt` branch'inde kalıcı olarak yaşayacak — bir "bekleyen PR" değil, kendi başına kalıcı bir çalışma branch'i, neredeyse ayrı bir "lab reposu" gibi davranılacak (gerçek ayrı bir repo GitHub App izin kısıtı yüzünden şu an açılamıyor, bkz. ADR-007). Her oturum bu branch'e commit atmaya ve push etmeye devam eder; `main`'e karşı bir PR açmak/açık tutmak artık hedef değil.
+
+**Alternatifler değerlendirildi:**
+- Lab içeriğini yine de `main`'e merge etmek — kullanıcı tarafından reddedildi, halka açık profil reposunun temiz/profesyonel kalması isteniyor.
+- Lab içeriği için PR'ı açık bırakıp draft'ta tutmak — reddedildi (kullanıcı PR'ı kapattı), gereksiz bir "bekleyen" durum yaratırdı.
+- Lab içeriğini tamamen ayrı bir repoya taşımak — ideal olurdu ama GitHub App'in repo oluşturma izni yok (ADR-007); kullanıcı üç yeni repo (`model-comparison-harness`, `asset-provenance-toolkit`, `ai-workflow-engine`) için zaten manuel repo açıyor, lab altyapısı için dördüncüsünü istemek şu an gereksiz sürtünme — branch zaten işlevsel olarak aynı amaca hizmet ediyor.
+
+**Sonuç:** `STATUS.md`'nin en üstüne bu gerçek açıkça yazıldı — gelecekteki her oturum, `main`'e değil bu branch'e bakmalı ve bu branch'e commit/push etmeye devam etmeli. `main` sadece halka açık, "bitmiş" araştırma içeriğini taşır (sentez dokümanları + raw research), asla lab'in çalışan iç durumunu değil.
+
+---
+
 ## ADR-010: Ses klonlama capability'si için rıza/watermark politikası, herhangi bir modelden önce şart
 
 **Tarih:** 2026-08-31 · **Durum:** Kabul edildi (politika, henüz uygulama yok)

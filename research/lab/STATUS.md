@@ -2,6 +2,8 @@
 
 **Bu dosya, her yeni oturumun/devamın ilk okuması gereken dosyadır.** Mevcut ekosistem durumu, aktif işler, ve "kaldığımız yer" burada tutulur. Diğer lab dosyaları: [`BACKLOG.md`](./BACKLOG.md) (fikir/araştırma/teknik borç), [`DECISIONS.md`](./DECISIONS.md) (mimari kararlar, ADR), [`TECH-RADAR.md`](./TECH-RADAR.md) (teknoloji değerlendirmeleri), [`DESIGN-SYSTEM.md`](./DESIGN-SYSTEM.md) (ürün UX/tasarım sistemi araştırması), [`shared/gateway_poll.py`](./shared/gateway_poll.py) (vendored ortak modül, ADR-008).
 
+> ⚠️ **ÖNEMLİ — ADR-011 (2026-08-31):** Bu `research/lab/*` dizini **`main`'e asla merge edilmeyecek**. Kullanıcı, PR #2'yi (araştırma içeriğini `main`'e taşıyan PR) bilinçli olarak bu dizini dışarıda bırakarak kapattı — `Furkiozknn/Furkiozknn` halka açık bir profil reposu, bu iç lab altyapısı orada görünmemeli. **Bu dizin kalıcı olarak sadece `claude/ai-creative-platform-research-fwh2vt` branch'inde yaşar** — neredeyse ayrı bir "lab reposu" gibi düşünün, sadece GitHub App izin kısıtı (ADR-007) yüzünden gerçek ayrı repo değil. Her yeni oturum bu branch'e commit/push etmeye devam etmeli; `main`'e karşı yeni bir PR açmaya **çalışmayın**. `main`'de sadece halka açık, "bitmiş" araştırma içeriği var (sentez dokümanları + `research/raw/*.md`).
+
 Son güncelleme: 2026-08-31
 
 ---
@@ -10,7 +12,7 @@ Son güncelleme: 2026-08-31
 
 | Repo | Amaç | Durum | Kalite Kapısı |
 |---|---|---|---|
-| [`Furkiozknn/Furkiozknn`](https://github.com/Furkiozknn/Furkiozknn) | Profil + araştırma/mimari dokümanları + lab durumu (bu dosyalar) | Aktif, PR #2 açık (draft) | — (doküman reposu) |
+| [`Furkiozknn/Furkiozknn`](https://github.com/Furkiozknn/Furkiozknn) | `main`: profil + halka açık araştırma dokümanları. Bu branch (`claude/ai-creative-platform-research-fwh2vt`): lab durumu (bu dosyalar, `main`'e asla merge edilmez — ADR-011) | `main` güncel (araştırma içeriği merge edildi, PR #2 kapatıldı); bu branch aktif çalışma alanı | — (doküman reposu) |
 | [`ai-job-gateway`](https://github.com/Furkiozknn/ai-job-gateway) | Provider-agnostic async job gateway (submit/poll/webhook) — ekosistemin orkestrasyon çekirdeği | ✅ main'e push edildi | ✅ 46/46 test, uçtan uca doğrulandı, Reviewer denetiminden geçti |
 | [`prompt-template-manager`](https://github.com/Furkiozknn/prompt-template-manager) | Versiyonlanmış, git-diff'lenebilir prompt/pipeline şablonları + CLI (`ptm`) | ✅ main'e push edildi | ✅ 43/43 test, ai-job-gateway ile uçtan uca entegre, Reviewer denetiminden geçti |
 | [`model-comparison-harness`](https://github.com/Furkiozknn/model-comparison-harness) | Aynı isteği birden fazla backend'e paralel gönderip gecikme/başarı/sonuç karşılaştırması (`mch`) | ⏳ Yerel commit hazır (3 commit ileride), kullanıcının boş repo açması bekleniyor | ✅ 37/37 test, ai-job-gateway ile uçtan uca entegre, Reviewer denetiminden geçti |
