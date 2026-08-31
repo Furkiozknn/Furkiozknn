@@ -6,6 +6,38 @@ Format: **ADR-NNN: Başlık** — Tarih, Durum (Kabul edildi / Reddedildi / Değ
 
 ---
 
+## ADR-010: Ses klonlama capability'si için rıza/watermark politikası, herhangi bir modelden önce şart
+
+**Tarih:** 2026-08-31 · **Durum:** Kabul edildi (politika, henüz uygulama yok)
+
+**Bağlam:** Ses/müzik/konuşma domain araştırması (bkz. `TECH-RADAR.md`), ses klonlamanın diğer tüm domain'lerden (görsel, video, lip-sync) farklı olarak doğrudan gerçek bir kişinin kimliğini taklit ettiğini ve düzenleyici ortamın hızla sıkılaştığını (AB AI Act Madde 50, ABD Tennessee ELVIS Act) ortaya koydu. Chatterbox gibi bazı modeller yerleşik watermark (PerTh) sunarken F5-TTS gibi başkaları sunmuyor.
+
+**Karar:** Herhangi bir ses klonlama `Provider`'ı (Chatterbox, F5-TTS, OpenVoice V2, ya da başka biri) `ai-job-gateway`'e eklenmeden **önce**, `tts-clone` capability'sinin API sözleşmesi şu üç unsuru zorunlu alan olarak içerecek: (1) referans ses yükleyenin o sese yasal hakkı/rızası olduğunu onaylayan bir doğrulama adımı (basit bir checkbox yetmez), (2) üretilen her klon çıktısına watermark veya en azından audit-trail metadata'sı, (3) tanınmış kamu figürü/ünlü isimleriyle eşleşen taleplere ekstra sürtünme veya reddetme. Bu üç unsur netleşmeden hiçbir klonlama `Provider`'ı üretime alınmayacak — teknoloji seçimi (Chatterbox vs F5-TTS vs OpenVoice) bu kararın önünde değil, arkasında gelir.
+
+**Alternatifler değerlendirildi:**
+- Rıza kontrolünü sonraya erteleyip önce teknik PoC'yi tamamlamak — reddedildi. Ürün politikası bir mühendislik detayı değil, gerçek hukuki/itibari risk taşıyor; sonradan eklemek "önce çalıştır, sonra güvenli hale getir" tuzağına düşer.
+- Sadece watermark'lı modelleri (yalnızca Chatterbox) kullanmak, ayrı bir rıza akışı kurmamak — reddedildi, watermark tek başına yeterli değil (kaldırılabilir/bozulabilir, sadece caydırıcı) ve rıza doğrulaması ayrı bir katman olarak gerekiyor.
+
+**Sonuç:** `TECH-RADAR.md`'de "Ses Klonlama — Rıza/Etik" girdisi P0 olarak işaretlendi — klonlama özelliği için blokaj, teknoloji seçiminden bağımsız. Henüz uygulama yok, bu bir önden-alınan politika kararı.
+
+---
+
+## ADR-009: Bağımlılık-içi bir alt-modelin lisansı asla örtük/varsayılan davranışa bırakılmaz
+
+**Tarih:** 2026-08-31 · **Durum:** Kabul edildi
+
+**Bağlam:** `mini-creative-toolkit::remove_background()`, `rembg.remove(data)`'yı `session` parametresi vermeden çağırıyordu — herkesin (dahil kendi ilk varsayımım) bunun rembg'nin klasik varsayılanı "u2net"e çözümlendiğini düşünmesine rağmen, kurulu `rembg` 2.0.81'de bu çağrı **doğrudan doğrulandı**: `rembg/bg.py`'nin kaynak kodu, `session=None` olduğunda `new_session("bria-rmbg", ...)` çağırıyor — yani sessizce **CC BY-NC 4.0 (ticari olmayan) lisanslı bir modele** geçilmiş durumdaydı, hiçbir kod değişikliği olmadan, sadece bir `rembg` sürüm güncellemesiyle. Bu, `TECH-RADAR.md`'nin zaten belgelediği "iyi görünen ama ticari olmayan lisans" tuzağının (HunyuanVideo, Wav2Lip) üçüncü, ama ilk kez **teorik değil bu ekosistemde zaten gerçekleşmiş** örneği.
+
+**Karar:** Lisans açısından hassas bir üçüncü-taraf kütüphane çağrısında (bir üretim/inference kütüphanesinin altında birden fazla alt-model/backend barındırdığı her durumda — rembg, gelecekte benzer şekilde çoklu-model sağlayan başka kütüphaneler), çağıran kod **hiçbir zaman** kütüphanenin kendi iç varsayılanına güvenmemeli; hangi alt-modelin kullanıldığı her zaman kodda açıkça, isim vererek belirtilmeli (`new_session("u2net")` gibi). Bu, hem lisans güvenliği hem de "sürüm güncellemesi davranışı sessizce değiştirmesin" öngörülebilirliği için geçerli.
+
+**Alternatifler:**
+- Sadece `rembg`'yi belirli bir sürüme sabitlemek (`rembg==2.0.65`) — reddedildi, kırılganlığı sadece erteler (güvenlik yaması için sürüm yükseltmesi gerektiğinde aynı risk geri döner), kök nedeni çözmez.
+- Hiçbir şey yapmamak, riski kabul etmek — reddedildi, gerçek ve aktif bir lisans ihlali riskiydi (ürün "ticari, API key gerektirmeyen" olarak pazarlanıyor).
+
+**Sonuç:** `mini-creative-toolkit` commit `74d5dad` ile düzeltildi — `remove_background()` artık her zaman açık `new_session(model)` çağırıyor, varsayılan `model="u2net"`. Bu ilke, benzer "kütüphane-içi model seçimi" deseni taşıyan gelecekteki her entegrasyon için (ör. TTS/müzik provider'ları, çoklu-checkpoint destekleyen kütüphaneler) geçerli sayılacak.
+
+---
+
 ## ADR-008: ADR-006'nın "3 tekrar" eşiği aşıldı — paylaşılan gateway-client modülü çıkarılacak (ama paket değil, vendored dosya)
 
 **Tarih:** 2026-08-31 · **Durum:** Kabul edildi

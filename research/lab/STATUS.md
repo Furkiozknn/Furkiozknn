@@ -15,15 +15,17 @@ Son güncelleme: 2026-08-31
 | [`prompt-template-manager`](https://github.com/Furkiozknn/prompt-template-manager) | Versiyonlanmış, git-diff'lenebilir prompt/pipeline şablonları + CLI (`ptm`) | ✅ main'e push edildi | ✅ 43/43 test, ai-job-gateway ile uçtan uca entegre, Reviewer denetiminden geçti |
 | [`model-comparison-harness`](https://github.com/Furkiozknn/model-comparison-harness) | Aynı isteği birden fazla backend'e paralel gönderip gecikme/başarı/sonuç karşılaştırması (`mch`) | ⏳ Yerel commit hazır (3 commit ileride), kullanıcının boş repo açması bekleniyor | ✅ 37/37 test, ai-job-gateway ile uçtan uca entegre, Reviewer denetiminden geçti |
 | [`asset-provenance-toolkit`](https://github.com/Furkiozknn/asset-provenance-toolkit) | Üretilen dosyalara pipeline provenance (capability/provider/params/job id) gömme/çıkarma — PNG native + evrensel sidecar | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 48/48 test, `ai-job-gateway`'e karşı uçtan uca doğrulandı (`from-job`) |
+| [`ai-workflow-engine`](https://github.com/Furkiozknn/ai-workflow-engine) | DAG pipeline orkestratörü — YAML ile tanımlı, `ai-job-gateway` job'larını zincirliyor (generate→upscale→lipsync), bağımsız adımlar eşzamanlı | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 32/32 test, `ai-job-gateway`'e karşı uçtan uca doğrulandı (2 adımlı zincir) |
 | [`mini-creative-toolkit`](https://github.com/Furkiozknn/mini-creative-toolkit) | Yerel, CPU-only görsel/video araçları (MCP server) | ✅ PR #1 açık, CI yeşil | ✅ 23/23 test, Reviewer denetiminden geçti (1 düşük öncelikli bulgu backlog'da) |
 | [`nvidia-nim-mcp`](https://github.com/Furkiozknn/nvidia-nim-mcp) | NVIDIA NIM ücretsiz katman modellerini Claude Code'a bağlayan MCP server | ✅ PR açık (branch push edildi), CI yeşil | ✅ 40/40 test, Reviewer denetiminde bulunan sınırsız eşzamanlılık düzeltildi ve push edildi |
 | [`mcp-vet`](https://github.com/Furkiozknn/mcp-vet) | MCP server keşfi/doğrulama Claude Code skill'i + bağımsız CLI | ✅ PR #1 açık, CI yeşil | ✅ 30/30 test, Reviewer denetiminden geçti (temiz, sadece kozmetik not) |
 | [`kalp-animasyon`](https://github.com/Furkiozknn/kalp-animasyon) | Three.js sanat parçası (kişisel/hediye) | ✅ PR #1 açık, CI yeşil | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (XSS yüzeyi doğrulandı temiz) |
 | [`nova-drift`](https://github.com/Furkiozknn/nova-drift) | Three.js tarayıcı oyunu | ✅ PR #1 açık, CI yeşil | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (seeded RNG additive doğrulandı) |
 
-**Bekleyen kullanıcı aksiyonu:** İki repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — bkz. `DECISIONS.md` ADR-007):
+**Bekleyen kullanıcı aksiyonu:** Üç repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — bkz. `DECISIONS.md` ADR-007):
 - `model-comparison-harness` (kod hazır, yerelde 3 commit push bekliyor)
 - `asset-provenance-toolkit` (kod hazır, yerelde 1 commit push bekliyor)
+- `ai-workflow-engine` (kod hazır, yerelde 1 commit push bekliyor)
 
 Aynı blokaj gelecekteki her yeni repo için de geçerli olacak; her seferinde tek tek sormak yerine, birikimli bir liste tutulur (yukarıdaki iki madde).
 
@@ -31,12 +33,16 @@ Aynı blokaj gelecekteki her yeni repo için de geçerli olacak; her seferinde t
 
 ## Aktif Çalışma (bu oturumda)
 
-**Tamamlanan bu turda:**
-1. İki Reviewer Agent'ın (backend/CLI repoları + agent-yapımı repolar) denetim raporları okundu, senkronize edildi. Ucuz/güvenli düzeltmeler (`ai-job-gateway` job-sonsuza-askıda-kalma, `prompt-template-manager`+`model-comparison-harness` 410-Gone hatası, `nvidia-nim-mcp` sınırsız eşzamanlılık) push edildi. Riskli/mimari-kararı gereken bulgular (SSRF, gövde boyutu, Jinja2 sandboxing, hata mesajı sızıntısı) `BACKLOG.md`'ye kaydedildi.
-2. `asset-provenance-toolkit` tamamlandı: kaynak+test zaten yazılmıştı, `.gitignore`/CI/README/examples eklendi, 48 test yeşil, `ai-job-gateway`'e karşı canlı uçtan uca doğrulama yapıldı (`aprov from-job`), commit alındı.
-3. **ADR-008 uygulandı:** İki bağımsız Reviewer denetiminin ortaya çıkardığı somut kod-tekrarı hatası (410-Gone kontrolünün iki repoda bağımsız olarak yanlış implemente edilmesi) üzerine, `research/lab/shared/gateway_poll.py` kanonik dosyası yazıldı ve `ai-job-gateway`, `prompt-template-manager`, `model-comparison-harness`'a vendor edildi. Her repo kendi public API/exception tiplerini korudu, sadece iç implementasyon paylaşılan modüle devredildi. Üç reponun testleri de yeşil (46/43/37). `model-comparison-harness`'ta ek olarak düşük öncelikli bir timeout tutarsızlığı da bu vesileyle düzeltildi.
+**Tamamlanan bu turda (Faz 3 — R&D lab derinleştirme):**
+1. İki Reviewer Agent'ın (backend/CLI repoları + agent-yapımı repolar) denetim raporları okundu, senkronize edildi. Ucuz/güvenli düzeltmeler (`ai-job-gateway` job-sonsuza-askıda-kalma, `prompt-template-manager`+`model-comparison-harness` 410-Gone hatası, `nvidia-nim-mcp` sınırsız eşzamanlılık) push edildi.
+2. `asset-provenance-toolkit` tamamlandı: 48 test yeşil, `ai-job-gateway`'e karşı canlı uçtan uca doğrulama (`aprov from-job`), commit alındı.
+3. **ADR-008 uygulandı:** `research/lab/shared/gateway_poll.py` kanonik dosyası yazıldı, üç repoya vendor edildi (410-Gone kod-tekrarı hatasının kök nedeni). Testler yeşil (46/43/37).
+4. **Yeni repo `ai-workflow-engine` inşa edildi:** DAG pipeline orkestratörü, YAML tanımlı, `ai-job-gateway` job'larını zincirliyor. 32 test, gerçek sunucuya karşı uçtan uca doğrulandı (2 adımlı generate→upscale zinciri, adımlar arası Jinja2 sonuç referansı).
+5. **İki paralel araştırma ajanı** yeni domainleri derinlemesine tarad: (a) 3D üretim (TRELLIS/Hunyuan3D-2.1/TripoSR/InstantMesh) + segmentasyon (BiRefNet/RMBG-2.0/SAM), (b) ses/müzik/konuşma (ACE-Step/Kokoro/Chatterbox/F5-TTS/XTTS-v2) + karakter tutarlılığı (IP-Adapter/PuLID/InstantID). Tüm bulgular `TECH-RADAR.md`'ye işlendi.
+6. **Gerçek, aktif bir lisans riski bulundu ve düzeltildi:** `mini-creative-toolkit::remove_background()`, `rembg` 2.0.81'in sessizce değişen iç varsayılanı yüzünden CC-BY-NC (ticari olmayan) "bria-rmbg" modelini kullanıyordu — teorik değil, doğrudan koddan doğrulandı. Commit `74d5dad` ile düzeltildi (her zaman açık `new_session(model)`, varsayılan `u2net`), ADR-009 olarak kaydedildi. Aynı düzeltmeyle BiRefNet de opt-in bir `model` parametresi olarak eklendi (`TECH-RADAR.md`'deki P1 madde artık ✅ uygulandı).
+7. **ADR-010:** Ses klonlama için rıza/watermark politikası — herhangi bir klonlama modelinden önce şart, P0 blokaj olarak kaydedildi.
 
-**Sıradaki iş (henüz başlanmadı, backlog'dan seçilecek):** `BACKLOG.md`'nin P1 kalan maddeleri arasından — gerçek bir model provider (API key gerektirir, kullanıcı girdisi olmadan ilerlenemez) veya benchmark/evaluation altyapısının kalite-skorlama tarafı (mock backend'lerle bile genişletilebilir, API key gerektirmez) değerlendirilecek.
+**Sıradaki iş (backlog'dan seçilecek, hepsi API key gerektirmiyor):** Kokoro-82M TTS PoC, ACE-Step müzik PoC, FLUX.2 yerleşik çoklu-referans testi (blokajlı — FLUX API key gerekiyor), PuLID-FLUX InsightFace lisans doğrulaması.
 
 ## Otonom Döngü Kuralları (özet)
 

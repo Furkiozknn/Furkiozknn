@@ -8,9 +8,20 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 ## Sıradaki İş (aktif seçim)
 
-**`asset-provenance-toolkit`** (P1) — Üretilen görsel/video dosyalarına pipeline metadata gömme/çıkarma (A1111'in PNG-metadata-roundtrip deseninin sağlayıcıdan bağımsız genellenmiş hali). `ai-job-gateway`'in job kayıtlarını tamamlayıcı: bir job sonucu indirildiğinde, hangi capability/provider/params ile üretildiği dosyanın kendisinde saklanır — veritabanı olmadan tam yeniden-üretilebilirlik.
+Tamamlanan: `asset-provenance-toolkit`, `research/lab/shared/gateway_poll.py` çıkarımı (ADR-008), `ai-workflow-engine` (bkz. aşağıda).
 
-**`research/lab/shared/gateway_poll.py` çıkarımı** (P1, yeni — ADR-008) — İki Reviewer Agent denetimi sonrası eklendi. Aşağıdaki "Reviewer Denetimi Bulguları" bölümüne bakın.
+**Şimdi en yüksek öncelik — API key gerektirmeyenler:**
+- **FLUX.2 yerleşik çoklu-referans testi** (P1) — PuLID-FLUX'tan önce denenmeli, InsightFace lisans riskini baştan bypass edebilir. **Blokaj: gerçek FLUX.2 API key gerekiyor**, aynı P1 provider blokajıyla aynı.
+- **Kokoro-82M TTS PoC** (P1) — Apache 2.0, self-host, API key gerekmiyor. `ai-job-gateway`'e `tts-fast` capability adayı.
+- **ACE-Step 1.5 müzik PoC** (P1) — Apache 2.0, self-host, API key gerekmiyor. `music-generation` capability adayı.
+- **Ses klonlama rıza/watermark politikası ADR'si** (P0 — ADR-010, kabul edildi) — herhangi bir klonlama Provider'ından önce şart, henüz uygulama yok.
+- **PuLID-FLUX InsightFace lisans zinciri doğrulaması** (P0/P1) — teknik PoC'den önce, InstantID'nin başına gelenin tekrarlanıp tekrarlanmadığı netleşmeli.
+
+---
+
+## Yeni Repo: `ai-workflow-engine` (tamamlandı, push bekliyor)
+
+DAG tabanlı pipeline orkestratörü — `ai-job-gateway` job'larını (generate → upscale → lip-sync gibi) YAML dosyasıyla zincirliyor, bağımsız adımları eşzamanlı çalıştırıyor (execution layers), Jinja2 ile adımlar arası sonuç referansı (`{{ steps.generate.result.x }}`). `gateway_poll.py` (ADR-008) vendor edildi. 32 test, gerçek `ai-job-gateway` sunucusuna karşı uçtan uca doğrulandı (generate→upscale zinciri). Yerel commit `613e85e`, kullanıcının boş repo açması bekleniyor.
 
 ---
 
@@ -77,3 +88,8 @@ Bunlar da araştırma çıktısıdır — tekrar zaman kaybetmemek için:
 - **Wav2Lip orijinal ağırlıklarını doğrudan kullanmak** — ticari olmayan lisans, ekosistemde çok yaygın bir tuzak (bkz. araştırma raporu D).
 - **GitHub topic sayfalarını doğrudan güvenilir kaynak olarak kullanmak** — SEO/spam repo'larla dolu, sadece bir "keşif sinyali", asıl değerlendirme bağımsız araştırmadan geldi.
 - **Paylaşılan bir `ai-ecosystem-common` paketi (şimdilik)** — ADR-006, henüz erken, sadece 3 küçük kod tekrarı var.
+- **Hunyuan3D-2.1'i 3D üretim modeli olarak seçmek** — HunyuanVideo ile birebir aynı Tencent lisans şablonu (AB/UK/Güney Kore hariç + 1M MAU tavanı). Tencent-Hunyuan ailesinden gelecek her yeni model varsayılan olarak şüpheyle kontrol edilmeli.
+- **RMBG-2.0 (BRIA)'yı arka plan kaldırma modeli olarak seçmek** — CC BY-NC 4.0. **Not: bu teorik değildi** — `rembg` 2.0.81'in `session=None` iç varsayılanı zaten sessizce buna çözümleniyordu, `mini-creative-toolkit` fiilen bunu kullanıyordu ta ki commit `74d5dad` düzeltene kadar (bkz. ADR-009).
+- **MusicGen/AudioCraft ağırlıklarını müzik üretim modeli olarak seçmek** — CC-BY-NC 4.0. ACE-Step/Stable Audio Open aynı alanı ticari lisanslarla kapsıyor.
+- **Coqui XTTS-v2'yi ses klonlama modeli olarak seçmek** — CPML (ticari olmayan) VE Coqui Inc. Ocak 2024'te kapandığı için ticari lisans satın alma yolu da artık yok. Kalite referansı olarak anılabilir, üretime asla alınmaz.
+- **InstantID'yi yüz kimliği tutarlılığı için seçmek** — InsightFace embedding'i ticari olmayan araştırma lisanslı, ayrıca SDXL'e kilitli (FLUX portları kararsız). PuLID-FLUX aynı riski taşıyabilir, doğrulama bekleniyor (ADR listesinde P0).
