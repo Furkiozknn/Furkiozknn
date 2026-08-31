@@ -19,7 +19,7 @@ Format: **ADR-NNN: Başlık** — Tarih, Durum (Kabul edildi / Reddedildi / Değ
 - Hiçbir şey yapmama, sadece 3 repoda ayrı ayrı düzeltmeye devam etme — reddedildi, Reviewer raporu bunun tam olarak neden başarısız olduğunu (aynı hata iki kez bağımsız tekrarlandı) somut olarak gösterdi.
 - Sadece dokümantasyon (BACKLOG.md'de "bu mantık drift riski taşıyor" notu, kod değişikliği yok) — yetersiz, Reviewer'ın önerdiği minimum çözüm ama gerçek riski azaltmıyor, sadece kaydediyor.
 
-**Sonuç:** Backlog'a P1 iş olarak eklendi: `research/lab/shared/gateway_poll.py` kanonik dosyasını yaz, üç repoya vendor et, her reponun kendi `gateway_client.py`/`backends.py`/`client.py` dosyasını bunun üzerine ince bir sarmalayıcıya indirge, testleri koru.
+**Sonuç:** Uygulandı. `research/lab/shared/gateway_poll.py` yazıldı ve üç repoya (`ai-job-gateway/src/ai_job_gateway/gateway_poll.py`, `prompt-template-manager/src/prompt_template_manager/gateway_poll.py`, `model-comparison-harness/src/model_comparison_harness/gateway_poll.py`) vendor edildi. Her repo kendi public API'sini (fonksiyon imzaları, exception tipleri: `JobNotFoundError`/`GatewaySubmissionError`/`BackendError` vb.) korudu — sadece iç implementasyon paylaşılan, bağımlılıksız, transport-agnostik fonksiyonlara (`parse_submission`, `classify_poll_body`, `is_expired_poll_response`, URL yardımcıları) devredildi. Üç reponun testleri de yeşil kaldı (46/43/37). `asset-provenance-toolkit`'in `gateway_client.py`'si kapsam dışı bırakıldı — o bir poll döngüsü çalıştırmıyor (tek seferlik `fetch_job_record`), ve zaten genel `>=400` kontrolü 410'u da doğru kapsıyor, orada hata yoktu.
 
 ---
 
