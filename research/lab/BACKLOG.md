@@ -10,6 +10,22 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 **`asset-provenance-toolkit`** (P1) — Üretilen görsel/video dosyalarına pipeline metadata gömme/çıkarma (A1111'in PNG-metadata-roundtrip deseninin sağlayıcıdan bağımsız genellenmiş hali). `ai-job-gateway`'in job kayıtlarını tamamlayıcı: bir job sonucu indirildiğinde, hangi capability/provider/params ile üretildiği dosyanın kendisinde saklanır — veritabanı olmadan tam yeniden-üretilebilirlik.
 
+**`research/lab/shared/gateway_poll.py` çıkarımı** (P1, yeni — ADR-008) — İki Reviewer Agent denetimi sonrası eklendi. Aşağıdaki "Reviewer Denetimi Bulguları" bölümüne bakın.
+
+---
+
+## Reviewer Denetimi Bulguları (2026-08-31, iki bağımsız arka plan ajanı)
+
+İki Reviewer Agent, sırasıyla (a) 3 backend/CLI reposunu (`ai-job-gateway`, `prompt-template-manager`, `model-comparison-harness`) ve (b) 5 ajan-yapımı reposunu (`mini-creative-toolkit`, `nvidia-nim-mcp`, `mcp-vet`, `kalp-animasyon`, `nova-drift`) tam kaynak koduyla denetledi. Ucuz/güvenli düzeltmeler doğrudan uygulanıp commit edildi (aşağıda ✅ işaretli, hepsi push edildi); mimari karar gerektiren veya riskli bulgular sadece kaydedildi.
+
+**Doğrudan düzeltilip push edildi:**
+- ✅ `ai-job-gateway`: `JobManager._run()`'da store-katmanı hatası job'ı sonsuza kadar askıda bırakabiliyordu (provider değil, `store.update_status` hatası yakalanmıyordu) — outer try/except + best-effort ERROR yazımı eklendi. Commit `2428311`, push edildi.
+- ✅ `prompt-template-manager`: `submit_and_wait()`, süresi geçmiş job'ın `410 Gone` yanıtında `raise_for_status()`'u kontrolsüz çağırıp ham `httpx.HTTPStatusError` fırlatıyordu (dokümante edilen `GatewayJobFailedError` yerine) — 410 kontrolü öne alındı. Commit `9f368d2`, push edildi.
+- ✅ `model-comparison-harness`: `GatewayBackend.run()`'da aynı 410 hatası, bağımsız olarak aynı şekilde tekrarlanmış — aynı düzeltme. Commit `da908ff`, henüz push edilmedi (repo boş GitHub deposu bekliyor, bkz. "bekleyen kullanıcı eylemleri").
+- ✅ `nvidia-nim-mcp`: `check_provider_health`'te sınırsız eşzamanlı probe (yapısal rate-limit riski, model listesi büyürse) — `asyncio.Semaphore(6)` eklendi. Commit `c7073bc`, push edildi (`claude/improve-nvidia-nim-mcp` branch, açık PR).
+
+**Yeni teknik borç/güvenlik kayıtları aşağıdaki tabloya eklendi (bkz. Teknik Borç Kaydı).**
+
 ---
 
 ## Fikir Backlog'u (henüz araştırılmamış/prototiplenmemiş)
@@ -37,7 +53,17 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 | Kayıt | Repo | Öncelik | Not |
 |---|---|---|---|
-| Repo'lar arası kod tekrarı (submit/poll istemci mantığı) | `ai-job-gateway`, `prompt-template-manager`, `model-comparison-harness` | P3 (izleniyor) | ADR-006 gereği bilinçli olarak paylaşılmıyor. Üçüncü bir tekrar (dördüncü repo) eklenirse "3 kural"ı tetiklenir, ortak bir `ai-gateway-client` mini-paketi değerlendirilmeli. |
+| Repo'lar arası kod tekrarı (submit/poll istemci mantığı) — **eşik aşıldı** | `ai-job-gateway`, `prompt-template-manager`, `model-comparison-harness` | P1 (yükseltildi) | ADR-008: iki Reviewer Agent denetimi, aynı 410-Gone hatasının bağımsız olarak iki repoda aynı şekilde tekrarlandığını buldu — "3 kural" artık hipotetik değil, somut kanıtla tetiklendi. Karar: `research/lab/shared/gateway_poll.py` kanonik dosyası yazılıp üç repoya vendor edilecek (gerçek pip paketi değil — ADR-006'nın gevşek bağlaşımı korunuyor). |
+| SSRF: `webhook_url` host/IP filtresi yok | `ai-job-gateway` | **P1 (güvenlik)** | Reviewer bulgusu (HIGH): `manager.py::_deliver_webhook`, submitter'ın verdiği herhangi bir URL'ye (ör. `169.254.169.254` cloud metadata, `localhost:<iç port>`) hiçbir host/IP kısıtı olmadan POST atıyor. Hızlı bir düzeltme değil — local-dev webhook testini kırmadan bir `webhook_allowed_hosts` allowlist politikası tasarlanmalı. Public deployment öncesi zorunlu. |
+| `POST /v1/{capability}` gövde boyutu sınırsız | `ai-job-gateway` | P2 (güvenlik) | Reviewer bulgusu (MEDIUM): `request.json()` hiçbir boyut sınırı olmadan tam belleğe okunuyor — ucuz bellek tükenmesi DoS'u. `Content-Length` kontrolü + streaming cap gerekiyor (spoofable header, dikkatli tasarlanmalı). |
+| Sandboxsız Jinja2 `Environment` | `prompt-template-manager` | P2 (güvenlik, koşullu) | Reviewer bulgusu (MEDIUM): `renderer.py`, tam Jinja2 dilini (loop/filter/makro) çalıştırıyor, sadece `{{ var }}` değil — şablonlar güvenilmeyen bir kaynaktan gelirse (paylaşılan pazar, webhook) SSTI/DoS riski. Bugünkü "şablon = kod kadar güvenilir" varsayımı kodda zorlanmıyor, sadece ima ediliyor. Ya `SandboxedEnvironment`'a geçilmeli ya da varsayım README'de açıkça yazılmalı. |
+| HTTP istemci çağrılarında per-request timeout tutarsızlığı | `ai-job-gateway`, `prompt-template-manager`, `model-comparison-harness` | P3 | Her üç repo da submit/poll HTTP çağrılarına yapılandırılan `timeout` değerini geçmiyor (httpx varsayılanına güveniyor) — `HttpBackend` bunu doğru yapıyor, `GatewayBackend` yapmıyor. Düşük risk (submit/poll hızlı olmalı), paylaşılan modül çıkarılırken (yukarıki madde) birlikte düzeltilebilir. |
+| `yaml.safe_load` anchor-expansion'a karşı korumasız | `prompt-template-manager`, `model-comparison-harness` | P3 | Şablon/config dosyaları operatör tarafından yazıldığı için düşük öncelik, ama kodda zorlanmıyor. |
+| `nvidia-nim-mcp`: hata mesajları `str(e)` olarak ham döndürülüyor | `nvidia-nim-mcp` | P2 (güvenlik, doğrulama gerekli) | `check_provider_health`'in 4 probe yardımcı fonksiyonu, provider hata metnini olduğu gibi rapor metnine yazıyor — teorik olarak kısmi API key sızıntısı riski (litellm'in bazı sağlayıcı hata şekillerinde). Güvenli redaksiyon için önce her sağlayıcının gerçek hata şeklini doğrulamak gerekiyor — kör düzeltme yapılmadı. |
+| `nvidia-nim-mcp`: kullanılmayan `httpx` bağımlılığı | `nvidia-nim-mcp` | P3 | Sadece `httpx2` kullanılıyor; `httpx` ya gereksiz (kaldırılmalı) ya da transitif bir ihtiyaç var (dokümante edilmeli). |
+| `mini-creative-toolkit`: `generate_image_free` boyut doğrulaması yok | `mini-creative-toolkit` | P3 | Diğer tüm araçlarda `_require_positive` var, bu araçta yok — 0/negatif değer yerel yerine uzak Pollinations API'sinde hata veriyor. |
+| `kalp-animasyon`: `prefers-reduced-motion` canlı değişikliği izlenmiyor | `kalp-animasyon` | P3 | Sayfa yüklendiğinde bir kez okunuyor, `matchMedia('change')` dinleyicisi yok. |
+| `nova-drift`: PRNG mantığı test dosyasında elle kopyalanmış | `nova-drift` | P3 | `mulberry32`/seed mantığı `script.js` ve `test/prng.spec.js`'de ayrı ayrı yazılı (yorumla belgelenmiş bilinçli tercih) — gerçek implementasyon değişirse test sessizce eskimiş kopyayı doğrulamaya devam eder. Saf fonksiyonları bağımlılıksız ortak bir modüle çıkarmak ya da CI'da iki kopyayı diff'leyen bir adım eklemek düşünülebilir. |
 | `ai-job-gateway`'de gerçek kuyruk yok | `ai-job-gateway` | P2 | ADR-004'te dokümante edildi, bilinçli v1 sınırı — gerçek trafik/çoklu-worker ihtiyacı doğduğunda ele alınacak. |
 | Hiçbir repoda gerçek provider yok (hepsi mock/echo) | `ai-job-gateway` ve türevleri | P1 | En büyük "demo'dan öteye geçme" engeli — gerçek API key'ler olmadan ilerlenemez, kullanıcı girdisi gerekiyor. |
 | Frontend/UI katmanı hiç yok | ekosistem geneli | P2 | Backend/orkestrasyon tarafı olgunlaştı, kullanıcı yüzü hâlâ eksik. |

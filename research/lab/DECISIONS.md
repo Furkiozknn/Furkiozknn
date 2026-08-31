@@ -6,6 +6,23 @@ Format: **ADR-NNN: Başlık** — Tarih, Durum (Kabul edildi / Reddedildi / Değ
 
 ---
 
+## ADR-008: ADR-006'nın "3 tekrar" eşiği aşıldı — paylaşılan gateway-client modülü çıkarılacak (ama paket değil, vendored dosya)
+
+**Tarih:** 2026-08-31 · **Durum:** Kabul edildi
+
+**Bağlam:** İki bağımsız Reviewer Agent denetimi (`ai-job-gateway`/`prompt-template-manager`/`model-comparison-harness` odaklı), ADR-006'nın kendi belirlediği "3+ tekrar oluşursa yeniden değerlendir" eşiğinin somut, hipotetik olmayan bir kanıtla aşıldığını gösterdi: submit→poll→terminal-durum-eşleme mantığı üç repoda bağımsız olarak yazıldı (`ai_job_gateway/client.py`, `prompt_template_manager/gateway_client.py`, `model_comparison_harness/backends.py::GatewayBackend`), ve aynı ince hata (`GET .../jobs/{id}`'in süresi geçmiş bir job için döndürdüğü `410 Gone`'u `raise_for_status()`'tan *önce* kontrol etmek gerektiği) doğru implementasyonda (#1, orijinal referans) doğru yazıldı, diğer ikisinde (#2, #3) bağımsız olarak *aynı şekilde* yanlış yazıldı. Bu, tekrarın teorik değil gerçek bir bakım/doğruluk riski olduğunun kanıtı.
+
+**Karar:** Paylaşılan mantığı çıkar, ama ADR-006'nın "repo'lar arası Python-seviyesi bağımlılık yok" ilkesini bozmadan: submit/poll/terminal-durum-eşleme (yalnızca bu ~15-20 satır) için bağımlılıksız, tek dosyalık, her repoya **vendored** (kopyalanan, pip ile kurulmayan) bir referans modül tutulacak — `research/lab/shared/gateway_poll.py` (bu repoda, kanonik kaynak olarak) — ve her tüketici repo bu dosyayı olduğu gibi kopyalar, üstüne kendi ince sarmalayıcısını (senkron/async, hata tipi mapping'i) yazar. Gerçek bir pip paketi (`ai-ecosystem-common`) hâlâ reddedilir — ayrı sürümleme/yayın yükü, bu ölçekte gereksiz. Vendored dosyanın başına, kaynağını ve "elle senkronize et" uyarısını belirten bir yorum eklenir (nova-drift'in `prng.spec.js` içinde zaten kullandığı desenin aynısı — bkz. Reviewer raporu).
+
+**Alternatifler değerlendirildi:**
+- Gerçek bir pip paketi olarak çıkarmak — reddedildi, ADR-006'nın "bağımsız sürümlenebilir repo" hedefiyle çelişir, bu ölçekteki 3 repo için aşırı.
+- Hiçbir şey yapmama, sadece 3 repoda ayrı ayrı düzeltmeye devam etme — reddedildi, Reviewer raporu bunun tam olarak neden başarısız olduğunu (aynı hata iki kez bağımsız tekrarlandı) somut olarak gösterdi.
+- Sadece dokümantasyon (BACKLOG.md'de "bu mantık drift riski taşıyor" notu, kod değişikliği yok) — yetersiz, Reviewer'ın önerdiği minimum çözüm ama gerçek riski azaltmıyor, sadece kaydediyor.
+
+**Sonuç:** Backlog'a P1 iş olarak eklendi: `research/lab/shared/gateway_poll.py` kanonik dosyasını yaz, üç repoya vendor et, her reponun kendi `gateway_client.py`/`backends.py`/`client.py` dosyasını bunun üzerine ince bir sarmalayıcıya indirge, testleri koru.
+
+---
+
 ## ADR-007: GitHub App'in repo oluşturma izni yok — kullanıcı manuel açıyor
 
 **Tarih:** 2026-08-31 · **Durum:** Kabul edildi (geçici kısıtlama)
