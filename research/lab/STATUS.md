@@ -20,7 +20,7 @@ Son güncelleme: 2026-08-31
 | [`nvidia-nim-mcp`](https://github.com/Furkiozknn/nvidia-nim-mcp) | NVIDIA NIM ücretsiz katman modellerini Claude Code'a bağlayan MCP server | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ 40/40 test, Reviewer denetiminde bulunan sınırsız eşzamanlılık düzeltmesi dahil |
 | [`mcp-vet`](https://github.com/Furkiozknn/mcp-vet) | MCP server keşfi/doğrulama Claude Code skill'i + bağımsız CLI | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ 30/30 test, Reviewer denetiminden geçti (temiz, sadece kozmetik not) |
 | [`kalp-animasyon`](https://github.com/Furkiozknn/kalp-animasyon) | Three.js sanat parçası (kişisel/hediye) | ✅ PR #1 açık, CI yeşil | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (XSS yüzeyi doğrulandı temiz) |
-| [`nova-drift`](https://github.com/Furkiozknn/nova-drift) | Three.js tarayıcı oyunu | ✅ PR #1 açık, CI yeşil | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (seeded RNG additive doğrulandı) |
+| [`nova-drift`](https://github.com/Furkiozknn/nova-drift) | Three.js tarayıcı oyunu | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (seeded RNG additive doğrulandı) |
 
 **Bekleyen kullanıcı aksiyonu:** Üç repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — bkz. `DECISIONS.md` ADR-007):
 - `model-comparison-harness` (kod hazır, yerelde 3 commit push bekliyor)
