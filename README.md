@@ -28,6 +28,10 @@
   <a href="https://github.com/Furkiozknn/mini-creative-toolkit">mini-creative-toolkit</a>
 </p>
 
+<p align="center">
+  <a href="research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md">📄 AI Creative Platform — araştırma & mimari notları</a>
+</p>
+
 <br>
 
 <p align="center">
