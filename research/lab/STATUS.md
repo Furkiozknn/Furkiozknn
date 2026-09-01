@@ -23,16 +23,25 @@ Son güncelleme: 2026-08-31
 | [`mcp-vet`](https://github.com/Furkiozknn/mcp-vet) | MCP server keşfi/doğrulama Claude Code skill'i + bağımsız CLI | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ 30/30 test, Reviewer denetiminden geçti (temiz, sadece kozmetik not) |
 | [`kalp-animasyon`](https://github.com/Furkiozknn/kalp-animasyon) | Three.js sanat parçası (kişisel/hediye) | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (XSS yüzeyi doğrulandı temiz) |
 | [`nova-drift`](https://github.com/Furkiozknn/nova-drift) | Three.js tarayıcı oyunu | ✅ **PR #1 kullanıcı tarafından merge edildi** | ✅ Playwright smoke test yeşil, Reviewer denetiminden geçti (seeded RNG additive doğrulandı) |
+| [`ai-repo-scaffold`](https://github.com/Furkiozknn/ai-repo-scaffold) | `scaffold new` — bu ekosistemin standart repo iskeletini (pyproject.toml+uv, CI, README+badge, LICENSE, smoke test) tek komutla üretir | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 14/14 test; kendi üzerinde dogfood edildi — `ai-cost-estimator`'ı bu araçla üretti |
+| [`ai-cost-estimator`](https://github.com/Furkiozknn/ai-cost-estimator) | `estimate` — 26 girdilik, kaynaklı (source_url + confidence seviyeli) fiyat tablosuyla AI job batch'lerinin maliyetini tahmin eder (FLUX.2/Wan2.2/Meshy/Rodin/ElevenLabs/Kokoro/ACE-Step/RunPod) | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 24/24 test; `compare` komutu birim uyuşmazlığında (sn vs video) uyarı veriyor — kendi çıktısını test ederken bulundu |
 
-**Bekleyen kullanıcı aksiyonu: yok.** 5 eski PR'ın tamamı (mini-creative-toolkit, nvidia-nim-mcp, mcp-vet, kalp-animasyon, nova-drift) merge edildi ✅. Kalan 3 repo de (`model-comparison-harness`, `asset-provenance-toolkit`, `ai-workflow-engine`) başka bir Claude oturumu tarafından GitHub'da açıldı, bu oturum tarafından `main`'e push edildi, CI hepsinde yeşil ✅ (2026-08-31, aynı gün — "GitHub entegrasyonu sıfırdan" isimli oturumdan gelen cross-session mesajla haber verildi, önce bağımsız doğrulandı: `add_repo` ile repoların gerçekten var olduğu ve boş olduğu teyit edildi, sonra push edildi). **9 repo'nun tamamı artık GitHub'da, hepsi CI yeşil.**
+**Bekleyen kullanıcı aksiyonu:** İki yeni repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — ADR-007):
+- `ai-repo-scaffold` (kod hazır, yerelde 1 commit push bekliyor)
+- `ai-cost-estimator` (kod hazır, yerelde 1 commit push bekliyor)
 
-Aynı repo-oluşturma blokajı (GitHub App izni yok, ADR-007) gelecekteki her yeni repo için de geçerli olacak.
+Diğer 9 repo'nun tamamı GitHub'da, hepsi CI yeşil (5 PR merge edildi, 4 repo `main`'e push edildi). Aynı repo-oluşturma blokajı gelecekteki her yeni repo için de geçerli olacak.
 
 ---
 
 ## Aktif Çalışma (bu oturumda)
 
-**Tamamlanan bu turda (Faz 3 — R&D lab derinleştirme):**
+**Tamamlanan bu turda (Faz 4 — repo sayısını artırma, basit ölçekli/hızlı):**
+Kullanıcı talimatı: repo sayısını artır, her repo kendi içinde iyi sunulsun (README/badge), "mükemmel"e takılma — çalışır+iş görür+iyi açıklanmış yeterli. Kullanıcı ayrıca "arka planda saatte bir tüm repoları analiz eden bir sistem" olduğunu belirtti — `list_triggers` ile kontrol edildi, hesapta böyle bir recurring trigger **yok**; muhtemelen başka bir oturum/mekanizma, bu oturumdan kurulmadı, kullanıcıya bildirildi.
+1. **`ai-repo-scaffold`** — `scaffold new` tek komutla bu ekosistemin standart repo iskeletini üretir (pyproject.toml+uv+hatchling, GitHub Actions CI, gerçek badge'li README, MIT LICENSE, smoke test). 14 test. Kendi üzerinde dogfood edildi: `ai-cost-estimator`'ın iskeletini bizzat bu araçla ürettik.
+2. **`ai-cost-estimator`** — `estimate list|cost|compare`: 26 girdilik, her biri `source_url` + `confidence` (cross_confirmed/single_source/unresolved_conflict) taşıyan bir fiyat tablosuyla AI job batch maliyeti tahmini. Ayrı bir araştırma ajanı (WebFetch ağ erişimi organizasyon politikasınca engellenmiş, WebSearch snippet'leriyle çalıştı — dürüstçe raporlandı) fiyatları topladı; iki gerçek kaynak çatışması (Rodin kredi matematiği, FLUX flex oranı) silinmedi, `unresolved_conflict` olarak kaydedildi. 24 test. Geliştirme sırasında CLI'ın kendi çıktısını okurken gerçek bir UX hatası bulundu ve düzeltildi: `compare` farklı birimleri (saniye vs video) karıştırdığında artık uyarı veriyor.
+
+**Tamamlanan önceki turda (Faz 3 — R&D lab derinleştirme):**
 1. İki Reviewer Agent'ın (backend/CLI repoları + agent-yapımı repolar) denetim raporları okundu, senkronize edildi. Ucuz/güvenli düzeltmeler (`ai-job-gateway` job-sonsuza-askıda-kalma, `prompt-template-manager`+`model-comparison-harness` 410-Gone hatası, `nvidia-nim-mcp` sınırsız eşzamanlılık) push edildi.
 2. `asset-provenance-toolkit` tamamlandı: 48 test yeşil, `ai-job-gateway`'e karşı canlı uçtan uca doğrulama (`aprov from-job`), commit alındı.
 3. **ADR-008 uygulandı:** `research/lab/shared/gateway_poll.py` kanonik dosyası yazıldı, üç repoya vendor edildi (410-Gone kod-tekrarı hatasının kök nedeni). Testler yeşil (46/43/37).
@@ -44,6 +53,8 @@ Aynı repo-oluşturma blokajı (GitHub App izni yok, ADR-007) gelecekteki her ye
 9. **`ai-workflow-engine` + `mini-creative-toolkit` rembg düzeltmesi bağımsız Reviewer denetiminden geçirildi** (kendi yazdığım kod da kural dışı değil — hiçbir şey Reviewer'sız "mezun olmuyor"). Sonuç: rembg/bria-rmbg iddiası satır satır doğrulandı (gerçek); `ai-workflow-engine`'de 1 HIGH bulgu bulundu ve düzeltildi (malformed Jinja2 syntax artık `PipelineRunError`'a düzgün eşleniyor, 2 yeni test), Jinja2 sandboxsız-çalıştırma riski `prompt-template-manager`'daki eşdeğeriyle birlikte belgelendi.
 
 **Sıradaki iş (backlog'dan seçilecek, hepsi API key gerektirmiyor):** Kokoro-82M TTS PoC, ACE-Step müzik PoC, FLUX.2 yerleşik çoklu-referans testi (blokajlı — FLUX API key gerekiyor), PuLID-FLUX InsightFace lisans doğrulaması. **Not:** Bu oturumda sandbox ağ bağlantısı zaman zaman çok yavaştı (pip kurulumları/model indirmeleri timeout'a uğradı) — bir sonraki oturumda ağ durumu tekrar kontrol edilmeli, canlı model kurulumu gerektiren işler (Kokoro/ACE-Step PoC'leri gibi) buna göre planlanmalı.
+
+**Düzeltme — `TECH-RADAR.md`'deki bir varsayım yanlıştı:** Kokoro-82M ve ACE-Step "sadece self-host, hosted API yok" olarak işaretlenmişti. Fiyat araştırması bunun **yanlış** olduğunu buldu: ikisinin de gerçek, ucuz üçüncü-taraf hosted API'leri var (Kokoro: DeepInfra/OpenRouter ~$0.62/1M karakter; ACE-Step: fal.ai $0.0002/saniye) — self-host hâlâ $0 API maliyetiyle mevcut ama artık "tek seçenek" değil, hızlı PoC için hosted API de bir yol. `ai-cost-estimator`'ın fiyat tablosuna her ikisi de eklendi.
 
 ## Otonom Döngü Kuralları (özet)
 

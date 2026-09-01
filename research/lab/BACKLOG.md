@@ -8,7 +8,7 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 ## Sıradaki İş (aktif seçim)
 
-Tamamlanan: `asset-provenance-toolkit`, `research/lab/shared/gateway_poll.py` çıkarımı (ADR-008), `ai-workflow-engine` (bkz. aşağıda).
+Tamamlanan: `asset-provenance-toolkit`, `research/lab/shared/gateway_poll.py` çıkarımı (ADR-008), `ai-workflow-engine`, `ai-repo-scaffold`, `ai-cost-estimator` (bkz. aşağıda).
 
 **Şimdi en yüksek öncelik — API key gerektirmeyenler:**
 - **FLUX.2 yerleşik çoklu-referans testi** (P1) — PuLID-FLUX'tan önce denenmeli, InsightFace lisans riskini baştan bypass edebilir. **Blokaj: gerçek FLUX.2 API key gerekiyor**, aynı P1 provider blokajıyla aynı.
