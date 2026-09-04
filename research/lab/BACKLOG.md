@@ -8,6 +8,11 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 ## Sıradaki İş (aktif seçim)
 
+**Yeni misyon çerçevesi (2026-09-04): FEWER REPOS + DEEPER ENGINEERING. Yeni repo yok; aşağıdaki her şey mevcut repoların içine gider.**
+- **Faz 1 denetim raporları** (8 ajan; scratchpad `audits/` dizininde toplanıyor) → sentez → portföy yeniden sıralaması → top-10 aksiyon. Denetim bitmeden büyük implementasyona başlama.
+- **`buradane` ana ürün hattı:** denetim çıktısına göre ilk gerçek kullanıcı için eksikler (veri tazeliği, moderasyon, duplicate tespiti, auth/rate-limit, spatial index doğrulaması) önceliklendirilecek.
+- **Portföy anlatısı:** profil README en fazla 5-6 projeyi AI SYSTEMS + AGENT TOOLING + DEVELOPER INFRASTRUCTURE + REAL PRODUCTS hikâyesiyle öne çıkaracak; kalabalık liste kaldırılacak.
+
 **2026-09-04 — platform artık gerçek iş yapıyor.** `ai-job-gateway` `generate-image` (hosted, keysiz) + 10 `media-*` (yerel) capability'si ile geliyor; `ai-workflow-engine` pipeline'ları canlı gateway'e karşı uçtan uca doğrulandı. Bu, aşağıdaki PoC'lerin önünü açtı: yeni bir Provider yazmak artık `Provider.run()` + registry'ye ekleme; `mini-creative-toolkit`'e yeni bir araç eklemek otomatik olarak `media-<op>` capability'si olur (OPERATIONS tablosuna bir satır).
 
 - **`generate-image` canlı doğrulaması** (P1) — bu oturumun sandbox'ından Pollinations.ai'ye çıkış yoktu; provider mock HTTP'ye karşı tam test edildi ama gerçek servise karşı bir kez çalıştırılmalı (`uv run ai-job-gateway submit generate-image '{"prompt":"..."}'`).
