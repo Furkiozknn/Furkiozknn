@@ -29,6 +29,18 @@
 </p>
 
 <p align="center">
+  <sub>AI creative platform — çalışan omurga:</sub><br>
+  <a href="https://github.com/Furkiozknn/ai-job-gateway">ai-job-gateway</a> · 
+  <a href="https://github.com/Furkiozknn/ai-workflow-engine">ai-workflow-engine</a> · 
+  <a href="https://github.com/Furkiozknn/prompt-template-manager">prompt-template-manager</a> · 
+  <a href="https://github.com/Furkiozknn/model-comparison-harness">model-comparison-harness</a> · 
+  <a href="https://github.com/Furkiozknn/asset-provenance-toolkit">asset-provenance-toolkit</a><br>
+  <a href="https://github.com/Furkiozknn/local-notes-search-mcp">local-notes-search-mcp</a> · 
+  <a href="https://github.com/Furkiozknn/voice-io-mcp">voice-io-mcp</a> · 
+  <a href="https://github.com/Furkiozknn/buradane">buradane</a>
+</p>
+
+<p align="center">
   <a href="research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md">📄 AI Creative Platform — araştırma & mimari notları</a>
 </p>
 
