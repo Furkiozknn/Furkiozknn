@@ -8,6 +8,12 @@ Bu dosya sürekli güncellenir — tamamlanan bir iş çıkar, her tamamlanan i�
 
 ## Sıradaki İş (aktif seçim)
 
+**2026-09-04 — platform artık gerçek iş yapıyor.** `ai-job-gateway` `generate-image` (hosted, keysiz) + 10 `media-*` (yerel) capability'si ile geliyor; `ai-workflow-engine` pipeline'ları canlı gateway'e karşı uçtan uca doğrulandı. Bu, aşağıdaki PoC'lerin önünü açtı: yeni bir Provider yazmak artık `Provider.run()` + registry'ye ekleme; `mini-creative-toolkit`'e yeni bir araç eklemek otomatik olarak `media-<op>` capability'si olur (OPERATIONS tablosuna bir satır).
+
+- **`generate-image` canlı doğrulaması** (P1) — bu oturumun sandbox'ından Pollinations.ai'ye çıkış yoktu; provider mock HTTP'ye karşı tam test edildi ama gerçek servise karşı bir kez çalıştırılmalı (`uv run ai-job-gateway submit generate-image '{"prompt":"..."}'`).
+- **`buradane` bbox filtresi için fonksiyonel indeks** (P3) — `location::geometry` cast'i GiST indeksini devre dışı bırakıyor; veri büyürse `CREATE INDEX ... USING gist ((location::geometry))`.
+- **Kokoro-82M TTS → `ai-job-gateway` provider** (P1) — artık somut bir hedef var: `providers_local.py` deseninde `voice-io-mcp`'nin Kokoro yolunu `tts` capability'si olarak sarmak.
+
 Tamamlanan: `asset-provenance-toolkit`, `research/lab/shared/gateway_poll.py` çıkarımı (ADR-008), `ai-workflow-engine`, `ai-repo-scaffold`, `ai-cost-estimator`, `webhook-sink` (bkz. `STATUS.md` ekosistem haritası).
 
 **Şimdi en yüksek öncelik — API key gerektirmeyenler:**
