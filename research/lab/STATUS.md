@@ -27,7 +27,7 @@ Son güncelleme: 2026-08-31
 | [`ai-cost-estimator`](https://github.com/Furkiozknn/ai-cost-estimator) | `estimate` — 26 girdilik, kaynaklı (source_url + confidence seviyeli) fiyat tablosuyla AI job batch'lerinin maliyetini tahmin eder (FLUX.2/Wan2.2/Meshy/Rodin/ElevenLabs/Kokoro/ACE-Step/RunPod) | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 24/24 test; `compare` komutu birim uyuşmazlığında (sn vs video) uyarı veriyor — kendi çıktısını test ederken bulundu |
 | [`webhook-sink`](https://github.com/Furkiozknn/webhook-sink) | `webhook-sink serve` — sıfır bağımlılıklı (sadece stdlib) yerel webhook test alıcısı, `--fail-first N` ile retry mantığını gerçek bir başarısızlığa karşı test etmeyi sağlıyor | ⏳ Yerel commit hazır, kullanıcının boş repo açması bekleniyor | ✅ 14/14 test; `ai-job-gateway`'in gerçek webhook teslimatına karşı uçtan uca doğrulandı (job submit edildi, webhook gerçekten bu sink'e ulaştı) |
 
-**Bekleyen kullanıcı aksiyonu:** Üç yeni repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — ADR-007):
+**Bekleyen kullanıcı aksiyonu:** Üç yeni repo için boş GitHub repository açılması gerekiyor (GitHub App'in repo oluşturma izni yok — ADR-007; proxy de repo-dışı endpoint'leri reddediyor). **Hazır çözüm: `research/lab/apply-github-metadata.py` — PAT ile tek komut, repoları oluşturur ve tüm açıklama/topic'leri yazar.**
 - `ai-repo-scaffold` (kod hazır, yerelde 1 commit push bekliyor)
 - `ai-cost-estimator` (kod hazır, yerelde 1 commit push bekliyor)
 - `webhook-sink` (kod hazır, yerelde 1 commit push bekliyor)
@@ -37,6 +37,15 @@ Diğer 9 repo'nun tamamı GitHub'da, hepsi CI yeşil (5 PR merge edildi, 4 repo 
 ---
 
 ## Aktif Çalışma (bu oturumda)
+
+**Tamamlanan bu turda (Faz 5 — "demo'dan çık, tam fonksiyon, bekleme yok, full otomasyon" — kullanıcı talimatı 2026-09-04):**
+Kullanıcı açıkça "bekleme yok, full otomasyon" dedi; bu turdan itibaren onay beklenen işler (merge, push) bağımsız yürütülüyor. Geri alınabilir her şey yapıldı, geri alınamayan/izin gerektiren iki şey aşağıda ayrı işaretli.
+1. **4 açık PR squash-merge edildi** (repo geleneği squash): `mini-creative-toolkit#2` (2.0 — 23 araç, capability tablosu, 313 test), `mcp-vet#2` (trust & security auditor, 192 test), `kalp-animasyon#2` (kalp atışı + GPU renk + hermetik test), `nvidia-nim-mcp#2` (bağımlılık düzeltmeleri). Hepsi merge öncesi CI yeşildi; merge sonrası feature branch'ler silindi.
+2. **5 yerel sertleştirme commit'i PR olarak açıldı, hepsi CI yeşil:** `ai-job-gateway#1` (body cap, webhook URL/capability doğrulama, idempotency key, HMAC imza), `ai-workflow-engine#1` (YAML anchor bomb reddi, depends_on zorunluluğu, sandbox Jinja2 — upstream ile birleştirildi), `asset-provenance-toolkit#1` (JPEG APP1 backend, zTXt), `model-comparison-harness#1` (CSV, error_type, --timeout — varsayılan kapalı kararı verildi), `prompt-template-manager#1` (sandbox Jinja2, batch validate, --vars-file). Merge otomasyonu bu oturumun check-in rutininde.
+3. **Repo oluşturma ve açıklama/topic yazma bu oturumdan mümkün değil** — iki ayrı katmanda 403: GitHub App token'ında `administration` izni yok ("Resource not accessible by integration") ve oturum proxy'si repo-dışı endpoint'leri reddediyor. Çözüm hazır: `research/lab/apply-github-metadata.py` — kullanıcı bir PAT ile tek komutta 3 repoyu oluşturur + 12 reponun açıklama/topic'lerini yazar (dry-run varsayılan, `--apply` ile uygular). Sonra 3 bekleyen repo push edilir (komutlar dosyanın başında).
+4. **Sağlık kontrolü, dokunulmamış repolar:** `local-notes-search-mcp` 24 geçti/13 atlandı (yerel), `voice-io-mcp` yerelde bağımlılık kurulu değil (CI GitHub'da), `buradane` FastAPI backend + CI mevcut, `lumen` Godot projesi (CI yok, test yok — kapsam dışı).
+5. **Tespit edilen asıl "demo" boşluğu:** `ai-job-gateway` sadece `EchoProvider` ve `MockProvider` ile geliyor — platformun omurgası gerçek bir iş yapmıyor. Sıradaki iş: keysiz gerçek provider'lar (Pollinations görsel üretimi + `mini-creative-toolkit` yerel medya işlemleri) → `ai-workflow-engine` pipeline'ları gerçekten çalışır hale gelir.
+
 
 **Tamamlanan bu turda (Faz 4 — repo sayısını artırma, basit ölçekli/hızlı):**
 Kullanıcı talimatı: repo sayısını artır, her repo kendi içinde iyi sunulsun (README/badge), "mükemmel"e takılma — çalışır+iş görür+iyi açıklanmış yeterli. Kullanıcı ayrıca "arka planda saatte bir tüm repoları analiz eden bir sistem" olduğunu belirtti — `list_triggers` ile kontrol edildi, hesapta böyle bir recurring trigger **yok**; muhtemelen başka bir oturum/mekanizma, bu oturumdan kurulmadı, kullanıcıya bildirildi.
