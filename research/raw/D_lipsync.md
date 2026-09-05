@@ -108,8 +108,8 @@ Notably absent from the topic tag itself (they're tagged under "talking-head"/"d
 - **Weaknesses:** Weak zero-shot generalization, older/more fragmented preprocessing stack (OpenFace + DeepSpeech are both showing their age vs. modern Whisper-based audio encoders), unclear license, and the project has seen little activity in the last couple of years.
 - **Platform relevance:** Largely of historical/architectural interest now — its deformation+inpainting idea predates and partially inspired newer inpainting-style approaches (MuseTalk). Not recommended to build on directly.
 
-### 2.7 DreamTalk
-- **URL:** https://github.com/ali-vilab/dreamtalk (Alibaba)
+### 2.7 DreamTalk (Alibaba)
+- **URL:** https://github.com/ali-vilab/dreamtalk
 - **One-liner:** Diffusion-based expressive talking-head generation with an explicit "style" control (multiple speaking styles from a reference clip).
 - **Technique:** Diffusion model operating over 3DMM parameter space (not raw pixels) conditioned on audio (wav2vec2.0) and a style/reference clip via PIRenderer as the final neural renderer.
 - **Stack:** PyTorch 1.8, wav2vec2.0, PIRenderer, dlib, HF Transformers.
