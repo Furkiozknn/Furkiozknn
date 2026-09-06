@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 528" width="1200" height="528" role="img" aria-label="Four working rules and the evidence behind each: test counts re-derived from the suite rather than written by hand, hermetic CI where suites run offline, READMEs that list known limits including a measured upscale stall and a deliberately-absent column, and licenses checked down the dependency tree where rembg's CC-BY-NC default model was caught and refused unless knowingly opted into.">
+  <rect width="1200" height="528" fill="#0d0d10"/>
+  <text x="40" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="3" fill="#d4b06a">HOW I WORK</text>
+  <path d="M40 62 L1160 62" stroke="#2a2a33" stroke-width="1"/>
+  <rect x="40" y="96" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
+  <rect x="40" y="96" width="4" height="88" rx="2" fill="#d4b06a"/>
+  <text x="70" y="126" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#d4b06a">tests before claims</text>
+  <text x="70" y="150" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Every count in these READMEs is re-derived from the suite. This pass found four that had</text>
+  <text x="70" y="168" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">drifted: 44 to 62, 56 to 58, 37 to 38, 82 to 85 - and corrected them.</text>
+  <rect x="40" y="200" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
+  <rect x="40" y="200" width="4" height="88" rx="2" fill="#4ade9e"/>
+  <text x="70" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#4ade9e">hermetic CI</text>
+  <text x="70" y="254" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Suites run offline; a CDN outage cannot redden a build. kalp-animasyon bundles its own</text>
+  <text x="70" y="272" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">Three.js fixture rather than fetching one at test time.</text>
+  <rect x="40" y="304" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
+  <rect x="40" y="304" width="4" height="88" rx="2" fill="#6cb6ff"/>
+  <text x="70" y="334" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#6cb6ff">honest READMEs</text>
+  <text x="70" y="358" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Known limits are listed, not hidden: a measured 7-minute upscale stall on integrated</text>
+  <text x="70" y="376" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">graphics, a gateway column headed 'deliberately absent', voice cloning left out on purpose.</text>
+  <rect x="40" y="408" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
+  <rect x="40" y="408" width="4" height="88" rx="2" fill="#e857c3"/>
+  <text x="70" y="438" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#e857c3">licenses checked down the tree</text>
+  <text x="70" y="462" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">rembg's default model is CC-BY-NC - caught by reading the dependency tree, and refused</text>
+  <text x="70" y="480" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">unless you opt in knowingly. buradane splits ODbL data from MIT code in a NOTICE file.</text>
+</svg>
