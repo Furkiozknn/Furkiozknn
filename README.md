@@ -11,7 +11,7 @@ I build the plumbing generative-AI products sit on — async job orchestration, 
 ## AI systems
 
 - **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** — Submit a generative-AI job, get an id back instantly, poll or get webhooked: a hardened, provider-agnostic async job server with real keyless providers, not just mocks. Idempotency keys that survive restarts, SSRF-guarded webhooks with signed payloads, jittered retries with a queryable dead letter. *156 tests · CI*
-- **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** — Pipelines as plain YAML DAGs, validated before they run (cycles, undeclared deps, template cross-checks), concurrent where the graph allows — proven end-to-end against a live gateway. *59 tests · e2e-proven*
+- **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** — Pipelines as plain YAML DAGs, validated before they run (cycles, undeclared deps, template cross-checks), concurrent where the graph allows but paced rather than bursted (a 40-step layer submits 10 at a time, and a job that keeps saying *processing* is polled progressively less often). Proven end-to-end against a live gateway. *72 tests · e2e-proven*
 
 <sub>Supporting cast: [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) (versioned prompt templates with real error surfaces) · [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) (same prompt, N models, one report) · [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) (which model/job/prompt made this file?)</sub>
 
