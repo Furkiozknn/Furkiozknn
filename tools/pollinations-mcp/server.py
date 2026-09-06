@@ -109,6 +109,14 @@ def extension_for(content_type: str, fallback: str) -> str:
         "image/svg+xml": ".svg",
         "video/mp4": ".mp4",
         "video/webm": ".webm",
+        "audio/mpeg": ".mp3",
+        "audio/mp3": ".mp3",
+        "audio/wav": ".wav",
+        "audio/x-wav": ".wav",
+        "audio/flac": ".flac",
+        "audio/opus": ".opus",
+        "audio/ogg": ".ogg",
+        "audio/aac": ".aac",
     }
     if base in known:
         return known[base]
@@ -230,6 +238,86 @@ def tool_generate_video(args: dict) -> list[dict]:
     }]
 
 
+
+def _pollinations_audio(text: str, query: dict, kind: str, output_name: str | None) -> list[dict]:
+    """Both speech and music come from the same GET /audio/{text} endpoint --
+    only the model and parameters differ."""
+    key = (os.environ.get("POLLINATIONS_KEY") or "").strip()
+    if not key:
+        raise ToolError(
+            f"{kind} generation needs a Pollinations key. Registration is free and the same "
+            f"key covers image, video, speech and music -- get one at {POLLINATIONS_SIGNUP}, "
+            "set POLLINATIONS_KEY, and restart the MCP server."
+        )
+
+    encoded = _query(query)
+    base = f"{POLLINATIONS_GEN_HOST}/audio/{urllib.parse.quote(text, safe='')}"
+    url = f"{base}?{encoded}" if encoded else base
+
+    payload, content_type = http_request(
+        url,
+        headers={"Authorization": f"Bearer {key}", "Accept": "audio/*"},
+        min_interval=3.0,
+    )
+    if not content_type.lower().startswith("audio/"):
+        raise ToolError(
+            f"expected audio but got '{content_type or 'unknown'}': "
+            f"{payload[:200].decode('utf-8', 'replace')!r}"
+        )
+
+    path = safe_output_path(output_name, text, extension_for(content_type, ".mp3"))
+    _write(path, payload)
+    return [{
+        "type": "text",
+        "text": (
+            f"{kind.capitalize()} saved to {path}\n"
+            f"  size: {_human_size(len(payload))} ({content_type})\n"
+            f"  model: {query.get('model') or 'server default'}"
+        ),
+    }]
+
+
+def tool_generate_speech(args: dict) -> list[dict]:
+    text = (args.get("text") or "").strip()
+    if not text:
+        raise ToolError("text is required")
+    return _pollinations_audio(
+        text,
+        {
+            "voice": args.get("voice"),
+            "model": args.get("model"),
+            "response_format": args.get("response_format"),
+            "instructions": args.get("instructions"),
+            "seed": args.get("seed"),
+        },
+        "speech",
+        args.get("output_name"),
+    )
+
+
+def tool_generate_music(args: dict) -> list[dict]:
+    prompt = (args.get("prompt") or "").strip()
+    if not prompt:
+        raise ToolError("prompt is required")
+    # Without an explicit music model the endpoint would speak the prompt aloud
+    # instead of scoring it, so default to one that actually generates music.
+    return _pollinations_audio(
+        prompt,
+        {
+            "model": args.get("model") or "elevenmusic",
+            "duration": args.get("duration"),
+            "seconds": args.get("seconds"),
+            "instrumental": args.get("instrumental"),
+            "steps": args.get("steps"),
+            "negative_prompt": args.get("negative_prompt"),
+            "response_format": args.get("response_format"),
+            "seed": args.get("seed"),
+        },
+        "music",
+        args.get("output_name"),
+    )
+
+
 def tool_list_providers(_args: dict) -> list[dict]:
     """What is wired up right now, and what each missing one would need."""
     try:
@@ -330,6 +418,50 @@ TOOLS = [
         },
     },
     {
+        "name": "generate_speech",
+        "description": (
+            "Turn text into spoken audio and save it to disk. 100+ voice presets. Pollinations "
+            "only, and requires POLLINATIONS_KEY; registration is free."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string", "description": "What to say. The eleven-dialogue model expects one 'voice: text' turn per line."},
+                "voice": {"type": "string", "description": "Voice preset, e.g. nova, onyx, af_bella, bm_george. Default: alloy."},
+                "model": {"type": "string", "description": "Audio model, e.g. eleven-dialogue for multi-speaker dialogue."},
+                "response_format": {"type": "string", "enum": ["mp3", "opus", "aac", "flac", "wav", "pcm"], "description": "Output format (default mp3)."},
+                "instructions": {"type": "string", "description": "Emotion/style instruction (qwen-tts-instruct only)."},
+                "seed": {"type": "integer", "description": "Seed for reproducible output."},
+                "output_name": {"type": "string", "description": "Filename stem; defaults to a slug of the text."},
+            },
+            "required": ["text"],
+        },
+    },
+    {
+        "name": "generate_music",
+        "description": (
+            "Generate music or a sound effect from a text prompt and save it to disk. Models: "
+            "elevenmusic (3-300s, instrumental mode), lyria-3-clip (fixed 30s), "
+            "stable-audio-3-medium/large, eleven-sfx. Requires POLLINATIONS_KEY."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "prompt": {"type": "string", "description": "Describe the music or sound effect."},
+                "model": {"type": "string", "description": "elevenmusic (default), lyria-3-clip, stable-audio-3-medium, stable-audio-3-large, eleven-sfx."},
+                "duration": {"type": "integer", "description": "Length in seconds for elevenmusic (3-300)."},
+                "seconds": {"type": "number", "description": "Length in seconds for stable-audio-3-* (1-380)."},
+                "instrumental": {"type": "boolean", "description": "Guarantee instrumental output (elevenmusic only)."},
+                "steps": {"type": "integer", "description": "Sampling steps (stable-audio-3-* only)."},
+                "negative_prompt": {"type": "string", "description": "Negative prompt (stable-audio-3-large only)."},
+                "response_format": {"type": "string", "enum": ["mp3", "opus", "aac", "flac", "wav", "pcm"], "description": "Output format (default mp3)."},
+                "seed": {"type": "integer", "description": "Seed for reproducible output."},
+                "output_name": {"type": "string", "description": "Filename stem; defaults to a slug of the prompt."},
+            },
+            "required": ["prompt"],
+        },
+    },
+    {
         "name": "list_providers",
         "description": "Show which image providers are configured, the active fallback chain, and what each missing provider needs. Makes no network calls.",
         "inputSchema": {"type": "object", "properties": {}},
@@ -347,6 +479,8 @@ TOOLS = [
 HANDLERS = {
     "generate_image": tool_generate_image,
     "generate_video": tool_generate_video,
+    "generate_speech": tool_generate_speech,
+    "generate_music": tool_generate_music,
     "list_providers": tool_list_providers,
     "list_models": tool_list_models,
 }

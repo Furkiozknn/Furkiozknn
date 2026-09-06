@@ -1,7 +1,7 @@
 # genmedia-mcp
 
 Four free-tier image providers behind one MCP tool, tried in order until one
-works, plus video. No dependencies — no `pip install`, no `npx`, nothing that
+works, plus video, speech and music. No dependencies — no `pip install`, no `npx`, nothing that
 updates itself between the audit and the run. The whole supply chain is
 `server.py`, `providers.py` and `http_client.py`.
 
@@ -24,6 +24,8 @@ configuration. Unconfigured providers are skipped, never attempted.
 |---|---|---|
 | `generate_image` | Text → image, saved to disk, preview inlined into the reply | No |
 | `generate_video` | Text → MP4, saved to disk | **Yes** (Pollinations) |
+| `generate_speech` | Text → spoken audio, 100+ voice presets | **Yes** (Pollinations) |
+| `generate_music` | Text → music or sound effect | **Yes** (Pollinations) |
 | `list_providers` | What is configured, the active chain, what each missing one needs | No (no network) |
 | `list_models` | Pollinations image/video catalogue | No |
 
@@ -99,11 +101,12 @@ python3 tools/pollinations-mcp/server.py --selfcheck
 python3 -m unittest discover -s tests -v
 ```
 
-67 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
+77 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
 They cover path-traversal refusal, chain resolution and ordering, each provider's
 response parsing (including Cloudflare's base64 envelope vs. raw binary, Gemini's
 camelCase/snake_case `inlineData`, and a Gemini text-only refusal), fall-through
-behaviour, per-host throttling, and the MCP handshake.
+behaviour, per-host throttling, the audio tools' model and format handling, and
+the MCP handshake.
 
 ## Known limits
 
@@ -116,6 +119,9 @@ behaviour, per-host throttling, and the MCP handshake.
 - Together's free FLUX endpoint began as a time-limited promotion; it may no
   longer be free.
 - Gemini's free tier may train on submitted prompts.
-- Video is Pollinations-only. No free provider surveyed offers keyless
-  text-to-video at any quality.
+- Video, speech and music are Pollinations-only and share one free key. No free
+  provider surveyed offers keyless text-to-video at any quality.
+- The audio endpoint's request shape was read from Pollinations' APIDOCS.md, but
+  like everything else here it has not been proven against a live call from this
+  environment.
 - No streaming or progress reporting: a video call blocks until the MP4 arrives.

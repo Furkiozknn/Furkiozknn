@@ -432,6 +432,94 @@ class TestGenerateVideo(Base):
         self.assertIn("aspectRatio=9%3A16", seen["url"])
 
 
+class TestGenerateSpeech(Base):
+    def test_without_key_says_one_free_key_covers_everything(self):
+        with self.assertRaises(http_client.ToolError) as caught:
+            server.tool_generate_speech({"text": "hello"})
+        message = str(caught.exception)
+        self.assertIn("POLLINATIONS_KEY", message)
+        self.assertIn("image, video, speech and music", message)
+
+    def test_saves_mp3_and_passes_the_voice_through(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            return b"ID3audio", "audio/mpeg"
+
+        with mock.patch.object(server, "http_request", side_effect=fake):
+            content = server.tool_generate_speech({"text": "hello there", "voice": "nova", "output_name": "hi"})
+
+        self.assertTrue(os.path.exists(os.path.join(server.output_dir(), "hi.mp3")))
+        self.assertIn("voice=nova", seen["url"])
+        self.assertIn("gen.pollinations.ai/audio/", seen["url"])
+        self.assertIn("hi.mp3", content[0]["text"])
+
+    def test_empty_text_is_refused(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        with self.assertRaises(http_client.ToolError):
+            server.tool_generate_speech({"text": "  "})
+
+    def test_non_audio_response_is_rejected(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        with mock.patch.object(server, "http_request", return_value=(b'{"error":"x"}', "application/json")):
+            with self.assertRaises(http_client.ToolError):
+                server.tool_generate_speech({"text": "hello"})
+
+    def test_wav_response_gets_a_wav_extension(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        with mock.patch.object(server, "http_request", return_value=(b"RIFF", "audio/wav")):
+            server.tool_generate_speech({"text": "hello", "response_format": "wav", "output_name": "hi"})
+        self.assertTrue(os.path.exists(os.path.join(server.output_dir(), "hi.wav")))
+
+
+class TestGenerateMusic(Base):
+    def test_defaults_to_a_music_model_not_speech(self):
+        # Without an explicit music model the endpoint would read the prompt
+        # aloud instead of scoring it.
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            return b"ID3", "audio/mpeg"
+
+        with mock.patch.object(server, "http_request", side_effect=fake):
+            server.tool_generate_music({"prompt": "lofi beat"})
+        self.assertIn("model=elevenmusic", seen["url"])
+
+    def test_instrumental_and_duration_reach_the_url(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            return b"ID3", "audio/mpeg"
+
+        with mock.patch.object(server, "http_request", side_effect=fake):
+            server.tool_generate_music({"prompt": "lofi", "duration": 30, "instrumental": True})
+        self.assertIn("duration=30", seen["url"])
+        self.assertIn("instrumental=true", seen["url"])
+
+    def test_explicit_model_is_not_overridden(self):
+        os.environ["POLLINATIONS_KEY"] = "sk_test"
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            return b"ID3", "audio/mpeg"
+
+        with mock.patch.object(server, "http_request", side_effect=fake):
+            server.tool_generate_music({"prompt": "rain", "model": "eleven-sfx"})
+        self.assertIn("model=eleven-sfx", seen["url"])
+        self.assertNotIn("elevenmusic", seen["url"])
+
+    def test_without_key_is_refused(self):
+        with self.assertRaises(http_client.ToolError):
+            server.tool_generate_music({"prompt": "lofi"})
+
+
 class TestListProviders(Base):
     def test_shows_ready_and_missing_with_signup_links(self):
         os.environ["GEMINI_API_KEY"] = "gk"
@@ -511,15 +599,19 @@ class TestProtocol(Base):
     def test_initialized_notification_gets_no_response(self):
         self.assertIsNone(server.handle_message({"jsonrpc": "2.0", "method": "notifications/initialized"}))
 
-    def test_tools_list_declares_four_tools_with_schemas(self):
+    def test_tools_list_declares_every_tool_with_schemas(self):
         tools = server.handle_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})["result"]["tools"]
         self.assertEqual(
             {t["name"] for t in tools},
-            {"generate_image", "generate_video", "list_providers", "list_models"},
+            {"generate_image", "generate_video", "generate_speech", "generate_music",
+             "list_providers", "list_models"},
         )
         for tool in tools:
             self.assertEqual(tool["inputSchema"]["type"], "object")
             self.assertTrue(tool["description"])
+
+    def test_every_declared_tool_has_a_handler(self):
+        self.assertEqual({t["name"] for t in server.TOOLS}, set(server.HANDLERS))
 
     def test_provider_enum_matches_the_registry(self):
         tools = {t["name"]: t for t in server.TOOLS}
