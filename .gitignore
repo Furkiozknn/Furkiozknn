@@ -1,0 +1,5 @@
+# Byte-compiled Python. research/lab/apply-github-metadata.py is meant to be
+# run from a clone, and doing so drops a __pycache__/ next to it - which then
+# shows up as untracked in the very repo the script exists to tidy up.
+__pycache__/
+*.py[cod]
