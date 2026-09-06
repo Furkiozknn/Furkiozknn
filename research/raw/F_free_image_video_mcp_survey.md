@@ -85,3 +85,92 @@ that matters: it unlocks video entirely, drops the image throttle from ~15s to ~
 and moves image generation off a legacy host that is being retired. The server picks
 up `POLLINATIONS_KEY` from the environment and switches hosts automatically — no code
 change, no reinstall.
+
+---
+
+# Part 2 — The wider free-provider landscape (rotation targets)
+
+Follow-up pass, same date. The goal here was breadth: enough separate free tiers
+that when one throttles or dries up, you move to the next rather than stopping.
+
+## 5. Free image-generation tiers, compared
+
+| Provider | Free allowance | Card? | Key? | Video | Verified |
+|---|---|:--:|:--:|:--:|---|
+| **Cloudflare Workers AI** | 10,000 neurons/day ≈ ~2,000 small FLUX images, resets 00:00 UTC | No | Yes (free) | No | Search only |
+| **Google Gemini** (Nano Banana) | ~100–500 images/day; Imagen capped ~2 IPM | No | Yes (free) | No (Veo is paid) | Search only |
+| **NVIDIA NIM** | 5,000 credits, ~40 RPM, credits do not expire | No | Yes (free) | Some video models | Search only |
+| **Together AI** | FLUX.1-schnell-Free endpoint | No | Yes (free) | No | Search only |
+| **ModelScope** | 2,000 req/day total, 500 RPD per model | No | Yes (free) | Some | Search only |
+| **Hugging Face** | ~$0.10/month inference credits + free Spaces | No | Yes (free) | Limited | Search only |
+| **Pollinations** (anon) | ~1 req/15s | No | **No** | No | Docs |
+| **Pollinations** (keyed) | ~1 req/3s | No | Yes (free) | **Yes** | Docs |
+| **SiliconFlow** | ~$1 starter credit; some models permanently free | No | Yes | Some | Weak — also now requires real-name ID verification |
+
+**Ranking for our purposes.** Cloudflare is the clear first choice: the largest
+free allowance by an order of magnitude, no card, and it starts immediately.
+Gemini is the best second because its failure mode is different (daily request
+cap rather than a compute budget), so the two rarely exhaust together. Pollinations
+belongs last but must stay in the chain — it is the only one that works with no
+configuration at all, which makes it the floor that keeps the tool from ever being
+completely dead.
+
+**Already in-house:** [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)
+already covers NIM. That is a fifth free tier reachable without writing anything new.
+
+**Caveats worth carrying:**
+- Gemini's free tier may use submitted prompts for training. Not for anything private.
+- Together's free FLUX access started as a 3-month promotion; treat "still free" as
+  unverified until `--selfcheck` says otherwise.
+- Google cut free-tier daily quotas across the board in December 2025 — quoted
+  numbers age fast, so the design must tolerate a tier shrinking without notice.
+
+## 6. Video: the honest answer has not changed
+
+Searching specifically for free text-to-video APIs returns mostly SEO content farms
+making unverifiable claims ("unlimited free video generation, no credit card"). Set
+against primary sources, the real picture is:
+
+- **Pollinations** (`GET /video/{prompt}`) is the only documented API here that
+  returns MP4 — `veo`, `seedance-2.5`, `wan-3.0`, `grok-video-pro`, `minimax-h3`,
+  `nova-reel`, with `duration`, `aspectRatio`, `audio` and first/last-frame control.
+  It requires a key.
+- **No keyless text-to-video exists**, at any quality.
+- The genuinely free path with real headroom is **self-hosting**: Alibaba's **Wan**
+  family is Apache 2.0 and runs on one consumer GPU — no credits, no queue, no
+  watermark. That is a hardware cost, not a subscription, and it is the only option
+  that does not have somebody else's quota attached. It matches what
+  `research/raw/C_video_generation.md` already concluded independently.
+
+## 7. Rotation strategy, as implemented
+
+`tools/pollinations-mcp/` now runs a provider chain rather than a single provider:
+
+- Default order `cloudflare → gemini → together → pollinations`, best free tier
+  first, keyless floor last.
+- Unconfigured providers are skipped, never attempted.
+- `IMAGE_PROVIDERS` reorders the chain for a session; `provider=` pins one for a
+  single call and then fails loudly instead of falling back, because a pinned
+  provider that silently redirects hides the thing you were testing.
+- Fall-through is reported in the result, so a chain quietly burning its first
+  provider on every call is visible.
+- `list_providers` shows what is wired up and what each missing one needs, with no
+  network call.
+
+**Verification gap, stated plainly.** Only the Pollinations request shape was read
+from vendor documentation. Cloudflare, Gemini and Together were written from
+knowledge of those APIs, because this environment's egress proxy blocks
+`developers.cloudflare.com`, `ai.google.dev`, `api.cloudflare.com`,
+`api.together.xyz` and `huggingface.co` — and, as it turns out, GitHub API access
+outside the one allowed repo. `server.py --selfcheck` exists precisely to close
+that gap in one command on an unrestricted machine.
+
+## 8. Sources
+
+- [Cloudflare Workers AI free tier (10k neurons/day)](https://costbench.com/software/llm-api-providers/cloudflare-workers-ai/free-plan/) · [neuron guide](https://freeaiapi.org/article/cloudflare-api-key-guide)
+- [Gemini image generation free tier](https://www.aifreeapi.com/en/posts/gemini-image-generation-free-api) · [rate limits](https://www.aifreeapi.com/en/posts/gemini-api-free-tier-rate-limits)
+- [Together AI free FLUX.1 [schnell]](https://www.together.ai/blog/flux-api-is-now-available-on-together-ai-new-pro-free-access-to-flux-schnell)
+- [NVIDIA NIM free tier](https://yangmao.ai/en/providers/nvidia-build/) · [limits](https://costbench.com/software/llm-api-providers/nvidia-nim/free-plan/)
+- [Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers/index) · [free tier limits](https://klymentiev.com/blog/huggingface-inference-api)
+- [ModelScope free limits](https://www.free-model.com/providers/modelscope/) · [awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis/blob/main/README.md)
+- [Free image API comparison](https://www.edenai.co/post/top-free-image-generation-tools-apis-and-open-source-models) · [what is actually free in 2026](https://apiframe.ai/blog/free-ai-image-generation-api-2026)
