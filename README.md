@@ -24,7 +24,7 @@ I build the plumbing generative-AI products sit on — async job orchestration, 
 
 ## Real products
 
-- **[buradane](https://github.com/Furkiozknn/buradane)** — "What do I need, and where's the nearest one?" A need-driven public-space finder for Türkiye: FastAPI + PostGIS with consensus-gated community verification (one phone in a shell loop can't falsify accessibility data), a real moderation loop, Alembic migrations, and a MapLibre demo on 167k+ real OSM places covering all 81 provinces. *85 backend tests · Vitest frontend suite · CI*
+- **[buradane](https://github.com/Furkiozknn/buradane)** — "What do I need, and where's the nearest one?" A need-driven public-space finder for Türkiye: FastAPI + PostGIS with consensus-gated community verification (one phone in a shell loop can't falsify accessibility data), a real moderation loop, Alembic migrations, and a MapLibre demo on 167k+ real OSM places covering all 81 provinces. *86 backend tests · Vitest frontend suite · CI*
 - **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — A browser space-runner with real bloom post-processing, fully synthesized audio, a seeded daily challenge, and adaptive render scaling. No build step, 1.4 MB first load, hermetic Playwright CI. **[Play it](https://furkiozknn.github.io/nova-drift/)** · sibling piece: **[kalp-animasyon](https://furkiozknn.github.io/kalp-animasyon/)**, a glowing parametric heart with a real cardiac rhythm.
 
 ## Research
