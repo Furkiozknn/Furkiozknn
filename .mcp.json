@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "pollinations": {
+      "command": "python3",
+      "args": ["tools/pollinations-mcp/server.py"],
+      "env": {
+        "POLLINATIONS_KEY": "${POLLINATIONS_KEY:-}",
+        "POLLINATIONS_OUTPUT_DIR": "${POLLINATIONS_OUTPUT_DIR:-generated-media}"
+      }
+    }
+  }
+}
