@@ -149,3 +149,73 @@ done
 ```
 
 Scan one skill at a time — `--recursive` stops early on an aggregate ceiling and omits the rest.
+
+---
+
+## 7. Triage verdict: delete nothing
+
+The scan was run to decide what to remove. After tracing every finding, **nothing should be
+deleted on security grounds.** The basis, in the order it was established:
+
+### 7.1 All 187 findings are false positives
+
+The HIGH ones are in §3. The MEDIUM ones are the same shape:
+
+| Finding | ×  | What it actually is |
+|---|---:|---|
+| Data Exfiltration / External Transmission | 64 | The skills' own documented vendor calls — `api.elevenlabs.io`, `api.heygen.com`, `api.bfl.ai` — as `curl` examples in `SKILL.md`, using the user's own key from an env var. Outbound, yes; declared purpose, not exfiltration. |
+| Rogue Agent / Session Persistence | 39 | Writing working files. |
+| Dangerous Code Execution / subprocess | 17 | `docx`/`pptx`/`xlsx` shelling out to LibreOffice. |
+| MCP Rug Pull | 6 | `finding: None`, `code_snippet: None` — **no evidence attached at all.** |
+| Prompt Injection / Whitespace Padding | 6 | `U+0020 x84` — **markdown table alignment spaces.** |
+| Privilege Escalation / Sudo/Root Execution | 1 | `sudo apt install -y ffmpeg` in an install-instructions block. |
+
+### 7.2 An independent check found nothing either
+
+Rather than only re-reading the scanner, the tree was grepped directly for what actually matters:
+`curl … | sh`, `eval(`, base64-decode piped to a shell, reads of `~/.aws/credentials` or
+`~/.ssh/id_*`, and `ANTHROPIC_API_KEY` harvesting. **Zero matches.**
+
+Two results from that pass are worth keeping:
+
+- **No executable script in any skill contacts a real endpoint.** Every HTTP-looking string in
+  `.py`/`.sh`/`.js` files across all 57 skills resolves to an XML namespace URI —
+  `schemas.openxmlformats.org` (81), `schemas.microsoft.com` (13), `www.w3.org` (9),
+  `openoffice.org` (2). Namespace identifiers, not network calls. All third-party API traffic
+  lives in `SKILL.md` as documented `curl` examples the model runs only when asked, with a key
+  the user has to have set.
+- **The four skills SkillSpector scanned at 0.0% coverage are `SKILL.md`-only** —
+  `playwright-recording`, `import-memory`, `d3-viz`, `session-start-hook` contain no scripts at
+  all. So nothing executable was missed. It scored pure documentation up to 49/100 without
+  reading it.
+
+**And the grep made the same mistake the scanner did.** Its `compile\(` pattern matched 20 files
+for "dynamic execution" — every hit was `re.compile()`. Regex compilation. The error was caught
+only by opening the lines instead of trusting the match count, which is the whole lesson of §4
+arriving a second time from the other direction.
+
+### 7.3 Provenance is the axis that was actually missing
+
+`manifest.json` records a `source` per skill, which SkillSpector never looks at:
+
+| Source | Count | Note |
+|---|---:|---|
+| `anthropic` | 4 | `docx`, `pptx`, `xlsx`, `pdf` — **three of these are the CRITICALs.** |
+| `anthropic-example` | 3 | `import-memory`, `learn`, `morning` |
+| `custom` | 49 | Added to the account rather than shipped |
+
+So the scanner's three `DO_NOT_INSTALL` verdicts land on **first-party Anthropic skills**, and the
+one HIGH among the custom set is `task-observer`, flagged for "self-modification" on prose
+describing its documented, approval-gated weekly review. Deleting any of them would be acting on
+a byte-order mark.
+
+The 49 `custom` skills are where third-party trust genuinely lives — that is the right place to
+spend scrutiny — but §7.2 checked them and found nothing.
+
+### 7.4 If they ever do need removing
+
+These are **synced from the account**, not installed locally: `manifest.json` carries `source`
+and `updatedAt` per skill, and the tree lives under `~/.claude/skills/synced/<bucket>/`. Deleting
+a directory there is undone at the next sync. Removal has to happen in the account's skill
+settings, not on disk — which is also why a local `rm` would be the wrong remedy even if a real
+finding appeared.
