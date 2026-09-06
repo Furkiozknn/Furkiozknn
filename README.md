@@ -6,6 +6,8 @@
 
 I build the plumbing generative-AI products sit on — async job orchestration, pipeline DAGs, provenance and cost math — plus the MCP tooling agents use, and I ship real products on top. Every repo below has CI and a test suite; the claims in their READMEs are written to be checked, not believed.
 
+<img src="assets/projects.svg" alt="The ecosystem in three groups: AI systems (ai-job-gateway, ai-workflow-engine, plus prompt-template-manager, model-comparison-harness and asset-provenance-toolkit), agent tooling (mcp-vet, mini-creative-toolkit, plus nvidia-nim-mcp, voice-io-mcp and local-notes-search-mcp), and real products (buradane, nova-drift and kalp-animasyon), each with the test count read out of its own suite" width="100%">
+
 ## AI systems
 
 - **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** — Submit a generative-AI job, get an id back instantly, poll or get webhooked: a hardened, provider-agnostic async job server with real keyless providers, not just mocks. Idempotency keys that survive restarts, SSRF-guarded webhooks with signed payloads, jittered retries with a queryable dead letter. *149 tests · CI*
@@ -31,7 +33,7 @@ I build the plumbing generative-AI products sit on — async job orchestration, 
 
 ---
 
-**How I work:** tests before claims · hermetic CI (suites run offline; a CDN outage can't redden a build) · honest READMEs (known limits are listed, not hidden) · licenses checked down the dependency tree.
+<img src="assets/principles.svg" alt="Four working rules and the evidence behind each: test counts re-derived from the suite rather than written by hand, hermetic CI where suites run offline, READMEs that list known limits including a measured upscale stall and a deliberately-absent column, and licenses checked down the dependency tree where rembg's CC-BY-NC default model was caught and refused unless knowingly opted into" width="100%">
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
