@@ -14,7 +14,7 @@
   <text x="78" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ai-workflow-engine</text>
   <text x="62" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Pipelines as YAML DAGs in git,</text>
   <text x="62" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">validated before a job is submitted.</text>
-  <text x="62" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">59 tests</text>
+  <text x="62" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">72 tests</text>
   <text x="40" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">ALSO</text>
   <text x="40" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">prompt-template-manager</text>
   <text x="40" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">model-comparison-harness</text>
