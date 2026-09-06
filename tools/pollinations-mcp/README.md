@@ -1,6 +1,6 @@
 # genmedia-mcp
 
-Four free-tier image providers behind one MCP tool, tried in order until one
+Six free-tier image providers behind one MCP tool, tried in order until one
 works, plus video, speech and music. No dependencies — no `pip install`, no `npx`, nothing that
 updates itself between the audit and the run. The whole supply chain is
 `server.py`, `providers.py` and `http_client.py`.
@@ -11,10 +11,12 @@ updates itself between the audit and the run. The whole supply chain is
 |---|---|---|---|---|
 | **cloudflare** | 10,000 neurons/day ≈ ~2,000 small images | No | No | Most generous free image tier found. FLUX.1-schnell. |
 | **gemini** | ~100–500 images/day | No | No | Nano Banana. **Free-tier prompts may be used for training** — do not send anything private. |
+| **nvidia** | ~5,000 credits that **never expire**, ~40 RPM | No | No | NVIDIA NIM, FLUX.1. Email signup only. |
+| **bfl** | Free FLUX.2 [dev] + FLUX Kontext [dev], rate limited | No | No | Black Forest Labs, the people who make FLUX. Async polling. |
 | **together** | Free FLUX.1-schnell endpoint | No | No | Free access has historically been promo-based; verify it is still on. |
 | **pollinations** | ~1 req/15s anonymous, ~1 req/3s keyed | No | **Yes** | The only one here that needs *no key at all*, and the only one doing video. |
 
-Default chain: `cloudflare → gemini → together → pollinations`. Best free tier
+Default chain: `cloudflare → gemini → nvidia → bfl → together → pollinations`. Best free tier
 first, keyless Pollinations last so there is always a floor that works with zero
 configuration. Unconfigured providers are skipped, never attempted.
 
@@ -58,6 +60,8 @@ credentials before starting Claude Code:
 export CLOUDFLARE_ACCOUNT_ID=...  CLOUDFLARE_API_TOKEN=...   # best free image tier
 export GEMINI_API_KEY=...                                     # aistudio.google.com/apikey
 export TOGETHER_API_KEY=...
+export NVIDIA_API_KEY=...                                     # build.nvidia.com
+export BFL_API_KEY=...                                        # dashboard.bfl.ai
 export POLLINATIONS_KEY=...                                   # unlocks video
 ```
 
@@ -76,6 +80,8 @@ python3 tools/pollinations-mcp/server.py --selfcheck
 | `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_API_TOKEN` | *(unset)* | Workers AI. Token needs the Workers AI permission. |
 | `GEMINI_API_KEY` | *(unset)* | Google AI Studio. |
 | `TOGETHER_API_KEY` | *(unset)* | Together AI. |
+| `NVIDIA_API_KEY` | *(unset)* | build.nvidia.com, NVIDIA Developer Program. |
+| `BFL_API_KEY` | *(unset)* | dashboard.bfl.ai. |
 | `POLLINATIONS_OUTPUT_DIR` | `./generated-media` | Where media is written. |
 | `POLLINATIONS_TIMEOUT` | `300` | Per-request timeout, seconds. Video is slow. |
 | `POLLINATIONS_MIN_INTERVAL` | per-provider | Override request spacing. |
@@ -101,7 +107,7 @@ python3 tools/pollinations-mcp/server.py --selfcheck
 python3 -m unittest discover -s tests -v
 ```
 
-77 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
+91 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
 They cover path-traversal refusal, chain resolution and ordering, each provider's
 response parsing (including Cloudflare's base64 envelope vs. raw binary, Gemini's
 camelCase/snake_case `inlineData`, and a Gemini text-only refusal), fall-through
@@ -110,9 +116,13 @@ the MCP handshake.
 
 ## Known limits
 
-- **Only the Pollinations request shape is verified against vendor docs.** The
-  Cloudflare, Gemini and Together adapters were written from knowledge of those
-  APIs; the environment they were built in blocks every one of those hosts at its
+- **Adding an OpenAI-compatible provider is three lines.** Subclass
+  `OpenAICompatibleImages` in `providers.py`, set `base_url` / `default_model` /
+  `key_env`, and add it to `REGISTRY`. That is how `nvidia` was added.
+- **Verification status differs per provider.** Pollinations' request shape was read
+  from its published `APIDOCS.md`, and BFL's submit/poll/download shape from the
+  BFL-authored `bfl-api` skill. The Cloudflare, Gemini, NVIDIA and Together adapters,
+  and BFL's free-model endpoint names, were written from knowledge of those APIs; the environment they were built in blocks every one of those hosts at its
   egress proxy, so they could not be checked against primary documentation or a
   live call. **Run `--selfcheck` before trusting them.** If one is wrong, it is
   wrong in `providers.py` in about ten lines.

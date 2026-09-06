@@ -27,6 +27,8 @@ PROVIDER_ENV = (
     "CLOUDFLARE_API_TOKEN",
     "GEMINI_API_KEY",
     "TOGETHER_API_KEY",
+    "NVIDIA_API_KEY",
+    "BFL_API_KEY",
     "IMAGE_PROVIDERS",
 )
 
@@ -128,6 +130,17 @@ class TestChainResolution(Base):
             [p.name for p in providers.resolve_chain(None)],
             ["cloudflare", "gemini", "pollinations"],
         )
+
+    def test_new_providers_take_their_place_in_the_default_order(self):
+        os.environ["NVIDIA_API_KEY"] = "n"
+        os.environ["BFL_API_KEY"] = "b"
+        self.assertEqual(
+            [p.name for p in providers.resolve_chain(None)],
+            ["nvidia", "bfl", "pollinations"],
+        )
+
+    def test_default_chain_covers_every_registered_provider(self):
+        self.assertEqual(set(providers.DEFAULT_CHAIN), set(providers.REGISTRY))
 
     def test_env_override_controls_order(self):
         os.environ["GEMINI_API_KEY"] = "k"
@@ -334,6 +347,189 @@ class TestTogetherProvider(Base):
 # --------------------------------------------------------------------------
 # tool behaviour
 # --------------------------------------------------------------------------
+
+class TestOpenAICompatibleFamily(Base):
+    """Together and NVIDIA share one adapter; test the shared behaviour once and
+    the per-provider wiring separately."""
+
+    def setUp(self):
+        super().setUp()
+        os.environ["TOGETHER_API_KEY"] = "tk"
+        os.environ["NVIDIA_API_KEY"] = "nk"
+
+    def _b64_body(self, raw=b"imgbytes"):
+        return json.dumps({"data": [{"b64_json": base64.b64encode(raw).decode()}]}).encode()
+
+    def test_together_targets_its_own_base_url_and_free_model(self):
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            seen["body"] = json.loads(kwargs["body"])
+            seen["headers"] = kwargs["headers"]
+            return self._b64_body(), "application/json"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            providers.REGISTRY["together"].generate("x", {})
+        self.assertEqual(seen["url"], "https://api.together.xyz/v1/images/generations")
+        self.assertEqual(seen["body"]["model"], "black-forest-labs/FLUX.1-schnell-Free")
+        self.assertEqual(seen["headers"]["Authorization"], "Bearer tk")
+
+    def test_nvidia_targets_its_own_base_url_and_uses_its_own_key(self):
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen["url"] = url
+            seen["body"] = json.loads(kwargs["body"])
+            seen["headers"] = kwargs["headers"]
+            return self._b64_body(), "application/json"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            providers.REGISTRY["nvidia"].generate("x", {})
+        self.assertEqual(seen["url"], "https://integrate.api.nvidia.com/v1/images/generations")
+        self.assertEqual(seen["body"]["model"], "black-forest-labs/flux.1-schnell")
+        self.assertEqual(seen["headers"]["Authorization"], "Bearer nk")
+
+    def test_url_response_is_followed_when_b64_is_ignored(self):
+        # Some OpenAI-compatible hosts ignore response_format and return a URL.
+        raw = b"\x89PNG-from-url"
+        calls = []
+
+        def fake(url, **kwargs):
+            calls.append(url)
+            if "images/generations" in url:
+                return json.dumps({"data": [{"url": "https://cdn.example/img.png"}]}).encode(), "application/json"
+            return raw, "image/png"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            payload, mime = providers.REGISTRY["nvidia"].generate("x", {})
+        self.assertEqual(payload, raw)
+        self.assertEqual(mime, "image/png")
+        self.assertEqual(len(calls), 2)
+
+    def test_non_image_at_result_url_is_rejected(self):
+        def fake(url, **kwargs):
+            if "images/generations" in url:
+                return json.dumps({"data": [{"url": "https://cdn.example/x"}]}).encode(), "application/json"
+            return b"<html>", "text/html"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            with self.assertRaises(http_client.ToolError):
+                providers.REGISTRY["nvidia"].generate("x", {})
+
+    def test_empty_data_is_reported_with_the_provider_name(self):
+        with mock.patch.object(providers, "http_request", return_value=(b'{"data":[]}', "application/json")):
+            with self.assertRaises(http_client.ToolError) as caught:
+                providers.REGISTRY["together"].generate("x", {})
+        self.assertIn("together", str(caught.exception))
+
+
+class TestBflProvider(Base):
+    """BFL is asynchronous: POST -> polling_url -> delivery URL."""
+
+    def setUp(self):
+        super().setUp()
+        os.environ["BFL_API_KEY"] = "bk"
+        patcher = mock.patch.object(providers.time, "sleep")
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_full_submit_poll_download_flow(self):
+        raw = b"\xff\xd8\xffbfl"
+        calls = []
+
+        def fake(url, **kwargs):
+            calls.append(url)
+            if url.startswith("https://api.bfl.ai/v1/flux-2-dev"):
+                return json.dumps({"id": "a1", "polling_url": "https://api.bfl.ai/v1/get_result?id=a1"}).encode(), "application/json"
+            if "get_result" in url:
+                # Pending once, then Ready -- the polling loop must survive both.
+                if len([c for c in calls if "get_result" in c]) == 1:
+                    return b'{"status":"Pending"}', "application/json"
+                return json.dumps({"status": "Ready", "result": {"sample": "https://delivery.bfl.ai/x.jpg", "seed": 7}}).encode(), "application/json"
+            return raw, "image/jpeg"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            payload, mime = providers.REGISTRY["bfl"].generate("a fox", {})
+
+        self.assertEqual(payload, raw)
+        self.assertEqual(mime, "image/jpeg")
+        self.assertEqual(len([c for c in calls if "get_result" in c]), 2)
+
+    def test_uses_the_x_key_header_not_bearer(self):
+        seen = {}
+
+        def fake(url, **kwargs):
+            seen.setdefault("headers", kwargs.get("headers", {}))
+            if "get_result" in url:
+                return json.dumps({"status": "Ready", "result": {"sample": "https://d/x"}}).encode(), "application/json"
+            if url.startswith("https://api.bfl.ai/v1/"):
+                return json.dumps({"polling_url": "https://api.bfl.ai/v1/get_result?id=1"}).encode(), "application/json"
+            return b"\xff\xd8\xff", "image/jpeg"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            providers.REGISTRY["bfl"].generate("x", {})
+        self.assertEqual(seen["headers"]["x-key"], "bk")
+        self.assertNotIn("Authorization", seen["headers"])
+
+    def test_reference_image_becomes_input_image(self):
+        seen = {}
+
+        def fake(url, **kwargs):
+            if url.startswith("https://api.bfl.ai/v1/flux"):
+                seen["body"] = json.loads(kwargs["body"])
+                return json.dumps({"polling_url": "https://api.bfl.ai/v1/get_result?id=1"}).encode(), "application/json"
+            if "get_result" in url:
+                return json.dumps({"status": "Ready", "result": {"sample": "https://d/x"}}).encode(), "application/json"
+            return b"\xff\xd8\xff", "image/jpeg"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            providers.REGISTRY["bfl"].generate("x", {"reference_image": "https://e/p.jpg"})
+        self.assertEqual(seen["body"]["input_image"], "https://e/p.jpg")
+
+    def test_error_status_stops_polling_immediately(self):
+        polls = []
+
+        def fake(url, **kwargs):
+            if "get_result" in url:
+                polls.append(url)
+                return b'{"status":"Error","details":"bad prompt"}', "application/json"
+            return json.dumps({"polling_url": "https://api.bfl.ai/v1/get_result?id=1"}).encode(), "application/json"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            with self.assertRaises(http_client.ToolError) as caught:
+                providers.REGISTRY["bfl"].generate("x", {})
+        self.assertEqual(len(polls), 1)
+        self.assertIn("bad prompt", str(caught.exception))
+
+    def test_moderation_is_reported_as_moderation(self):
+        def fake(url, **kwargs):
+            if "get_result" in url:
+                return b'{"status":"Request Moderated"}', "application/json"
+            return json.dumps({"polling_url": "https://api.bfl.ai/v1/get_result?id=1"}).encode(), "application/json"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            with self.assertRaises(http_client.ToolError) as caught:
+                providers.REGISTRY["bfl"].generate("x", {})
+        self.assertIn("moderation", str(caught.exception))
+
+    def test_missing_polling_url_is_reported(self):
+        with mock.patch.object(providers, "http_request", return_value=(b'{"id":"a"}', "application/json")):
+            with self.assertRaises(http_client.ToolError) as caught:
+                providers.REGISTRY["bfl"].generate("x", {})
+        self.assertIn("nothing to poll", str(caught.exception))
+
+    def test_never_finishing_gives_up_instead_of_hanging(self):
+        def fake(url, **kwargs):
+            if "get_result" in url:
+                return b'{"status":"Pending"}', "application/json"
+            return json.dumps({"polling_url": "https://api.bfl.ai/v1/get_result?id=1"}).encode(), "application/json"
+
+        with mock.patch.object(providers, "http_request", side_effect=fake):
+            with self.assertRaises(http_client.ToolError) as caught:
+                providers.REGISTRY["bfl"].generate("x", {})
+        self.assertIn("did not finish", str(caught.exception))
+
 
 class TestGenerateImage(Base):
     def test_saves_file_and_inlines_preview(self):

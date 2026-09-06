@@ -2,7 +2,9 @@
   "mcpServers": {
     "genmedia": {
       "command": "python3",
-      "args": ["tools/pollinations-mcp/server.py"],
+      "args": [
+        "tools/pollinations-mcp/server.py"
+      ],
       "env": {
         "IMAGE_PROVIDERS": "${IMAGE_PROVIDERS:-}",
         "POLLINATIONS_KEY": "${POLLINATIONS_KEY:-}",
@@ -10,7 +12,9 @@
         "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_API_TOKEN:-}",
         "GEMINI_API_KEY": "${GEMINI_API_KEY:-}",
         "TOGETHER_API_KEY": "${TOGETHER_API_KEY:-}",
-        "POLLINATIONS_OUTPUT_DIR": "${POLLINATIONS_OUTPUT_DIR:-generated-media}"
+        "POLLINATIONS_OUTPUT_DIR": "${POLLINATIONS_OUTPUT_DIR:-generated-media}",
+        "NVIDIA_API_KEY": "${NVIDIA_API_KEY:-}",
+        "BFL_API_KEY": "${BFL_API_KEY:-}"
       }
     }
   }

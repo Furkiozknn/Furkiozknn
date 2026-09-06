@@ -62,22 +62,39 @@ new tooling.*
 Directly relevant to `model-comparison-harness` and `ai-job-gateway`, and the same chain
 pattern the image providers now use applies unchanged.
 
+> **Correction (later pass, same date).** An earlier version of this section
+> listed Cerebras as offering ~1M tokens/day on a permanent free tier and
+> recommended it first. That is wrong as of July 2026 and the recommendation
+> below has been rewritten. Mistral's allowance was also overstated. Both are
+> corrected in the table.
+
 | Provider | Free allowance | Card? | Notable |
 |---|---|:--:|---|
-| **Cerebras** | ~30 RPM, 14,400 RPD, 60–64K TPM (~1M tokens/day) | No | The most generous per-day figure here; limits were materially raised from the old 5 RPM. |
-| **Groq** | ~30 RPM, Llama 3.3 70B | No | Fastest generation by a distance — ~320 tok/s on LPU hardware. |
-| **Mistral** | All models, ~1B tokens/month at 2 RPM | No | Biggest headline quota, but **requires opting into training**. The 2 RPM ceiling makes it a batch tier, not an interactive one. |
+| **Groq** | ~30 RPM, Llama 3.3 70B | No | Fastest generation by a distance — ~320 tok/s on LPU hardware. Now the top pick. |
 | **Google AI Studio** | Gemini free tier | No | Same key as the image provider already wired up. |
-| **OpenRouter** | ~30 free models, 20 RPM | No | One key, many models — the natural comparison harness backend. |
+| **OpenRouter** | ~30 free models, 20 RPM | No | One key, many models — the natural comparison-harness backend. |
+| **Mistral** | **~$10/month in API credits**, ~1 RPS, 500K TPM | No | Requires phone verification, and free-mode prompts may train Mistral models unless you opt out. |
 | **GitHub Models** | Mixed catalogue incl. OpenAI and Llama | No | Worth a look given the GitHub identity is already there. |
+| **SambaNova** | $5 credits (30-day), 20 RPM, 200K tokens/day | No | Fast RDU inference; time-limited rather than permanent. |
+| ~~**Cerebras**~~ | ⚠️ **Free tier ended July 2026** | **Yes** | Replaced by $5 trial credits that expire in 30 days *and require a verified payment method*. No longer a permanent free tier. |
+| ~~**Chutes.ai**~~ | ⚠️ **Free tier ended** | — | Paid only now. |
+| ~~**Nebius**~~ | ⚠️ **Trial suspended July 13 2026** | **Yes** | ~$1 trial credit, $25 minimum deposit. |
+| ~~**DeepInfra**~~ | ⚠️ **No free tier** | **Yes** | Card or pre-pay required before any API use. |
 
 **The rule that matters more than the numbers:** free tiers are funded by your prompts.
 Assume anything sent to one may train a model. Keep customer data and anything from
 `buradane` off them entirely; on a paid tier, part of what you buy is that guarantee.
 
-**Shape for us:** Cerebras or Groq first (speed and volume), OpenRouter as the breadth
-fallback, Mistral for batch work where 2 RPM is fine. Same `resolve_chain` logic, different
-registry.
+**Shape for us:** Groq first (speed, and a free tier that is still actually free),
+OpenRouter as the breadth fallback, Mistral for batch work where ~1 RPS is fine. Same
+`resolve_chain` logic, different registry.
+
+**The meta-lesson is the correction itself.** Four of the providers in this table
+withdrew or gutted their free tier inside a few months, and two of them did it *after*
+being written down here. Any design that pins one free provider is a design with an
+expiry date; the chain-with-fallback is not a nicety, it is the only shape that survives
+this churn. Re-check quotas before depending on them, and treat every figure above as
+decaying.
 
 ---
 

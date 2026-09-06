@@ -174,3 +174,75 @@ that gap in one command on an unrestricted machine.
 - [Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers/index) · [free tier limits](https://klymentiev.com/blog/huggingface-inference-api)
 - [ModelScope free limits](https://www.free-model.com/providers/modelscope/) · [awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis/blob/main/README.md)
 - [Free image API comparison](https://www.edenai.co/post/top-free-image-generation-tools-apis-and-open-source-models) · [what is actually free in 2026](https://apiframe.ai/blog/free-ai-image-generation-api-2026)
+
+---
+
+# Part 3 — More providers, and a hard constraint discovered by testing
+
+Third pass, same date. Goal: add more free image providers to the rotation.
+
+## 9. The constraint that reframes everything: what the sandbox can actually reach
+
+Before adding providers, sixteen provider hosts were probed directly from the cloud
+session. The result decides which of this work is usable where:
+
+| Host | Reachable from the cloud session? |
+|---|---|
+| `generativelanguage.googleapis.com` (Gemini) | ✅ **Yes** |
+| `image.pollinations.ai`, `gen.pollinations.ai` | ❌ |
+| `api.cloudflare.com` | ❌ |
+| `integrate.api.nvidia.com` | ❌ |
+| `api.bfl.ai`* | ❌ (not probed directly; same class) |
+| `api.together.xyz`, `huggingface.co`, `router.huggingface.co` | ❌ |
+| `api.deepinfra.com`, `api.studio.nebius.com`, `api.siliconflow.cn` | ❌ |
+| `api-inference.modelscope.cn`, `dashscope-intl.aliyuncs.com`, `open.bigmodel.cn` | ❌ |
+| `api.segmind.com`, `llm.chutes.ai`, `api.openai.com`, `api.stability.ai` | ❌ |
+
+**Fifteen of sixteen blocked.** The cause is not the providers: the cloud environment's
+**Network access** level is `Trusted`, which allowlists only package registries, GitHub
+and cloud SDK hosts. Google's endpoint is on that list; nothing else here is.
+
+Two consequences worth stating plainly:
+
+1. **In this cloud environment, Gemini is the only provider that works without changing
+   any setting.** Everything else needs the environment switched to `Custom` with the
+   provider domains allowlisted (and "Also include default list of common package
+   managers" left checked, or git and npm break).
+2. **On an ordinary machine none of this applies** — there is no such proxy, and the
+   whole chain works, Pollinations included, with no key at all.
+
+This is also why every non-Pollinations adapter remains unverified against a live call:
+it is not possible to verify them from here at all.
+
+## 10. Providers added this pass
+
+| Provider | Free tier | Card? | Shape | Source quality |
+|---|---|:--:|---|---|
+| **NVIDIA NIM** | ~5,000 credits that **do not expire**, ~40 RPM | No | OpenAI-compatible `POST /v1/images/generations` at `integrate.api.nvidia.com/v1`, FLUX.1 models | Documented as OpenAI-compatible; exact model id unverified |
+| **Black Forest Labs** | Free **FLUX.2 [dev]** and **FLUX Kontext [dev]**, rate limited | No | Async: `POST /v1/{model}` with `x-key` → `polling_url` → poll to `Ready` → fetch `result.sample` (expires 10 min) | **Request/polling shape verified** from the BFL-authored `bfl-api` skill; the free-model endpoint names are not |
+
+NVIDIA is interesting for a second reason: [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)
+already exists in-house, so a key may already be to hand.
+
+Together was refactored onto a shared `OpenAICompatibleImages` adapter in the same pass,
+so NVIDIA cost three lines rather than a new implementation. Any further
+OpenAI-compatible provider is now the same three lines. The shared adapter also follows a
+`data[0].url` response when a host ignores `response_format: b64_json`, which several do.
+
+## 11. Rejected this pass, with reasons
+
+- **DeepInfra** — no free tier at all; card or pre-pay required before any API call.
+- **Nebius** — free trial suspended 13 July 2026; ~$1 credit, $25 minimum deposit.
+- **Chutes.ai** — free tier ended, paid only.
+- **Fal.ai / Replicate** — small one-off starter credits, not a sustaining free tier.
+- **OVHcloud AI Endpoints** — a curated list claimed "no registration required for
+  anonymous tier"; **OVHcloud's own documentation contradicts this**, requiring an API
+  key created in the OVHcloud Manager, and the image endpoint's base URL is not
+  published in an accessible place. Rejected rather than guessed at.
+- **ModelScope / Z.ai** — plausible free tiers (2,000 req/day and 4 free models), but the
+  image-generation request shape could not be confirmed from an accessible source.
+
+The pattern in the rejections is worth keeping: **secondary "free API" lists overstate
+things.** Two of the entries above were contradicted by the vendor's own documentation,
+and Cerebras' free tier — recommended in an earlier pass of the companion document —
+had already ended. Every quota here decays.
