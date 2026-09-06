@@ -25,6 +25,20 @@ class ToolError(Exception):
     """A failure worth showing the user verbatim, not a stack trace."""
 
 
+def env_value(name: str) -> str | None:
+    """Read an env var, treating blank and unexpanded placeholders as unset.
+
+    Claude Code expands ${VAR:-default} in .mcp.json, but a config that drops
+    the ":-" leaves the literal "${VAR}" text in place when the variable is
+    unset. Without this guard that string would be sent as an API key and come
+    back as an unexplained 401, so treat it as absent instead.
+    """
+    raw = (os.environ.get(name) or "").strip()
+    if not raw or (raw.startswith("${") and raw.endswith("}")):
+        return None
+    return raw
+
+
 def request_timeout() -> float:
     raw = os.environ.get("POLLINATIONS_TIMEOUT")
     if raw and raw.strip():

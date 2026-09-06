@@ -348,6 +348,40 @@ class TestTogetherProvider(Base):
 # tool behaviour
 # --------------------------------------------------------------------------
 
+class TestEnvValue(Base):
+    """Claude Code expands ${VAR:-default} in .mcp.json; a config that drops the
+    ":-" leaves the literal text behind, and that must not be sent as a key."""
+
+    def test_plain_value_passes_through(self):
+        os.environ["GEMINI_API_KEY"] = "gk"
+        self.assertEqual(http_client.env_value("GEMINI_API_KEY"), "gk")
+
+    def test_blank_and_whitespace_are_unset(self):
+        os.environ["GEMINI_API_KEY"] = "   "
+        self.assertIsNone(http_client.env_value("GEMINI_API_KEY"))
+
+    def test_unexpanded_placeholder_is_treated_as_unset(self):
+        os.environ["GEMINI_API_KEY"] = "${GEMINI_API_KEY}"
+        self.assertIsNone(http_client.env_value("GEMINI_API_KEY"))
+
+    def test_placeholder_does_not_make_a_provider_look_configured(self):
+        # The failure this guards: gemini appears ready, then 401s on a key
+        # that is really the literal text from .mcp.json.
+        os.environ["GEMINI_API_KEY"] = "${GEMINI_API_KEY}"
+        self.assertFalse(providers.REGISTRY["gemini"].configured())
+        self.assertEqual([p.name for p in providers.resolve_chain(None)], ["pollinations"])
+
+    def test_placeholder_pollinations_key_still_refuses_video(self):
+        os.environ["POLLINATIONS_KEY"] = "${POLLINATIONS_KEY}"
+        with self.assertRaises(http_client.ToolError) as caught:
+            server.tool_generate_video({"prompt": "x"})
+        self.assertIn("POLLINATIONS_KEY", str(caught.exception))
+
+    def test_a_value_merely_containing_braces_is_kept(self):
+        os.environ["GEMINI_API_KEY"] = "sk-abc${def"
+        self.assertEqual(http_client.env_value("GEMINI_API_KEY"), "sk-abc${def")
+
+
 class TestOpenAICompatibleFamily(Base):
     """Together and NVIDIA share one adapter; test the shared behaviour once and
     the per-provider wiring separately."""

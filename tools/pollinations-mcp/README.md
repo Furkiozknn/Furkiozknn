@@ -107,7 +107,7 @@ python3 tools/pollinations-mcp/server.py --selfcheck
 python3 -m unittest discover -s tests -v
 ```
 
-91 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
+97 tests, all hermetic — every HTTP call is stubbed, so the suite passes offline.
 They cover path-traversal refusal, chain resolution and ordering, each provider's
 response parsing (including Cloudflare's base64 envelope vs. raw binary, Gemini's
 camelCase/snake_case `inlineData`, and a Gemini text-only refusal), fall-through

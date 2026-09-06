@@ -43,7 +43,7 @@ import sys
 import time
 import urllib.parse
 
-from http_client import ToolError, http_request
+from http_client import ToolError, env_value, http_request
 from providers import (
     DEFAULT_CHAIN,
     POLLINATIONS_GEN_HOST,
@@ -194,7 +194,7 @@ def tool_generate_video(args: dict) -> list[dict]:
     if not prompt:
         raise ToolError("prompt is required")
 
-    key = (os.environ.get("POLLINATIONS_KEY") or "").strip()
+    key = env_value("POLLINATIONS_KEY")
     if not key:
         raise ToolError(
             "Video needs a Pollinations key: no free provider surveyed offers keyless "
@@ -242,7 +242,7 @@ def tool_generate_video(args: dict) -> list[dict]:
 def _pollinations_audio(text: str, query: dict, kind: str, output_name: str | None) -> list[dict]:
     """Both speech and music come from the same GET /audio/{text} endpoint --
     only the model and parameters differ."""
-    key = (os.environ.get("POLLINATIONS_KEY") or "").strip()
+    key = env_value("POLLINATIONS_KEY")
     if not key:
         raise ToolError(
             f"{kind} generation needs a Pollinations key. Registration is free and the same "
@@ -556,7 +556,7 @@ def selfcheck() -> int:
             failures += 1
             print(f"  FAIL  {name:<12} {exc}")
 
-    key = (os.environ.get("POLLINATIONS_KEY") or "").strip()
+    key = env_value("POLLINATIONS_KEY")
     print(f"\n  {'OK   ' if key else 'SKIP '} video        "
           + ("POLLINATIONS_KEY present (not spending credits on a test clip)"
              if key else f"no POLLINATIONS_KEY -- video unavailable ({POLLINATIONS_SIGNUP})"))

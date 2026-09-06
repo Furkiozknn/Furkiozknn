@@ -23,7 +23,7 @@ import os
 import time
 import urllib.parse
 
-from http_client import ToolError, http_request
+from http_client import ToolError, env_value, http_request
 
 # --------------------------------------------------------------------------
 
@@ -76,10 +76,10 @@ class Provider:
     min_interval = 1.0
 
     def configured(self) -> bool:
-        return all((os.environ.get(var) or "").strip() for var in self.needs)
+        return all(env_value(var) for var in self.needs)
 
     def missing(self) -> list[str]:
-        return [var for var in self.needs if not (os.environ.get(var) or "").strip()]
+        return [var for var in self.needs if not env_value(var)]
 
     def generate(self, prompt: str, params: dict) -> tuple[bytes, str]:
         raise NotImplementedError
@@ -94,7 +94,7 @@ class Pollinations(Provider):
     notes = "works with no key at all (slow); a free key unlocks video and ~5x the rate"
 
     def key(self) -> str | None:
-        return (os.environ.get("POLLINATIONS_KEY") or "").strip() or None
+        return env_value("POLLINATIONS_KEY")
 
     @property
     def min_interval(self) -> float:  # type: ignore[override]
@@ -142,8 +142,8 @@ class Cloudflare(Provider):
     min_interval = 0.0
 
     def generate(self, prompt: str, params: dict) -> tuple[bytes, str]:
-        account = os.environ["CLOUDFLARE_ACCOUNT_ID"].strip()
-        token = os.environ["CLOUDFLARE_API_TOKEN"].strip()
+        account = env_value("CLOUDFLARE_ACCOUNT_ID")
+        token = env_value("CLOUDFLARE_API_TOKEN")
         model = params.get("model") or "@cf/black-forest-labs/flux-1-schnell"
 
         body: dict = {"prompt": prompt}
@@ -191,7 +191,7 @@ class Gemini(Provider):
     min_interval = 1.0
 
     def generate(self, prompt: str, params: dict) -> tuple[bytes, str]:
-        key = os.environ["GEMINI_API_KEY"].strip()
+        key = env_value("GEMINI_API_KEY")
         model = params.get("model") or "gemini-2.5-flash-image"
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         body = {"contents": [{"parts": [{"text": prompt}]}]}
@@ -256,7 +256,7 @@ class OpenAICompatibleImages(Provider):
             f"{self.base_url}/images/generations",
             method="POST",
             headers={
-                "Authorization": f"Bearer {os.environ[self.key_env].strip()}",
+                "Authorization": f"Bearer {env_value(self.key_env)}",
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
@@ -326,7 +326,7 @@ class BFL(Provider):
     max_polls = 60
 
     def generate(self, prompt: str, params: dict) -> tuple[bytes, str]:
-        key = os.environ["BFL_API_KEY"].strip()
+        key = env_value("BFL_API_KEY")
         headers = {"x-key": key, "Content-Type": "application/json", "Accept": "application/json"}
         model = params.get("model") or "flux-2-dev"
 
