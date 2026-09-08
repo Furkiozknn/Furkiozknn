@@ -10,8 +10,8 @@
   <rect x="40" y="200" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
   <rect x="40" y="200" width="4" height="88" rx="2" fill="#4ade9e"/>
   <text x="70" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#4ade9e">hermetic CI</text>
-  <text x="70" y="254" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Suites run offline; a CDN outage cannot redden a build. kalp-animasyon bundles its own</text>
-  <text x="70" y="272" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">Three.js fixture rather than fetching one at test time.</text>
+  <text x="70" y="254" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Suites run offline; a CDN outage cannot redden a build. And the gate is tested too: ajans-os</text>
+  <text x="70" y="272" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b6b77">plants a deliberate violation in the tree and fails if its own validator misses it.</text>
   <rect x="40" y="304" width="1120" height="88" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
   <rect x="40" y="304" width="4" height="88" rx="2" fill="#6cb6ff"/>
   <text x="70" y="334" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#6cb6ff">honest READMEs</text>

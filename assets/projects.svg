@@ -1,58 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 552" width="1200" height="552" role="img" aria-label="The ecosystem in three groups: AI systems (ai-job-gateway, ai-workflow-engine, plus prompt-template-manager, model-comparison-harness and asset-provenance-toolkit), agent tooling (mcp-vet, mini-creative-toolkit, plus nvidia-nim-mcp, voice-io-mcp and local-notes-search-mcp), and real products (buradane, nova-drift and kalp-animasyon), each with the test count read out of its own suite.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 552" width="1200" height="552" role="img" aria-label="The ecosystem in three groups: agent systems (ajans-os, turkce-ajanlar, mcp-vet), developer intelligence and AI infrastructure (claude-code-intelligence, ai-job-gateway, plus ai-workflow-engine, model-comparison-harness, prompt-template-manager, asset-provenance-toolkit), and products with local MCP tooling (buradane, nova-drift, plus mini-creative-toolkit, nvidia-nim-mcp, voice-io-mcp, local-notes-search-mcp). Every count is read out of the repo's own suite.">
   <rect width="1200" height="552" fill="#0d0d10"/>
   <text x="40" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="3" fill="#d4b06a">THE ECOSYSTEM</text>
   <path d="M40 62 L1160 62" stroke="#2a2a33" stroke-width="1"/>
-  <text x="40" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#6cb6ff">AI SYSTEMS</text>
+
+  <!-- column 1 -->
+  <text x="40" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#d4b06a">AGENT SYSTEMS</text>
   <rect x="40" y="126" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
-  <circle cx="62" cy="152" r="4" fill="#6cb6ff"/>
-  <text x="78" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ai-job-gateway</text>
-  <text x="62" y="184" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Submit a job, get an id instantly —</text>
-  <text x="62" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">idempotency that survives a restart.</text>
-  <text x="62" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">156 tests</text>
+  <circle cx="62" cy="152" r="4" fill="#d4b06a"/>
+  <text x="78" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ajans-os</text>
+  <text x="62" y="184" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">An agency OS built research-first:</text>
+  <text x="62" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">40 projects read, then 13 modules written.</text>
+  <text x="62" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#d4b06a">142 tests · 11 ADRs · 6 schemas</text>
+
   <rect x="40" y="258" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
-  <circle cx="62" cy="284" r="4" fill="#6cb6ff"/>
-  <text x="78" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ai-workflow-engine</text>
-  <text x="62" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Pipelines as YAML DAGs in git,</text>
-  <text x="62" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">validated before a job is submitted.</text>
-  <text x="62" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">72 tests</text>
+  <circle cx="62" cy="284" r="4" fill="#d4b06a"/>
+  <text x="78" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">turkce-ajanlar</text>
+  <text x="62" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Claude Code sub-agents that answer in</text>
+  <text x="62" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Turkish — and know this machine's traps.</text>
+  <text x="62" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#d4b06a">8 agents · exported to 4 tools</text>
+
   <text x="40" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">ALSO</text>
-  <text x="40" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">prompt-template-manager</text>
-  <text x="40" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">model-comparison-harness</text>
-  <text x="40" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">asset-provenance-toolkit</text>
-  <text x="428" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#4ade9e">AGENT TOOLING</text>
+  <text x="40" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">mcp-vet — audits an MCP server</text>
+  <text x="40" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">before you install it: reads the code,</text>
+  <text x="40" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">not the star count.</text>
+
+  <!-- column 2 -->
+  <text x="428" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#6cb6ff">TOOLING &amp; INFRASTRUCTURE</text>
   <rect x="428" y="126" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
-  <circle cx="450" cy="152" r="4" fill="#4ade9e"/>
-  <text x="466" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">mcp-vet</text>
-  <text x="450" y="184" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Audits an MCP server before you</text>
-  <text x="450" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">install it. Reads code, not stars.</text>
-  <text x="450" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#4ade9e">237 tests</text>
+  <circle cx="450" cy="152" r="4" fill="#6cb6ff"/>
+  <text x="466" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">claude-code-intelligence</text>
+  <text x="450" y="184" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Where the tokens went, what it cost,</text>
+  <text x="450" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">and when the quota runs out. Local-first.</text>
+  <text x="450" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">OTLP receiver · transcripts · quota</text>
+
   <rect x="428" y="258" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
-  <circle cx="450" cy="284" r="4" fill="#4ade9e"/>
-  <text x="466" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">mini-creative-toolkit</text>
-  <text x="450" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">23 media tools; 22 never leave</text>
-  <text x="450" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">the machine, and it says which one does.</text>
-  <text x="450" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#4ade9e">319 tests</text>
+  <circle cx="450" cy="284" r="4" fill="#6cb6ff"/>
+  <text x="466" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ai-job-gateway</text>
+  <text x="450" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Submit a job, get an id instantly —</text>
+  <text x="450" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">idempotency that survives a restart.</text>
+  <text x="450" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">156 tests</text>
+
   <text x="428" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">ALSO</text>
-  <text x="428" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">nvidia-nim-mcp</text>
-  <text x="428" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">voice-io-mcp</text>
-  <text x="428" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">local-notes-search-mcp</text>
-  <text x="816" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#e857c3">REAL PRODUCTS</text>
+  <text x="428" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">ai-workflow-engine · YAML DAGs</text>
+  <text x="428" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">model-comparison-harness · prompt-template-manager</text>
+  <text x="428" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">asset-provenance-toolkit</text>
+
+  <!-- column 3 -->
+  <text x="816" y="106" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5" fill="#e857c3">PRODUCTS</text>
   <rect x="816" y="126" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
   <circle cx="838" cy="152" r="4" fill="#e857c3"/>
   <text x="854" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">buradane</text>
   <text x="838" y="184" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Public-space finder for Türkiye.</text>
   <text x="838" y="202" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">167k OSM places, all 81 provinces.</text>
   <text x="838" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#e857c3">96 backend tests</text>
+
   <rect x="816" y="258" width="344" height="116" rx="12" fill="#141419" stroke="#2a2a33" stroke-width="1.4"/>
   <circle cx="838" cy="284" r="4" fill="#e857c3"/>
   <text x="854" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">nova-drift</text>
   <text x="838" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Browser space-runner: real bloom,</text>
   <text x="838" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">synthesized audio, no build step.</text>
-  <text x="838" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#e857c3">1.4 MB first load</text>
-  <text x="816" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">ALSO</text>
-  <text x="816" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">kalp-animasyon</text>
-  <text x="816" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">a parametric heart on a real</text>
-  <text x="816" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">cardiac rhythm</text>
+  <text x="838" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#e857c3">0.7 MB first load</text>
+
+  <text x="816" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">LOCAL MCP SERVERS</text>
+  <text x="816" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">mini-creative-toolkit · nvidia-nim-mcp</text>
+  <text x="816" y="447" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">voice-io-mcp · local-notes-search-mcp</text>
+  <text x="816" y="464" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">no API keys, no telemetry</text>
+
   <path d="M40 496 L1160 496" stroke="#2a2a33" stroke-width="1"/>
   <text x="40" y="524" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Every count above was read out of that repo’s own suite, not written by hand.</text>
 </svg>

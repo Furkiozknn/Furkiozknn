@@ -1,39 +1,98 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Furki Özkan" width="100%">
+  <img src="assets/hero.svg" alt="Furki Özkan — 15 projects, all with tests" width="100%">
 </p>
 
-**AI systems, agent tooling, and the developer infrastructure that keeps them honest — shipped as small, focused, tested repos that work together.**
+**Agent systems, the tooling that keeps them honest, and the infrastructure underneath — small, focused repos that work together.**
 
-I build the plumbing generative-AI products sit on — async job orchestration, pipeline DAGs, provenance and cost math — plus the MCP tooling agents use, and I ship real products on top. Every repo below has CI and a test suite; the claims in their READMEs are written to be checked, not believed.
+I build the plumbing AI agents sit on. An agency operating system designed
+research-first, sub-agents that answer in Turkish and know this machine's traps,
+a usage-intelligence platform that says where the tokens went. Under that: async
+job orchestration, pipeline DAGs, provenance and cost math, and the MCP servers
+agents actually call. Some evenings a browser game instead.
 
-<img src="assets/projects.svg" alt="The ecosystem in three groups: AI systems (ai-job-gateway, ai-workflow-engine, plus prompt-template-manager, model-comparison-harness and asset-provenance-toolkit), agent tooling (mcp-vet, mini-creative-toolkit, plus nvidia-nim-mcp, voice-io-mcp and local-notes-search-mcp), and real products (buradane, nova-drift and kalp-animasyon), each with the test count read out of its own suite" width="100%">
-
-## AI systems
-
-- **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** — Submit a generative-AI job, get an id back instantly, poll or get webhooked: a hardened, provider-agnostic async job server with real keyless providers, not just mocks. Idempotency keys that survive restarts, SSRF-guarded webhooks with signed payloads, jittered retries with a queryable dead letter. *156 tests · CI*
-- **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** — Pipelines as plain YAML DAGs, validated before they run (cycles, undeclared deps, template cross-checks), concurrent where the graph allows but paced rather than bursted (a 40-step layer submits 10 at a time, and a job that keeps saying *processing* is polled progressively less often). Proven end-to-end against a live gateway. *72 tests · e2e-proven*
-
-<sub>Supporting cast: [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) (versioned prompt templates with real error surfaces) · [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) (same prompt, N models, one report) · [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) (which model/job/prompt made this file?)</sub>
-
-## Agent tooling
-
-- **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — A trust-and-security auditor for MCP servers: evidence with file:line for every claim, zero dependencies, and it never executes what it audits. Looks at code, not stars. *237 tests · SECURITY.md · offline audit 0.16 s*
-- **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)** — 23 local, CPU-first media tools behind one MCP server: no paid APIs, exactly one documented network touchpoint, and a real licensing bug caught by reading the dependency tree (rembg's default model is CC-BY-NC — the toolkit refuses it unless you opt in knowingly). *319 tests*
-
-<sub>More MCP servers: [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) · [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) · [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)</sub>
-
-## Real products
-
-- **[buradane](https://github.com/Furkiozknn/buradane)** — "What do I need, and where's the nearest one?" A need-driven public-space finder for Türkiye: FastAPI + PostGIS with consensus-gated community verification (one phone in a shell loop can't falsify accessibility data), a real moderation loop, Alembic migrations, and a MapLibre demo on 167k+ real OSM places covering all 81 provinces. *96 backend tests · Vitest frontend suite · CI*
-- **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — A browser space-runner with real bloom post-processing, fully synthesized audio, a seeded daily challenge, and adaptive render scaling. No build step, 1.4 MB first load, hermetic Playwright CI. **[Play it](https://furkiozknn.github.io/nova-drift/)** · sibling piece: **[kalp-animasyon](https://furkiozknn.github.io/kalp-animasyon/)**, a glowing parametric heart with a real cardiac rhythm.
-
-## Research
-
-[AI Creative Platform — architecture & model-landscape notes](research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md) — the research these repos grew out of.
+> **The repositories below are private.** No links, because a link to a private
+> repo is a 404 with extra steps. If one is useful to you, say so and I'll open it.
 
 ---
 
-<img src="assets/principles.svg" alt="Four working rules and the evidence behind each: test counts re-derived from the suite rather than written by hand, hermetic CI where suites run offline, READMEs that list known limits including a measured upscale stall and a deliberately-absent column, and licenses checked down the dependency tree where rembg's CC-BY-NC default model was caught and refused unless knowingly opted into" width="100%">
+## This week
+
+Two things, both finished end to end rather than left at 80%.
+
+**ajans-os** — an AI agency operating system built in five phases: read 40 agent
+projects with file-and-line evidence, compare them in one matrix, distill 13
+patterns and 11 anti-patterns, settle the architecture in 11 ADRs, then write it.
+13 modules, 6 machine-readable contracts, 142 passing tests. Every phase output
+was audited by a session other than the one that produced it — 30 review
+documents — and the audits found real defects, which is the point of having them.
+
+**turkce-ajanlar** — eight Claude Code sub-agents whose output language is
+Turkish, not a translated system prompt. They know PowerShell 5.1 has no `&&`,
+that cp1254 breaks a Python tool's stdout before it prints a line, and that a
+heredoc quietly eats backslashes. One source in `agents/`, exported to Cursor,
+OpenCode, Copilot and Codex, with CI that fails on a stale copy.
+
+<img src="assets/projects.svg" alt="The ecosystem in three groups: agent systems, tooling and infrastructure, and products" width="100%">
+
+## Agent systems
+
+- **ajans-os** — research-first agency OS. Nothing enters the architecture
+  without four answers: the problem it solves, the failure it prevents, the cost
+  it adds, and evidence from two independent projects. Five candidate components
+  were refused on that rule and parked in a waiting list with the conditions that
+  would let them in written down.
+- **turkce-ajanlar** — eight Turkish-speaking sub-agents, three slash commands,
+  two skills, a format hook, and an eval suite that caught the agents disobeying
+  a rule they had been given.
+- **mcp-vet** — audits an MCP server *before* you install it. Every claim carries
+  a file and a line, it never executes what it audits, and it reads the code
+  rather than the star count.
+
+## Tooling & infrastructure
+
+- **claude-code-intelligence** — where the tokens went, what it cost, and when
+  the quota resets. An OTLP receiver, transcript parsing, quota tracking, all
+  local-first.
+- **ai-job-gateway** — submit a generative-AI job, get an id back instantly, then
+  poll or take a webhook. A provider-agnostic contract with idempotency keys that
+  survive a restart, SSRF-guarded signed webhooks, and a queryable dead letter.
+- **ai-workflow-engine** — pipelines as plain YAML DAGs, validated before they
+  run. Cycles, undeclared dependencies and unbounded fan-out are rejected at
+  parse time rather than at 3 a.m.
+
+<sub>Supporting cast: <b>prompt-template-manager</b> (prompts versioned in git, so a change is a diff) · <b>model-comparison-harness</b> (same prompt, N providers, one report, and a judge that says <i>unparseable</i> instead of guessing) · <b>asset-provenance-toolkit</b> (which model, job and prompt made this file, written into the file)</sub>
+
+## MCP servers — local, keyless
+
+- **mini-creative-toolkit** — 23 CPU-only media tools behind one server:
+  background removal, resize, thumbnails, GIFs. Twenty-two never leave the
+  machine, and the README names the one that does.
+- **nvidia-nim-mcp** — NVIDIA NIM's free tier inside Claude Code: image
+  generation, vision, translation, chat.
+- **voice-io-mcp** — speech in and out, with a hosted fast path and a fully
+  local, keyless fallback.
+- **local-notes-search-mcp** — semantic search over your own files. No server, no
+  API key, no upload.
+
+## Products
+
+- **buradane** — "what do I need, and where is the nearest one?" A need-driven
+  public-space finder for Türkiye: toilets, parks, drinking water, mosques,
+  libraries, parking, assembly areas. 167k OpenStreetMap places across all 81
+  provinces, with community verification gated on consensus so one phone in a
+  shell loop cannot falsify accessibility data.
+- **nova-drift** — an endless browser space-runner. Real bloom post-processing,
+  fully synthesized audio, a seeded daily run, adaptive render scaling, and a
+  0.7 MB first load with no build step.
+
+## Research
+
+[AI Creative Platform — architecture and model-landscape notes](research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md)
+— the research the infrastructure repos grew out of.
+
+---
+
+<img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
