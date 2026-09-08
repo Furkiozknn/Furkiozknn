@@ -10,9 +10,6 @@ a usage-intelligence platform that says where the tokens went. Under that: async
 job orchestration, pipeline DAGs, provenance and cost math, and the MCP servers
 agents actually call. Some evenings a browser game instead.
 
-> **The repositories below are private.** No links, because a link to a private
-> repo is a 404 with extra steps. If one is useful to you, say so and I'll open it.
-
 ---
 
 ## This week
@@ -32,6 +29,10 @@ that cp1254 breaks a Python tool's stdout before it prints a line, and that a
 heredoc quietly eats backslashes. One source in `agents/`, exported to Cursor,
 OpenCode, Copilot and Codex, with CI that fails on a stale copy.
 
+<sub>These two are the only repos still private, and for a boring reason: a
+handful of their commits carry my personal email in the author field, and
+publishing would put it in front of every scraper. Everything else here is open.</sub>
+
 <img src="assets/projects.svg" alt="The ecosystem in three groups: agent systems, tooling and infrastructure, and products" width="100%">
 
 ## Agent systems
@@ -44,46 +45,51 @@ OpenCode, Copilot and Codex, with CI that fails on a stale copy.
 - **turkce-ajanlar** — eight Turkish-speaking sub-agents, three slash commands,
   two skills, a format hook, and an eval suite that caught the agents disobeying
   a rule they had been given.
-- **mcp-vet** — audits an MCP server *before* you install it. Every claim carries
-  a file and a line, it never executes what it audits, and it reads the code
-  rather than the star count.
+- **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server
+  *before* you install it. Every claim carries a file and a line, it never
+  executes what it audits, and it reads the code rather than the star count.
 
 ## Tooling & infrastructure
 
-- **claude-code-intelligence** — where the tokens went, what it cost, and when
-  the quota resets. An OTLP receiver, transcript parsing, quota tracking, all
-  local-first.
-- **ai-job-gateway** — submit a generative-AI job, get an id back instantly, then
-  poll or take a webhook. A provider-agnostic contract with idempotency keys that
-  survive a restart, SSRF-guarded signed webhooks, and a queryable dead letter.
-- **ai-workflow-engine** — pipelines as plain YAML DAGs, validated before they
-  run. Cycles, undeclared dependencies and unbounded fan-out are rejected at
-  parse time rather than at 3 a.m.
+- **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)**
+  — where the tokens went, what it cost, and when the quota resets. An OTLP
+  receiver, transcript parsing, quota tracking, all local-first.
+- **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** — submit a
+  generative-AI job, get an id back instantly, then poll or take a webhook. A
+  provider-agnostic contract with idempotency keys that survive a restart,
+  SSRF-guarded signed webhooks, and a queryable dead letter.
+- **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** —
+  pipelines as plain YAML DAGs, validated before they run. Cycles, undeclared
+  dependencies and unbounded fan-out are rejected at parse time rather than at
+  3 a.m.
 
-<sub>Supporting cast: <b>prompt-template-manager</b> (prompts versioned in git, so a change is a diff) · <b>model-comparison-harness</b> (same prompt, N providers, one report, and a judge that says <i>unparseable</i> instead of guessing) · <b>asset-provenance-toolkit</b> (which model, job and prompt made this file, written into the file)</sub>
+<sub>Supporting cast: <a href="https://github.com/Furkiozknn/prompt-template-manager">prompt-template-manager</a> (prompts versioned in git, so a change is a diff) · <a href="https://github.com/Furkiozknn/model-comparison-harness">model-comparison-harness</a> (same prompt, N providers, one report, and a judge that says <i>unparseable</i> instead of guessing) · <a href="https://github.com/Furkiozknn/asset-provenance-toolkit">asset-provenance-toolkit</a> (which model, job and prompt made this file, written into the file)</sub>
 
 ## MCP servers — local, keyless
 
-- **mini-creative-toolkit** — 23 CPU-only media tools behind one server:
-  background removal, resize, thumbnails, GIFs. Twenty-two never leave the
-  machine, and the README names the one that does.
-- **nvidia-nim-mcp** — NVIDIA NIM's free tier inside Claude Code: image
-  generation, vision, translation, chat.
-- **voice-io-mcp** — speech in and out, with a hosted fast path and a fully
-  local, keyless fallback.
-- **local-notes-search-mcp** — semantic search over your own files. No server, no
-  API key, no upload.
+- **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)**
+  — 23 CPU-only media tools behind one server: background removal, resize,
+  thumbnails, GIFs. Twenty-two never leave the machine, and the README names the
+  one that does.
+- **[nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)** — NVIDIA
+  NIM's free tier inside Claude Code: image generation, vision, translation, chat.
+- **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** — speech in and
+  out, with a hosted fast path and a fully local, keyless fallback.
+- **[local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)**
+  — semantic search over your own files. No server, no API key, no upload.
 
 ## Products
 
-- **buradane** — "what do I need, and where is the nearest one?" A need-driven
-  public-space finder for Türkiye: toilets, parks, drinking water, mosques,
-  libraries, parking, assembly areas. 167k OpenStreetMap places across all 81
-  provinces, with community verification gated on consensus so one phone in a
-  shell loop cannot falsify accessibility data.
-- **nova-drift** — an endless browser space-runner. Real bloom post-processing,
-  fully synthesized audio, a seeded daily run, adaptive render scaling, and a
-  0.7 MB first load with no build step.
+- **[buradane](https://github.com/Furkiozknn/buradane)** — "what do I need, and
+  where is the nearest one?" A need-driven public-space finder for Türkiye:
+  toilets, parks, drinking water, mosques, libraries, parking, assembly areas.
+  167k OpenStreetMap places across all 81 provinces, with community verification
+  gated on consensus so one phone in a shell loop cannot falsify accessibility
+  data.
+- **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — an endless browser
+  space-runner. Real bloom post-processing, fully synthesized audio, a seeded
+  daily run, adaptive render scaling, and a 0.7 MB first load with no build step.
+  **[Play it](https://furkiozknn.github.io/nova-drift/)**
 
 ## Research
 
