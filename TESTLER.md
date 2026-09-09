@@ -1,6 +1,6 @@
-# Where the 1.902 comes from
+# Where the 1.910 comes from
 
-The hero image on this profile claims 1.902 tests across 15 repositories.
+The hero image on this profile claims 1.910 tests across 15 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -17,7 +17,7 @@ Measured 9 September 2026.
 | Repository | Tests | Source of the number |
 |---|---:|---|
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 319 | CI log: `319 passed` |
-| [buradane](https://github.com/Furkiozknn/buradane) | 278 | 96 backend (CI) + 182 frontend (vitest) |
+| [buradane](https://github.com/Furkiozknn/buradane) | 286 | 96 backend (CI) + 190 frontend (vitest) |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 256 | local `pytest`: `256 passed, 2 skipped` |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 237 | CI log: `237 passed` |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 150 | CI log: `150 passed, 6 skipped` |
@@ -31,7 +31,7 @@ Measured 9 September 2026.
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 38 | CI log: `38 passed` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 33 | CI log: `33 passed, 2 skipped` |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 12 | CI log: `12 passed` (Playwright) |
-| **Total** | **1.902** | |
+| **Total** | **1.910** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 

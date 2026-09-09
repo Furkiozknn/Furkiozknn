@@ -86,6 +86,15 @@ publishing would put it in front of every scraper. Everything else here is open.
   167k OpenStreetMap places across all 81 provinces, with community verification
   gated on consensus so one phone in a shell loop cannot falsify accessibility
   data.
+
+<p align="center">
+  <a href="https://github.com/Furkiozknn/buradane">
+    <img src="https://raw.githubusercontent.com/Furkiozknn/buradane/main/assets/demo.gif" alt="buradane: picking categories on a map of Istanbul, then typing free text and watching the results narrow to 19" width="720">
+  </a>
+</p>
+
+<p align="center"><sub>Also a real session, also captured by a script in that repo. Typing "ücretsiz tuvalet"
+takes 167k places down to the 19 nearest free toilets.</sub></p>
 - **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — an endless browser
   space-runner. Real bloom post-processing, fully synthesized audio, a seeded
   daily run, adaptive render scaling, and a 0.7 MB first load with no build step.
@@ -109,7 +118,7 @@ through the same fixture its tests use. That run scored 525.</sub></p>
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
-<p align="center"><sub><a href="TESTLER.md">Where the 1.902 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+<p align="center"><sub><a href="TESTLER.md">Where the 1.910 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
