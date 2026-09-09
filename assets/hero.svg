@@ -64,15 +64,15 @@
     </g>
     <g>
       <rect x="510" y="326" width="180" height="40" rx="8" fill="#141419" stroke="#2a2a33"/>
-      <text x="530" y="346" fill="#4ade9e" font-size="17">147</text>
-      <text x="566" y="346" fill="#9a9aa6" font-size="12">test dosyası</text>
-      <text x="530" y="360" fill="#6b6b77" font-size="10">15 deponun 15'inde</text>
+      <text x="530" y="346" fill="#4ade9e" font-size="17">1.902</text>
+      <text x="588" y="346" fill="#9a9aa6" font-size="12">test</text>
+      <text x="530" y="360" fill="#6b6b77" font-size="10">15 takımdan sayıldı</text>
     </g>
     <g>
       <rect x="704" y="326" width="140" height="40" rx="8" fill="#141419" stroke="#2a2a33"/>
-      <text x="724" y="346" fill="#6cb6ff" font-size="17">397</text>
+      <text x="724" y="346" fill="#6cb6ff" font-size="17">408</text>
       <text x="760" y="346" fill="#9a9aa6" font-size="12">commit</text>
-      <text x="724" y="360" fill="#6b6b77" font-size="10">8 Eylül 2026</text>
+      <text x="724" y="360" fill="#6b6b77" font-size="10">9 Eylül 2026</text>
     </g>
   </g>
 

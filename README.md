@@ -91,6 +91,15 @@ publishing would put it in front of every scraper. Everything else here is open.
   daily run, adaptive render scaling, and a 0.7 MB first load with no build step.
   **[Play it](https://furkiozknn.github.io/nova-drift/)**
 
+<p align="center">
+  <a href="https://furkiozknn.github.io/nova-drift/">
+    <img src="https://raw.githubusercontent.com/Furkiozknn/nova-drift/master/assets/gameplay.gif" alt="Nova Drift gameplay: a ship threading between red obstacles down a glowing space tunnel, score climbing" width="620">
+  </a>
+</p>
+
+<p align="center"><sub>Real play, not a mockup — captured by a script in that repo that opens the game
+through the same fixture its tests use. That run scored 525.</sub></p>
+
 ## Research
 
 [AI Creative Platform — architecture and model-landscape notes](research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md)
@@ -100,11 +109,13 @@ publishing would put it in front of every scraper. Everything else here is open.
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
+<p align="center"><sub><a href="TESTLER.md">Where the 1.902 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+
 <p align="center">
   <a href="https://github.com/Furkiozknn">
     <img src="https://img.shields.io/badge/GitHub-0c0c10?style=for-the-badge&logo=github&logoColor=f2efe6" alt="GitHub">
   </a>
-  <a href="https://twitter.com/imfurki">
-    <img src="https://img.shields.io/badge/Twitter-0c0c10?style=for-the-badge&logo=x&logoColor=f2efe6" alt="Twitter">
+  <a href="https://x.com/furkiozkan">
+    <img src="https://img.shields.io/badge/%40furkiozkan-0c0c10?style=for-the-badge&logo=x&logoColor=f2efe6" alt="X">
   </a>
 </p>
