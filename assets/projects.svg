@@ -38,7 +38,7 @@
   <text x="466" y="289" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14.5" font-weight="700" fill="#f2efe6">ai-job-gateway</text>
   <text x="450" y="316" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">Submit a job, get an id instantly —</text>
   <text x="450" y="334" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#9a9aa6">idempotency that survives a restart.</text>
-  <text x="450" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">156 tests</text>
+  <text x="450" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#6cb6ff">150 tests · 6 skipped</text>
 
   <text x="428" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" letter-spacing="1.5" fill="#6b6b77">ALSO</text>
   <text x="428" y="430" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b6b77">ai-workflow-engine · YAML DAGs</text>
