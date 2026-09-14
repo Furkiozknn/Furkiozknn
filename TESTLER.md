@@ -1,12 +1,12 @@
-# Where the 2.003 comes from
+# Where the 2.029 comes from
 
-The hero image on this profile claims 2.003 tests across 16 repositories.
+The hero image on this profile claims 2.029 tests across 16 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
 the end of a run — not a count of `def test_` or `it(` in the source. Those
-two disagree, sometimes badly: `mcp-vet` has 243 test functions and 237 test
+two disagree, sometimes badly: `mcp-vet` has 227 test functions and 270 test
 cases, `mini-creative-toolkit` has 208 functions and 319 cases, because
 parametrised tests expand at collection time. An earlier version of the hero
 said "1.426 tests" and was wrong in both directions, having been produced by
@@ -19,7 +19,7 @@ Measured 14 September 2026.
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 319 | CI log: `319 passed` |
 | [buradane](https://github.com/Furkiozknn/buradane) | 286 | 96 backend (CI) + 190 frontend (vitest) |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 259 | CI log: `259 passed` |
-| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 244 | CI log: `244 passed` |
+| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 270 | CI log: `270 passed` |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed` (a second job re-runs it without the media extra: `150 passed, 6 skipped`) |
 | ajans-os *(private)* | 142 | local `node --test`: `pass 142` |
 | turkce-ajanlar *(private)* | 92 | 27 validator + 32 export + 33 format checks |
@@ -32,7 +32,7 @@ Measured 14 September 2026.
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 33 | CI log: `33 passed, 2 skipped` |
 | [masal](https://github.com/Furkiozknn/masal) | 77 | CI log: `pass 77` (node:test) |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 12 | CI log: `12 passed` (Playwright) |
-| **Total** | **2.003** | |
+| **Total** | **2.029** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 

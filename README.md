@@ -12,6 +12,13 @@ agents actually call. Some evenings a browser game instead.
 
 ---
 
+> ### Available for remote contract work
+>
+> MCP and agent infrastructure, and turning code that works into code that
+> ships. Remote, Türkiye, European hours. **[What I can be hired for, and what
+> it costs →](HIRE.md)**
+
+
 ## This week
 
 Two things, both finished end to end rather than left at 80%.
@@ -126,7 +133,7 @@ through the same fixture its tests use. That run scored 525.</sub></p>
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
-<p align="center"><sub><a href="TESTLER.md">Where the 2.003 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+<p align="center"><sub><a href="TESTLER.md">Where the 2.029 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
