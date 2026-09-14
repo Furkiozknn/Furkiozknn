@@ -1,6 +1,6 @@
-# Where the 2.029 comes from
+# Where the 2.057 comes from
 
-The hero image on this profile claims 2.029 tests across 16 repositories.
+The hero image on this profile claims 2.057 tests across 16 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -30,9 +30,9 @@ Measured 14 September 2026.
 | [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 58 | CI log: `58 passed` |
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 38 | CI log: `38 passed` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 33 | CI log: `33 passed, 2 skipped` |
-| [masal](https://github.com/Furkiozknn/masal) | 77 | CI log: `pass 77` (node:test) |
-| [nova-drift](https://github.com/Furkiozknn/nova-drift) | 12 | CI log: `12 passed` (Playwright) |
-| **Total** | **2.029** | |
+| [masal](https://github.com/Furkiozknn/masal) | 89 | CI log: `pass 89` (node:test) |
+| [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | CI log: `28 passed` (Playwright) |
+| **Total** | **2.057** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 
