@@ -1,6 +1,6 @@
-# Where the 1.910 comes from
+# Where the 1.926 comes from
 
-The hero image on this profile claims 1.910 tests across 15 repositories.
+The hero image on this profile claims 1.926 tests across 15 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -12,15 +12,15 @@ parametrised tests expand at collection time. An earlier version of the hero
 said "1.426 tests" and was wrong in both directions, having been produced by
 grepping the tree.
 
-Measured 9 September 2026.
+Measured 14 September 2026.
 
 | Repository | Tests | Source of the number |
 |---|---:|---|
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 319 | CI log: `319 passed` |
 | [buradane](https://github.com/Furkiozknn/buradane) | 286 | 96 backend (CI) + 190 frontend (vitest) |
-| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 256 | local `pytest`: `256 passed, 2 skipped` |
-| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 237 | CI log: `237 passed` |
-| [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 150 | CI log: `150 passed, 6 skipped` |
+| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 259 | CI log: `259 passed` |
+| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 244 | CI log: `244 passed` |
+| [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed` (a second job re-runs it without the media extra: `150 passed, 6 skipped`) |
 | ajans-os *(private)* | 142 | local `node --test`: `pass 142` |
 | turkce-ajanlar *(private)* | 92 | 27 validator + 32 export + 33 format checks |
 | [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 86 | CI log: `86 passed` |
@@ -31,18 +31,21 @@ Measured 9 September 2026.
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 38 | CI log: `38 passed` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 33 | CI log: `33 passed, 2 skipped` |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 12 | CI log: `12 passed` (Playwright) |
-| **Total** | **1.910** | |
+| **Total** | **1.926** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 
 ## The other two numbers
 
-**15 projects.** Every non-archived repository on the account except this
-one, which holds the profile README. Two of them — `ajans-os` and
-`turkce-ajanlar` — are still private, for the reason given on the profile.
+**15 projects.** The fifteen listed above — everything the profile page
+describes. Two of them, `ajans-os` and `turkce-ajanlar`, are still private
+for the reason given on the profile. Not counted: this repository, which
+holds the profile README and has no suite of its own; the two archived
+repositories; and one private repository that is not ready to be described
+yet.
 
-**408 commits.** `git rev-list --count HEAD`, summed over those same 15
-repositories, on 9 September 2026. This repository's own commits are not
+**418 commits.** `git rev-list --count HEAD`, summed over those same 15
+repositories, on 14 September 2026. This repository's own commits are not
 included.
 
 ## Recheck it yourself

@@ -29,9 +29,10 @@ that cp1254 breaks a Python tool's stdout before it prints a line, and that a
 heredoc quietly eats backslashes. One source in `agents/`, exported to Cursor,
 OpenCode, Copilot and Codex, with CI that fails on a stale copy.
 
-<sub>These two are the only repos still private, and for a boring reason: a
-handful of their commits carry my personal email in the author field, and
-publishing would put it in front of every scraper. Everything else here is open.</sub>
+<sub>These two are the only repos on this page still private, and for a boring
+reason: a handful of their commits carry my personal email in the author field,
+and publishing would put it in front of every scraper. Everything else here is
+open.</sub>
 
 <img src="assets/projects.svg" alt="The ecosystem in three groups: agent systems, tooling and infrastructure, and products" width="100%">
 
@@ -95,6 +96,7 @@ publishing would put it in front of every scraper. Everything else here is open.
 
 <p align="center"><sub>Also a real session, also captured by a script in that repo. Typing "ücretsiz tuvalet"
 takes 167k places down to the 19 nearest free toilets.</sub></p>
+
 - **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — an endless browser
   space-runner. Real bloom post-processing, fully synthesized audio, a seeded
   daily run, adaptive render scaling, and a 0.7 MB first load with no build step.
@@ -118,7 +120,7 @@ through the same fixture its tests use. That run scored 525.</sub></p>
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
-<p align="center"><sub><a href="TESTLER.md">Where the 1.910 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+<p align="center"><sub><a href="TESTLER.md">Where the 1.926 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
