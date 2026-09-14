@@ -1,6 +1,6 @@
-# Where the 1.926 comes from
+# Where the 2.003 comes from
 
-The hero image on this profile claims 1.926 tests across 15 repositories.
+The hero image on this profile claims 2.003 tests across 16 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -30,21 +30,21 @@ Measured 14 September 2026.
 | [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 58 | CI log: `58 passed` |
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 38 | CI log: `38 passed` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 33 | CI log: `33 passed, 2 skipped` |
+| [masal](https://github.com/Furkiozknn/masal) | 77 | CI log: `pass 77` (node:test) |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 12 | CI log: `12 passed` (Playwright) |
-| **Total** | **1.926** | |
+| **Total** | **2.003** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 
 ## The other two numbers
 
-**15 projects.** The fifteen listed above — everything the profile page
+**16 projects.** The sixteen listed above — everything the profile page
 describes. Two of them, `ajans-os` and `turkce-ajanlar`, are still private
 for the reason given on the profile. Not counted: this repository, which
-holds the profile README and has no suite of its own; the two archived
-repositories; and one private repository that is not ready to be described
-yet.
+holds the profile README and has no suite of its own, and the two archived
+repositories.
 
-**418 commits.** `git rev-list --count HEAD`, summed over those same 15
+**443 commits.** `git rev-list --count HEAD`, summed over those same 16
 repositories, on 14 September 2026. This repository's own commits are not
 included.
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Furki Özkan — 15 projects, all with tests" width="100%">
+  <img src="assets/hero.svg" alt="Furki Özkan — 16 projects, all with tests" width="100%">
 </p>
 
 **Agent systems, the tooling that keeps them honest, and the infrastructure underneath — small, focused repos that work together.**
@@ -97,6 +97,12 @@ open.</sub>
 <p align="center"><sub>Also a real session, also captured by a script in that repo. Typing "ücretsiz tuvalet"
 takes 167k places down to the 19 nearest free toilets.</sub></p>
 
+- **[masal](https://github.com/Furkiozknn/masal)** — a bedtime story written
+  around one child's name, age and town, with the colouring page embedded in
+  it. A Turkish suffix engine inflects the name correctly, which template
+  substitution cannot: Sinop takes *-ta*, Trabzon takes *-da*. Six themes, two
+  languages, a branch point on the third page. Nothing downloads, and CI fails
+  if a path to export the drawing ever appears. **[Read one](https://furkiozknn.github.io/masal/)**
 - **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — an endless browser
   space-runner. Real bloom post-processing, fully synthesized audio, a seeded
   daily run, adaptive render scaling, and a 0.7 MB first load with no build step.
@@ -120,7 +126,7 @@ through the same fixture its tests use. That run scored 525.</sub></p>
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
-<p align="center"><sub><a href="TESTLER.md">Where the 1.926 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+<p align="center"><sub><a href="TESTLER.md">Where the 2.003 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
