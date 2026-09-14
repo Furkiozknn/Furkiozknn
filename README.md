@@ -122,12 +122,7 @@ takes 167k places down to the 19 nearest free toilets.</sub></p>
 </p>
 
 <p align="center"><sub>Real play, not a mockup — captured by a script in that repo that opens the game
-through the same fixture its tests use. That run scored 525.</sub></p>
-
-## Research
-
-[AI Creative Platform — architecture and model-landscape notes](research/AI-CREATIVE-PLATFORM-ARASTIRMA-VE-MIMARI.md)
-— the research the infrastructure repos grew out of.
+through the same fixture its tests use. That run scored 446.</sub></p>
 
 ---
 
