@@ -44,7 +44,11 @@ Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-dr
 - **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** — submit a generative-AI job, get an id back instantly, then poll or take a webhook. Idempotency keys that survive a restart, SSRF-guarded signed webhooks, and a queryable dead letter.
 - **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** — pipelines as plain YAML DAGs, validated before they run. Cycles, undeclared dependencies and unbounded fan-out are rejected at parse time rather than at 3 a.m.
 
-<sub>Supporting cast: <a href="https://github.com/Furkiozknn/prompt-template-manager">prompt-template-manager</a> (prompts versioned in git, so a change is a diff) · <a href="https://github.com/Furkiozknn/model-comparison-harness">model-comparison-harness</a> (same prompt, N providers, one report, and a judge that says <i>unparseable</i> instead of guessing) · <a href="https://github.com/Furkiozknn/asset-provenance-toolkit">asset-provenance-toolkit</a> (which model, job and prompt made this file, written into the file)</sub>
+## Developer tooling
+
+- **[prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager)** — prompts versioned in git, so a change is a diff instead of an argument.
+- **[model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness)** — one prompt, N providers, one report — and a judge that says *unparseable* rather than guessing.
+- **[asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit)** — which model, job and prompt made this file, written into the file itself.
 
 ## MCP servers — local, keyless
 
@@ -57,14 +61,6 @@ Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-dr
 
 - **[nova-drift](https://github.com/Furkiozknn/nova-drift)** — endless browser space-runner. Real bloom post-processing, fully synthesized audio, a seeded daily run, adaptive render scaling, 0.7 MB first load, no build step. **[Play it](https://furkiozknn.github.io/nova-drift/)**
 - **[masal](https://github.com/Furkiozknn/masal)** — a bedtime story written around one child's name, age and town, with the colouring page embedded in it. A Turkish suffix engine inflects the name correctly, which template substitution cannot: Sinop takes *-ta*, Trabzon takes *-da*. Nothing downloads, and CI fails if a path to export the drawing ever appears. **[Read one](https://furkiozknn.github.io/masal/)**
-
-<p align="center">
-  <a href="https://furkiozknn.github.io/nova-drift/">
-    <img src="https://raw.githubusercontent.com/Furkiozknn/nova-drift/master/assets/gameplay.gif" alt="Nova Drift gameplay: a ship threading between red obstacles down a glowing space tunnel, score climbing" width="620">
-  </a>
-</p>
-
-<p align="center"><sub>Real play, not a mockup — captured by a script in that repo that opens the game through the same fixture its tests use. That run scored 446.</sub></p>
 
 ---
 

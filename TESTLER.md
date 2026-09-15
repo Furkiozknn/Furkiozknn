@@ -42,9 +42,8 @@ a model download the CI runner does not do — the repository's own README says
 so too.
 
 Not in the table: [claude-quota-monitor](https://github.com/Furkiozknn/claude-quota-monitor)
-(43 passing tests, but superseded by `claude-code-intelligence` and not
-actively developed), [lumen](https://github.com/Furkiozknn/lumen) (a prototype
-with a single headless-GDScript harness) and
+(43 passing tests, now archived — `claude-code-intelligence` superseded it and
+records what carried over) and
 [godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon) (two starter
 templates, no suite). Also not counted: this repository, which holds the
 profile README.
