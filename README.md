@@ -4,9 +4,9 @@ I build the infrastructure AI agents run on — async job contracts, pipeline DA
 
 ### Start here
 
-- **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Every claim carries a file and a line, it reads the code rather than the star count, and it never executes what it audits. <sub>`289 tests` · `zero dependencies, stdlib only`</sub>
-- **[buradane](https://github.com/Furkiozknn/buradane)** — "what do I need, and where is the nearest one?" 167,829 real OpenStreetMap places across all 81 provinces of Türkiye. <sub>`324 tests` · `FastAPI + PostGIS + Next.js/MapLibre`</sub>
-- **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that never phones home. <sub>`261 tests` · `local-first`</sub>
+- **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Every claim carries a file and a line, it reads the code rather than the star count, and it never executes what it audits. Standard library only, no dependencies. <sub>`289 tests`</sub>
+- **[buradane](https://github.com/Furkiozknn/buradane)** — "what do I need, and where is the nearest one?" 167,829 real OpenStreetMap places across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`324 tests`</sub>
+- **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that never phones home; nothing leaves the machine. <sub>`261 tests`</sub>
 
 Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-drift/)** — an endless browser space-runner with real bloom, synthesized audio and a 0.7 MB first load. No build step, no install.
 
