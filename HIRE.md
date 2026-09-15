@@ -27,7 +27,7 @@ first is an attack that a normal code review walks straight past.
 machine, what is worth acting on and what is noise, each finding quoted with
 file and line. Plus the scan tooling, so you can re-run it yourself.
 
-**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 270
+**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 289
 tests — and ran it against 17 widely-used MCP servers. Roughly half of all
 findings landed outside the code a server actually ships: test fixtures, issue
 templates, developer scripts. That is the number that matters, because it is
@@ -47,8 +47,8 @@ I report traces back to the run that printed it.
 have shipped — a package that could not build because of a stray carriage
 return in its manifest, a published summary that had drifted from the code, and
 three servers that installed cleanly but had no entry point to run. All three
-were invisible to a suite of 244 passing tests, because nothing tested the
-packaging. They are now gated in CI.
+were invisible to every passing test in those repositories, because nothing
+tested the packaging. They are now gated in CI.
 
 ### 3. Ongoing contract — $50/hour
 
@@ -61,9 +61,9 @@ first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
 
 ## The evidence
 
-- **[2.029 tests across 16 projects](TESTLER.md)** — every count traced to the
-  suite run that printed it, not grepped from the source. An earlier version of
-  my own profile said 1.426 and was wrong; that file exists so the claim is
+- **[2,168 tests across 16 repositories](TESTLER.md)** — every count traced to
+  the suite run that printed it, not grepped from the source. An earlier version
+  of this profile said 1,426 and was wrong; that file exists so the claim is
   checkable rather than believable.
 - **Everything is public.** [Play the game](https://furkiozknn.github.io/nova-drift/),
   [read a story](https://furkiozknn.github.io/masal/), read the tests.
