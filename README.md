@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Furki Özkan — 16 projects, all with tests" width="100%">
+  <img src="assets/hero.svg" alt="Furki Özkan — 16 projects, all with tests, 2.165 tests in total" width="100%">
 </p>
 
 **Agent systems, the tooling that keeps them honest, and the infrastructure underneath — small, focused repos that work together.**
@@ -19,38 +19,33 @@ agents actually call. Some evenings a browser game instead.
 > it costs →](HIRE.md)**
 
 
-## This week
+## Recently
 
 Two things, both finished end to end rather than left at 80%.
 
-**ajans-os** — an AI agency operating system built in five phases: read 40 agent
+**[ajans-os](https://github.com/Furkiozknn/ajans-os)** — an AI agency operating system built in five phases: read 40 agent
 projects with file-and-line evidence, compare them in one matrix, distill 13
 patterns and 11 anti-patterns, settle the architecture in 11 ADRs, then write it.
 13 modules, 6 machine-readable contracts, 142 passing tests. Every phase output
 was audited by a session other than the one that produced it — 30 review
 documents — and the audits found real defects, which is the point of having them.
 
-**turkce-ajanlar** — eight Claude Code sub-agents whose output language is
+**[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** — eight Claude Code sub-agents whose output language is
 Turkish, not a translated system prompt. They know PowerShell 5.1 has no `&&`,
 that cp1254 breaks a Python tool's stdout before it prints a line, and that a
 heredoc quietly eats backslashes. One source in `agents/`, exported to Cursor,
 OpenCode, Copilot and Codex, with CI that fails on a stale copy.
 
-<sub>These two are the only repos on this page still private, and for a boring
-reason: a handful of their commits carry my personal email in the author field,
-and publishing would put it in front of every scraper. Everything else here is
-open.</sub>
-
 <img src="assets/projects.svg" alt="The ecosystem in three groups: agent systems, tooling and infrastructure, and products" width="100%">
 
 ## Agent systems
 
-- **ajans-os** — research-first agency OS. Nothing enters the architecture
+- **[ajans-os](https://github.com/Furkiozknn/ajans-os)** — research-first agency OS. Nothing enters the architecture
   without four answers: the problem it solves, the failure it prevents, the cost
   it adds, and evidence from two independent projects. Five candidate components
   were refused on that rule and parked in a waiting list with the conditions that
   would let them in written down.
-- **turkce-ajanlar** — eight Turkish-speaking sub-agents, three slash commands,
+- **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** — eight Turkish-speaking sub-agents, three slash commands,
   two skills, a format hook, and an eval suite that caught the agents disobeying
   a rule they had been given.
 - **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server
@@ -128,7 +123,7 @@ through the same fixture its tests use. That run scored 446.</sub></p>
 
 <img src="assets/principles.svg" alt="Four working rules and the evidence behind each" width="100%">
 
-<p align="center"><sub><a href="TESTLER.md">Where the 2.057 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
+<p align="center"><sub><a href="TESTLER.md">Where the 2.165 comes from</a> — every count above traced to the suite run that printed it.</sub></p>
 
 <p align="center">
   <a href="https://github.com/Furkiozknn">
