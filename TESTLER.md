@@ -1,6 +1,6 @@
-# Where the 2,165 comes from
+# Where the 2,168 comes from
 
-The hero image on this profile claims 2,165 tests across 16 repositories.
+The hero image on this profile claims 2,168 tests across 16 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -27,14 +27,14 @@ moved since the 14 September measurement.
 | [masal](https://github.com/Furkiozknn/masal) | 92 | +3 | `node --test`: `pass 92` |
 | [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar) | 92 | — | 27 validator + 32 export + 33 format checks |
 | [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 86 | — | `86 passed` |
-| [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) | 77 | +10 | `77 passed` |
+| [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) | 80 | +13 | `80 passed` |
 | [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) | 74 | +12 | `74 passed` |
 | [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) | 72 | — | `72 passed` |
 | [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 61 | +3 | `61 passed` |
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 50 | +12 | `50 passed, 14 skipped` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | +2 | `35 passed, 2 skipped` |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | — | `28 passed` (Playwright) |
-| **Total** | **2,165** | **+108** | |
+| **Total** | **2,168** | **+111** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s 14 skips are the embedding-model tests, which need
@@ -42,7 +42,7 @@ a model download the CI runner does not do — the repository's own README says
 so too.
 
 Not in the table: [claude-quota-monitor](https://github.com/Furkiozknn/claude-quota-monitor)
-(30 passing tests, but superseded by `claude-code-intelligence` and not
+(43 passing tests, but superseded by `claude-code-intelligence` and not
 actively developed), [lumen](https://github.com/Furkiozknn/lumen) (a prototype
 with a single headless-GDScript harness) and
 [godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon) (two starter

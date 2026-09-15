@@ -1,4 +1,4 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 16 repos, 2,165 tests, 569 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 16 repos, 2,168 tests, 569 commits." width="100%">
 
 I build the infrastructure AI agents run on — async job contracts, pipeline DAGs, MCP servers — and the tooling that checks whether any of it actually works.
 
@@ -18,7 +18,7 @@ Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-dr
 
 <p align="center"><sub>A real session, captured by a script in that repo. Typing “ücretsiz tuvalet” takes 167,829 places down to the 19 nearest free toilets.</sub></p>
 
-**[2,165 tests across 16 repositories](TESTLER.md)** — and that link is the point: every count on this page is traced to the suite run that printed it. No generated stat cards here. A number is checkable or it isn't on the page.
+**[2,168 tests across 16 repositories](TESTLER.md)** — and that link is the point: every count on this page is traced to the suite run that printed it. No generated stat cards here. A number is checkable or it isn't on the page.
 
 > **Available for remote contract work** — MCP and agent infrastructure, and turning code that works into code that ships. Remote, Türkiye, European hours. **[What I can be hired for, and what it costs →](HIRE.md)**
 
@@ -70,7 +70,7 @@ Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-dr
 
 <p align="center">
   <sub>
-    <a href="TESTLER.md">Where the 2,165 comes from</a> ·
+    <a href="TESTLER.md">Where the 2,168 comes from</a> ·
     <a href="HIRE.md">Hire me</a> ·
     <a href="https://x.com/furkiozkan">@furkiozkan</a>
   </sub>
