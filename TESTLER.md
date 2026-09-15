@@ -1,6 +1,6 @@
-# Where the 2.165 comes from
+# Where the 2,165 comes from
 
-The hero image on this profile claims 2.165 tests across 16 repositories.
+The hero image on this profile claims 2,165 tests across 16 repositories.
 This file is that claim, broken down, so you can check it instead of
 believing it.
 
@@ -9,7 +9,7 @@ the end of a run — not a count of `def test_` or `it(` in the source. Those
 two disagree, sometimes badly: `buradane`'s backend has 68 test functions and
 96 test cases, `mini-creative-toolkit` has 208 functions and 326 cases,
 because parametrised tests expand at collection time. An earlier version of
-the hero said "1.426 tests" and was wrong in both directions, having been
+the hero said "1,426 tests" and was wrong in both directions, having been
 produced by grepping the tree.
 
 Measured 15 September 2026, after an audit pass that fixed bugs in 14 of
@@ -34,7 +34,7 @@ moved since the 14 September measurement.
 | [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 50 | +12 | `50 passed, 14 skipped` |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | +2 | `35 passed, 2 skipped` |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | — | `28 passed` (Playwright) |
-| **Total** | **2.165** | **+108** | |
+| **Total** | **2,165** | **+108** | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s 14 skips are the embedding-model tests, which need
