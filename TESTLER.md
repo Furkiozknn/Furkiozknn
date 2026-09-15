@@ -54,9 +54,16 @@ profile README.
 **16 projects.** The sixteen listed above — everything the profile page
 describes. All of them are public.
 
-**569 commits.** `git rev-list --count HEAD`, summed over those same 16
+**622 commits.** `git rev-list --count HEAD`, summed over those same 16
 repositories, on 15 September 2026. This repository's own commits are not
 included.
+
+This figure was published as 569 for part of that day. The count had been
+taken from local clones that had not been fetched, so the merge commits
+created on GitHub when pull requests were merged there were missing from
+every local history. Re-measured after `git fetch`, with each repository
+confirmed level with its remote, the number is 622. It is the kind of error
+this file exists to catch, and it is the third one caught so far.
 
 ## Recheck it yourself
 

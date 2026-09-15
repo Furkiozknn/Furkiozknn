@@ -1,4 +1,4 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 16 repos, 2,168 tests, 569 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 16 repos, 2,168 tests, 622 commits." width="100%">
 
 I build the infrastructure AI agents run on — async job contracts, pipeline DAGs, MCP servers — and the tooling that checks whether any of it actually works.
 
@@ -26,7 +26,7 @@ Or skip the reading and **[play nova-drift](https://furkiozknn.github.io/nova-dr
 
 ## How I work
 
-**Tests before claims.** Every count here is re-derived, not remembered. This page itself has lost two numbers that way: a "1,426 tests" figure that turned out to be a grep rather than a suite, and a 1.4 MB load that measured 0.7 MB.
+**Tests before claims.** Every count here is re-derived, not remembered. This page itself has lost three numbers that way: a "1,426 tests" figure that turned out to be a grep rather than a suite, a 1.4 MB load that measured 0.7 MB, and a commit count taken from clones that had not been fetched, which undercounted by 53.
 
 **Hermetic CI.** Suites run offline, so a CDN outage cannot redden a build. The gate is tested too — `ajans-os` plants a deliberate violation in its own tree and fails if its validator misses it.
 
