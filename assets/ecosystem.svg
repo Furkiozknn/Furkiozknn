@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-label="How the repositories fit together: a verification layer that checks the other repositories, a generation pipeline of four tools around one gateway contract, a set of MCP servers, the Godot games and web apps, and a metadata file in every repository that a daily audit re-derives">
+<defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#17161d"/><stop offset="60%" stop-color="#0e0d12"/><stop offset="100%" stop-color="#0b0b0f"/></linearGradient><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6b6b77"/></marker></defs>
+<rect width="1200" height="660" fill="url(#bg)"/>
+<text x="40" y="52" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" font-size="26" fill="#c9a961">How these repositories hold each other up</text>
+<text x="41" y="78" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" fill="#9a9aa6">Grouped by what they do, not by when they were written. Every number below is one this account can re-derive.</text>
+<rect x="40" y="100" width="1120" height="104" rx="14" fill="#101016" stroke="#242430"/>
+<rect x="40" y="100" width="1120" height="3" rx="1.5" fill="#4ade9e" opacity="0.7"/>
+<text x="58" y="130" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#4ade9e">Tools that check other work — each one calibrated against real outside projects</text>
+<rect x="150" y="136" width="91" height="32" rx="9" fill="#141419" stroke="#4ade9e" stroke-opacity="0.55"/>
+<text x="195" y="157" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#4ade9e">repo-vet</text>
+<text x="195" y="186" text-anchor="middle" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">GitHub repositories</text>
+<rect x="424" y="136" width="83" height="32" rx="9" fill="#141419" stroke="#4ade9e" stroke-opacity="0.55"/>
+<text x="465" y="157" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#4ade9e">mcp-vet</text>
+<text x="465" y="186" text-anchor="middle" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">MCP servers, before you install one</text>
+<rect x="665" y="136" width="140" height="32" rx="9" fill="#141419" stroke="#4ade9e" stroke-opacity="0.55"/>
+<text x="735" y="157" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#4ade9e">godot-refcheck</text>
+<text x="735" y="186" text-anchor="middle" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">Godot 3 and 4 projects</text>
+<rect x="894" y="136" width="222" height="32" rx="9" fill="#141419" stroke="#4ade9e" stroke-opacity="0.55"/>
+<text x="1005" y="157" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#4ade9e">claude-code-intelligence</text>
+<text x="1005" y="186" text-anchor="middle" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">token spend, locally</text>
+<rect x="40" y="246" width="360" height="250" rx="14" fill="#101016" stroke="#242430"/>
+<rect x="40" y="246" width="360" height="3" rx="1.5" fill="#c9a961" opacity="0.7"/>
+<text x="58" y="276" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#c9a961">Generation pipeline</text>
+<rect x="70" y="290" width="300" height="32" rx="9" fill="#141419" stroke="#c9a961" stroke-opacity="0.6"/>
+<text x="220" y="311" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#c9a961">ai-job-gateway</text>
+<text x="220" y="338" text-anchor="middle" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">one async job contract, over HTTP</text>
+<path d="M58 356 L58 452" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1.4"/>
+<path d="M58 360 L70 360" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1.4"/>
+<text x="78" y="364" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">prompt-template-manager</text>
+<text x="78" y="377" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="10.5" fill="#6b6b77">templates in git</text>
+<path d="M58 390 L70 390" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1.4"/>
+<text x="78" y="394" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">ai-workflow-engine</text>
+<text x="78" y="407" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="10.5" fill="#6b6b77">pipelines as YAML DAGs</text>
+<path d="M58 420 L70 420" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1.4"/>
+<text x="78" y="424" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">model-comparison-harness</text>
+<text x="78" y="437" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="10.5" fill="#6b6b77">N backends at once</text>
+<path d="M58 450 L70 450" stroke="#c9a961" stroke-opacity="0.3" stroke-width="1.4"/>
+<text x="78" y="454" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">asset-provenance-toolkit</text>
+<text x="78" y="467" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="10.5" fill="#6b6b77">provenance inside the file</text>
+<text x="70" y="482" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">coupled only by that contract — no shared Python dependency</text>
+<rect x="420" y="246" width="360" height="250" rx="14" fill="#101016" stroke="#242430"/>
+<rect x="420" y="246" width="360" height="3" rx="1.5" fill="#6cb6ff" opacity="0.7"/>
+<text x="438" y="276" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#6cb6ff">MCP servers, and a census of them</text>
+<text x="450" y="502" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77"></text>
+<text x="450" y="306" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">mini-creative-toolkit</text>
+<text x="452" y="321" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">23 CPU-first media tools</text>
+<text x="450" y="340" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">local-notes-search-mcp</text>
+<text x="452" y="355" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">your own files, no network</text>
+<text x="450" y="374" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">nvidia-nim-mcp</text>
+<text x="452" y="389" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">seven tools on a free tier</text>
+<text x="450" y="408" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">voice-io-mcp</text>
+<text x="452" y="423" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">speech in and out, no key</text>
+<text x="450" y="442" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">mcp-census</text>
+<text x="452" y="457" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">how many servers are there, really</text>
+<rect x="800" y="246" width="360" height="250" rx="14" fill="#101016" stroke="#242430"/>
+<rect x="800" y="246" width="360" height="3" rx="1.5" fill="#e19bd0" opacity="0.7"/>
+<text x="818" y="276" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#e19bd0">Things you can open and use</text>
+<text x="830" y="306" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">nova-drift</text>
+<text x="832" y="321" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">browser space-runner, live</text>
+<text x="830" y="340" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">buradane</text>
+<text x="832" y="355" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">167,829 OpenStreetMap places</text>
+<text x="830" y="374" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">masal</text>
+<text x="832" y="389" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">a bedtime story, live</text>
+<text x="830" y="408" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">turkce-ajanlar</text>
+<text x="832" y="423" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">70 sub-agents, searchable</text>
+<text x="830" y="442" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">4 Godot games + a starter</text>
+<text x="832" y="457" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">853, 841, 460 and 115 checks</text>
+<path d="M220 206 L220 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+<path d="M600 206 L600 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+<path d="M980 206 L980 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+<rect x="40" y="540" width="1120" height="84" rx="14" fill="#101016" stroke="#242430"/>
+<rect x="40" y="540" width="1120" height="3" rx="1.5" fill="#c9a961" opacity="0.7"/>
+<text x="58" y="570" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#c9a961">project-meta.json in all 26 repositories</text>
+<text x="1138" y="570" text-anchor="end" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#4ade9e">last audit: 26 repositories, 0 findings</text>
+<text x="62" y="590" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="12.5" fill="#c7c2b6">One schema, one validator, and an audit that runs every morning over the GitHub API.</text>
+<text x="62" y="609" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="12.5" fill="#c7c2b6">It re-derives every published number from the run that printed it, and opens an issue the day a repository drifts.</text>
+<path d="M220 496 L220 534" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+<path d="M600 496 L600 534" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+<path d="M980 496 L980 534" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
+</svg>

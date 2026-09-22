@@ -70,13 +70,33 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 ---
 
+## ▸ This is one system, not twenty-six side projects
+
+![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
+
+<sub>Four repositories share one job contract and no Python dependency. Four more exist to check work — a repository's README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. Underneath all of them, one metadata schema and one audit that runs every morning.</sub>
+
+---
+
 ## ▸ Start here
 
-> **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Every claim carries a file and a line, it reads the code rather than the star count, and **it never executes what it audits**. Standard library only, zero dependencies. <sub>`289 tests`</sub>
+> 🛡️ **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Every claim carries a file and a line, it reads the code rather than the star count, and **it never executes what it audits**. Standard library only, zero dependencies. <sub>`289 tests`</sub>
 >
-> **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`324 tests`</sub>
+> 🧩 **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — Godot names a broken reference only when that scene loads, and a dead signal connection never. This finds both without opening the editor, and **repairs the ones with a single provable answer**. Checked against **237 real Godot projects** and against a headless engine. <sub>`107 tests`</sub>
 >
-> **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that **never phones home**. <sub>`261 tests`</sub>
+> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise: it tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on **30 public repositories** so it stays quiet on the ones that work. <sub>`97 tests`</sub>
+>
+> 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`324 tests`</sub>
+>
+> 📊 **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that **never phones home**. <sub>`261 tests`</sub>
+
+<p align="center">
+  <a href="https://github.com/Furkiozknn/godot-refcheck">
+    <img src="https://raw.githubusercontent.com/Furkiozknn/godot-refcheck/main/assets/demo.gif" alt="godot-refcheck finding three broken references in a Godot project, repairing them with --fix, and finding nothing on the next run" width="760">
+  </a>
+</p>
+
+<p align="center"><sub><b>A real run, on a fixture committed in that repository.</b> Three references broken by a moved folder, three repairs, then a clean pass — and a headless Godot agrees before and after.</sub></p>
 
 ---
 

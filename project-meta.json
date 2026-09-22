@@ -36,7 +36,9 @@
   ],
   "media": {
     "hero": "assets/hero.svg",
-    "screenshots": [],
+    "screenshots": [
+      "assets/ecosystem.svg"
+    ],
     "gifs": [],
     "videos": []
   },
