@@ -1,0 +1,790 @@
+{
+  "kanca": {
+    "status": "active",
+    "category": "game",
+    "platform": [
+      "windows",
+      "web"
+    ],
+    "technologies": [
+      "Godot 4.7",
+      "GDScript",
+      "GL Compatibility renderer"
+    ],
+    "key_features": [
+      "Swing physics with no jump button: hook a ceiling anchor, swing, release at the right moment and keep the momentum",
+      "14 hand-built levels; medal times on 13 of them measured by a scripted bot rather than guessed",
+      "All sprites generated from code (tools/sprite_uret.gd), so the art is reproducible from the repository",
+      "Single-finger control scheme for touch, documented alongside the keyboard layout"
+    ],
+    "tests": {
+      "count": 115,
+      "source": "CI log: `=== 115/115 gecti ===`",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "One key. One rope. All the momentum you can carry.",
+      "hashtags": [
+        "godot",
+        "godot4",
+        "indiedev",
+        "gamedev",
+        "platformer"
+      ]
+    }
+  },
+  "derin-kazi": {
+    "status": "active",
+    "category": "game",
+    "platform": [
+      "windows",
+      "web"
+    ],
+    "technologies": [
+      "Godot 4.7",
+      "GDScript",
+      "GL Compatibility renderer"
+    ],
+    "key_features": [
+      "Dig-sell-upgrade loop across five underground layers down to the core at 250 m",
+      "Fuel is the timer: every descent is a bet on getting back up before it runs out",
+      "Seeded worlds - a daily world and a Deep Mode built from the same seed code",
+      "Earthquakes, exploration fog and depth ambience that change how the layers read"
+    ],
+    "tests": {
+      "count": 460,
+      "source": "CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`)",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "Mine deeper, or make it back up. The fuel gauge decides.",
+      "hashtags": [
+        "godot",
+        "godot4",
+        "indiedev",
+        "gamedev",
+        "miningame"
+      ]
+    }
+  },
+  "yercekimi-cevir": {
+    "status": "active",
+    "category": "game",
+    "platform": [
+      "windows",
+      "web"
+    ],
+    "technologies": [
+      "Godot 4.7",
+      "GDScript",
+      "GL Compatibility renderer"
+    ],
+    "key_features": [
+      "No jump button: one key flips gravity and you fall onto the ceiling",
+      "20 hand-built precision rooms, each with its own medal times",
+      "Ghost race, level-of-the-day and streak tracking built on recorded runs",
+      "Left-handed layout, storm mode and readability options as first-class settings"
+    ],
+    "tests": {
+      "count": 841,
+      "source": "CI log: `841 dogrulama, 0 hata` / `TESTLER GECTI`",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "There is no jump button. There is only which way is down.",
+      "hashtags": [
+        "godot",
+        "godot4",
+        "indiedev",
+        "gamedev",
+        "precisionplatformer"
+      ]
+    }
+  },
+  "tek-tus-kosu": {
+    "status": "active",
+    "category": "game",
+    "platform": [
+      "windows",
+      "web"
+    ],
+    "technologies": [
+      "Godot 4.7",
+      "GDScript",
+      "GL Compatibility renderer"
+    ],
+    "key_features": [
+      "One-button endless rooftop runner: the only input is when to press",
+      "Rhythm mode lays every obstacle on the music's beat grid instead of a random spacer",
+      "Post-run timing histogram shows how early or late each press landed",
+      "Daily run seeded from the date, so every player gets the same rooftops"
+    ],
+    "tests": {
+      "count": 853,
+      "source": "CI log: `=== SONUC: 853 gecti, 0 hata ===`",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "One button. Every obstacle on the beat.",
+      "hashtags": [
+        "godot",
+        "godot4",
+        "indiedev",
+        "gamedev",
+        "rhythmgame"
+      ]
+    }
+  },
+  "mcp-census": {
+    "status": "active",
+    "category": "research",
+    "platform": [
+      "cli"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "zero runtime dependencies"
+    ],
+    "key_features": [
+      "Asks the official MCP Registry the same question three ways and shows why the three answers differ",
+      "Finds that roughly a quarter of registry entries have no source code to read",
+      "Measures the count over time instead of quoting a single snapshot",
+      "Reproducible: the sample data and the fetch/analyse pipeline are both in the repository"
+    ],
+    "tests": {
+      "count": 44,
+      "source": "CI log: `44 passed`",
+      "measured": "2026-09-21"
+    },
+    "social": {
+      "headline": "How many MCP servers are there? Ask three ways, get three numbers.",
+      "hashtags": [
+        "mcp",
+        "modelcontextprotocol",
+        "opensource",
+        "datascience"
+      ]
+    }
+  },
+  "ajans-os": {
+    "status": "active",
+    "category": "agent-infrastructure",
+    "platform": [
+      "node"
+    ],
+    "technologies": [
+      "Node.js 22+",
+      "JavaScript",
+      "JSON Schema",
+      "zero dependencies"
+    ],
+    "key_features": [
+      "Built research-first: 40 agent projects read with file:line evidence before a line was written",
+      "11 architecture decision records, 6 machine-readable contracts, 13 modules",
+      "Acceptance run is killed mid-task, reloaded from disk and resumed - then checked that no side effect repeated",
+      "The gate tests itself: a deliberate violation is planted in the tree and CI fails if the validator misses it"
+    ],
+    "tests": {
+      "count": 142,
+      "source": "`node --test`: `pass 142`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "An agency OS whose strongest test is being killed mid-task and resumed.",
+      "hashtags": [
+        "aiagents",
+        "nodejs",
+        "architecture",
+        "opensource"
+      ]
+    }
+  },
+  "turkce-ajanlar": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "claude-code",
+      "cursor",
+      "opencode",
+      "github-copilot",
+      "codex"
+    ],
+    "technologies": [
+      "Claude Code plugin",
+      "Node.js",
+      "Markdown agent definitions"
+    ],
+    "key_features": [
+      "70 sub-agents that think in Turkish rather than translate into it",
+      "Encodes the traps that actually bite on Turkish Windows: no && in PowerShell 5.1, cp1254 killing a tool before its first line, heredocs eating backslashes",
+      "3 commands, 2 skills and an eval suite alongside the agents",
+      "One source of truth, exported to Cursor, OpenCode, Copilot and Codex; CI fails if the web UI drifts from the agent files"
+    ],
+    "tests": {
+      "count": 92,
+      "source": "27 validator + 32 export + 33 format checks",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "70 Claude Code sub-agents that think in Turkish, not translate into it.",
+      "hashtags": [
+        "claudecode",
+        "aiagents",
+        "turkce",
+        "devtools"
+      ]
+    }
+  },
+  "mcp-vet": {
+    "status": "active",
+    "category": "security-tool",
+    "platform": [
+      "cli",
+      "claude-code-skill"
+    ],
+    "technologies": [
+      "Python 3.9-3.13",
+      "zero dependencies",
+      "MCP"
+    ],
+    "key_features": [
+      "Reads an MCP server's source before you install it - 31 rules across tool poisoning, exfiltration paths, install hooks and registry provenance",
+      "Every finding is quoted with file:line, so a claim can be checked rather than believed",
+      "Never executes what it audits",
+      "JSON output and a CI mode, plus a version diff between two releases of the same server"
+    ],
+    "tests": {
+      "count": 289,
+      "source": "`289 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "An MCP tool description is read on every call. Nobody scrolls past it. mcp-vet does.",
+      "hashtags": [
+        "mcp",
+        "security",
+        "supplychain",
+        "aiagents"
+      ]
+    }
+  },
+  "model-comparison-harness": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli",
+      "library"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "CLI: mch"
+    ],
+    "key_features": [
+      "Fires one request at N model backends at once and puts latency, success and output side by side",
+      "--rubric adds a judge model returning pass/fail, a 0-1 score and a reason, so quality is compared too",
+      "Every failure carries an error_type a script can branch on",
+      "Usable as a library, with a documented path for writing a new backend type"
+    ],
+    "tests": {
+      "count": 74,
+      "source": "`74 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "One prompt, N providers, one report - and a judge model scoring each answer.",
+      "hashtags": [
+        "llm",
+        "evaluation",
+        "python",
+        "devtools"
+      ]
+    }
+  },
+  "ai-workflow-engine": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli",
+      "library"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "YAML",
+      "DAG scheduling"
+    ],
+    "key_features": [
+      "A pipeline is a plain YAML DAG in git, not a diagram in a visual editor",
+      "Validated before it runs: a step reading another step's result without declaring the dependency is rejected at load time, typo and all",
+      "Layers run concurrently, capped and backed off, so width never becomes a burst",
+      "Known v1 limitations are written down in the README rather than discovered later"
+    ],
+    "tests": {
+      "count": 72,
+      "source": "`72 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Your pipeline is a YAML DAG in git - and it fails at load time, not at 3am.",
+      "hashtags": [
+        "python",
+        "orchestration",
+        "gitops",
+        "devtools"
+      ]
+    }
+  },
+  "claude-code-intelligence": {
+    "status": "active",
+    "category": "observability",
+    "platform": [
+      "cli",
+      "local-dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "OpenTelemetry/OTLP",
+      "local-first"
+    ],
+    "key_features": [
+      "Where the tokens went, what it cost, and when the limit resets",
+      "Every number carries an evidence class - observed, derived or estimated - and one that fails the reconciliation gate is not printed at all",
+      "No prompt, response or file content is defined in any type, so a privacy review is a grep",
+      "Local-first: an OTLP receiver and transcript parser that never phone home"
+    ],
+    "tests": {
+      "count": 261,
+      "source": "`261 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Where the tokens went, what it cost, when the limit resets - measured, not guessed.",
+      "hashtags": [
+        "claudecode",
+        "observability",
+        "opentelemetry",
+        "python"
+      ]
+    }
+  },
+  "prompt-template-manager": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli",
+      "library"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "Jinja2 SandboxedEnvironment",
+      "CLI: ptm"
+    ],
+    "key_features": [
+      "Templates as plain YAML, so a prompt change is a diff in a pull request rather than a database row",
+      "Rendered through Jinja's SandboxedEnvironment with StrictUndefined: a typo'd variable fails loudly instead of rendering blank",
+      "A ${var} form that keeps an integer an integer instead of stringifying it",
+      "Works as a CLI and as a library, with the security model documented"
+    ],
+    "tests": {
+      "count": 61,
+      "source": "`61 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Your prompts deserve git diff, not a database row.",
+      "hashtags": [
+        "llmops",
+        "promptengineering",
+        "python",
+        "gitops"
+      ]
+    }
+  },
+  "Furkiozknn": {
+    "status": "active",
+    "category": "profile",
+    "platform": [
+      "github"
+    ],
+    "technologies": [
+      "hand-written SVG",
+      "Markdown"
+    ],
+    "key_features": [
+      "Source of the GitHub profile README",
+      "Every number on the page is traced to the suite run that printed it (TESTLER.md)",
+      "Hand-written SVG hero, no generated stat cards"
+    ],
+    "tests": null,
+    "social": {
+      "headline": "A profile page where every number is checkable.",
+      "hashtags": [
+        "github",
+        "opensource"
+      ]
+    }
+  },
+  "asset-provenance-toolkit": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli",
+      "library"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "PNG text chunks",
+      "JPEG APP1 markers"
+    ],
+    "key_features": [
+      "Which model, provider, parameters and job made this file - written into the file itself, so the record outlives the database row",
+      "PNG gets a lossless text chunk; JPEG gets a private APP1 marker spliced into container bytes with no re-encoding",
+      "Anything else gets a sidecar file rather than a silent failure",
+      "Honest about what C2PA does that this does not"
+    ],
+    "tests": {
+      "count": 86,
+      "source": "`86 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Provenance that lives in the file, not in a database row you will lose.",
+      "hashtags": [
+        "provenance",
+        "c2pa",
+        "aitransparency",
+        "python"
+      ]
+    }
+  },
+  "ai-job-gateway": {
+    "status": "active",
+    "category": "backend-service",
+    "platform": [
+      "http-api",
+      "library"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "FastAPI",
+      "webhooks"
+    ],
+    "key_features": [
+      "The async job contract fal.ai, Black Forest Labs and RunPod each arrived at independently, as one hardened reference server: submit, poll, webhook",
+      "Idempotency keys that survive a restart",
+      "SSRF-guarded signed webhooks",
+      "Expiry as a status you can read rather than a silent 404"
+    ],
+    "tests": {
+      "count": 156,
+      "source": "CI log: `156 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Submit, poll, webhook - the async job contract three providers converged on.",
+      "hashtags": [
+        "fastapi",
+        "python",
+        "backend",
+        "generativeai"
+      ]
+    }
+  },
+  "godot-2d-sablon": {
+    "status": "active",
+    "category": "template",
+    "platform": [
+      "godot"
+    ],
+    "technologies": [
+      "Godot 4.7",
+      "GDScript",
+      "GL Compatibility renderer"
+    ],
+    "key_features": [
+      "Two starter projects that already feel right to play: top-down with 8-way accelerated movement, side-view with coyote time, jump buffering and variable jump height",
+      "The feel is measured, not guessed: jump curves come from running the real _physics_process at the project's 60 Hz fixed step",
+      "GL Compatibility throughout, so it runs on integrated graphics",
+      "Export settings and project layout documented, ready to fork"
+    ],
+    "tests": null,
+    "social": {
+      "headline": "Two Godot 4 starters whose jump feel was measured, not guessed.",
+      "hashtags": [
+        "godot",
+        "godot4",
+        "gamedev",
+        "template"
+      ]
+    }
+  },
+  "claude-quota-monitor": {
+    "status": "archived",
+    "category": "observability",
+    "platform": [
+      "cli",
+      "local-dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "local web dashboard"
+    ],
+    "key_features": [
+      "Superseded early prototype of Claude Code quota tracking",
+      "The maintained implementation lives in claude-code-intelligence"
+    ],
+    "tests": {
+      "count": 43,
+      "source": "suite run before archiving",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Archived prototype - see claude-code-intelligence instead.",
+      "hashtags": [
+        "claudecode",
+        "archived"
+      ]
+    }
+  },
+  "buradane": {
+    "status": "active",
+    "category": "web-app",
+    "platform": [
+      "web",
+      "http-api"
+    ],
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "MapLibre",
+      "FastAPI",
+      "PostGIS",
+      "Python"
+    ],
+    "key_features": [
+      "167,829 real OpenStreetMap places across all 81 provinces of Turkiye",
+      "Pulled from each province's true boundary, not a box around its capital, so all 973 district centres have data within 15 km",
+      "Bearing, distance and a one-tap 'still here?' on every result",
+      "ODbL data and MIT code split explicitly in a NOTICE file"
+    ],
+    "tests": {
+      "count": 324,
+      "source": "96 backend (CI log) + 228 frontend (vitest)",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "What do I need, and where is the nearest one? 167,829 places, all 81 provinces.",
+      "hashtags": [
+        "openstreetmap",
+        "civictech",
+        "nextjs",
+        "postgis",
+        "turkiye"
+      ]
+    }
+  },
+  "masal": {
+    "status": "active",
+    "category": "web-app",
+    "platform": [
+      "web"
+    ],
+    "technologies": [
+      "vanilla JavaScript",
+      "SVG",
+      "no build step",
+      "GitHub Pages"
+    ],
+    "key_features": [
+      "A bedtime story written around one child's name, age and hometown",
+      "The colouring page is drawn into the story as vectors, so it fills cleanly instead of smudging past the outline",
+      "Six themes and a branch on page three - twelve readings",
+      "Turkish suffix engine gets the name right where template substitution never could; no photo upload, no download, no API key"
+    ],
+    "tests": {
+      "count": 92,
+      "source": "`node --test`: `pass 92`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "A bedtime story written around your child's name - and a colouring page drawn into it.",
+      "hashtags": [
+        "javascript",
+        "svg",
+        "kids",
+        "turkce",
+        "webapp"
+      ]
+    }
+  },
+  "local-notes-search-mcp": {
+    "status": "active",
+    "category": "mcp-server",
+    "platform": [
+      "mcp",
+      "cli"
+    ],
+    "technologies": [
+      "Python 3.10+",
+      "sqlite-vec",
+      "multilingual ONNX embeddings",
+      "MCP"
+    ],
+    "key_features": [
+      "Ask your own files a question in plain language instead of guessing the keyword you typed six months ago",
+      "Semantic search as an MCP server: sqlite-vec plus a multilingual ONNX model, with incremental re-indexing",
+      "Answers returned as file:line",
+      "No server, no API key, no network at query time; grounded LLM Q&A is opt-in"
+    ],
+    "tests": {
+      "count": 50,
+      "source": "`50 passed, 14 skipped` (skips need a model download CI does not do)",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Ask your own notes a question instead of guessing the keyword.",
+      "hashtags": [
+        "mcp",
+        "semanticsearch",
+        "obsidian",
+        "privacyfirst"
+      ]
+    }
+  },
+  "nvidia-nim-mcp": {
+    "status": "active",
+    "category": "mcp-server",
+    "platform": [
+      "mcp"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "NVIDIA NIM",
+      "Groq",
+      "Mistral",
+      "Gemini",
+      "Cerebras"
+    ],
+    "key_features": [
+      "Seven MCP tools on NVIDIA NIM's free tier: image, vision, translation, chat, content safety, embeddings, plus a health probe that tells you which models are still alive",
+      "Two of the seven need no API key at all",
+      "Falls through to Groq, Mistral, Gemini or Cerebras when a model is rate-limited or quietly retired",
+      "Output files land where you can find them, documented in the README"
+    ],
+    "tests": {
+      "count": 80,
+      "source": "`80 passed`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Seven MCP tools on a free tier - and a fallback chain for when a model quietly dies.",
+      "hashtags": [
+        "mcp",
+        "nvidia",
+        "llm",
+        "freetier"
+      ]
+    }
+  },
+  "nova-drift": {
+    "status": "active",
+    "category": "game",
+    "platform": [
+      "web"
+    ],
+    "technologies": [
+      "JavaScript",
+      "Three.js r160",
+      "WebGL",
+      "Web Audio API",
+      "no build step"
+    ],
+    "key_features": [
+      "Endless browser space-runner with real Three.js bloom post-processing and hand-written particles",
+      "Audio engine synthesized live in Web Audio - not one sound file in the repository",
+      "Skim an obstacle without touching it and take the near-miss bonus",
+      "A daily run seeded from the UTC date deals every player the same obstacles; 0.7 MB first load, no build step"
+    ],
+    "tests": {
+      "count": 28,
+      "source": "`28 passed` (Playwright)",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "0.7 MB, no build step, real bloom - and every sound synthesized on the fly.",
+      "hashtags": [
+        "threejs",
+        "webgl",
+        "gamedev",
+        "javascript",
+        "webaudio"
+      ]
+    }
+  },
+  "mini-creative-toolkit": {
+    "status": "active",
+    "category": "mcp-server",
+    "platform": [
+      "mcp",
+      "cli"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "Pillow",
+      "FFmpeg",
+      "CPU-only"
+    ],
+    "key_features": [
+      "23 CPU-first media tools behind one MCP server: background removal, EXIF/GPS stripping, resize, thumbnails, GIFs, video trim",
+      "22 of them report \"network\": \"none\" in their own response payload rather than in a README",
+      "A test fails if any other module ever imports an HTTP client",
+      "No GPU and no paid API; rembg's CC-BY-NC default model is refused unless you opt in knowingly"
+    ],
+    "tests": {
+      "count": 326,
+      "source": "`326 passed, 1 skipped`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "23 media tools that prove they are offline in their own response payload.",
+      "hashtags": [
+        "mcp",
+        "ffmpeg",
+        "imageprocessing",
+        "offlinefirst"
+      ]
+    }
+  },
+  "voice-io-mcp": {
+    "status": "active",
+    "category": "mcp-server",
+    "platform": [
+      "mcp"
+    ],
+    "technologies": [
+      "Python 3.10+",
+      "Kokoro-82M",
+      "faster-whisper",
+      "Groq"
+    ],
+    "key_features": [
+      "Speech in and speech out, needing no API key at all",
+      "Groq's free hosted tier when a key is set; Kokoro-82M and faster-whisper locally when it is not",
+      "Transcription checks extension and size before it ever opens the file, so 'transcribe the audio at .env' is refused locally instead of uploaded",
+      "4 tools, with known limitations and roadmap written down"
+    ],
+    "tests": {
+      "count": 35,
+      "source": "`35 passed, 2 skipped`",
+      "measured": "2026-09-15"
+    },
+    "social": {
+      "headline": "Speech in, speech out - no API key required, and .env is refused before it opens.",
+      "hashtags": [
+        "mcp",
+        "texttospeech",
+        "whisper",
+        "localfirst"
+      ]
+    }
+  }
+}

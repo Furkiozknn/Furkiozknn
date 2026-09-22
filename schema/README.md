@@ -10,6 +10,26 @@ It exists so that a later tool can answer *"what changed in which project this
 week, and what should be said about it"* without parsing prose, and so that the
 answer is the same everywhere it is asked.
 
+## Producing the files
+
+[`uret.py`](uret.py) writes every repository's `project-meta.json`. It reads
+the mechanical half from the clone and the GitHub API, and the editorial half
+from [`meta-source.json`](meta-source.json) — which lives here, in the
+repository, rather than on one machine.
+
+```bash
+python3 schema/uret.py --kok /where/the/clones/are
+```
+
+That placement is the point. The editorial fields are the half nobody can
+regenerate from code: what a project's three or four real selling points are,
+which test count came from which runner line. Keeping them on a single disk
+made the metadata layer only as durable as that disk. A fresh clone and a
+token now rebuild the whole layer.
+
+A repository with no entry in `meta-source.json` is skipped and named at the
+end, with exit code 1 — so a new project cannot quietly fall out of the layer.
+
 ## The rule the files follow
 
 Mechanical fields are read from the repository itself and from the GitHub API:
