@@ -1,0 +1,51 @@
+name: projeler
+
+# Her deponun kendi project-meta.json'unu tek bir dizine toplar.
+#
+# Bilerek SADECE elle tetikleniyor (workflow_dispatch) ve sonucu depoya
+# COMMIT ETMIYOR. Iki sebep:
+#   1. Islenmis bir projects.json, bir sonraki push'ta eskiyor; eskimis bir
+#      dizin, hic dizin olmamasindan kotudur.
+#   2. Haftalik bir bot commit'i katki grafigini gercek olmayan bir emekle
+#      sisirirdi. Bu hesapta sayilar oyle uretilmiyor.
+#
+# Cikti "Artifacts" altinda indirilebilir bir dosya olarak duruyor; ayni
+# betik yerelde de calisiyor: python3 schema/derle.py
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  derle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
+      - name: Dizini uret
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 schema/derle.py
+
+      - name: Ozet
+        run: |
+          python3 - <<'PY'
+          import json
+          d = json.load(open("schema/projects.json", encoding="utf-8"))
+          print(f"{d['count']} proje, {len(d['missing'])} eksik, uretim {d['generated_at']}")
+          for m in d["missing"]:
+              print("  eksik:", m["id"], "-", m["reason"])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: projects-json
+          path: schema/projects.json
+          if-no-files-found: error

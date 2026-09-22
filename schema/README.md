@@ -28,10 +28,26 @@ does not go in the file.
 
 [`project-meta.schema.json`](project-meta.schema.json) — JSON Schema 2020-12.
 
+## One index across every repository
+
+[`derle.py`](derle.py) reads every public repository's `project-meta.json`
+through the GitHub API and writes a single `schema/projects.json`, adding the
+two facts only the API knows: when each repository was last pushed to, and what
+its newest release is.
+
 ```bash
-# validate one file
-python -c "import json,sys;json.load(open(sys.argv[1]))" path/to/project-meta.json
+python3 schema/derle.py            # writes schema/projects.json
+python3 schema/derle.py --stdout   # prints it instead
 ```
+
+Standard library only, no dependencies. A repository with no `project-meta.json`
+is listed under `missing` with the reason — it is never silently dropped, which
+is the failure mode that would make the index quietly wrong.
+
+`projects.json` is **not committed**: a checked-in copy goes stale the moment
+anything is pushed, and a stale index is worse than no index. Build it when you
+need it, or run the *projeler* workflow from the Actions tab, which runs the
+same script and uploads the result as an artifact.
 
 ## Fields that matter to a reader
 
@@ -41,6 +57,7 @@ python -c "import json,sys;json.load(open(sys.argv[1]))" path/to/project-meta.js
 | `version` | The version the project declares, from its manifest or its newest tag. `null` where it declares none. |
 | `tests` | The count, the runner line it came from, and when it was measured. |
 | `media` | Only assets the README actually shows, as repository-relative paths. |
+| `ci.workflows` | The workflow files that actually exist in the repository. |
 | `social.primary_link` | Where a reader should be sent: the live deployment where there is one, the repository otherwise. |
 
 ## What it deliberately does not contain
