@@ -549,6 +549,35 @@ class KapsamTesti(unittest.TestCase):
         self.assertIn("DEPO_JETONU", denetim.SAYI_BAKILAMADI["x"])
 
 
+class IkiKaynakTesti(unittest.TestCase):
+    """Iki yayimlanan sayi birbirine bakmiyorsa ikisi de dogru sanilir.
+
+    Hub sayfasi depolarin kendi project-meta.json'larindan toplaniyor,
+    profil sayfasi meta-source.json'dan. Her iki tarafin tutarlilik
+    kontrolu de yalniz kendi tarafina bakiyordu, ve ikisi sessizce
+    ayristi.
+    """
+
+    KAYNAK = {"x": {"tests": {"count": 347}}, "y": {"tests": {"count": 5}}}
+
+    def test_ayrisma_bildirilir(self):
+        (m,) = denetim._sayi_ayni_mi("x", {"tests": {"count": 334}}, self.KAYNAK)
+        self.assertIn("334", m)
+        self.assertIn("347", m)
+        self.assertIn("hub", m)
+
+    def test_ayni_sayi_sessiz(self):
+        self.assertEqual(denetim._sayi_ayni_mi("y", {"tests": {"count": 5}}, self.KAYNAK), [])
+
+    def test_kaydi_olmayan_depo_sessiz(self):
+        self.assertEqual(denetim._sayi_ayni_mi("z", {"tests": {"count": 5}}, self.KAYNAK), [])
+
+    def test_sayi_olmayan_taraf_sessiz(self):
+        # Sayi yayimlamayan bir depo "ayrismis" degildir.
+        self.assertEqual(denetim._sayi_ayni_mi("x", {}, self.KAYNAK), [])
+        self.assertEqual(denetim._sayi_ayni_mi("x", {"tests": {"count": None}}, self.KAYNAK), [])
+
+
 class HizSiniriTesti(unittest.TestCase):
     """Hiz siniri "bakilamadi" demek; ne "temiz" ne de "denetimi dusur"."""
 

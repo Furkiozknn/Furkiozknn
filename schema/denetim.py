@@ -263,6 +263,26 @@ def sayilari_bul(metin, desen):
     return [int(m.group(1)) for m in re.finditer(kalip_re, metin or "") if m.groups()]
 
 
+def _sayi_ayni_mi(ad, meta, kaynak):
+    """Deponun kendi project-meta.json'u ile meta-source.json ayni sayiyi mi soyluyor.
+
+    Iki dosya var ve ikisi de yayimlaniyor: hub sayfasi
+    (`veri/projeler.json`) depolarin kendi project-meta.json'larindan
+    toplaniyor, profil sayfasi meta-source.json'dan. Bu kontrol yokken
+    ikisi sessizce ayristi: buradane depoda 334 profilde 347, turkce-ajanlar
+    depoda 111 profilde 160 diyordu -- ve her iki tarafta da tutarlilik
+    kontrolleri yesildi, cunku her biri yalniz KENDI tarafina bakiyordu.
+    Iki yayimlanan sayinin birbirine bakmamasi, tam olarak bir sayinin
+    yanlis olabilecegi yerdir.
+    """
+    a = (meta.get("tests") or {}).get("count")
+    b = ((kaynak.get(ad) or {}).get("tests") or {}).get("count")
+    if not isinstance(a, int) or not isinstance(b, int) or a == b:
+        return []
+    return ["project-meta.json %d diyor, meta-source.json %d -- hub sayfasi "
+            "birincisini, profil sayfasi ikincisini yayimliyor" % (a, b)]
+
+
 def _test_sayisi(ad, dal, meta, akislar):
     """Yayimlanan test sayisi, kosunun bugun yazdigi sayiyla ayni mi.
 
@@ -578,6 +598,8 @@ def _depoyu_olc(r, kaynak):
     else:
         for m in _ayrismalar(meta, r, akislar, kok):
             bulgular.append(("ayrisma", m))
+        for m in _sayi_ayni_mi(ad, meta, kaynak):
+            bulgular.append(("olcum", m))
 
     ana = (meta or {}).get("homepage") or (r.get("homepage") or "").strip() or None
     if ana:
