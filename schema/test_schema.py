@@ -586,6 +586,29 @@ class HizSiniriTesti(unittest.TestCase):
         self.assertEqual(denetim._okunamayan_satiri(), "")
         self.assertIn("28 depo", denetim._rapor([], {}, 28))
 
+    def test_depo_listesi_alinamazsa_yigin_izi_degil_cumle(self):
+        # Olumcul, ama yigin izi basarak degil. Ve nedenini soylemeli:
+        # _get GITHUB_TOKEN/GH_TOKEN okuyor, kosu loglarini okuyan taraf
+        # DEPO_JETONU; yalniz ikincisi tanimliyken istekler kimliksiz gider.
+        import io, os, contextlib
+        gercek = denetim.D._repos
+        denetim.D._repos = lambda: (_ for _ in ()).throw(denetim.D.HizSiniri("x"))
+        eski = {k: os.environ.pop(k, None) for k in ("GITHUB_TOKEN", "GH_TOKEN")}
+        tampon = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(tampon):
+                kod = denetim.main()
+        finally:
+            denetim.D._repos = gercek
+            for k, v in eski.items():
+                if v is not None:
+                    os.environ[k] = v
+        metin = tampon.getvalue()
+        self.assertEqual(kod, 2)
+        self.assertIn("hiz siniri", metin.lower())
+        self.assertIn("KIMLIKSIZ", metin)
+        self.assertIn("GITHUB_TOKEN", metin)
+
 
 class BayatlikTesti(unittest.TestCase):
     """'active' diyen ama aylardir sessiz depo."""

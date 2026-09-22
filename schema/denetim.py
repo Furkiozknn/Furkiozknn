@@ -760,7 +760,22 @@ def _rapor(bulgular, iskeletler, depo_sayisi):
 
 def main():
     kaynak = json.loads(KAYNAK.read_text(encoding="utf-8"))
-    depolar = [r for r in D._repos() if not r.get("fork")]
+    # Depo listesi olmadan denetim diye bir sey yok, yani bu olumcul -- ama
+    # olumcul olmasi yigin izi basmasi anlamina gelmiyor. Ayrica nedeni
+    # soylemek gerekiyor: `_get` GITHUB_TOKEN/GH_TOKEN okuyor, kosu loglarini
+    # okuyan taraf DEPO_JETONU; yalnizca ikincisi tanimliyken istekler
+    # KIMLIKSIZ gidiyor ve saatte 60'ta duruyor. CI'da GITHUB_TOKEN hazir
+    # oldugu icin orada hic gorulmez, yerelde hemen gorulur.
+    try:
+        depolar = [r for r in D._repos() if not r.get("fork")]
+    except D.HizSiniri:
+        kimlikli = bool(os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN"))
+        print("GitHub hiz siniri: depo listesi alinamadi, denetim kosulamadi.")
+        print("Istekler %s gidiyor%s." % (
+            "kimlikli" if kimlikli else "KIMLIKSIZ",
+            "" if kimlikli else " -- GITHUB_TOKEN ya da GH_TOKEN tanimlayin "
+                               "(DEPO_JETONU yalniz kosu loglari icin kullaniliyor)"))
+        return 2
 
     bulgular, iskeletler, metalar = [], {}, {}
     KURULUM_ONBELLEK.clear()
