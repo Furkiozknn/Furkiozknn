@@ -45,7 +45,8 @@
     "workflows": [
       "denetim.yml",
       "haftalik.yml",
-      "projeler.yml"
+      "projeler.yml",
+      "yenile.yml"
     ],
     "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/denetim.yml/badge.svg"
   },
