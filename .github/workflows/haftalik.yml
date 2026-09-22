@@ -1,0 +1,103 @@
+name: haftalik
+
+# "Bu hafta hangi projede ne degisti" sorusunu haftada bir kendisi soruyor.
+#
+# Uc sey yapar:
+#   1. schema/derle.py -- her deponun project-meta.json'unu toplar ve
+#      semaya karsi denetler. Ihlal varsa 1 ile cikar, is kirmizi yanar.
+#   2. schema/haftalik.py -- son 7 gunde gercekten ne olduguna bakar
+#      (conventional commit turune gore commitler, yayimlanan release'ler)
+#      ve hareketi olan her proje icin bir gonderi taslagi uretir.
+#   3. Hareket varsa tek bir "Haftalik ozet" konusuna yorum olarak dusuru.
+#
+# Neden konuya yorum, haftalik yeni konu degil: 52 konu/yil gurultudur.
+# Neden depoya commit degil: islenmis bir ozet bir sonraki push'ta eskir
+# ve bot commit'i katki grafigini gercek olmayan emekle sisirir.
+#
+# Hareket yoksa hicbir sey yazilmaz -- bos bir bildirim bildirim degildir.
+
+on:
+  schedule:
+    # Pazartesi 06:00 UTC. Hafta kapanmis, ozet taze olur.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      gun:
+        description: "Kac gunluk pencere"
+        type: string
+        default: "7"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: haftalik
+  cancel-in-progress: false
+
+jobs:
+  ozet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Bagimlilik yok: betikler yalnizca standart kutuphane kullaniyor.
+      - name: Dizin + sema denetimi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 schema/derle.py
+
+      - name: Haftalik ozet
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GUN: ${{ inputs.gun || '7' }}
+        run: |
+          set -euo pipefail
+          python3 schema/haftalik.py --gun "$GUN" | tee ozet.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: haftalik
+          path: |
+            schema/projects.json
+            schema/hafta.json
+            ozet.txt
+          if-no-files-found: error
+
+      - name: Hareket varsa konuya yorum dus
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          hareket=$(python3 -c "import json;print(len(json.load(open('schema/hafta.json',encoding='utf-8'))['hareketli']))")
+          if [ "$hareket" = "0" ]; then
+            echo "Bu pencerede hareket yok; yorum yazilmiyor."
+            exit 0
+          fi
+
+          baslik="Haftalik ozet"
+          numara=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+                     --search "$baslik in:title" --json number,title \
+                     --jq "[.[] | select(.title == \"$baslik\")] | .[0].number // empty")
+          if [ -z "$numara" ]; then
+            numara=$(gh issue create --repo "$GITHUB_REPOSITORY" --title "$baslik" \
+              --body "Bu konu haftalik ozetleri tutar. Her hafta yeni bir konu acmak yerine buraya yorum dusulur; kapatilirsa bir sonraki kosu yenisini acar." \
+              | sed 's#.*/##')
+            echo "konu acildi: #$numara"
+          fi
+
+          {
+            echo "## $(date -u '+%d %B %Y') — son ${GUN:-7} gun"
+            echo
+            sed -n '1,200p' ozet.txt
+            echo
+            echo "---"
+            echo "<sub>schema/derle.py + schema/haftalik.py, ${GITHUB_RUN_ID} kosusundan. Taslaklar taslak: gonderilmeden once okunmali.</sub>"
+          } > yorum.md
+
+          gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" --body-file yorum.md
+          echo "yorum dusuldu: #$numara"

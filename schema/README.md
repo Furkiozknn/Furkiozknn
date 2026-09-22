@@ -115,6 +115,14 @@ adjective and no number is invented: where there is no data, there is no
 sentence. The drafts are drafts — they are meant to be read before
 anything is posted anywhere.
 
+It runs itself. The `haftalik` workflow fires every Monday at 06:00 UTC: it
+collects the index, validates it against the schema, asks what moved in the
+last seven days, and — **only if something moved** — posts the digest as a
+comment on a single *Haftalik ozet* issue. One issue with a comment history,
+not fifty-two issues a year, and nothing is committed: a processed summary
+goes stale on the next push, and a weekly bot commit would inflate the
+contribution graph with work nobody did.
+
 This is the first real link of `CODE → BUILD → MEDIA → GITHUB → SOCIAL`.
 The last hop needs an account that does not exist yet, so nothing is
 posted and no account is assumed.
