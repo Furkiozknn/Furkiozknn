@@ -32,7 +32,7 @@
 
 <table>
 <tr>
-<td width="50%" valign="top">
+<td width="34%" valign="top">
 
 ### 🚀 [nova-drift →](https://furkiozknn.github.io/nova-drift/)
 
@@ -41,13 +41,20 @@ synthesized audio and a seeded daily run everyone plays the same.
 **0.7 MB first load. No build step.** It is flying before you finish reading this.
 
 </td>
-<td width="50%" valign="top">
+<td width="33%" valign="top">
 
 ### 📖 [masal →](https://furkiozknn.github.io/masal/)
 
 A bedtime story written around **one child's name, age and hometown**, with the
 colouring page drawn into the page itself. A Turkish suffix engine gets the name
 right where template substitution never could — *Sinop* takes `-ta`, *Trabzon* takes `-da`.
+
+</td>
+<td width="33%" valign="top">
+
+### 🇹🇷 [turkce-ajanlar →](https://furkiozknn.github.io/turkce-ajanlar/)
+
+All **70** Claude Code sub-agents, searchable in the browser before you install anything. `/` jumps to the search box, `Enter` opens the first hit. Taking one means copying **one markdown file** into `.claude/agents/`.
 
 </td>
 </tr>
