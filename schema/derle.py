@@ -20,6 +20,7 @@ Only the standard library is used.
 
 import argparse
 import base64
+import importlib.util
 import json
 import os
 import sys
@@ -31,6 +32,22 @@ from pathlib import Path
 OWNER = "Furkiozknn"
 API = "https://api.github.com"
 KOK = Path(__file__).resolve().parent.parent
+SEMA = KOK / "schema" / "project-meta.schema.json"
+
+
+def _sema_denetleyici():
+    """schema/dogrula.py icindeki sema yorumlayicisini odunc alir.
+
+    Ayni kurali iki yerde yazmamak icin: dosyanin kendisi tek kaynak.
+    Bulunamazsa dogrulama atlanir ve bu ciktida yazili olur.
+    """
+    yol = KOK / "schema" / "dogrula.py"
+    if not yol.is_file():
+        return None, None
+    spec = importlib.util.spec_from_file_location("meta_dogrula", yol)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod._sema_dogrula, json.loads(SEMA.read_text(encoding="utf-8"))
 
 
 def _get(url):
@@ -84,7 +101,8 @@ def main():
     ap.add_argument("--stdout", action="store_true")
     args = ap.parse_args()
 
-    projects, missing = [], []
+    denetle, sema = _sema_denetleyici()
+    projects, missing, bozuk = [], [], []
     for r in _repos():
         if r.get("fork"):
             continue
@@ -97,6 +115,16 @@ def main():
         meta["default_branch"] = r["default_branch"]
         meta["open_issues"] = r["open_issues_count"]
         meta["latest_release"] = _release(r["name"])
+        if denetle is not None:
+            # latest_release/pushed_at gibi API alanlari semada yok; sema
+            # denetimi dosyanin kendi alanlari uzerinde yapilir.
+            cikarilan = {k: v for k, v in meta.items()
+                         if k not in ("pushed_at", "default_branch",
+                                      "open_issues", "latest_release")}
+            hatalar = []
+            denetle(cikarilan, sema, "", hatalar)
+            if hatalar:
+                bozuk.append({"id": meta["id"], "hatalar": hatalar})
         projects.append(meta)
 
     projects.sort(key=lambda m: m["pushed_at"], reverse=True)
@@ -108,6 +136,8 @@ def main():
                 "such file is listed under 'missing', not silently dropped.",
         "projects": projects,
         "missing": missing,
+        "schema_violations": bozuk,
+        "schema_checked": denetle is not None,
     }
     text = json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
     if args.stdout:
@@ -115,7 +145,15 @@ def main():
     else:
         out = KOK / "schema" / "projects.json"
         out.write_text(text, encoding="utf-8", newline="\n")
-        print(f"{out}: {len(projects)} proje, {len(missing)} eksik")
+        print(f"{out}: {len(projects)} proje, {len(missing)} eksik, "
+              f"{len(bozuk)} sema ihlali"
+              + ("" if denetle is not None else "  (dogrula.py yok: sema denetimi atlandi)"))
+        for b in bozuk:
+            print(f"  {b['id']}:")
+            for h in b["hatalar"]:
+                print(f"    {h}")
+    if bozuk:
+        return 1
     return 0
 
 

@@ -49,6 +49,32 @@ anything is pushed, and a stale index is worse than no index. Build it when you
 need it, or run the *projeler* workflow from the Actions tab, which runs the
 same script and uploads the result as an artifact.
 
+## Checking the files against the schema — and against the repository
+
+[`dogrula.py`](dogrula.py) validates a `project-meta.json` two ways, because
+schema conformance alone is not much of a guarantee:
+
+1. **Against the schema** — required fields, types, closed object shapes,
+   the `status` enum. The subset of JSON Schema these files use is
+   interpreted directly, so no `jsonschema` install is needed.
+2. **Against the repository** — whether what the file *claims* is actually
+   there: every path under `media` and `docs` resolves to a real file,
+   `ci.workflows` matches the workflow files on disk, `tests` carries a
+   source and a date alongside its count, `id` matches the directory.
+
+```bash
+python3 schema/dogrula.py ../some-repo
+python3 schema/dogrula.py --kok /path/to/all/clones
+```
+
+Exit code 1 on the first error, so it works as a gate. The second check is
+the one that earns its keep: adding a workflow to four repositories left
+their `ci.workflows` lists a step behind, and this is what said so.
+
+`derle.py` runs the schema half over everything it collects and reports
+`schema_violations`; it cannot run the filesystem half, because it reads
+through the API and never has the working tree.
+
 ## What changed this week, and what to say about it
 
 [`haftalik.py`](haftalik.py) answers the question the metadata exists for.

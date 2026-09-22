@@ -1,6 +1,7 @@
 name: projeler
 
-# Her deponun kendi project-meta.json'unu tek bir dizine toplar.
+# Her deponun kendi project-meta.json'unu tek bir dizine toplar ve
+# topladigi her dosyayi semaya karsi denetler.
 #
 # Bilerek SADECE elle tetikleniyor (workflow_dispatch) ve sonucu depoya
 # COMMIT ETMIYOR. Iki sebep:
@@ -11,6 +12,11 @@ name: projeler
 #
 # Cikti "Artifacts" altinda indirilebilir bir dosya olarak duruyor; ayni
 # betik yerelde de calisiyor: python3 schema/derle.py
+#
+# derle.py sema ihlali gorurse 1 ile cikar, yani bu is akisi kirmizi yanar.
+# Dosya sistemi yarisi (medya/docs yollari gercekten var mi) burada
+# kosulamaz: derle.py API uzerinden okuyor, calisma agaci elinde yok.
+# O yarisi icin klonlarin yaninda: python3 schema/dogrula.py --kok <klasor>
 
 on:
   workflow_dispatch:
@@ -29,7 +35,7 @@ jobs:
           python-version: "3.12"
 
       # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
-      - name: Dizini uret
+      - name: Dizini uret ve semaya karsi denetle
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 schema/derle.py
@@ -39,9 +45,13 @@ jobs:
           python3 - <<'PY'
           import json
           d = json.load(open("schema/projects.json", encoding="utf-8"))
-          print(f"{d['count']} proje, {len(d['missing'])} eksik, uretim {d['generated_at']}")
+          print(f"{d['count']} proje, {len(d['missing'])} eksik, "
+                f"{len(d['schema_violations'])} sema ihlali, uretim {d['generated_at']}")
+          print("sema denetimi:", "acik" if d["schema_checked"] else "ATLANDI")
           for m in d["missing"]:
               print("  eksik:", m["id"], "-", m["reason"])
+          for b in d["schema_violations"]:
+              print("  ihlal:", b["id"], b["hatalar"])
           PY
 
       - uses: actions/upload-artifact@v4
