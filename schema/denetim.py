@@ -14,15 +14,18 @@ Depo basina olculenler:
   - hic is akisi var mi
   - varsayilan dalda en son tamamlanan kosular kirmizi mi
   - yayindaki adres (homepage) hala aciliyor mu
+  - (DEPO_JETONU varsa) acik Dependabot uyarisi var mi
 
 Cikti: markdown rapor (stdout) + schema/denetim.json.
 
 Cikis kodu **her zaman 0**. Baska bir deponun eksigi bu deponun CI'ini
 kirmizi yakmaz; sinyal, acilan/guncellenen konudur.
 
-Yalnizca standart kutuphane. Dependabot uyarilari bilerek disarida:
-onlar genel okumaya kapali, GITHUB_TOKEN baska bir depoda goremez;
-goremedigi bir seyi "temiz" diye yazmaktansa hic yazmiyor.
+Yalnizca standart kutuphane. Dependabot uyarilari GITHUB_TOKEN ile baska
+bir depoda okunamaz; o yuzden varsayilan olarak kapsam disi -- goremedigi
+bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_JETONU tanimliysa
+(Dependabot alerts: Read) kapsama giriyor ve denetim.json bunu
+`dependabot_checked` alaninda soyluyor.
 
     GITHUB_TOKEN=... python3 schema/denetim.py
 """
@@ -30,6 +33,7 @@ goremedigi bir seyi "temiz" diye yazmaktansa hic yazmiyor.
 import hashlib
 import importlib.util
 import json
+import os
 import re
 import urllib.error
 import urllib.request
@@ -102,6 +106,41 @@ def _kirmizi_kosular(ad, dal, akislar):
         son.setdefault(k["path"], k)
     return sorted(k["name"] for k in son.values()
                   if k["conclusion"] in ("failure", "timed_out", "startup_failure"))
+
+
+GENIS = os.environ.get("DEPO_JETONU") or ""
+UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
+
+
+def _uyarilar(ad):
+    """Acik Dependabot uyarilari.
+
+    GITHUB_TOKEN bunu baska bir depoda goremez; goremedigi bir seyi
+    "temiz" diye yazmaktansa hic yazmamak dogru. DEPO_JETONU tanimliysa
+    (Dependabot alerts: Read yetkisiyle) kapak aciliyor ve uyarilar da
+    gunluk denetime giriyor. Jeton yoksa None doner -- "uyari yok" degil,
+    "bakilamadi".
+    """
+    if not GENIS:
+        return None
+    istek = urllib.request.Request(
+        f"{API}/repos/{OWNER}/{ad}/dependabot/alerts?state=open&per_page=100",
+        headers={"Accept": "application/vnd.github+json",
+                 "Authorization": f"Bearer {GENIS}",
+                 "User-Agent": "ekosistem-denetim"})
+    try:
+        with urllib.request.urlopen(istek, timeout=30) as r:
+            veri = json.load(r)
+        UYARI_OKUNAN.append(ad)
+        return veri
+    except urllib.error.HTTPError as e:
+        if e.code in (403, 404):
+            # Deponun Dependabot'u kapali ya da jeton yetkisiz. Ikisi de
+            # "uyari yok" degil; bulgu uretmez ama okundu da sayilmaz.
+            return None
+        raise
+    except Exception:
+        return None
 
 
 def _canli_mi(url):
@@ -207,6 +246,15 @@ def _depoyu_olc(r, kaynak):
     if not (r.get("topics") or []):
         bulgular.append(("vitrin", "depo topics bos"))
 
+    uyari = _uyarilar(ad)
+    if uyari:
+        ciddi = [u for u in uyari
+                 if (u.get("security_advisory") or {}).get("severity")
+                 in ("high", "critical")]
+        bulgular.append(("guvenlik", "%d acik Dependabot uyarisi%s"
+                         % (len(uyari),
+                            " (%d high/critical)" % len(ciddi) if ciddi else "")))
+
     if r["archived"]:
         # Arsivli depoda is akisi kosmaz; kirmizi aramak yanlis alarm uretir.
         return bulgular, iskelet, meta
@@ -264,8 +312,10 @@ BASLIK = {
     "vitrin": "Vitrin alani bos",
     "ci": "CI",
     "baglanti": "Yayindaki adres cevap vermiyor",
+    "guvenlik": "Acik guvenlik uyarisi",
 }
-SIRA = ["metadata", "kayit", "ci", "baglanti", "ayrisma", "belge", "vitrin"]
+SIRA = ["metadata", "guvenlik", "kayit", "ci", "baglanti", "ayrisma",
+        "belge", "vitrin"]
 
 
 def _rapor(bulgular, iskeletler, depo_sayisi):
@@ -329,8 +379,11 @@ def main():
         "repo_count": len(depolar),
         "finding_count": len(bulgular),
         "fingerprint": parmak,
-        "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez. "
-                "Dependabot uyarilari kapsam disi: genel okumaya kapali.",
+        "dependabot_checked": len(UYARI_OKUNAN),
+        "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
+                + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
+                   "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "
+                   "onlari baska bir depoda goremiyor."),
         "findings": [{"repo": a, "kind": b, "message": c} for a, b, c in bulgular],
         "onboarding_skeletons": iskeletler,
     }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")

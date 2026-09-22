@@ -1,0 +1,149 @@
+name: yenile
+
+# Metadata katmanini kendi kendine tazeler.
+#
+# Denetim (denetim.yml) ayrismayi GORUYOR ama duzeltemiyor: duzeltmek icin
+# her deponun calisma agaci gerekiyor. Bu is akisi o bosluga bakiyor --
+# butun depolari klonlar, schema/uret.py ile project-meta.json'lari
+# yeniden uretir, schema/dogrula.py kapisindan gecirir ve farki yazar.
+#
+# Iki kipte calisir ve kip, sir olup olmamasina gore KENDILIGINDEN secilir:
+#
+#   DEPO_JETONU yoksa  -> "sadece bak". Klonlamak icin yetki gerekmiyor
+#                         (depolar zaten acik), yani bu kip her zaman
+#                         calisir ve ne degisecegini ozet sayfasina yazar.
+#                         Duzeltme `/meta` ile bu bilgisayardan yurur.
+#   DEPO_JETONU varsa  -> degisen her dosya kendi deposuna push edilir.
+#                         Metadata katmani artik kendi kendini onariyor.
+#
+# GITHUB_TOKEN neden yetmiyor: yalnizca kendi deposunda yazabilir.
+# Gereken sir: butun depolarda Contents: Read and write yetkisi olan
+# fine-grained bir PAT, adi DEPO_JETONU.
+#
+# Guvenlik kemerleri:
+#   - yalnizca `project-meta.json` stage'lenir, baska hicbir dosya
+#   - dogrula.py kapisi gecmezse hicbir depoya dokunulmaz
+#   - arsivli depo atlanir (push kabul etmez)
+#   - force push yok, dal degistirme yok
+#   - `sadece_bak` girdisi sir varken bile push'u kapatir
+
+on:
+  schedule:
+    # Pazartesi 04:30 UTC. Denetimden (05:00) ve haftalik ozetten (06:00)
+    # once kossun ki ikisi de tazelenmis veriyi gorsun.
+    - cron: "30 4 * * 1"
+  workflow_dispatch:
+    inputs:
+      sadece_bak:
+        description: "Sir tanimli olsa bile push etme, yalnizca farki yaz"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: yenile
+  cancel-in-progress: false
+
+jobs:
+  tazele:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Butun depolari klonla
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GIT_LFS_SKIP_SMUDGE: "1"
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' > depolar.txt
+          import importlib.util
+          spec = importlib.util.spec_from_file_location("d", "schema/derle.py")
+          m = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(m)
+          for r in m._repos():
+              if r.get("fork"):
+                  continue
+              print(r["name"], r["default_branch"], int(bool(r["archived"])))
+          PY
+
+          mkdir -p klonlar
+          while read -r ad dal arsiv; do
+            git clone --quiet --filter=blob:none --branch "$dal" \
+              "https://github.com/${GITHUB_REPOSITORY_OWNER}/${ad}.git" "klonlar/${ad}"
+          done < depolar.txt
+          echo "klonlanan: $(wc -l < depolar.txt)"
+
+      - name: Uret ve dogrula
+        run: |
+          set -euo pipefail
+          python3 schema/uret.py --kok klonlar
+          python3 schema/dogrula.py --kok klonlar | tail -3
+
+      - name: Farki yaz, jeton varsa push et
+        env:
+          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
+          SADECE_BAK: ${{ inputs.sadece_bak && 'evet' || 'hayir' }}
+        run: |
+          set -euo pipefail
+
+          yazabilir="hayir"
+          if [ -n "${DEPO_JETONU:-}" ] && [ "$SADECE_BAK" != "evet" ]; then
+            yazabilir="evet"
+            git config --global url."https://x-access-token:${DEPO_JETONU}@github.com/".insteadOf "https://github.com/"
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          fi
+
+          echo "### yenile" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+
+          degisen=0
+          atlanan=0
+          while read -r ad dal arsiv; do
+            yol="klonlar/${ad}"
+            [ -d "$yol" ] || continue
+            [ -n "$(git -C "$yol" status --porcelain -- project-meta.json)" ] || continue
+            degisen=$((degisen + 1))
+            echo "#### $ad"
+            git -C "$yol" --no-pager diff -- project-meta.json | head -40
+            if [ "$arsiv" = "1" ]; then
+              atlanan=$((atlanan + 1))
+              echo "- \`${ad}\` ayrismis ama **arsivli**, dokunulmadi" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            if [ "$yazabilir" != "evet" ]; then
+              echo "- \`${ad}\` ayrismis" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            git -C "$yol" add project-meta.json
+            git -C "$yol" commit --quiet \
+              -m "meta: project-meta.json tazelendi [skip ci]" \
+              -m "Depodaki gercekler degisti; dosya schema/uret.py ile yeniden uretildi ve schema/dogrula.py kapisindan gecti." \
+              -m "Kaynak: ${GITHUB_REPOSITORY} yenile.yml, kosu ${GITHUB_RUN_ID}"
+            git -C "$yol" push origin "HEAD:${dal}"
+            echo "- \`${ad}\` **tazelendi ve push edildi**" >> "$GITHUB_STEP_SUMMARY"
+          done < depolar.txt
+
+          echo >> "$GITHUB_STEP_SUMMARY"
+          if [ "$degisen" = "0" ]; then
+            echo "Hicbir depoda ayrisma yok." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$yazabilir" = "evet" ]; then
+            echo "${degisen} depoda ayrisma vardi; arsivli olanlar disinda hepsi tazelendi." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "**Sadece bak kipi.** ${degisen} depoda ayrisma var, hicbiri push edilmedi." >> "$GITHUB_STEP_SUMMARY"
+            echo >> "$GITHUB_STEP_SUMMARY"
+            if [ -z "${DEPO_JETONU:-}" ]; then
+              echo "Kendi kendine duzeltmesi icin: butun depolarda **Contents: Read and write** yetkisi olan fine-grained bir PAT uretip bu deponun Settings -> Secrets and variables -> Actions altina \`DEPO_JETONU\` adiyla ekle. O zamana kadar duzeltme \`/meta\` ile yurur." >> "$GITHUB_STEP_SUMMARY"
+            fi
+          fi
+          if [ "$atlanan" != "0" ]; then
+            echo >> "$GITHUB_STEP_SUMMARY"
+            echo "${atlanan} arsivli depo atlandi: arsivli depo push kabul etmez." >> "$GITHUB_STEP_SUMMARY"
+          fi

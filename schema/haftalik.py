@@ -128,6 +128,21 @@ def _tur_ozeti(commitler):
     return parcalar
 
 
+def _gorsel(meta, dal):
+    """Taslagin yanina konacak gorsel, varsa.
+
+    Bir gonderi gorselsiz gider ya da hic gitmez. Depo zaten bir hero
+    tasiyor ve metadata onu biliyor; adresi burada hazir edilir ki taslagi
+    okuyan kisi dosyayi aramak zorunda kalmasin. Uydurulan bir sey yok:
+    yol project-meta.json'dan, o da README'nin gercekten gosterdigi
+    gorselden geliyor.
+    """
+    hero = (meta.get("media") or {}).get("hero")
+    if not hero:
+        return None
+    return f"https://raw.githubusercontent.com/{OWNER}/{meta['id']}/{dal}/{hero}"
+
+
 def _taslak(meta, commitler, releaseler):
     """Gönderi taslağı. Her cümlenin arkasında bir veri olmalı."""
     ad = meta["id"]
@@ -197,6 +212,7 @@ def main():
             "commitler": commitler,
             "releaseler": releaseler,
             "taslak": _taslak(meta, commitler, releaseler),
+            "gorsel": _gorsel(meta, dal),
         })
 
     hareketli.sort(key=lambda p: (-len(p["releaseler"]), -p["commit_sayisi"]))
@@ -232,6 +248,8 @@ def main():
         print("\n  taslak (kısa):")
         for satir in p["taslak"]["kisa"].splitlines():
             print(f"    {satir}")
+        if p.get("gorsel"):
+            print(f"    görsel: {p['gorsel']}")
         print()
     if belge["sessiz"]:
         print("Bu pencerede hareket yok: " + ", ".join(belge["sessiz"]))

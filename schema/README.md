@@ -140,6 +140,32 @@ note when everything clears. A repository that has no entry in
 mechanical fields filled and the editorial ones left `null` — a new project is
 onboarded by writing four fields, not by remembering that the layer exists.
 
+## Fixing the drift, not just finding it
+
+The audit can see that a `project-meta.json` no longer matches its
+repository, but it cannot fix it: regenerating needs each repository's
+working tree, which used to mean one particular Windows machine being
+switched on.
+
+The *yenile* workflow closes that. Every Monday at 04:30 UTC it clones all
+of them (treeless, no credentials needed — they are public), runs `uret.py`
+over the lot, puts the result through `dogrula.py`, and prints the diff.
+What happens next depends on one secret:
+
+- **No `DEPO_JETONU`** — it stops there and writes what *would* change into
+  the run summary. Useful on its own: a second drift detector that shows the
+  exact diff rather than a description of it.
+- **With `DEPO_JETONU`** — a fine-grained token with `Contents: Read and
+  write` on the repositories — each changed file is committed to its own
+  repository and the layer repairs itself with nobody watching.
+
+Only `project-meta.json` is ever staged, nothing is pushed if the validator
+fails, archived repositories are skipped because they reject pushes, and
+there is no force push anywhere. The same token, given `Dependabot alerts:
+Read`, also turns on the one check the daily audit is otherwise blind to;
+`denetim.json` reports how many repositories it actually managed to read
+rather than claiming a clean bill it could not have seen.
+
 ## What changed this week, and what to say about it
 
 [`haftalik.py`](haftalik.py) answers the question the metadata exists for.
@@ -153,6 +179,10 @@ python3 schema/haftalik.py            # last 7 days
 python3 schema/haftalik.py --gun 14
 python3 schema/haftalik.py --json     # machine-readable
 ```
+
+Each draft carries the project's hero image URL alongside it, resolved from
+the `media.hero` path the metadata already holds — a post without a picture
+tends not to get made.
 
 Every sentence in a draft comes either from a written field in
 `project-meta.json` or from real git/release data in that window. No
