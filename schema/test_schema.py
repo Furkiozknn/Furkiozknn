@@ -521,6 +521,72 @@ class KapsamTesti(unittest.TestCase):
         self.assertIn("DEPO_JETONU", denetim.SAYI_BAKILAMADI["x"])
 
 
+class HizSiniriTesti(unittest.TestCase):
+    """Hiz siniri "bakilamadi" demek; ne "temiz" ne de "denetimi dusur"."""
+
+    def setUp(self):
+        denetim.OKUNAMADI.clear()
+        denetim.SAYI_OKUNAN.clear()
+        denetim.SAYI_BAKILAMADI.clear()
+
+    tearDown = setUp
+
+    def _hata(self, kod, basliklar=None, govde=b""):
+        import urllib.error, io, email.message
+        m = email.message.Message()
+        for k, v in (basliklar or {}).items():
+            m[k] = v
+        return urllib.error.HTTPError("http://x", kod, "n", m, io.BytesIO(govde))
+
+    def test_403_kota_bitmisse_hiz_siniri(self):
+        e = self._hata(403, {"x-ratelimit-remaining": "0"})
+        self.assertTrue(self._siniflandir(e))
+
+    def test_429_her_zaman_hiz_siniri(self):
+        self.assertTrue(self._siniflandir(self._hata(429)))
+
+    def test_govdedeki_metin_de_sayilir(self):
+        self.assertTrue(self._siniflandir(self._hata(403, {}, b'{"message":"API rate limit exceeded"}')))
+
+    def test_yetkisiz_403_hiz_siniri_degildir(self):
+        # Her 403 kota degil: yetkisiz bir uc de 403 doner ve onu "sonra
+        # bakariz" diye gecistirmek gercek bir yetki sorununu gizlerdi.
+        e = self._hata(403, {"x-ratelimit-remaining": "4999"}, b'{"message":"Resource not accessible"}')
+        self.assertFalse(self._siniflandir(e))
+
+    def _siniflandir(self, e):
+        """derle._get'in HTTPError'u nasil siniflandirdigini tek yerden sinar."""
+        import urllib.request
+        sonuc = {}
+
+        def sahte(req, timeout=None):
+            raise e
+
+        gercek = urllib.request.urlopen
+        urllib.request.urlopen = sahte
+        try:
+            denetim.D._get("http://x")
+        except denetim.D.HizSiniri:
+            sonuc["hiz"] = True
+        except urllib.error.HTTPError:
+            sonuc["hiz"] = False
+        finally:
+            urllib.request.urlopen = gercek
+        return sonuc.get("hiz", False)
+
+    def test_okunamayan_depo_raporda_yaziyor(self):
+        denetim.OKUNAMADI.extend(["a", "b"])
+        metin = denetim._rapor([], {}, 28)
+        self.assertIn("hiz siniri", metin.lower())
+        self.assertIn("2 depo hic olculemedi", metin)
+        # "28 depo, bulgu yok" demiyor: bakilan 26.
+        self.assertIn("26 depo", metin)
+
+    def test_okunamayan_yoksa_satir_da_yok(self):
+        self.assertEqual(denetim._okunamayan_satiri(), "")
+        self.assertIn("28 depo", denetim._rapor([], {}, 28))
+
+
 class BayatlikTesti(unittest.TestCase):
     """'active' diyen ama aylardir sessiz depo."""
 

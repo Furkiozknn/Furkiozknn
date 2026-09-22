@@ -50,6 +50,17 @@ def _sema_denetleyici():
     return mod._sema_dogrula, json.loads(SEMA.read_text(encoding="utf-8"))
 
 
+class HizSiniri(Exception):
+    """GitHub hiz siniri: bakilamadi, bozuk degil.
+
+    Bunu duz bir HTTPError olarak birakmak gunluk denetimi bir Python
+    yigin izine cevirdi -- ve rapor "bakilamadi" ile "temiz" arasindaki
+    farki yazmak icin var olan bir araci, hicbir sey yazamadan dusurmek
+    en kotu sonuc. Cagiran taraf bunu yakalayip "bu depo okunamadi" diye
+    sayabilsin diye ayri bir tur.
+    """
+
+
 def _get(url):
     req = urllib.request.Request(url, headers={
         "Accept": "application/vnd.github+json",
@@ -58,8 +69,23 @@ def _get(url):
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     if token:
         req.add_header("Authorization", f"Bearer {token}")
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        # 403 + kalan kota 0, ya da 429: ikisi de "simdi olmaz" demek.
+        # 403'un baska nedenleri de var (yetkisiz uc), o yuzden basliga
+        # bakiliyor; baslik yoksa govdedeki standart metne.
+        if e.code in (403, 429):
+            kalan = e.headers.get("x-ratelimit-remaining") if e.headers else None
+            govde = ""
+            try:
+                govde = e.read(400).decode("utf-8", "replace")
+            except Exception:
+                pass
+            if e.code == 429 or kalan == "0" or "rate limit" in govde.lower():
+                raise HizSiniri(url) from e
+        raise
 
 
 def _repos():

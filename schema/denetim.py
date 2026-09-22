@@ -121,6 +121,7 @@ GENIS = os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
 SAYI_OKUNAN = []           # yayimlanan test sayisi kosuya karsi GERCEKTEN karsilastirilan depolar
 SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
+OKUNAMADI = []             # hiz siniri yuzunden hic olculemeyen depolar
 KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
 
 
@@ -690,6 +691,19 @@ SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "baglanti",
         "ayrisma", "belge", "vitrin"]
 
 
+def _okunamayan_satiri():
+    """Hiz siniri yuzunden hic olculemeyen depolar.
+
+    Rapor bunlari yazmazsa "28 depo, bulgu yok" cumlesi, yarisina hic
+    bakilmamis bir kosuda da ayni sekilde yazilir.
+    """
+    if not OKUNAMADI:
+        return ""
+    return ("GitHub hiz siniri: %d depo hic olculemedi (%s). Bunlar hakkinda "
+            "bu kosunun soyleyecegi bir sey yok." % (len(OKUNAMADI), ", ".join(OKUNAMADI[:8])
+            + (" ..." if len(OKUNAMADI) > 8 else "")))
+
+
 def _kapsam_satiri():
     """Yayimlanan test sayilarindan kaci gercekten kosuya karsi bakildi.
 
@@ -714,13 +728,13 @@ def _kapsam_satiri():
 
 
 def _rapor(bulgular, iskeletler, depo_sayisi):
-    kapsam = _kapsam_satiri()
+    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri()) if x]
     if not bulgular:
-        metin = "Denetim temiz: %d depo, bulgu yok." % depo_sayisi
-        return metin + ("\n\n" + kapsam if kapsam else "")
+        metin = "Denetim temiz: %d depo, bulgu yok." % (depo_sayisi - len(OKUNAMADI))
+        return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
     s = ["**%d depoda %d bulgu.**" % (len({b[0] for b in bulgular}), len(bulgular)), ""]
-    if kapsam:
-        s.extend([kapsam, ""])
+    for x in ustbilgi:
+        s.extend([x, ""])
     for tur in SIRA:
         alt = [b for b in bulgular if b[1] == tur]
         if not alt:
@@ -752,8 +766,16 @@ def main():
     KURULUM_ONBELLEK.clear()
     SAYI_OKUNAN.clear()
     SAYI_BAKILAMADI.clear()
+    OKUNAMADI.clear()
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
-        alt, iskelet, meta = _depoyu_olc(r, kaynak)
+        # Hiz siniri "bakilamadi" demek, "temiz" degil -- ve kesinlikle
+        # "butun denetimi dusur" degil. Bu tur bir yigin izi yuzunden
+        # gunluk denetim hicbir sey yazamadan oluyordu.
+        try:
+            alt, iskelet, meta = _depoyu_olc(r, kaynak)
+        except D.HizSiniri:
+            OKUNAMADI.append(r["name"])
+            continue
         if meta is not None:
             metalar[r["name"]] = (r, meta)
         for tur, mesaj in alt:
@@ -783,6 +805,7 @@ def main():
         "fingerprint": parmak,
         "dependabot_checked": len(UYARI_OKUNAN),
         "test_counts_verified": len(SAYI_OKUNAN),
+        "repos_unreadable": list(OKUNAMADI),
         "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
