@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Furkiozknn/Furkiozknn/main/schema/project-meta.schema.json",
+  "title": "project-meta",
+  "description": "One machine-readable file per repository, holding the facts a human would otherwise have to read the README to learn. Written so a later tool can answer 'what changed in which project this week' without parsing prose. Every field is read from the repository or hand-written and reviewed; nothing here is generated from a guess, and an unknown value is null rather than a plausible-looking string.",
+  "type": "object",
+  "required": ["schema_version", "id", "owner", "repository", "status", "category", "summary", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "description": "Version of this schema the file was written against."},
+    "id": {"type": "string", "description": "Repository name, and the stable key across tools."},
+    "owner": {"type": "string"},
+    "repository": {"type": "string", "format": "uri"},
+    "homepage": {"type": ["string", "null"], "description": "Live deployment, if one exists. Null means there is none - not that it is unknown."},
+    "releases": {"type": "string", "format": "uri"},
+    "status": {"enum": ["active", "archived", "prototype"]},
+    "category": {"type": "string", "description": "One of: game, web-app, mcp-server, developer-tool, security-tool, agent-infrastructure, backend-service, observability, research, template, profile."},
+    "platform": {"type": "array", "items": {"type": "string"}, "description": "Where it actually runs, as shipped."},
+    "primary_language": {"type": ["string", "null"]},
+    "technologies": {"type": "array", "items": {"type": "string"}},
+    "version": {"type": ["string", "null"], "description": "Declared version, from the package manifest or the newest git tag. Null where the project declares none."},
+    "license": {"type": ["string", "null"]},
+    "topics": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": ["string", "null"], "description": "The repository's own GitHub description, verbatim."},
+    "key_features": {"type": "array", "items": {"type": "string"}, "description": "Claims that hold up if checked against the code."},
+    "media": {
+      "type": "object",
+      "description": "Paths relative to the repository root, limited to assets the README actually shows.",
+      "additionalProperties": false,
+      "properties": {
+        "hero": {"type": ["string", "null"]},
+        "screenshots": {"type": "array", "items": {"type": "string"}},
+        "gifs": {"type": "array", "items": {"type": "string"}},
+        "videos": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "tests": {
+      "type": ["object", "null"],
+      "description": "Null where the project has no suite. A count without a source line does not belong here.",
+      "additionalProperties": false,
+      "required": ["count", "source", "measured"],
+      "properties": {
+        "count": {"type": "integer"},
+        "source": {"type": "string", "description": "The line a runner printed, or how the number was composed."},
+        "measured": {"type": "string", "description": "ISO date of the run the count came from."}
+      }
+    },
+    "ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "workflows": {"type": "array", "items": {"type": "string"}},
+        "badge": {"type": ["string", "null"]}
+      }
+    },
+    "docs": {
+      "type": "object",
+      "description": "Repository-relative filenames, null where the file does not exist.",
+      "additionalProperties": {"type": ["string", "null"]}
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headline", "hashtags", "primary_link"],
+      "properties": {
+        "headline": {"type": "string", "description": "One sentence a post can open with. Describes the project as it is."},
+        "hashtags": {"type": "array", "items": {"type": "string"}},
+        "primary_link": {"type": "string", "format": "uri", "description": "Where a reader should be sent: the live deployment when there is one, the repository otherwise."}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generated_at", "generator", "rule"],
+      "properties": {
+        "generated_at": {"type": "string"},
+        "generator": {"type": "string"},
+        "rule": {"type": "string"}
+      }
+    }
+  }
+}
