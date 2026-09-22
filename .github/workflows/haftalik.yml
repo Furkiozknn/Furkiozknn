@@ -71,6 +71,9 @@ jobs:
       - name: Hareket varsa konuya yorum dus
         env:
           GH_TOKEN: ${{ github.token }}
+          # Pencere uzunlugu burada da lazim: ozetin basligindaki sayi ile
+          # icerideki sayi ayrisirsa yayimlanmis bir yanlis sayi olur.
+          GUN: ${{ inputs.gun || '7' }}
         run: |
           set -euo pipefail
           hareket=$(python3 -c "import json;print(len(json.load(open('schema/hafta.json',encoding='utf-8'))['hareketli']))")
@@ -91,7 +94,7 @@ jobs:
           fi
 
           {
-            echo "## $(date -u '+%d %B %Y') — son ${GUN:-7} gun"
+            echo "### $(date -u '+%Y-%m-%d') kosusu"
             echo
             sed -n '1,200p' ozet.txt
             echo

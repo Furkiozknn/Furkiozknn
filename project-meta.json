@@ -43,9 +43,10 @@
   "tests": null,
   "ci": {
     "workflows": [
+      "haftalik.yml",
       "projeler.yml"
     ],
-    "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/projeler.yml/badge.svg"
+    "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/haftalik.yml/badge.svg"
   },
   "docs": {
     "readme": "README.md",
