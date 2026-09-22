@@ -169,6 +169,33 @@ Read`, also turns on the one check the daily audit is otherwise blind to;
 `denetim.json` reports how many repositories it actually managed to read
 rather than claiming a clean bill it could not have seen.
 
+## The gates in front of all of this
+
+These scripts write into twenty-four repositories now, which makes an
+untested change to them an expensive one. Three gates run on every push to
+this repository ([`ci.yml`](../.github/workflows/ci.yml)):
+
+1. [`test_schema.py`](test_schema.py) — 41 tests, standard library only.
+   Most of them come from a bug that actually happened, and each says which
+   one at the top: a `"private": true` flag that silently dropped `masal`'s
+   version, a plugin manifest that was never read so `turkce-ajanlar` looked
+   versionless, four `ci.workflows` lists left a step behind. Nothing here
+   tests a failure that has never occurred.
+2. This repository's own `project-meta.json`, through both halves of
+   `dogrula.py`.
+3. Every workflow YAML, parsed. Not a formality: an invalid workflow file
+   fails on GitHub with no jobs, no log and no annotation to explain it.
+
+And one more gate stands specifically in front of the automatic refresh.
+The schema cannot object to a value disappearing, because most fields are
+nullable — which is exactly how the `masal` version loss got through
+everything. [`koruma.py`](koruma.py) applies a one-way rule: **a full value
+going empty is suspicious, an empty one filling in is not.** `yenile.yml`
+puts every file through it, and also checks the blast radius — if more
+repositories than the threshold (8 by default) change at once, it touches
+none of them, because that is almost always a bug in the generator rather
+than twenty-four simultaneous real drifts.
+
 ## What changed this week, and what to say about it
 
 [`haftalik.py`](haftalik.py) answers the question the metadata exists for.
