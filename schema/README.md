@@ -95,6 +95,43 @@ their `ci.workflows` lists a step behind, and this is what said so.
 `schema_violations`; it cannot run the filesystem half, because it reads
 through the API and never has the working tree.
 
+## Checking the account against itself, every day
+
+`dogrula.py` needs the clones, which means it needs the one machine that has
+them. [`denetim.py`](denetim.py) asks a narrower question that needs nothing
+but a token, so GitHub can ask it on its own:
+
+```bash
+GITHUB_TOKEN=... python3 schema/denetim.py
+```
+
+For every non-fork repository it checks whether `project-meta.json` is on the
+default branch, whether the repository has an entry in `meta-source.json`,
+whether the mechanical half of the metadata still matches the live repository
+(description, topics, licence, homepage, archived state, workflow filenames),
+whether LICENSE and README are where the file says they are, whether the
+description and topics are empty, and whether the newest finished run of each
+of the repository's **own** workflows is red.
+
+Two things are deliberately out of scope. Runs GitHub manages itself — the
+Dependabot updater, default-setup CodeQL — are not the repository's CI, so a
+permanently red dependency bump or a run left queued by archiving is not
+reported every morning. And Dependabot alerts are not readable across
+repositories with a workflow token; reporting "clean" for something it cannot
+see would be worse than saying nothing.
+
+It fixes nothing and commits nothing. It exits 0 even when it finds
+something, because one repository's missing licence should not turn another
+repository's badge red.
+
+The *denetim* workflow runs it daily at 05:00 UTC and keeps a single
+*Ekosistem denetimi* issue: it comments when the **set** of findings changes,
+stays quiet when the same findings are still open, and closes the issue with a
+note when everything clears. A repository that has no entry in
+`meta-source.json` gets a ready-to-paste skeleton in that comment, with the
+mechanical fields filled and the editorial ones left `null` — a new project is
+onboarded by writing four fields, not by remembering that the layer exists.
+
 ## What changed this week, and what to say about it
 
 [`haftalik.py`](haftalik.py) answers the question the metadata exists for.

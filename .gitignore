@@ -29,3 +29,4 @@ service-account*.json
 # eskir; eskimis bir dizin hic dizin olmamasindan kotudur.
 schema/projects.json
 schema/hafta.json
+schema/denetim.json

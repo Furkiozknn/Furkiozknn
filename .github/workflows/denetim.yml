@@ -1,0 +1,113 @@
+name: denetim
+
+# Hesap capinda gunluk oz-denetim.
+#
+# Bu is akisi, ekosistemin tek bir Windows makinesine bagli kalmamasi
+# icin var. Daha once "her depo dogru mu" sorusunu yalnizca o makinedeki
+# betikler soruyordu; makine kapaliyken kimse sormuyordu. Artik GitHub
+# kendi kendine soruyor.
+#
+# Hicbir seyi duzeltmez, hicbir seye commit atmaz. Yalnizca olcer ve
+# tek bir "Ekosistem denetimi" konusuna yazar:
+#   - bulgu varsa ve bulgu KUMESI degistiyse  -> yorum dusurur
+#   - bulgu varsa ama ayni kume duruyorsa     -> susar (365 ayni yorum yok)
+#   - bulgu yoksa ve konu aciksa              -> kapanis yorumu + kapatir
+#   - bulgu yoksa ve konu yoksa               -> hic ses cikarmaz
+#
+# Kirmizi yanmaz: baska bir deponun eksigi bu deponun rozetini
+# bozmamali. Sinyal konudur, rozet degil.
+
+on:
+  schedule:
+    # Her gun 05:00 UTC. Haftalik ozetten (pazartesi 06:00) once kossun ki
+    # ozet yazilirken ayrisma zaten bilinsin.
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: denetim
+  cancel-in-progress: false
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
+      - name: Denetim
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 schema/denetim.py | tee denetim.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: denetim
+          path: |
+            schema/denetim.json
+            denetim.md
+          if-no-files-found: error
+
+      - name: Konuyu guncelle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sayi=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8'))['finding_count'])")
+          parmak=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8'))['fingerprint'])")
+          baslik="Ekosistem denetimi"
+
+          numara=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+                     --search "$baslik in:title" --json number,title \
+                     --jq "[.[] | select(.title == \"$baslik\")] | .[0].number // empty")
+
+          if [ "$sayi" = "0" ]; then
+            if [ -z "$numara" ]; then
+              echo "Temiz; acik konu da yok. Yazilacak bir sey yok."
+              exit 0
+            fi
+            gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" \
+              --body "Denetim temiz: $(date -u '+%Y-%m-%d') kosusunda bulgu kalmadi. Konu kapaniyor; yeni bir bulgu cikarsa bir sonraki kosu yenisini acar.
+
+<sub>schema/denetim.py, ${GITHUB_RUN_ID} kosusundan.</sub>"
+            gh issue close "$numara" --repo "$GITHUB_REPOSITORY"
+            echo "temiz -> #$numara kapatildi"
+            exit 0
+          fi
+
+          {
+            echo "### $(date -u '+%Y-%m-%d') denetimi"
+            echo
+            cat denetim.md
+            echo
+            echo "---"
+            echo "<sub>schema/denetim.py, ${GITHUB_RUN_ID} kosusundan. Hicbir bulgu otomatik duzeltilmedi.</sub>"
+            echo "<!-- parmak: ${parmak} -->"
+          } > yorum.md
+
+          if [ -z "$numara" ]; then
+            numara=$(gh issue create --repo "$GITHUB_REPOSITORY" --title "$baslik" \
+              --body-file yorum.md | sed 's#.*/##')
+            echo "konu acildi: #$numara"
+            exit 0
+          fi
+
+          son=$(gh issue view "$numara" --repo "$GITHUB_REPOSITORY" \
+                  --json body,comments --jq '[.body] + [.comments[].body] | last')
+          onceki=$(printf '%s' "$son" | grep -o 'parmak: [0-9a-f]*' | tail -1 | awk '{print $2}' || true)
+          if [ "${onceki:-}" = "$parmak" ]; then
+            echo "Bulgu kumesi degismedi ($parmak); yorum yazilmiyor."
+            exit 0
+          fi
+          gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" --body-file yorum.md
+          echo "yorum dusuldu: #$numara"
