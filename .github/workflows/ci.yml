@@ -48,6 +48,14 @@ jobs:
       - name: Kendi metadata'si
         run: python3 schema/dogrula.py "$GITHUB_WORKSPACE"
 
+      # Bir sayi yedi yerde duruyor (bu dosyalarin tablolari, basliklari,
+      # rozetler, tanitim cumleleri, hero.svg). Gunluk denetim bunlarin bir
+      # kismina bakiyor ama TESTLER.md'nin KENDI tablo satirlarina hic
+      # bakmiyordu ve hicbirini duzeltemiyor. Bu kapi agsiz: yalnizca
+      # "hepsi ayni seyi mi soyluyor" diye soruyor.
+      - name: Yayimlanan sayilar tutarli mi
+        run: python3 schema/testler.py --kontrol
+
       - name: Is akisi YAML'leri
         run: |
           set -euo pipefail

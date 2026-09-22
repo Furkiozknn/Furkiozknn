@@ -124,6 +124,29 @@ while two rows drift in opposite directions, and a reader looks at the row,
 not the total. Adding seven tests to one game is enough to make the page
 wrong, and nobody would notice by reading.
 
+What the audit cannot do is repair any of it — repairing means editing this
+repository, and the audit deliberately writes nothing. [`testler.py`](testler.py)
+is that missing half, the same way [`yenile.yml`](../.github/workflows/yenile.yml)
+is for the metadata layer:
+
+```bash
+python3 schema/testler.py --kontrol                 # offline gate, runs in CI
+python3 schema/testler.py --tazele --depo-sayisi N  # write meta-source's numbers everywhere
+DEPO_JETONU=... python3 schema/testler.py --olc     # re-read the run behind each number
+DEPO_JETONU=... python3 schema/testler.py --yaz     # ...and write what it measured
+```
+
+`--kontrol` checks one more thing than the daily audit does: `TESTLER.md`'s
+**own** table rows. The audit compares the heading, the total and the README's
+rows, so that file's table could drift while everything it was compared
+against agreed. It also refuses a `tests.source` that carries a single
+backticked line whose number is not the published one — such a source looks
+measurable and is not, and the daily audit would report a drift that does not
+exist. `--tazele` regenerates `TESTLER.md`'s table from all four columns in
+`meta-source.json` and rewrites the figure in every other place it appears:
+the README's two tables and its per-project blurbs, the badge, and the three
+numbers inside `assets/hero.svg`, which carry `id`s for exactly this reason.
+
 Two things are deliberately out of scope. Runs GitHub manages itself — the
 Dependabot updater, default-setup CodeQL — are not the repository's CI, so a
 permanently red dependency bump or a run left queued by archiving is not

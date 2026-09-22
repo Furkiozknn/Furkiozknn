@@ -51,9 +51,9 @@
       "Known v1 limitations are written down in the README rather than discovered later"
     ],
     "tests": {
-      "count": 72,
-      "source": "`72 passed`",
-      "measured": "2026-09-15"
+      "count": 80,
+      "source": "72 suite + 8 cross-repo contract job; CI splits them, so no single line prints 80",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "Your pipeline is a YAML DAG in git - and it fails at load time, not at 3am.",
@@ -117,9 +117,9 @@
       "Honest about what C2PA does that this does not"
     ],
     "tests": {
-      "count": 86,
-      "source": "`86 passed`",
-      "measured": "2026-09-15"
+      "count": 125,
+      "source": "`125 passed`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "Provenance that lives in the file, not in a database row you will lose.",
@@ -153,9 +153,9 @@
       "ODbL data and MIT code split explicitly in a NOTICE file"
     ],
     "tests": {
-      "count": 324,
-      "source": "96 backend (CI log) + 228 frontend (vitest)",
-      "measured": "2026-09-15"
+      "count": 334,
+      "source": "106 backend (CI log: 106 passed) + 228 frontend (vitest)",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "What do I need, and where is the nearest one? 167,829 places, all 81 provinces.",
@@ -304,7 +304,11 @@
       "A null field is left off the page rather than filled in with a guess",
       "Rebuilt weekly by a workflow that commits only when the output changes"
     ],
-    "tests": null,
+    "tests": {
+      "count": 37,
+      "source": "`37 passed`",
+      "measured": "2026-09-22"
+    },
     "social": {
       "headline": "Every repository on the account, in one searchable page, generated from the metadata each one carries.",
       "hashtags": [
@@ -496,9 +500,9 @@
       "Reproducible: the sample data and the fetch/analyse pipeline are both in the repository"
     ],
     "tests": {
-      "count": 44,
-      "source": "CI log: `44 passed`",
-      "measured": "2026-09-21"
+      "count": 55,
+      "source": "CI log: `55 passed`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "How many MCP servers are there? Ask three ways, get three numbers.",
@@ -529,9 +533,9 @@
       "JSON output and a CI mode, plus a version diff between two releases of the same server"
     ],
     "tests": {
-      "count": 289,
-      "source": "`289 passed`",
-      "measured": "2026-09-15"
+      "count": 319,
+      "source": "`319 passed`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "An MCP tool description is read on every call. Nobody scrolls past it. mcp-vet does.",
@@ -629,9 +633,9 @@
       "A daily run seeded from the UTC date deals every player the same obstacles; 0.7 MB first load, no build step"
     ],
     "tests": {
-      "count": 28,
-      "source": "`28 passed` (Playwright)",
-      "measured": "2026-09-15"
+      "count": 38,
+      "source": "`38 passed` (Playwright)",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "0.7 MB, no build step, real bloom - and every sound synthesized on the fly.",
@@ -731,8 +735,8 @@
       "Checked against 30 public repositories that disagree with each other; every false positive it produced is now a named test"
     ],
     "tests": {
-      "count": 97,
-      "source": "CI log: `=== 97 tests passed ===`",
+      "count": 103,
+      "source": "CI log: `=== 103 tests passed ===`",
       "measured": "2026-09-22"
     },
     "social": {
@@ -801,9 +805,9 @@
       "One source of truth, exported to Cursor, OpenCode, Copilot and Codex; CI fails if the web UI drifts from the agent files"
     ],
     "tests": {
-      "count": 92,
-      "source": "27 validator + 32 export + 33 format checks",
-      "measured": "2026-09-15"
+      "count": 160,
+      "source": "27 validator + 33 format + 43 browser + 20 team-runner + 19 trigger-collision + 14 boundary + 4 module-type, each from its own printed line",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "70 Claude Code sub-agents that think in Turkish, not translate into it.",
@@ -879,6 +883,37 @@
         "indiedev",
         "gamedev",
         "precisionplatformer"
+      ]
+    }
+  },
+  "repo-ratchet": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli"
+    ],
+    "technologies": [
+      "Python 3.11+",
+      "zero dependencies"
+    ],
+    "key_features": [
+      "Decides which repository to open next from twelve measured signals, and refuses to call any of them a verdict",
+      "Will not record 'advanced' unless the commit moved and a check actually exited zero",
+      "'Nothing worth doing here' is a legitimate outcome, but it has to say what was looked at",
+      "Runs another repository's own test command behind an allowlist, with no shell at all"
+    ],
+    "tests": {
+      "count": 118,
+      "source": "`118 passed`",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "A ratchet only turns one way: the engine that keeps every repository moving forward.",
+      "hashtags": [
+        "python",
+        "devtools",
+        "opensource",
+        "automation"
       ]
     }
   }

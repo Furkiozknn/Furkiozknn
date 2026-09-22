@@ -37,6 +37,7 @@ def _yukle(ad):
 
 
 uret = _yukle("uret")
+testler = _yukle("testler")
 koruma = _yukle("koruma")
 dogrula = _yukle("dogrula")
 haftalik = _yukle("haftalik")
@@ -522,6 +523,79 @@ class KurulumTesti(unittest.TestCase):
     def test_bos_metin(self):
         self.assertEqual(denetim.kurulum_adlari(""), set())
         self.assertEqual(denetim.kurulum_adlari(None), set())
+
+
+class TestlerAraciTesti(unittest.TestCase):
+    """testler.py: bir sayi kac yerde goruluyorsa hepsi ayni seyi soylemeli."""
+
+    def _kaynak(self, **fazla):
+        temel = {
+            "a-repo": {"status": "active",
+                       "tests": {"count": 10, "source": "`10 passed`",
+                                 "measured": "2026-09-22"}},
+            "b-repo": {"status": "active",
+                       "tests": {"count": 5, "source": "`5 passed`",
+                                 "measured": "2026-09-01"}},
+            "arsiv": {"status": "archived",
+                      "tests": {"count": 99, "source": "`99 passed`",
+                                "measured": "2026-01-01"}},
+            "suitsiz": {"status": "active"},
+        }
+        temel.update(fazla)
+        return temel
+
+    def test_arsivli_depo_toplama_girmez(self):
+        # TESTLER.md bunu acikca yaziyor; denetim.py API'deki `archived`
+        # bayragina bakiyor, bu arac agsiz kipte `status` alanina bakmak
+        # zorunda -- iki yerin ayni cevabi vermesi gerekiyor.
+        self.assertEqual(sorted(testler.sayilar(self._kaynak())), ["a-repo", "b-repo"])
+
+    def test_bicim_binlik_ayirici(self):
+        self.assertEqual(testler.bicim(5037), "5,037")
+
+    def test_duz_hucredeki_sayi_guncellenir(self):
+        satir = "| [x](https://github.com/Furkiozknn/x) | 28 | `28 passed` | 1 Sep 2026 |"
+        self.assertIn("| 38 |", testler._satiri_guncelle(satir, 38))
+
+    def test_backtickli_hucre_guncellenir(self):
+        satir = "| x | **[y](https://github.com/Furkiozknn/y)** | ne yapar | `28` |"
+        self.assertIn("`38`", testler._satiri_guncelle(satir, 38))
+
+    def test_kalin_toplam_hucresi_guncellenir(self):
+        # Ilk surum yalnizca duz ve backtick'li bicimleri taniyordu ve
+        # `| **Total** | **4,700** | | |` satirini atliyordu -- yani en cok
+        # goze carpan sayiyi.
+        satir = "| **Total** | **4,700** | | |"
+        self.assertEqual(testler._satiri_guncelle(satir, 5037),
+                         "| **Total** | **5,037** | | |")
+
+    def test_satirdaki_SON_sayi_degisir(self):
+        satir = "| 🔎 | **[y](https://github.com/Furkiozknn/y)** | 30 projede denendi | `97` |"
+        yeni = testler._satiri_guncelle(satir, 103)
+        self.assertIn("30 projede", yeni)      # aciklamadaki sayi korunur
+        self.assertIn("`103`", yeni)
+
+    def test_tablo_sayiya_gore_siralanir(self):
+        satirlar = testler.testler_tablosu(self._kaynak())
+        self.assertIn("a-repo", satirlar[0])
+        self.assertIn("b-repo", satirlar[1])
+        self.assertTrue(satirlar[-1].startswith("| **Total** | **15**"))
+
+    def test_tarih_okunur_bicime_donusur(self):
+        self.assertEqual(testler._olculdu("2026-09-22"), "22 Sep 2026")
+        self.assertEqual(testler._olculdu("bilinmiyor"), "bilinmiyor")
+
+    def test_ayni_kalip_iki_farkli_sayi_eslerse_belirsiz(self):
+        # ai-workflow-engine'e ikinci bir is eklendiginde ayni log hem
+        # `72 passed` hem `8 passed` tasiyor. Ilkini secmek yanlis sayiyi
+        # yayimlamak demekti.
+        log = "job A\n8 passed in 0.2s\njob B\n72 passed in 1.1s"
+        self.assertEqual(sorted(set(testler.tum_sayilar(log, "72 passed", denetim))),
+                         [8, 72])
+
+    def test_tek_is_tek_sayi(self):
+        log = "=== 319 passed in 2s ==="
+        self.assertEqual(testler.tum_sayilar(log, "319 passed", denetim), [319])
 
 
 if __name__ == "__main__":
