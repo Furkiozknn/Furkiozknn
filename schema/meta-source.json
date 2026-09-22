@@ -153,8 +153,8 @@
       "ODbL data and MIT code split explicitly in a NOTICE file"
     ],
     "tests": {
-      "count": 334,
-      "source": "106 backend (CI log: 106 passed) + 228 frontend (vitest)",
+      "count": 347,
+      "source": "119 backend (CI log: 119 passed) + 228 frontend (vitest)",
       "measured": "2026-09-22"
     },
     "social": {
@@ -903,8 +903,8 @@
       "Runs another repository's own test command behind an allowlist, with no shell at all"
     ],
     "tests": {
-      "count": 118,
-      "source": "`118 passed`",
+      "count": 130,
+      "source": "`130 passed`",
       "measured": "2026-09-22"
     },
     "social": {

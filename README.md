@@ -1,7 +1,7 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,037 tests, 1,067 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,062 tests, 1,067 commits." width="100%">
 
 <p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C037_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,037 tests passing"></a>
+  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C062_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,062 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
   <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-28-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="28 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
@@ -89,7 +89,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 >
 > 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise: it tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on **30 public repositories** so it stays quiet on the ones that work. <sub>`103 tests`</sub>
 >
-> 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`334 tests`</sub>
+> 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`347 tests`</sub>
 >
 > 📊 **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that **never phones home**. <sub>`261 tests`</sub>
 
@@ -114,13 +114,13 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Godot names a broken reference only when that scene loads, and a dead signal connection never. Finds both, and repairs what has one provable answer. | `107` |
 | 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Your README is a promise: it tries the install command, the badges, the links and the tags, over the API, without cloning. | `103` |
 | 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `319` |
-| 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `334` |
+| 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `347` |
 | 📊 | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** | Where the tokens went and when the limit resets. No prompt or file content exists in any type — a privacy review is a `grep`. | `261` |
 | 🎨 | **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)** | 23 CPU-first media tools in one MCP server. 22 report `"network": "none"` in their own payload, not in a README. | `327` |
 | 🏛️ | **[ajans-os](https://github.com/Furkiozknn/ajans-os)** | An agency OS built research-first. Its acceptance run is killed mid-task, reloaded from disk and resumed. | `142` |
 | 📚 | **[masal](https://github.com/Furkiozknn/masal)** | A bedtime story around one child's name. Six themes, a branch on page three — twelve readings. | `92` |
 | 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | **70** Claude Code sub-agents that *think* in Turkish, not translate into it. Exported to Cursor, OpenCode, Copilot, Codex. | `160` |
-| 🔁 | **[repo-ratchet](https://github.com/Furkiozknn/repo-ratchet)** | Decides which repository to open next from twelve measured signals — and will not record an improvement that left no commit and no passing check. | `118` |
+| 🔁 | **[repo-ratchet](https://github.com/Furkiozknn/repo-ratchet)** | Decides which repository to open next from twelve measured signals — and will not record an improvement that left no commit and no passing check. | `130` |
 | 🔖 | **[asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit)** | Which model made this file, written **into** the file. JPEG gets a marker spliced in with no re-encoding. | `125` |
 | ⚡ | **[nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)** | NVIDIA NIM's free tier in Claude Code. Two of its seven tools need no API key at all. | `80` |
 | ⚖️ | **[model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness)** | One prompt, N providers, one report — plus a judge model scoring each answer against your own rubric. | `74` |
@@ -142,7 +142,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
 | ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `460` |
 | 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| | | **Total, across 25 repositories with suites** | **`5,037`** |
+| | | **Total, across 25 repositories with suites** | **`5,062`** |
 
 <sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
 
@@ -221,7 +221,7 @@ Remote · Türkiye · European hours
 
 <sub>
   <a href="https://furkiozknn.github.io/">Project directory</a> ·
-  <a href="TESTLER.md">Where the 5,037 comes from</a> ·
+  <a href="TESTLER.md">Where the 5,062 comes from</a> ·
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·

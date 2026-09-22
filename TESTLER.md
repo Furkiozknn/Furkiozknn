@@ -1,12 +1,12 @@
-# Where the 5,037 comes from
+# Where the 5,062 comes from
 
-The hero image on this profile claims 5,037 tests. This file is that claim,
+The hero image on this profile claims 5,062 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
 the end of a run — not a count of `def test_` or `it(` in the source. Those
 two disagree, sometimes badly, because parametrised tests expand at
-collection time: `buradane`'s backend collects 104 functions into 106 cases,
+collection time: `buradane`'s backend collects 113 functions into 119 cases,
 `mini-creative-toolkit` 213 into 327, `ai-job-gateway` 117 into 156. (Those
 three lines were themselves stale until 22 September — they had been written
 once and never re-collected, which is the same failure this file exists to
@@ -33,15 +33,15 @@ fired. It now has 37 tests and is counted.
 | [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) | 853 | CI log: `=== SONUC: 853 gecti, 0 hata ===` | 22 Sep 2026 |
 | [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) | 841 | CI log: `841 dogrulama, 0 hata` / `TESTLER GECTI` | 22 Sep 2026 |
 | [derin-kazi](https://github.com/Furkiozknn/derin-kazi) | 460 | CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`) | 22 Sep 2026 |
-| [buradane](https://github.com/Furkiozknn/buradane) | 334 | 106 backend (CI log: 106 passed) + 228 frontend (vitest) | 22 Sep 2026 |
+| [buradane](https://github.com/Furkiozknn/buradane) | 347 | 119 backend (CI log: 119 passed) + 228 frontend (vitest) | 22 Sep 2026 |
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 327 | `327 passed` | 22 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 319 | `319 passed` | 22 Sep 2026 |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
 | [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar) | 160 | 27 validator + 33 format + 43 browser + 20 team-runner + 19 trigger-collision + 14 boundary + 4 module-type, each from its own printed line | 22 Sep 2026 |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed` | 15 Sep 2026 |
 | [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | `node --test`: `pass 142` | 15 Sep 2026 |
+| [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet) | 130 | `130 passed` | 22 Sep 2026 |
 | [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 125 | `125 passed` | 22 Sep 2026 |
-| [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet) | 118 | `118 passed` | 22 Sep 2026 |
 | [kanca](https://github.com/Furkiozknn/kanca) | 115 | CI log: `=== 115/115 gecti ===` | 22 Sep 2026 |
 | [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) | 107 | CI log: `=== 107 tests passed ===` | 22 Sep 2026 |
 | [repo-vet](https://github.com/Furkiozknn/repo-vet) | 103 | CI log: `=== 103 tests passed ===` | 22 Sep 2026 |
@@ -55,7 +55,7 @@ fired. It now has 37 tests and is counted.
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 38 | `38 passed` (Playwright) | 22 Sep 2026 |
 | [Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io) | 37 | `37 passed` | 22 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
-| **Total** | **5,037** | | |
+| **Total** | **5,062** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -95,6 +95,13 @@ closes that hole and is a CI gate; `--tazele` is the repair.
 
 `Furkiozknn.github.io` and `repo-ratchet` also take the suite count from 23
 to 25 and the public repository count from 27 to 28.
+
+Round 2 opened the same day and its first two entries are already here:
+`repo-ratchet` 118 → 130 (it had been measuring `<name>-test.js` files as no
+tests at all, which is how a repository guarded by eight of them was ranked
+first in the round) and `buradane` 334 → 347 (`access` and `operator`, the
+two fields round 1's executable contract document had recorded as missing
+from every schema).
 
 ## What moved, and why
 
