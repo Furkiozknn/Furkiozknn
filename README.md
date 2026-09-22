@@ -1,7 +1,7 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,101 tests, 1,081 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,209 tests, 1,083 commits." width="100%">
 
 <p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C101_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,101 tests passing"></a>
+  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C209_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,209 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
   <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-28-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="28 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
@@ -138,11 +138,11 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 | | Project | The one idea it is built on | Tests |
 |:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `853` |
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
 | 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
 | ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `460` |
 | 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| | | **Total, across 25 repositories with suites** | **`5,101`** |
+| | | **Total, across 25 repositories with suites** | **`5,209`** |
 
 <sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
 
@@ -221,7 +221,7 @@ Remote · Türkiye · European hours
 
 <sub>
   <a href="https://furkiozknn.github.io/">Project directory</a> ·
-  <a href="TESTLER.md">Where the 5,101 comes from</a> ·
+  <a href="TESTLER.md">Where the 5,209 comes from</a> ·
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·

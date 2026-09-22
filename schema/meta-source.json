@@ -766,11 +766,12 @@
       "One-button endless rooftop runner: the only input is when to press",
       "Rhythm mode lays every obstacle on the music's beat grid instead of a random spacer",
       "Post-run timing histogram shows how early or late each press landed",
-      "Daily run seeded from the date, so every player gets the same rooftops"
+      "Daily run seeded from the date, so every player gets the same rooftops",
+      "Every bar pattern is bot-cleared at every song's beat spacing: obstacle geometry is absolute pixels while the beat grid is 120 / 140.6 / 128.6 px, so an unclearable bar could have hidden in a rare pattern-song pair"
     ],
     "tests": {
-      "count": 853,
-      "source": "CI log: `=== SONUC: 853 gecti, 0 hata ===`",
+      "count": 961,
+      "source": "CI log: `=== SONUC: 961 gecti, 0 hata ===`",
       "measured": "2026-09-22"
     },
     "social": {
