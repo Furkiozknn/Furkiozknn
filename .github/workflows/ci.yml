@@ -1,0 +1,74 @@
+name: CI
+
+# Bu depo artik bir arac deposu: schema/ altindaki betikler haftada bir
+# 24 deponun icine yaziyor ve her gun neyin bozuk oldugunu soyluyor.
+# Boyle bir seyin testsiz push edilmesi, otomasyonu bir riske cevirir.
+#
+# Uc kapi, hepsi her push'ta:
+#   1. schema/ testleri (bagimliliksiz unittest)
+#   2. bu deponun KENDI project-meta.json'u hem semaya hem depoya uyuyor mu
+#   3. .github/workflows/ altindaki her YAML ayristirilabiliyor mu
+#
+# Ucuncusu bos bir formalite degil: gecersiz bir workflow YAML'i GitHub'da
+# hic is uretmeden "failure" olur -- job listesi bos, log yok, annotation
+# yok. Bir kez `run: |` blogunun icine girintisiz bir satir kacti ve
+# tespiti dakikalar aldi.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kapilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # schema/ betiklerinin kendisi bagimliliksiz; pyyaml yalnizca
+      # burada, YAML'i ayristirabilmek icin var.
+      - name: pyyaml
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: schema testleri
+        run: python3 schema/test_schema.py
+
+      - name: Kendi metadata'si
+        run: python3 schema/dogrula.py "$GITHUB_WORKSPACE"
+
+      - name: Is akisi YAML'leri
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import glob, sys, yaml
+          hata = 0
+          dosyalar = sorted(glob.glob(".github/workflows/*.y*ml"))
+          for p in dosyalar:
+              try:
+                  d = yaml.safe_load(open(p, encoding="utf-8").read())
+              except Exception as e:
+                  print("HATA   %s  %s" % (p, str(e).replace("\n", " ")[:200]))
+                  hata += 1
+                  continue
+              if not isinstance(d, dict) or "jobs" not in d:
+                  print("HATA   %s  (jobs yok)" % p)
+                  hata += 1
+              # PyYAML `on:` anahtarini True'ya cevirir (YAML 1.1 mirasi).
+              elif True not in d and "on" not in d:
+                  print("HATA   %s  (tetikleyici yok)" % p)
+                  hata += 1
+          print("taranan: %d dosya, hata: %d" % (len(dosyalar), hata))
+          sys.exit(1 if hata else 0)
+          PY

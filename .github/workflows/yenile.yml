@@ -23,6 +23,10 @@ name: yenile
 # Guvenlik kemerleri:
 #   - yalnizca `project-meta.json` stage'lenir, baska hicbir dosya
 #   - dogrula.py kapisi gecmezse hicbir depoya dokunulmaz
+#   - koruma.py: dolu bir alanin bosaldigi degisiklik push edilmez
+#   - patlama yaricapi: `esik`ten fazla depo degisiyorsa hicbirine
+#     dokunulmaz. Ayni anda on depoda gercek ayrisma olmasi beklenmez;
+#     boyle bir sey neredeyse her zaman ureticideki bir hatadir.
 #   - arsivli depo atlanir (push kabul etmez)
 #   - force push yok, dal degistirme yok
 #   - `sadece_bak` girdisi sir varken bile push'u kapatir
@@ -38,6 +42,10 @@ on:
         description: "Sir tanimli olsa bile push etme, yalnizca farki yaz"
         type: boolean
         default: false
+      esik:
+        description: "Bu sayidan fazla depo degisiyorsa hicbirine dokunma"
+        type: string
+        default: "8"
 
 permissions:
   contents: read
@@ -86,64 +94,88 @@ jobs:
           python3 schema/uret.py --kok klonlar
           python3 schema/dogrula.py --kok klonlar | tail -3
 
-      - name: Farki yaz, jeton varsa push et
+      - name: Farki yaz, guvenliyse push et
         env:
           DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
           SADECE_BAK: ${{ inputs.sadece_bak && 'evet' || 'hayir' }}
+          ESIK: ${{ inputs.esik || '8' }}
         run: |
           set -euo pipefail
 
-          yazabilir="hayir"
-          if [ -n "${DEPO_JETONU:-}" ] && [ "$SADECE_BAK" != "evet" ]; then
-            yazabilir="evet"
-            git config --global url."https://x-access-token:${DEPO_JETONU}@github.com/".insteadOf "https://github.com/"
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          fi
-
-          echo "### yenile" >> "$GITHUB_STEP_SUMMARY"
-          echo >> "$GITHUB_STEP_SUMMARY"
-
-          degisen=0
-          atlanan=0
+          # --- 1. tur: neyin degistigini topla, hicbir seye dokunma ---
+          : > degisenler.txt
           while read -r ad dal arsiv; do
             yol="klonlar/${ad}"
             [ -d "$yol" ] || continue
             [ -n "$(git -C "$yol" status --porcelain -- project-meta.json)" ] || continue
-            degisen=$((degisen + 1))
+            echo "$ad $dal $arsiv" >> degisenler.txt
             echo "#### $ad"
             git -C "$yol" --no-pager diff -- project-meta.json | head -40
+          done < depolar.txt
+          degisen=$(wc -l < degisenler.txt)
+
+          echo "### yenile" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$degisen" = "0" ]; then
+            echo "Hicbir depoda ayrisma yok." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          # --- 2. tur: kapilar ---
+          yazabilir="evet"
+          neden=""
+          if [ -z "${DEPO_JETONU:-}" ]; then
+            yazabilir="hayir"
+            neden="DEPO_JETONU tanimli degil"
+          elif [ "$SADECE_BAK" = "evet" ]; then
+            yazabilir="hayir"
+            neden="sadece_bak isaretli"
+          elif [ "$degisen" -gt "$ESIK" ]; then
+            yazabilir="hayir"
+            neden="patlama yaricapi: $degisen depo degisiyor, esik $ESIK"
+          fi
+
+          if [ "$yazabilir" != "evet" ]; then
+            echo "**$degisen depoda ayrisma var, hicbiri push edilmedi** ($neden)." >> "$GITHUB_STEP_SUMMARY"
+            echo >> "$GITHUB_STEP_SUMMARY"
+            cut -d" " -f1 degisenler.txt | sed 's/^/- `/; s/$/`/' >> "$GITHUB_STEP_SUMMARY"
+            if [ -z "${DEPO_JETONU:-}" ]; then
+              echo >> "$GITHUB_STEP_SUMMARY"
+              echo "Kendi kendine duzeltmesi icin butun depolarda **Contents: Read and write** yetkisi olan fine-grained bir PAT uretip bu deponun Settings -> Secrets and variables -> Actions altina \`DEPO_JETONU\` adiyla ekle. O zamana kadar duzeltme \`/meta\` ile yurur." >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 0
+          fi
+
+          git config --global url."https://x-access-token:${DEPO_JETONU}@github.com/".insteadOf "https://github.com/"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # --- 3. tur: depo depo, son kapi ve push ---
+          atlanan=0
+          gonderilen=0
+          while read -r ad dal arsiv; do
+            yol="klonlar/${ad}"
             if [ "$arsiv" = "1" ]; then
               atlanan=$((atlanan + 1))
               echo "- \`${ad}\` ayrismis ama **arsivli**, dokunulmadi" >> "$GITHUB_STEP_SUMMARY"
               continue
             fi
-            if [ "$yazabilir" != "evet" ]; then
-              echo "- \`${ad}\` ayrismis" >> "$GITHUB_STEP_SUMMARY"
+            git -C "$yol" show "HEAD:project-meta.json" > eski.json
+            if ! python3 schema/koruma.py eski.json "${yol}/project-meta.json"; then
+              atlanan=$((atlanan + 1))
+              echo "- \`${ad}\` **push EDILMEDI**: degisiklik dolu bir alani bosaltiyor (yukaridaki KAYIP satirlarina bak)" >> "$GITHUB_STEP_SUMMARY"
               continue
             fi
             git -C "$yol" add project-meta.json
             git -C "$yol" commit --quiet \
               -m "meta: project-meta.json tazelendi [skip ci]" \
-              -m "Depodaki gercekler degisti; dosya schema/uret.py ile yeniden uretildi ve schema/dogrula.py kapisindan gecti." \
+              -m "Depodaki gercekler degisti; dosya schema/uret.py ile yeniden uretildi, schema/dogrula.py ve schema/koruma.py kapilarindan gecti." \
               -m "Kaynak: ${GITHUB_REPOSITORY} yenile.yml, kosu ${GITHUB_RUN_ID}"
             git -C "$yol" push origin "HEAD:${dal}"
+            gonderilen=$((gonderilen + 1))
             echo "- \`${ad}\` **tazelendi ve push edildi**" >> "$GITHUB_STEP_SUMMARY"
-          done < depolar.txt
+          done < degisenler.txt
 
           echo >> "$GITHUB_STEP_SUMMARY"
-          if [ "$degisen" = "0" ]; then
-            echo "Hicbir depoda ayrisma yok." >> "$GITHUB_STEP_SUMMARY"
-          elif [ "$yazabilir" = "evet" ]; then
-            echo "${degisen} depoda ayrisma vardi; arsivli olanlar disinda hepsi tazelendi." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "**Sadece bak kipi.** ${degisen} depoda ayrisma var, hicbiri push edilmedi." >> "$GITHUB_STEP_SUMMARY"
-            echo >> "$GITHUB_STEP_SUMMARY"
-            if [ -z "${DEPO_JETONU:-}" ]; then
-              echo "Kendi kendine duzeltmesi icin: butun depolarda **Contents: Read and write** yetkisi olan fine-grained bir PAT uretip bu deponun Settings -> Secrets and variables -> Actions altina \`DEPO_JETONU\` adiyla ekle. O zamana kadar duzeltme \`/meta\` ile yurur." >> "$GITHUB_STEP_SUMMARY"
-            fi
-          fi
-          if [ "$atlanan" != "0" ]; then
-            echo >> "$GITHUB_STEP_SUMMARY"
-            echo "${atlanan} arsivli depo atlandi: arsivli depo push kabul etmez." >> "$GITHUB_STEP_SUMMARY"
-          fi
+          echo "${degisen} depoda ayrisma vardi: ${gonderilen} tazelendi, ${atlanan} dokunulmadi." >> "$GITHUB_STEP_SUMMARY"

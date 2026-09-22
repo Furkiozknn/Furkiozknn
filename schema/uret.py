@@ -73,17 +73,19 @@ def _depolar():
 def surum(d):
     p = os.path.join(d, "pyproject.toml")
     if os.path.isfile(p):
-        for satir in open(p, encoding="utf-8", errors="replace"):
-            m = re.match(r'\s*version\s*=\s*"([^"]+)"', satir)
-            if m:
-                return m.group(1)
+        with open(p, encoding="utf-8", errors="replace") as f:
+            for satir in f:
+                m = re.match(r'\s*version\s*=\s*"([^"]+)"', satir)
+                if m:
+                    return m.group(1)
     # Claude Code eklentisi: bildirilen surum burada durur. package.json'dan
     # once bakilir, cunku bir eklenti deposundaki package.json cogu zaman
     # yalnizca modul turunu sabitlemek icin vardir ve "0.0.0" tasir.
     p = os.path.join(d, ".claude-plugin", "plugin.json")
     if os.path.isfile(p):
         try:
-            v = json.load(open(p, encoding="utf-8")).get("version")
+            with open(p, encoding="utf-8") as f:
+                v = json.load(f).get("version")
             if v and v != "0.0.0":
                 return v
         except Exception:
@@ -91,7 +93,8 @@ def surum(d):
     p = os.path.join(d, "package.json")
     if os.path.isfile(p):
         try:
-            v = json.load(open(p, encoding="utf-8")).get("version")
+            with open(p, encoding="utf-8") as f:
+                v = json.load(f).get("version")
             # "private": true tek basina bir sey soylemiyor -- bir uygulama
             # kutuphane olmadigi icin private olur ama surumunu yine de
             # bildirir (masal 1.0.0). Ayirt edici olan "0.0.0" yer tutucusu.
@@ -116,7 +119,8 @@ def medya(d):
     yol = os.path.join(d, "README.md")
     hero, kareler, gifler = None, [], []
     if os.path.isfile(yol):
-        metin = open(yol, encoding="utf-8", errors="replace").read()
+        with open(yol, encoding="utf-8", errors="replace") as f:
+            metin = f.read()
         for m in GORSEL.finditer(metin):
             u = (m.group(1) or m.group(2) or "").strip()
             if not u or u.startswith(("http://", "https://", "data:")):
