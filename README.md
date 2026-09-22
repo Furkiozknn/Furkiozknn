@@ -1,9 +1,9 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 26 public repositories, 4,700 tests, 978 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 27 public repositories, 4,700 tests, 1,019 commits." width="100%">
 
 <p align="center">
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C700_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,700 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
-  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-26-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="26 public repositories"></a>
+  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-27-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="27 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
 </p>
 
@@ -70,9 +70,12 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 ---
 
-## ▸ This is one system, not twenty-six side projects
+## ▸ This is one system, not twenty-seven side projects
 
 ![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
+
+<p align="center"><b><a href="https://furkiozknn.github.io/">Every repository, searchable, in one page →</a></b><br>
+<sub>Generated from the <code>project-meta.json</code> each one carries, rebuilt weekly. Nothing on it is hand-written.</sub></p>
 
 <sub>Four repositories share one job contract and no Python dependency. Four more exist to check work — a repository's README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. Underneath all of them, one metadata schema and one audit that runs every morning.</sub>
 
@@ -216,6 +219,7 @@ Remote · Türkiye · European hours
 <br>
 
 <sub>
+  <a href="https://furkiozknn.github.io/">Project directory</a> ·
   <a href="TESTLER.md">Where the 4,700 comes from</a> ·
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·

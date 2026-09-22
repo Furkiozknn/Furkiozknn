@@ -11,11 +11,12 @@ because parametrised tests expand at collection time. `ai-job-gateway` has 9
 test functions and 156 cases. An early version of the hero said "1,426 tests"
 and was wrong in both directions, having been produced by grepping the tree.
 
-Twenty-six repositories are public. Twenty-three of them have a suite and are
+Twenty-seven repositories are public. Twenty-three of them have a suite and are
 counted here. The three that are not: `godot-2d-sablon` (two starter
 templates, no suite), `claude-quota-monitor` (43 passing tests, archived —
-`claude-code-intelligence` superseded it) and this repository, which holds the
-profile README.
+`claude-code-intelligence` superseded it), `Furkiozknn.github.io` (the project
+directory, which is generated rather than written) and this repository, which
+holds the profile README.
 
 | Repository | Tests | Source of the number | Measured |
 |---|---:|---|---|
@@ -90,10 +91,10 @@ kind that catches a level becoming unfinishable.
 
 ## The other two numbers
 
-**26 public repositories.** Every repository on this account is public except
+**27 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**978 commits.** `git rev-list --count HEAD`, summed over those 26
+**1,019 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 

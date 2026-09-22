@@ -287,6 +287,33 @@
       ]
     }
   },
+  "Furkiozknn.github.io": {
+    "status": "active",
+    "category": "profile",
+    "platform": [
+      "web"
+    ],
+    "technologies": [
+      "Python 3 standard library only",
+      "one static HTML file",
+      "GitHub Pages"
+    ],
+    "key_features": [
+      "One searchable page over every public repository, with filters by category and language",
+      "Generated from each repository's own project-meta.json, never hand-edited",
+      "A null field is left off the page rather than filled in with a guess",
+      "Rebuilt weekly by a workflow that commits only when the output changes"
+    ],
+    "tests": null,
+    "social": {
+      "headline": "Every repository on the account, in one searchable page, generated from the metadata each one carries.",
+      "hashtags": [
+        "opensource",
+        "devtools",
+        "githubpages"
+      ]
+    }
+  },
   "godot-2d-sablon": {
     "status": "active",
     "category": "template",
