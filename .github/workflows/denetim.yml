@@ -43,9 +43,16 @@ jobs:
           python-version: "3.12"
 
       # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
+      # DEPO_JETONU tanimliysa kosu loglari da okunabiliyor, yani
+      # "yayimlanan test sayisi hala kosunun yazdigi sayi mi" sorusu
+      # gercekten soruluyor. Tanimli degilse denetim yine kosuyor ama
+      # raporun basinda kac deponun sayisina BAKILAMADIGI yaziyor --
+      # bakilamayan bir sayi temiz degildir, ve bu satir eklenene kadar
+      # o kontrol her gun sessizce atlaniyordu.
       - name: Denetim
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
         run: |
           set -euo pipefail
           python3 schema/denetim.py | tee denetim.md

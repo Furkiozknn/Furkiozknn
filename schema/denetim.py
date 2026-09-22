@@ -119,6 +119,8 @@ def _kirmizi_kosular(ad, dal, akislar):
 
 GENIS = os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
+SAYI_OKUNAN = []           # yayimlanan test sayisi kosuya karsi GERCEKTEN karsilastirilan depolar
+SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
 KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
 
 
@@ -256,21 +258,25 @@ def _test_sayisi(ad, dal, meta, akislar):
     eski sayiyi gosterdigi icin kimse fark etmez. Burada sayinin kaynagina
     geri gidiliyor.
     """
-    if not GENIS:
-        return None                       # log okunamaz; sessiz kal
     testler = meta.get("tests") if meta else None
     if not testler or not testler.get("count"):
+        return None                       # yayimlanan sayi yok: karsilastiracak bir sey de yok
+    if not GENIS:
+        SAYI_BAKILAMADI[ad] = "DEPO_JETONU yok: kosu logu okunamaz"
         return None
     desen = kalip(testler.get("source"))
     if not desen:
-        return None                       # birlesik kaynak: dogrulanamaz
+        SAYI_BAKILAMADI[ad] = "birlesik kaynak: tek bir kalibi yok"
+        return None
     metin = _log_metni(ad, dal, akislar)
     if metin is None:
+        SAYI_BAKILAMADI[ad] = "okunabilir bir ci.yml kosu logu bulunamadi"
         return None
     olculen = sayiyi_bul(metin, desen)
     if olculen is None:
         return ("tests.source kalibi (%r) en yeni basarili CI kosusunda "
                 "bulunamadi -- sayinin kaynagi degismis olabilir" % desen)
+    SAYI_OKUNAN.append(ad)
     if olculen != testler["count"]:
         return ("tests.count %d diyor, en yeni CI kosusu %d yazdi"
                 % (testler["count"], olculen))
@@ -684,10 +690,37 @@ SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "baglanti",
         "ayrisma", "belge", "vitrin"]
 
 
+def _kapsam_satiri():
+    """Yayimlanan test sayilarindan kaci gercekten kosuya karsi bakildi.
+
+    "Bakilamadi" ile "temiz" ayni cumleye giremez. Bu kontrol, sistemin
+    kendi hakkinda soyledigi en yuklu cumleyi -- profil sayfasindaki toplam
+    test sayisini -- kosunun bugun yazdigi satira geri baglayan kontrol; ve
+    DEPO_JETONU olmadan sessizce atlaniyordu, yani gunluk denetim aylarca
+    "temiz" yazarken o cumleye hic bakmamis olabilirdi. Simdi sayiyor.
+    """
+    okunan, bakilamayan = len(SAYI_OKUNAN), len(SAYI_BAKILAMADI)
+    if not okunan and not bakilamayan:
+        return ""
+    if not bakilamayan:
+        return "Yayimlanan test sayisi %d depoda kosuya karsi dogrulandi." % okunan
+    nedenler = {}
+    for ad, neden in SAYI_BAKILAMADI.items():
+        nedenler.setdefault(neden, []).append(ad)
+    parca = "; ".join("%d: %s" % (len(v), k) for k, v in sorted(nedenler.items()))
+    return ("Yayimlanan test sayisi %d depoda kosuya karsi dogrulandi, "
+            "%d depoda **bakilamadi** (%s). Bakilamayan bir sayi temiz degildir."
+            % (okunan, bakilamayan, parca))
+
+
 def _rapor(bulgular, iskeletler, depo_sayisi):
+    kapsam = _kapsam_satiri()
     if not bulgular:
-        return "Denetim temiz: %d depo, bulgu yok." % depo_sayisi
+        metin = "Denetim temiz: %d depo, bulgu yok." % depo_sayisi
+        return metin + ("\n\n" + kapsam if kapsam else "")
     s = ["**%d depoda %d bulgu.**" % (len({b[0] for b in bulgular}), len(bulgular)), ""]
+    if kapsam:
+        s.extend([kapsam, ""])
     for tur in SIRA:
         alt = [b for b in bulgular if b[1] == tur]
         if not alt:
@@ -717,6 +750,8 @@ def main():
 
     bulgular, iskeletler, metalar = [], {}, {}
     KURULUM_ONBELLEK.clear()
+    SAYI_OKUNAN.clear()
+    SAYI_BAKILAMADI.clear()
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
         alt, iskelet, meta = _depoyu_olc(r, kaynak)
         if meta is not None:
@@ -747,6 +782,8 @@ def main():
         "finding_count": len(bulgular),
         "fingerprint": parmak,
         "dependabot_checked": len(UYARI_OKUNAN),
+        "test_counts_verified": len(SAYI_OKUNAN),
+        "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
                    "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "

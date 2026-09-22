@@ -1,6 +1,6 @@
-# Where the 5,062 comes from
+# Where the 5,101 comes from
 
-The hero image on this profile claims 5,062 tests. This file is that claim,
+The hero image on this profile claims 5,101 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
@@ -36,16 +36,16 @@ fired. It now has 37 tests and is counted.
 | [buradane](https://github.com/Furkiozknn/buradane) | 347 | 119 backend (CI log: 119 passed) + 228 frontend (vitest) | 22 Sep 2026 |
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 327 | `327 passed` | 22 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 319 | `319 passed` | 22 Sep 2026 |
-| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
+| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 273 | `273 passed` | 22 Sep 2026 |
 | [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar) | 160 | 27 validator + 33 format + 43 browser + 20 team-runner + 19 trigger-collision + 14 boundary + 4 module-type, each from its own printed line | 22 Sep 2026 |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed` | 15 Sep 2026 |
 | [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | `node --test`: `pass 142` | 15 Sep 2026 |
-| [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet) | 130 | `130 passed` | 22 Sep 2026 |
+| [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) | 133 | CI log: `=== 133 tests passed ===` | 22 Sep 2026 |
+| [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet) | 131 | `131 passed` | 22 Sep 2026 |
 | [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 125 | `125 passed` | 22 Sep 2026 |
 | [kanca](https://github.com/Furkiozknn/kanca) | 115 | CI log: `=== 115/115 gecti ===` | 22 Sep 2026 |
-| [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) | 107 | CI log: `=== 107 tests passed ===` | 22 Sep 2026 |
 | [repo-vet](https://github.com/Furkiozknn/repo-vet) | 103 | CI log: `=== 103 tests passed ===` | 22 Sep 2026 |
-| [masal](https://github.com/Furkiozknn/masal) | 92 | `node --test`: `pass 92` | 15 Sep 2026 |
+| [masal](https://github.com/Furkiozknn/masal) | 92 | `node --test`: `pass 92` | 22 Sep 2026 |
 | [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) | 80 | 72 suite + 8 cross-repo contract job; CI splits them, so no single line prints 80 | 22 Sep 2026 |
 | [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) | 80 | `80 passed` | 15 Sep 2026 |
 | [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) | 74 | `74 passed` | 15 Sep 2026 |
@@ -55,7 +55,7 @@ fired. It now has 37 tests and is counted.
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 38 | `38 passed` (Playwright) | 22 Sep 2026 |
 | [Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io) | 37 | `37 passed` | 22 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
-| **Total** | **5,062** | | |
+| **Total** | **5,101** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -147,7 +147,7 @@ kind that catches a level becoming unfinishable.
 **28 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**1,067 commits.** `git rev-list --count HEAD`, summed over those 27
+**1,081 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 
@@ -156,6 +156,16 @@ This figure was published as 622 over 16 repositories on 15 September, and as
 not been fetched, so the merge commits created on GitHub when pull requests
 were merged there were missing from every local history. It is the kind of
 error this file exists to catch, and it is the third one caught so far.
+
+The fourth was found on 22 September by running `--olc` rather than
+`--kontrol`. `repo-ratchet`'s count was published with `130 passed` as its
+source — a line its own CI never wrote, because the workflow ran
+`pytest -q` and under `-q` pytest prints the progress dots and no summary at
+all. The count was right; its stated source was not in the run, so nobody
+could go back and check it, and the offline consistency check stayed green
+the whole time. That is the distinction this file turns on: four copies of an
+unverifiable number still agree with each other. `-q` is gone from that
+workflow and the count is now `131 passed`, a line the run actually prints.
 
 ## Recheck it yourself
 
@@ -175,6 +185,17 @@ DEPO_JETONU=... python3 schema/testler.py --yaz     # ...and write what it measu
 `--kontrol` needs no token and runs in CI. `--olc` downloads one run log per
 repository, which GitHub rate-limits; `--bekleme` spaces the requests out and
 `--depo` narrows the pass to one repository at a time.
+
+**The two are not the same question, and the difference is the whole point of
+this file.** `--kontrol` asks whether the hero image, the badge, the table and
+the totals agree with each other. They can all agree and all be stale — four
+copies of one wrong number is still a wrong number. Only `--olc` goes back to
+the run. The daily audit (`schema/denetim.py`) does ask the second question,
+but it needs a token that can read another repository's run logs, and without
+one it used to skip that check in silence: the report said "clean" on days
+when the most load-bearing number in this repository had not been looked at at
+all. The report now opens with how many counts were actually compared and how
+many could not be, and why. A number nobody could check is not a clean number.
 
 Each repository also carries a `project-meta.json` at its root with the same
 count, the line it came from and the date — see

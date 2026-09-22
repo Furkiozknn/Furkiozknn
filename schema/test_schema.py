@@ -455,6 +455,72 @@ class OlcumTesti(unittest.TestCase):
                                             "=== 115/115 gecti ==="), 115)
 
 
+class KapsamTesti(unittest.TestCase):
+    """"Bakilamadi" ile "temiz" ayni cumleye giremez.
+
+    _test_sayisi, DEPO_JETONU yokken sessizce None donuyordu ve gunluk
+    denetim raporu bunu hic yazmiyordu. Yani "Denetim temiz" cumlesi,
+    sistemin kendi hakkinda soyledigi en yuklu sayiya hic bakilmamis
+    oldugu gunlerde de ayni sekilde yaziliyordu.
+    """
+
+    def setUp(self):
+        denetim.SAYI_OKUNAN.clear()
+        denetim.SAYI_BAKILAMADI.clear()
+
+    def tearDown(self):
+        denetim.SAYI_OKUNAN.clear()
+        denetim.SAYI_BAKILAMADI.clear()
+
+    def test_hicbir_sey_olculmediyse_satir_yok(self):
+        self.assertEqual(denetim._kapsam_satiri(), "")
+
+    def test_hepsi_okunduysa_sade_cumle(self):
+        denetim.SAYI_OKUNAN.extend(["a", "b"])
+        self.assertEqual(denetim._kapsam_satiri(),
+                         "Yayimlanan test sayisi 2 depoda kosuya karsi dogrulandi.")
+
+    def test_bakilamayan_varsa_sayisi_ve_nedeni_yazilir(self):
+        denetim.SAYI_OKUNAN.append("a")
+        denetim.SAYI_BAKILAMADI["b"] = "DEPO_JETONU yok: kosu logu okunamaz"
+        denetim.SAYI_BAKILAMADI["c"] = "DEPO_JETONU yok: kosu logu okunamaz"
+        denetim.SAYI_BAKILAMADI["d"] = "birlesik kaynak: tek bir kalibi yok"
+        satir = denetim._kapsam_satiri()
+        self.assertIn("1 depoda kosuya karsi dogrulandi", satir)
+        self.assertIn("3 depoda **bakilamadi**", satir)
+        self.assertIn("2: DEPO_JETONU yok", satir)
+        self.assertIn("1: birlesik kaynak", satir)
+        self.assertIn("Bakilamayan bir sayi temiz degildir", satir)
+
+    def test_temiz_rapor_da_kapsami_soyler(self):
+        denetim.SAYI_BAKILAMADI["b"] = "DEPO_JETONU yok: kosu logu okunamaz"
+        metin = denetim._rapor([], {}, 28)
+        self.assertIn("Denetim temiz", metin)
+        self.assertIn("bakilamadi", metin)
+
+    def test_bulgulu_rapor_da_kapsami_soyler(self):
+        denetim.SAYI_OKUNAN.append("a")
+        metin = denetim._rapor([("x", "olcum", "bir sey")], {}, 28)
+        self.assertIn("kosuya karsi dogrulandi", metin)
+
+    def test_yayimlanan_sayisi_olmayan_depo_bakilamadi_sayilmaz(self):
+        # Test sayisi yayimlamayan bir depo icin karsilastiracak bir sey yok;
+        # onu "bakilamadi" diye saymak gercek boslugu gurultuye gomerdi.
+        self.assertIsNone(denetim._test_sayisi("x", "main", {"tests": {}}, {}))
+        self.assertIsNone(denetim._test_sayisi("x", "main", None, {}))
+        self.assertEqual(denetim.SAYI_BAKILAMADI, {})
+
+    def test_jeton_yokken_sebep_kaydedilir(self):
+        onceki = denetim.GENIS
+        denetim.GENIS = ""
+        try:
+            self.assertIsNone(denetim._test_sayisi(
+                "x", "main", {"tests": {"count": 12, "source": "`12 passed`"}}, {}))
+        finally:
+            denetim.GENIS = onceki
+        self.assertIn("DEPO_JETONU", denetim.SAYI_BAKILAMADI["x"])
+
+
 class BayatlikTesti(unittest.TestCase):
     """'active' diyen ama aylardir sessiz depo."""
 

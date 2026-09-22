@@ -184,12 +184,13 @@
       "Where the tokens went, what it cost, and when the limit resets",
       "Every number carries an evidence class - observed, derived or estimated - and one that fails the reconciliation gate is not printed at all",
       "No prompt, response or file content is defined in any type, so a privacy review is a grep",
-      "Local-first: an OTLP receiver and transcript parser that never phone home"
+      "Local-first: an OTLP receiver and transcript parser that never phone home",
+      "Provider-agnostic in practice, not only on paper: a third-party adapter is a pip-installable package with one cci.adapters entry point, cci providers says which ones are reachable and why one is not, and CI installs an example package and fails if the product cannot see it"
     ],
     "tests": {
-      "count": 261,
-      "source": "`261 passed`",
-      "measured": "2026-09-15"
+      "count": 273,
+      "source": "`273 passed`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "Where the tokens went, what it cost, when the limit resets - measured, not guessed.",
@@ -360,15 +361,15 @@
       "GitHub Actions"
     ],
     "key_features": [
-      "Ten checks over .tscn, .tres, project.godot, .import, plugin.cfg, GDScript and shaders, in both the Godot 3 and Godot 4 formats",
-      "Node paths resolve through instanced, inherited and placeholder scenes, so a dead signal connection is found without ever calling a healthy one broken",
+      "Eleven checks over .tscn, .tres, project.godot, .import, plugin.cfg, GDScript and shaders, in both the Godot 3 and Godot 4 formats",
+      "Node paths resolve through instanced, inherited and placeholder scenes, and are judged where they are written - $Head/Body inside a script, not only a scene's [connection] block, which most projects never use",
       "--fix repairs in place what the project itself settles: a moved file, a case-only difference, a uid that already resolves; two files with the same name produce no repair",
       "Verified against a headless Godot: eight engine-confirmed cases and two repair round trips where the engine errors before --fix and is silent afterwards",
-      "Calibrated on 237 projects in eleven real repositories: 41 findings, each confirmed by hand, and no repair proposed anywhere"
+      "Calibrated on 237 projects in eleven real repositories: 50 findings, each confirmed by hand, no repair proposed anywhere, and a weekly job that fails if the corpus stops agreeing with the documented total"
     ],
     "tests": {
-      "count": 107,
-      "source": "CI log: `=== 107 tests passed ===`",
+      "count": 133,
+      "source": "CI log: `=== 133 tests passed ===`",
       "measured": "2026-09-22"
     },
     "social": {
@@ -470,7 +471,7 @@
     "tests": {
       "count": 92,
       "source": "`node --test`: `pass 92`",
-      "measured": "2026-09-15"
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "A bedtime story written around your child's name - and a colouring page drawn into it.",
@@ -903,8 +904,8 @@
       "Runs another repository's own test command behind an allowlist, with no shell at all"
     ],
     "tests": {
-      "count": 130,
-      "source": "`130 passed`",
+      "count": 131,
+      "source": "`131 passed`",
       "measured": "2026-09-22"
     },
     "social": {
