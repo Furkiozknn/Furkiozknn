@@ -76,10 +76,13 @@ jobs:
               echo "Temiz; acik konu da yok. Yazilacak bir sey yok."
               exit 0
             fi
-            gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" \
-              --body "Denetim temiz: $(date -u '+%Y-%m-%d') kosusunda bulgu kalmadi. Konu kapaniyor; yeni bir bulgu cikarsa bir sonraki kosu yenisini acar.
-
-<sub>schema/denetim.py, ${GITHUB_RUN_ID} kosusundan.</sub>"
+            {
+              echo "Denetim temiz: $(date -u '+%Y-%m-%d') kosusunda bulgu kalmadi."
+              echo "Konu kapaniyor; yeni bir bulgu cikarsa bir sonraki kosu yenisini acar."
+              echo
+              echo "<sub>schema/denetim.py, ${GITHUB_RUN_ID} kosusundan.</sub>"
+            } > kapanis.md
+            gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" --body-file kapanis.md
             gh issue close "$numara" --repo "$GITHUB_REPOSITORY"
             echo "temiz -> #$numara kapatildi"
             exit 0
