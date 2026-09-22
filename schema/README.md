@@ -116,10 +116,13 @@ of the repository's **own** workflows is red.
 It also checks this profile's own headline numbers, which are the numbers
 most likely to rot quietly. `TESTLER.md` names one canonical figure in its
 title; the audit sums `tests.count` across every non-archived repository and
-compares. It also checks that the README repeats that same figure and that
-the public-repository count on the page matches the live one. Adding seven
-tests to one game is enough to make the hero image wrong, and nobody would
-notice by reading.
+compares. It also checks that the README repeats that same figure, that the
+public-repository count on the page matches the live one, and that **every
+row of the project table carries the test count its own metadata reports**.
+The per-row check is the one that earns its keep: a total can stay right
+while two rows drift in opposite directions, and a reader looks at the row,
+not the total. Adding seven tests to one game is enough to make the page
+wrong, and nobody would notice by reading.
 
 Two things are deliberately out of scope. Runs GitHub manages itself — the
 Dependabot updater, default-setup CodeQL — are not the repository's CI, so a

@@ -295,6 +295,34 @@ def _profil_sayilari(metalar, depo_sayisi):
                   "TESTLER.md %d test diyor, metadata toplami %d" % (iddia, toplam)))
 
     metin = readme.read_text(encoding="utf-8")
+
+    # Tablodaki her satirin kendi sayisi da tutmali. Toplam dogru ama
+    # satirlar yanlis olabilir -- iki depo birbirini gotururse toplam
+    # farki yutar, satira bakan okuyucu yanlis sayiyi gorur.
+    satirlar = {}
+    for s in metin.splitlines():
+        if not s.startswith("|") or "github.com/" not in s:
+            continue
+        d = re.search(r"\]\(https://github\.com/%s/([A-Za-z0-9._-]+)\)" % OWNER, s)
+        if d:
+            satirlar[d.group(1)] = s
+    for ad, (r, meta) in sorted(metalar.items()):
+        if r["archived"] or not meta.get("tests"):
+            continue
+        s = satirlar.get(ad)
+        if s is None:
+            f.append(("Furkiozknn", "vitrin",
+                      "README tablosunda %s satiri yok (suiti var)" % ad))
+            continue
+        sayilar = re.findall(r"`([\d,]+)`", s)
+        if not sayilar:
+            continue
+        yazan = int(sayilar[-1].replace(",", ""))
+        if yazan != meta["tests"]["count"]:
+            f.append(("Furkiozknn", "vitrin",
+                      "README tablosunda %s icin %d yaziyor, metadata %d diyor"
+                      % (ad, yazan, meta["tests"]["count"])))
+
     if m.group(1) not in metin:
         f.append(("Furkiozknn", "vitrin",
                   "README, TESTLER.md'deki %s sayisini hic gecirmiyor" % m.group(1)))
