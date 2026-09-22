@@ -1,74 +1,101 @@
-# Where the 2,168 comes from
+# Where the 4,481 comes from
 
-The hero image on this profile claims 2,168 tests across 16 repositories.
-This file is that claim, broken down, so you can check it instead of
-believing it.
+The hero image on this profile claims 4,481 tests. This file is that claim,
+broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
 the end of a run — not a count of `def test_` or `it(` in the source. Those
 two disagree, sometimes badly: `buradane`'s backend has 68 test functions and
 96 test cases, `mini-creative-toolkit` has 208 functions and 326 cases,
-because parametrised tests expand at collection time. An earlier version of
-the hero said "1,426 tests" and was wrong in both directions, having been
-produced by grepping the tree.
+because parametrised tests expand at collection time. `ai-job-gateway` has 9
+test functions and 156 cases. An early version of the hero said "1,426 tests"
+and was wrong in both directions, having been produced by grepping the tree.
 
-Measured 15 September 2026, after an audit pass that fixed bugs in 14 of
-these repositories and added tests for each fix. That is why several counts
-moved since the 14 September measurement.
+Twenty-four repositories are public. Twenty-one of them have a suite and are
+counted here. The three that are not: `godot-2d-sablon` (two starter
+templates, no suite), `claude-quota-monitor` (43 passing tests, archived —
+`claude-code-intelligence` superseded it) and this repository, which holds the
+profile README.
 
-| Repository | Tests | Δ | Source of the number |
-|---|---:|---:|---|
-| [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 326 | +7 | `326 passed, 1 skipped` |
-| [buradane](https://github.com/Furkiozknn/buradane) | 324 | +38 | 96 backend (CI log) + 228 frontend (vitest) |
-| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 289 | +19 | `289 passed` |
-| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | +2 | `261 passed` |
-| [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | — | CI log: `156 passed`. A local run without the `media` extra gives `150 passed, 6 skipped`. |
-| [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | — | `node --test`: `pass 142`. Unchanged as a number, but until the glob in `package.json` was quoted, `npm test` silently ran only 137 of them — the end-to-end acceptance run was never among them. |
-| [masal](https://github.com/Furkiozknn/masal) | 92 | +3 | `node --test`: `pass 92` |
-| [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar) | 92 | — | 27 validator + 32 export + 33 format checks |
-| [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 86 | — | `86 passed` |
-| [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) | 80 | +13 | `80 passed` |
-| [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) | 74 | +12 | `74 passed` |
-| [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) | 72 | — | `72 passed` |
-| [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 61 | +3 | `61 passed` |
-| [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 50 | +12 | `50 passed, 14 skipped` |
-| [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | +2 | `35 passed, 2 skipped` |
-| [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | — | `28 passed` (Playwright) |
-| **Total** | **2,168** | **+111** | |
+| Repository | Tests | Source of the number | Measured |
+|---|---:|---|---|
+| [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) | 853 | CI log: `=== SONUC: 853 gecti, 0 hata ===` | 22 Sep 2026 |
+| [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) | 841 | CI log: `841 dogrulama, 0 hata` → `TESTLER GECTI` | 22 Sep 2026 |
+| [derin-kazi](https://github.com/Furkiozknn/derin-kazi) | 460 | CI log, two jobs: `== 304 sinama, 0 hata ==` (unit) + `== 156 sinama, 0 hata ==` (gameplay) | 22 Sep 2026 |
+| [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 326 | `326 passed, 1 skipped` | 15 Sep 2026 |
+| [buradane](https://github.com/Furkiozknn/buradane) | 324 | 96 backend (CI log) + 228 frontend (vitest) | 15 Sep 2026 |
+| [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 289 | `289 passed` | 15 Sep 2026 |
+| [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
+| [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed`. A local run without the `media` extra gives `150 passed, 6 skipped`. | 15 Sep 2026 |
+| [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | `node --test`: `pass 142` | 15 Sep 2026 |
+| [kanca](https://github.com/Furkiozknn/kanca) | 115 | CI log: `=== 115/115 gecti ===` | 22 Sep 2026 |
+| [masal](https://github.com/Furkiozknn/masal) | 92 | `node --test`: `pass 92` | 15 Sep 2026 |
+| [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar) | 92 | 27 validator + 32 export + 33 format checks | 15 Sep 2026 |
+| [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit) | 86 | `86 passed` | 15 Sep 2026 |
+| [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp) | 80 | `80 passed` | 15 Sep 2026 |
+| [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) | 74 | `74 passed` | 15 Sep 2026 |
+| [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) | 72 | `72 passed` | 15 Sep 2026 |
+| [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 61 | `61 passed` | 15 Sep 2026 |
+| [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 50 | `50 passed, 14 skipped` | 15 Sep 2026 |
+| [mcp-census](https://github.com/Furkiozknn/mcp-census) | 44 | CI log: `44 passed in 0.13s` | 21 Sep 2026 |
+| [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
+| [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | `28 passed` (Playwright) | 15 Sep 2026 |
+| **Total** | **4,481** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s 14 skips are the embedding-model tests, which need
 a model download the CI runner does not do — the repository's own README says
 so too.
 
-Not in the table: [claude-quota-monitor](https://github.com/Furkiozknn/claude-quota-monitor)
-(43 passing tests, now archived — `claude-code-intelligence` superseded it and
-records what carried over) and
-[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon) (two starter
-templates, no suite). Also not counted: this repository, which holds the
-profile README.
+## What moved, and why
+
+The previous published figure was **2,168 across 16 repositories**, measured
+15 September 2026. Five repositories have been published since, all of them
+with suites that run headlessly in CI:
+
+| Added | Tests | First green CI run |
+|---|---:|---|
+| tek-tus-kosu | 853 | 21 Sep 2026 |
+| yercekimi-cevir | 841 | 21 Sep 2026 |
+| derin-kazi | 460 | 21 Sep 2026 |
+| kanca | 115 | 21 Sep 2026 |
+| mcp-census | 44 | 21 Sep 2026 |
+| | **+2,313** | |
+
+2,168 + 2,313 = 4,481. The sixteen earlier counts were not re-measured for
+this update; their CI has been green on every run since 15 September, and the
+recheck command below re-derives any of them in one line.
+
+The four game repositories are worth a note of their own: the counts are large
+because these suites exercise gameplay, not just functions. `yercekimi-cevir`'s
+841 checks include playing all 20 rooms to the end screen and confirming a
+medal was earned in each. That is a slow suite by design — it is also the only
+kind that catches a level becoming unfinishable.
 
 ## The other two numbers
 
-**16 projects.** The sixteen listed above — everything the profile page
-describes. All of them are public.
+**24 public repositories.** Every repository on this account is public except
+one unreleased game.
 
-**622 commits.** `git rev-list --count HEAD`, summed over those same 16
-repositories, on 15 September 2026. This repository's own commits are not
-included.
+**848 commits.** `git rev-list --count HEAD`, summed over those 24
+repositories minus this one, on 22 September 2026. This repository's own
+commits are not included.
 
-This figure was published as 569 for part of that day. The count had been
-taken from local clones that had not been fetched, so the merge commits
-created on GitHub when pull requests were merged there were missing from
-every local history. Re-measured after `git fetch`, with each repository
-confirmed level with its remote, the number is 622. It is the kind of error
-this file exists to catch, and it is the third one caught so far.
+This figure was published as 622 over 16 repositories on 15 September, and as
+569 earlier that same day. The 569 had been taken from local clones that had
+not been fetched, so the merge commits created on GitHub when pull requests
+were merged there were missing from every local history. It is the kind of
+error this file exists to catch, and it is the third one caught so far.
 
 ## Recheck it yourself
 
 ```bash
-gh run view --repo Furkiozknn/<repo> --log | grep -E '[0-9]+ passed'
+gh run view --repo Furkiozknn/<repo> --log | grep -E '[0-9]+ passed|gecti|sinama|dogrulama'
 ```
+
+Each repository also carries a `project-meta.json` at its root with the same
+count, the line it came from and the date — see
+[the schema](schema/README.md).
 
 If a number here and a number in a repository's own README disagree, the
 repository is right and this file is stale. Please open an issue.

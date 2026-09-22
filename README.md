@@ -1,15 +1,16 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 16 repos, 2,168 tests, 622 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 24 public repositories, 4,481 tests, 848 commits." width="100%">
 
 <p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-2%2C168_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="2,168 tests passing"></a>
+  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C481_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,481 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
-  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-16-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="16 public repositories"></a>
+  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-24-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="24 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
 </p>
 
 <p align="center">
   <b>I build the infrastructure AI agents run on</b> — async job contracts, pipeline DAGs, MCP servers —<br>
-  <b>and the tooling that checks whether any of it actually works.</b>
+  <b>and the tooling that checks whether any of it actually works.</b><br>
+  <sub>Some evenings, a game engine instead.</sub>
 </p>
 
 <p align="center">
@@ -74,7 +75,9 @@ right where template substitution never could — *Sinop* takes `-ta`, *Trabzon*
 
 ## ▸ Everything, in one table
 
-<sub>Every test count below links to the suite run that printed it. **[The full ledger →](TESTLER.md)**</sub>
+<sub>Every test count below is traced to the suite run that printed it. **[The full ledger →](TESTLER.md)**</sub>
+
+### Agent infrastructure, MCP and developer tooling
 
 | | Project | What it does | Tests |
 |:--:|---|---|---:|
@@ -91,12 +94,39 @@ right where template substitution never could — *Sinop* takes `-ta`, *Trabzon*
 | 🔗 | **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** | Pipelines as YAML DAGs, validated *before* they run. An undeclared dependency is rejected at load time, typo and all. | `72` |
 | ✍️ | **[prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager)** | Prompts versioned in git, so a change is a diff instead of an argument. `StrictUndefined` throughout. | `61` |
 | 🔍 | **[local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)** | Ask your own files a question, in any language the multilingual model covers. No server, no API key, no network. | `50` |
+| 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `44` |
 | 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, needing no key at all. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
 | 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
 | 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `28` |
-| | | **Total** | **`2,168`** |
 
-<sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects that already feel right to play (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
+### Games — Godot 4, each one tested headlessly in CI
+
+<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Windows and web (HTML5) export presets ship in every repository; there is no hosted build yet.</sub>
+
+| | Project | The one idea it is built on | Tests |
+|:--:|---|---|---:|
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `853` |
+| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
+| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `460` |
+| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
+| | | **Total, across 21 repositories with suites** | **`4,481`** |
+
+<sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
+
+---
+
+## ▸ Every repository carries its own metadata
+
+Each one has a `project-meta.json` at its root: identity, version, status,
+platform, the images its README actually shows, and the test count together
+with the runner line it came from and the date of that run.
+
+Mechanical fields are read from the repository; editorial fields are written
+by hand and checked against the code. **Nothing is filled in with a guess** — an
+unknown value is `null` rather than a plausible-looking string, and a test
+count with no source line does not go in the file at all.
+
+**[The schema and the rule it follows →](schema/README.md)**
 
 ---
 
@@ -157,7 +187,8 @@ Remote · Türkiye · European hours
 <br>
 
 <sub>
-  <a href="TESTLER.md">Where the 2,168 comes from</a> ·
+  <a href="TESTLER.md">Where the 4,481 comes from</a> ·
+  <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
   <a href="https://x.com/furkiozkan">@furkiozkan</a>
