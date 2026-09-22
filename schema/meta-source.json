@@ -315,6 +315,40 @@
       ]
     }
   },
+  "godot-refcheck": {
+    "status": "active",
+    "category": "developer-tool",
+    "platform": [
+      "cli",
+      "github-actions"
+    ],
+    "technologies": [
+      "Rust (std only)",
+      "zero dependencies",
+      "SARIF 2.1.0",
+      "GitHub Actions"
+    ],
+    "key_features": [
+      "Eight checks over .tscn, .tres, project.godot, .import, plugin.cfg, GDScript and shaders, in both the Godot 3 and Godot 4 formats",
+      "Every check is compared with a real headless Godot by tools/verify_with_godot.py; six have a matching engine message and the other two are documented as static-only",
+      "Calibrated against 237 projects in eleven real repositories: 25 findings, each confirmed by hand, and nothing else reported",
+      "Text, JSON and SARIF 2.1.0 output, plus a composite GitHub Action that puts findings on the changed lines of a pull request"
+    ],
+    "tests": {
+      "count": 73,
+      "source": "CI log: `=== 73 tests passed ===`",
+      "measured": "2026-09-22"
+    },
+    "social": {
+      "headline": "Godot only tells you a reference is broken when that scene loads. godot-refcheck tells you at commit time.",
+      "hashtags": [
+        "godot",
+        "gamedev",
+        "rust",
+        "staticanalysis"
+      ]
+    }
+  },
   "kanca": {
     "status": "active",
     "category": "game",
