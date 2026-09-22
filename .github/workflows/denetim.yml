@@ -67,13 +67,18 @@ jobs:
           parmak=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8'))['fingerprint'])")
           baslik="Ekosistem denetimi"
 
-          numara=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
-                     --search "$baslik in:title" --json number,title \
-                     --jq "[.[] | select(.title == \"$baslik\")] | .[0].number // empty")
+          # Kapali olanlar dahil aranir: her turda yeni bir konu acmak
+          # yerine hep ayni konu yeniden acilir. Bir yil sonra elli konu
+          # degil, gecmisi tek yerde duran bir konu olsun.
+          kayit=$(gh issue list --repo "$GITHUB_REPOSITORY" --state all --limit 100 \
+                    --search "$baslik in:title" --json number,title,state \
+                    --jq "[.[] | select(.title == \"$baslik\")] | sort_by(.number) | last")
+          numara=$(printf '%s' "$kayit" | python3 -c "import json,sys;d=sys.stdin.read().strip();print(json.loads(d)['number'] if d and d!='null' else '')")
+          durum=$(printf '%s' "$kayit" | python3 -c "import json,sys;d=sys.stdin.read().strip();print(json.loads(d)['state'] if d and d!='null' else '')")
 
           if [ "$sayi" = "0" ]; then
-            if [ -z "$numara" ]; then
-              echo "Temiz; acik konu da yok. Yazilacak bir sey yok."
+            if [ -z "$numara" ] || [ "$durum" = "CLOSED" ]; then
+              echo "Temiz; acilacak bir konu yok."
               exit 0
             fi
             {
@@ -102,6 +107,13 @@ jobs:
             numara=$(gh issue create --repo "$GITHUB_REPOSITORY" --title "$baslik" \
               --body-file yorum.md | sed 's#.*/##')
             echo "konu acildi: #$numara"
+            exit 0
+          fi
+
+          if [ "$durum" = "CLOSED" ]; then
+            gh issue reopen "$numara" --repo "$GITHUB_REPOSITORY"
+            gh issue comment "$numara" --repo "$GITHUB_REPOSITORY" --body-file yorum.md
+            echo "konu yeniden acildi: #$numara"
             exit 0
           fi
 
