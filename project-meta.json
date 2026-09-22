@@ -43,10 +43,11 @@
   "tests": null,
   "ci": {
     "workflows": [
+      "denetim.yml",
       "haftalik.yml",
       "projeler.yml"
     ],
-    "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/haftalik.yml/badge.svg"
+    "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/denetim.yml/badge.svg"
   },
   "docs": {
     "readme": "README.md",
