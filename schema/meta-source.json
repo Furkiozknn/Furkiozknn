@@ -246,11 +246,12 @@
       "Dig-sell-upgrade loop across five underground layers down to the core at 250 m",
       "Fuel is the timer: every descent is a bet on getting back up before it runs out",
       "Seeded worlds - a daily world and a Deep Mode built from the same seed code",
-      "Earthquakes, exploration fog and depth ambience that change how the layers read"
+      "Earthquakes, exploration fog and depth ambience that change how the layers read",
+      "The claims the design rests on are gates, not notes: the balance, human-like and fault-line suites were kept out of CI as \"simulations that take minutes\" - measured at 0s, 1s and 6s, and now run on every push"
     ],
     "tests": {
-      "count": 460,
-      "source": "CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`)",
+      "count": 477,
+      "source": "CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`) + 7 balance (`== 7 sinama, 0 hata ==`) + 10 human-like (`== 10 sinama, 0 hata ==`)",
       "measured": "2026-09-22"
     },
     "social": {
@@ -398,7 +399,8 @@
       "Swing physics with no jump button: hook a ceiling anchor, swing, release at the right moment and keep the momentum",
       "14 hand-built levels; medal times on 13 of them measured by a scripted bot rather than guessed",
       "All sprites generated from code (tools/sprite_uret.gd), so the art is reproducible from the repository",
-      "Single-finger control scheme for touch, documented alongside the keyboard layout"
+      "Single-finger control scheme for touch, documented alongside the keyboard layout",
+      "Medal thresholds come from a bot that really plays each level, and CI re-runs it on every push: every level has to still finish and the published gold has to still be a time the bot can reach - which is how level 5's gold was found to be 3.5s faster than the bot's own median"
     ],
     "tests": {
       "count": 115,
@@ -870,7 +872,8 @@
       "No jump button: one key flips gravity and you fall onto the ceiling",
       "20 hand-built precision rooms, each with its own medal times",
       "Ghost race, level-of-the-day and streak tracking built on recorded runs",
-      "Left-handed layout, storm mode and readability options as first-class settings"
+      "Left-handed layout, storm mode and readability options as first-class settings",
+      "Medal thresholds are measured by a bot that really plays the level, and CI re-runs that bot on every push, so a map edit cannot leave a stale threshold or an unsolvable room behind a green suite"
     ],
     "tests": {
       "count": 841,

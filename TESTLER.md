@@ -1,6 +1,6 @@
-# Where the 5,209 comes from
+# Where the 5,226 comes from
 
-The hero image on this profile claims 5,209 tests. This file is that claim,
+The hero image on this profile claims 5,226 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
@@ -32,7 +32,7 @@ fired. It now has 37 tests and is counted.
 |---|---:|---|---|
 | [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) | 961 | CI log: `=== SONUC: 961 gecti, 0 hata ===` | 22 Sep 2026 |
 | [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) | 841 | CI log: `841 dogrulama, 0 hata` / `TESTLER GECTI` | 22 Sep 2026 |
-| [derin-kazi](https://github.com/Furkiozknn/derin-kazi) | 460 | CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`) | 22 Sep 2026 |
+| [derin-kazi](https://github.com/Furkiozknn/derin-kazi) | 477 | CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay (`== 156 sinama, 0 hata ==`) + 7 balance (`== 7 sinama, 0 hata ==`) + 10 human-like (`== 10 sinama, 0 hata ==`) | 22 Sep 2026 |
 | [buradane](https://github.com/Furkiozknn/buradane) | 347 | 119 backend (CI log: 119 passed) + 228 frontend (vitest) | 22 Sep 2026 |
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 327 | `327 passed` | 22 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 319 | `319 passed` | 22 Sep 2026 |
@@ -55,7 +55,7 @@ fired. It now has 37 tests and is counted.
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 38 | `38 passed` (Playwright) | 22 Sep 2026 |
 | [Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io) | 37 | `37 passed` | 22 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
-| **Total** | **5,209** | | |
+| **Total** | **5,226** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -147,7 +147,7 @@ kind that catches a level becoming unfinishable.
 **28 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**1,083 commits.** `git rev-list --count HEAD`, summed over those 27
+**1,089 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 
