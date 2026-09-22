@@ -249,6 +249,20 @@ def sayiyi_bul(metin, desen):
         return None
 
 
+def sayilari_bul(metin, desen):
+    """Kalibin log metnindeki BUTUN eslesmeleri.
+
+    `sayiyi_bul` ilkini aliyor ve bir kosu tek is oldugu surece bu dogru.
+    Ikinci bir is eklendigi anda ayni log birden fazla sayi tasiyor ve ilk
+    eslesme yanlis olani olabiliyor. testler.py bu ayrimi bir tur once
+    ogrendi; denetim ogrenmemisti, ve gunluk konuya yazan taraf o.
+    Farkli sayilar esleiyorsa dogru cevap "belirsiz"dir, ilkini secmek degil.
+    """
+    desen, metin = sadelestir(desen), sadelestir(metin)
+    kalip_re = re.sub(r"\d+", r"(\\d+)", re.escape(desen))
+    return [int(m.group(1)) for m in re.finditer(kalip_re, metin or "") if m.groups()]
+
+
 def _test_sayisi(ad, dal, meta, akislar):
     """Yayimlanan test sayisi, kosunun bugun yazdigi sayiyla ayni mi.
 
@@ -273,14 +287,23 @@ def _test_sayisi(ad, dal, meta, akislar):
     if metin is None:
         SAYI_BAKILAMADI[ad] = "okunabilir bir ci.yml kosu logu bulunamadi"
         return None
-    olculen = sayiyi_bul(metin, desen)
-    if olculen is None:
+    hepsi = sayilari_bul(metin, desen)
+    if not hepsi:
         return ("tests.source kalibi (%r) en yeni basarili CI kosusunda "
                 "bulunamadi -- sayinin kaynagi degismis olabilir" % desen)
+    ayri = sorted(set(hepsi))
+    if len(ayri) > 1:
+        # Ayni kalip birden fazla sayiyi esliyor (kosuda birden fazla is).
+        # Ilkini secip "yayimlanan sayi yanlis" demek, bilinmeyeni bilinen
+        # gibi sunmaktir -- ve bu tam olarak bir kez oldu:
+        # mini-creative-toolkit'in logunda hem 135 hem 327 var.
+        SAYI_BAKILAMADI[ad] = ("belirsiz: kalip %s sayilarini esliyor"
+                               % ", ".join(str(x) for x in ayri))
+        return None
     SAYI_OKUNAN.append(ad)
-    if olculen != testler["count"]:
+    if ayri[0] != testler["count"]:
         return ("tests.count %d diyor, en yeni CI kosusu %d yazdi"
-                % (testler["count"], olculen))
+                % (testler["count"], ayri[0]))
     return None
 
 

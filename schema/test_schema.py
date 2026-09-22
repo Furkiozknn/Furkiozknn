@@ -454,6 +454,34 @@ class OlcumTesti(unittest.TestCase):
         self.assertEqual(denetim.sayiyi_bul("=== 115/115 gecti ===",
                                             "=== 115/115 gecti ==="), 115)
 
+    def test_iki_isli_log_belirsizdir(self):
+        # mini-creative-toolkit'in logunda hem 135 hem 327 var (iki is).
+        # `sayiyi_bul` ilkini alip "yayimlanan 327 yanlis, kosu 135 yazdi"
+        # diyordu -- bilinmeyeni bilinen gibi sunmak. Denetim artik ayrimi
+        # yapiyor, ve mantik tek yerde: testler.py buraya delege ediyor.
+        log = "=== 135 passed in 2s ===\nsonra\n=== 327 passed in 61s ==="
+        self.assertEqual(denetim.sayilari_bul(log, "327 passed"), [135, 327])
+        # Rakamlar genellestiriliyor (sayi degisince yakalanabilsin diye),
+        # ama rakam disi metin aynen aranir.
+        self.assertEqual(denetim.sayilari_bul(log, "999 passed"), [135, 327])
+        self.assertEqual(denetim.sayilari_bul(log, "999 sinama"), [])
+
+    def test_belirsiz_log_bulgu_degil_bakilamadi(self):
+        denetim.SAYI_OKUNAN.clear()
+        denetim.SAYI_BAKILAMADI.clear()
+        onceki_genis, onceki_log = denetim.GENIS, denetim._log_metni
+        denetim.GENIS = "x"
+        denetim._log_metni = lambda *a, **k: "=== 135 passed ===\n=== 327 passed ==="
+        try:
+            sonuc = denetim._test_sayisi(
+                "mct", "main", {"tests": {"count": 327, "source": "`327 passed`"}}, {})
+        finally:
+            denetim.GENIS, denetim._log_metni = onceki_genis, onceki_log
+        self.assertIsNone(sonuc, "belirsizlik bir BULGU degil")
+        self.assertIn("belirsiz", denetim.SAYI_BAKILAMADI["mct"])
+        self.assertEqual(denetim.SAYI_OKUNAN, [], "belirsiz log dogrulanmis sayilmaz")
+        denetim.SAYI_BAKILAMADI.clear()
+
 
 class KapsamTesti(unittest.TestCase):
     """"Bakilamadi" ile "temiz" ayni cumleye giremez.

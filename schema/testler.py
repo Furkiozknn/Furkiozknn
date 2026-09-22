@@ -211,17 +211,16 @@ def kontrol(kaynak):
 def tum_sayilar(metin, desen, D):
     """Kalibin log metnindeki BUTUN eslesmeleri.
 
-    denetim.py'nin `sayiyi_bul`u ilkini aliyor. Bir kosu tek is oldugu
-    surece dogru; ai-workflow-engine'e ikinci bir is (sozlesme testleri)
-    eklendigi anda ayni log hem `72 passed` hem `8 passed` tasiyor ve ilk
-    eslesme 8 cikiyor. Olculen sayiyi YAZAN bir arac icin bu kabul
-    edilemez: farkli sayilar eslesiyorsa dogru cevap "belirsiz"dir,
-    ilkini secmek degil.
+    Bir kosu tek is oldugu surece ilk eslesme dogru; ai-workflow-engine'e
+    ikinci bir is (sozlesme testleri) eklendigi anda ayni log hem
+    `72 passed` hem `8 passed` tasiyor ve ilk eslesme 8 cikiyor. Farkli
+    sayilar eslesiyorsa dogru cevap "belirsiz"dir, ilkini secmek degil.
+
+    Mantik denetim.py'de duruyor (tek kaynak): gunluk denetim de ayni
+    ayrimi yapmak zorunda, ve bir tur boyunca yapmadigi icin belirsiz bir
+    logu "yayimlanan sayi yanlis" diye bildiriyordu.
     """
-    desen, metin = D.sadelestir(desen), D.sadelestir(metin)
-    kalip_re = re.sub(r"\d+", r"(\\d+)", re.escape(desen))
-    return [int(m.group(1)) for m in re.finditer(kalip_re, metin or "")
-            if m.groups()]
+    return D.sayilari_bul(metin, desen)
 
 
 class HizSiniri(Exception):
