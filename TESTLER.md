@@ -91,7 +91,7 @@ kind that catches a level becoming unfinishable.
 **26 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**975 commits.** `git rev-list --count HEAD`, summed over those 26
+**976 commits.** `git rev-list --count HEAD`, summed over those 26
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 

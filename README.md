@@ -1,4 +1,4 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 26 public repositories, 4,666 tests, 975 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 26 public repositories, 4,666 tests, 976 commits." width="100%">
 
 <p align="center">
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C666_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,666 tests passing"></a>
