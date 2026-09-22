@@ -410,5 +410,70 @@ class KorumaTesti(unittest.TestCase):
             koruma.kayip_alanlar(self._meta(), self._meta(version="2.0.0")), [])
 
 
+class OlcumTesti(unittest.TestCase):
+    """Yayimlanan test sayisi, kosunun yazdigi satira geri goturulebiliyor mu."""
+
+    def test_tek_kalip_okunur(self):
+        self.assertEqual(denetim.kalip("CI log: `=== 115/115 gecti ===`"),
+                         "=== 115/115 gecti ===")
+
+    def test_birlesik_kaynak_dogrulanmaz(self):
+        # derin-kazi'nin sayisi iki ayri kosu satirinin toplami; buradane'inki
+        # backend + frontend. Tek bir satira karsilik gelmeyen bir sayiyi
+        # tek bir satira karsi olcmeye calismak gurultuden baska bir sey
+        # uretmez -- bunlar "dogrulanamaz" sayilir, "yanlis" degil.
+        self.assertIsNone(denetim.kalip(
+            "CI log: 304 unit (`== 304 sinama, 0 hata ==`) + 156 gameplay "
+            "(`== 156 sinama, 0 hata ==`)"))
+        self.assertIsNone(denetim.kalip("96 backend (CI log) + 228 frontend (vitest)"))
+
+    def test_kalipsiz_kaynak(self):
+        self.assertIsNone(denetim.kalip("27 validator + 32 export + 33 format checks"))
+        self.assertIsNone(denetim.kalip(""))
+
+    def test_sayi_logdan_okunur(self):
+        log = "bir sey\n==== 289 passed in 1.2s ====\nbaska sey"
+        self.assertEqual(denetim.sayiyi_bul(log, "289 passed"), 289)
+
+    def test_degismis_sayi_yakalanir(self):
+        log = "======== 327 passed in 61.62s ========"
+        self.assertEqual(denetim.sayiyi_bul(log, "326 passed"), 327)
+
+    def test_turkce_harfler_eslesmeyi_bozmaz(self):
+        # Kosu "SONU\u00c7: 853 ge\u00e7ti" yaziyor, metadata ASCII tutuldugu icin
+        # "SONUC: 853 gecti" diyor. Ayni satir, farkli yazim.
+        log = "2026-09-22T06:25Z === SONU\u00c7: 853 ge\u00e7ti, 0 hata ==="
+        self.assertEqual(
+            denetim.sayiyi_bul(log, "=== SONUC: 853 gecti, 0 hata ==="), 853)
+
+    def test_bulunamayan_kalip_none_doner(self):
+        self.assertIsNone(denetim.sayiyi_bul("hicbir sey", "42 passed"))
+
+    def test_ilk_sayi_alinir(self):
+        self.assertEqual(denetim.sayiyi_bul("=== 115/115 gecti ===",
+                                            "=== 115/115 gecti ==="), 115)
+
+
+class BayatlikTesti(unittest.TestCase):
+    """'active' diyen ama aylardir sessiz depo."""
+
+    def _repo(self, gun):
+        from datetime import datetime, timedelta, timezone
+        an = datetime.now(timezone.utc) - timedelta(days=gun)
+        return {"archived": False, "pushed_at": an.strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+    def test_taze_depo_sessiz(self):
+        self.assertIsNone(denetim._bayat_mi(self._repo(3), {"status": "active"}))
+
+    def test_aylardir_sessiz_depo_bildirilir(self):
+        self.assertIsNotNone(denetim._bayat_mi(self._repo(400), {"status": "active"}))
+
+    def test_prototype_ve_arsiv_bildirilmez(self):
+        self.assertIsNone(denetim._bayat_mi(self._repo(400), {"status": "prototype"}))
+        r = self._repo(400)
+        r["archived"] = True
+        self.assertIsNone(denetim._bayat_mi(r, {"status": "active"}))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

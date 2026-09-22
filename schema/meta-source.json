@@ -636,9 +636,9 @@
       "No server, no API key, no network at query time; grounded LLM Q&A is opt-in"
     ],
     "tests": {
-      "count": 50,
-      "source": "`50 passed, 14 skipped` (skips need a model download CI does not do)",
-      "measured": "2026-09-15"
+      "count": 64,
+      "source": "`64 passed, 1 warning`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "Ask your own notes a question instead of guessing the keyword.",
@@ -740,9 +740,9 @@
       "No GPU and no paid API; rembg's CC-BY-NC default model is refused unless you opt in knowingly"
     ],
     "tests": {
-      "count": 326,
-      "source": "`326 passed, 1 skipped`",
-      "measured": "2026-09-15"
+      "count": 327,
+      "source": "`327 passed`",
+      "measured": "2026-09-22"
     },
     "social": {
       "headline": "23 media tools that prove they are offline in their own response payload.",

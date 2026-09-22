@@ -15,6 +15,11 @@ Depo basina olculenler:
   - varsayilan dalda en son tamamlanan kosular kirmizi mi
   - yayindaki adres (homepage) hala aciliyor mu
   - (DEPO_JETONU varsa) acik Dependabot uyarisi var mi
+  - (DEPO_JETONU varsa) yayimlanan test sayisi en yeni CI kosusunun
+    yazdigi sayiyla ayni mi
+  - en yeni etiketin release'i var mi, PyPI'a gitmis mi
+  - 'active' diyen bir depo aylardir sessiz mi
+  - alisilmis Pages adresi acik ama metadata bos mu
 
 Cikti: markdown rapor (stdout) + schema/denetim.json.
 
@@ -30,13 +35,16 @@ bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_JETONU tanimliysa
     GITHUB_TOKEN=... python3 schema/denetim.py
 """
 
+import base64
 import hashlib
+import io
 import importlib.util
 import json
 import os
 import re
 import urllib.error
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -143,6 +151,130 @@ def _uyarilar(ad):
         return None
 
 
+LOG_TAVANI = 40 * 1024 * 1024        # bir kosu logu bundan buyukse indirilmez
+
+
+def kalip(kaynak):
+    """tests.source icindeki OLCULEBILIR kalip; yoksa None.
+
+    Metadata kurali zaten "bir sayi ancak onu yazdiran kosu satiriyla
+    birlikte yayimlanir" diyor. O satir backtick icinde duruyorsa makine de
+    okuyabilir -- ve okuyabildigi seyi her gun yeniden olcebilir.
+
+    Birlesik kaynaklar dogrulanamaz sayilir, yanlis sayilmaz: buradane'in
+    sayisi "96 backend + 228 frontend", derin-kazi'ninki iki ayri kosu
+    satirinin toplami. Tek bir satir tek bir sayiyi yazdirmiyorsa bu
+    kontrolun soyleyecegi bir sey yok -- ve olmayan bir seyi soylemeye
+    calisan bir kontrol, gurultuden baska bir sey uretmez.
+    """
+    hepsi = re.findall(r"`([^`]*\d[^`]*)`", kaynak or "")
+    return hepsi[0] if len(hepsi) == 1 else None
+
+
+def _log_metni(ad, dal, akislar):
+    """Deponun en yeni basarili ci.yml kosusunun log metni.
+
+    Yalnizca `ci.yml`: bir oyun deposunun yapi kosusunun logu on megabayt
+    olabilir ve icinde test sayisi yoktur. Aranan sey testin kendisi.
+    """
+    if "ci.yml" not in akislar:
+        return None
+    veri = _belki(f"{API}/repos/{OWNER}/{ad}/actions/runs"
+                  f"?branch={dal}&status=success&per_page=20", {})
+    kosu = None
+    for k in (veri or {}).get("workflow_runs", []):
+        if k.get("path") == ".github/workflows/ci.yml":
+            kosu = k
+            break
+    if kosu is None:
+        return None
+    istek = urllib.request.Request(
+        f"{API}/repos/{OWNER}/{ad}/actions/runs/{kosu['id']}/logs",
+        headers={"Accept": "application/vnd.github+json",
+                 "Authorization": f"Bearer {GENIS}",
+                 "User-Agent": "ekosistem-denetim"})
+    try:
+        with urllib.request.urlopen(istek, timeout=90) as r:
+            uzunluk = int(r.headers.get("Content-Length") or 0)
+            if uzunluk > LOG_TAVANI:
+                return None
+            ham = r.read(LOG_TAVANI + 1)
+        if len(ham) > LOG_TAVANI:
+            return None
+        parcalar = []
+        with zipfile.ZipFile(io.BytesIO(ham)) as z:
+            for x in z.namelist():
+                if x.endswith(".txt"):
+                    parcalar.append(z.read(x).decode("utf-8", "replace"))
+        return "\n".join(parcalar)
+    except Exception:
+        return None
+
+
+TURKCE = str.maketrans("\u00e7\u011f\u0131\u00f6\u015f\u00fc\u00c7\u011e\u0130\u00d6\u015e\u00dc",
+                       "cgiosuCGIOSU")
+
+
+def sadelestir(s):
+    """Turkce harfleri ASCII karsiliklarina indirger.
+
+    Kosu `=== SONU\u00c7: 853 ge\u00e7ti, 0 hata ===` yaziyor; metadata dosyalari
+    bilerek ASCII tutuldugu icin ayni satir orada `=== SONUC: 853 gecti,
+    0 hata ===` olarak duruyor. Sayi ayni, yazim farkli. Esnek olmasi
+    gereken taraf veri degil, eslestirici.
+    """
+    return (s or "").translate(TURKCE)
+
+
+def sayiyi_bul(metin, desen):
+    """Kalibi log metninde arar ve ilk sayiyi dondurur.
+
+    Kalip duz metin olarak kacisliyor, sonra icindeki her sayi grubu bir
+    yakalama grubuna cevriliyor: `=== 115/115 gecti ===` kalibi bugun 122
+    yazan bir satiri da bulur, ve aradaki farki soyleyebilir.
+    """
+    desen, metin = sadelestir(desen), sadelestir(metin)
+    kalip_re = re.sub(r"\d+", r"(\\d+)", re.escape(desen))
+    m = re.search(kalip_re, metin or "")
+    if not m or not m.groups():
+        return None
+    try:
+        return int(m.group(1))
+    except (ValueError, IndexError):
+        return None
+
+
+def _test_sayisi(ad, dal, meta, akislar):
+    """Yayimlanan test sayisi, kosunun bugun yazdigi sayiyla ayni mi.
+
+    Bu, sistemin kendi hakkinda soyledigi en yuklu cumle: profil sayfasi
+    "4.496 test" diyor ve TESTLER.md her sayinin hangi kosu satirindan
+    geldigini yaziyor. Ama o satir bir kez okunup elle yazilmisti; bir
+    depoya yedi test eklenince sayi sessizce eskir ve iki kopya da ayni
+    eski sayiyi gosterdigi icin kimse fark etmez. Burada sayinin kaynagina
+    geri gidiliyor.
+    """
+    if not GENIS:
+        return None                       # log okunamaz; sessiz kal
+    testler = meta.get("tests") if meta else None
+    if not testler or not testler.get("count"):
+        return None
+    desen = kalip(testler.get("source"))
+    if not desen:
+        return None                       # birlesik kaynak: dogrulanamaz
+    metin = _log_metni(ad, dal, akislar)
+    if metin is None:
+        return None
+    olculen = sayiyi_bul(metin, desen)
+    if olculen is None:
+        return ("tests.source kalibi (%r) en yeni basarili CI kosusunda "
+                "bulunamadi -- sayinin kaynagi degismis olabilir" % desen)
+    if olculen != testler["count"]:
+        return ("tests.count %d diyor, en yeni CI kosusu %d yazdi"
+                % (testler["count"], olculen))
+    return None
+
+
 def _canli_mi(url):
     """Yayindaki adres hala aciliyor mu.
 
@@ -160,6 +292,98 @@ def _canli_mi(url):
         return e.code
     except Exception:
         return None
+
+
+def _pypi_surumleri(paket):
+    """PyPI'da yayimlanmis surumler. Jeton gerektirmez, herkese acik."""
+    try:
+        with urllib.request.urlopen(
+                "https://pypi.org/pypi/%s/json" % paket, timeout=25) as r:
+            return set(json.load(r).get("releases") or {})
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return set()                  # paket hic yayimlanmamis
+        return None
+    except Exception:
+        return None
+
+
+def _pypi_adi(ad, dal):
+    """pyproject.toml'daki paket adi. Depo adiyla ayni olmak zorunda degil."""
+    blob = _belki(f"{API}/repos/{OWNER}/{ad}/contents/pyproject.toml?ref={dal}")
+    if not blob or "content" not in blob:
+        return None
+    metin = base64.b64decode(blob["content"]).decode("utf-8", "replace")
+    m = re.search(r'^\s*name\s*=\s*"([^"]+)"', metin, re.M)
+    return m.group(1) if m else None
+
+
+def _surum_zinciri(ad, dal, akislar):
+    """Etiket atildi ama zincirin geri kalani tamamlanmadi mi.
+
+    Iki kopuk arasak yeter, ikisi de sessizce olur:
+      - en yeni etiketin GitHub Release'i yok (etiket atildi, yayin yok)
+      - PyPI'a yayin yapan bir depoda etiket var ama PyPI'da o surum yok
+        (yayin kosusu dustu ya da hic kosmadi)
+
+    Eski ara etiketlerin release'i olmamasi normaldir; yalnizca EN YENI
+    etikete bakiliyor, yoksa her gun ayni on satir yazilirdi.
+    """
+    f = []
+    etiketler = _belki(f"{API}/repos/{OWNER}/{ad}/tags?per_page=10", [])
+    if not etiketler:
+        return f
+    yeni = etiketler[0]["name"]
+    releaseler = _belki(f"{API}/repos/{OWNER}/{ad}/releases?per_page=20", []) or []
+    yayinda = {r["tag_name"] for r in releaseler if not r.get("draft")}
+    if yeni not in yayinda:
+        f.append("en yeni etiket %s var ama GitHub Release'i yok" % yeni)
+
+    if "yayinla.yml" in akislar:
+        paket = _pypi_adi(ad, dal)
+        if paket:
+            surumler = _pypi_surumleri(paket)
+            beklenen = yeni.lstrip("v")
+            if surumler is not None and beklenen not in surumler:
+                f.append("etiket %s atilmis ama PyPI'da %s %s yok"
+                         % (yeni, paket, beklenen))
+    return f
+
+
+def _bayat_mi(r, meta, gun=180):
+    """'active' diyen ama aylardir dokunulmamis depo.
+
+    Bir portfoyu sessizce eskiten sey budur: durum alani 'active' kalir,
+    okuyan kisi surmekte olan bir is sanir. Arsivlemek ya da 'prototype'
+    demek bir karardir -- burada yalnizca fark bildiriliyor.
+    """
+    if r["archived"] or not meta or meta.get("status") != "active":
+        return None
+    try:
+        son = datetime.strptime(r["pushed_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=timezone.utc)
+    except Exception:
+        return None
+    gecen = (datetime.now(timezone.utc) - son).days
+    if gecen > gun:
+        return "status 'active' ama son push %d gun once" % gecen
+    return None
+
+
+def _gizli_pages(ad, meta):
+    """Yayina alinmis ama metadata'ya girmemis Pages sitesi.
+
+    Oyunlardan biri 'sayfaya_yayinla' kutusuyla yayina cikinca adres
+    dogar ama kimse metadata'ya yazmaz. Alisilmis adrese bakip soylemek
+    bir istek; unutulmus bir yayin ise gorunmez bir kazanc.
+    """
+    if not meta or meta.get("homepage"):
+        return None
+    url = "https://%s.github.io/%s/" % (OWNER.lower(), ad)
+    kod = _canli_mi(url)
+    if kod == 200:
+        return "Pages yayinda (%s) ama metadata homepage bos" % url
+    return None
 
 
 def _iskelet(r):
@@ -255,9 +479,24 @@ def _depoyu_olc(r, kaynak):
                          % (len(uyari),
                             " (%d high/critical)" % len(ciddi) if ciddi else "")))
 
+    bayat = _bayat_mi(r, meta)
+    if bayat:
+        bulgular.append(("vitrin", bayat))
+
     if r["archived"]:
         # Arsivli depoda is akisi kosmaz; kirmizi aramak yanlis alarm uretir.
         return bulgular, iskelet, meta
+
+    gizli = _gizli_pages(ad, meta)
+    if gizli:
+        bulgular.append(("baglanti", gizli))
+
+    for m in _surum_zinciri(ad, dal, akislar):
+        bulgular.append(("surum", m))
+
+    sapma = _test_sayisi(ad, dal, meta, akislar)
+    if sapma:
+        bulgular.append(("olcum", sapma))
     if not akislar:
         bulgular.append(("ci", "hic is akisi yok"))
     else:
@@ -269,7 +508,7 @@ def _depoyu_olc(r, kaynak):
 def _profil_sayilari(metalar, depo_sayisi):
     """Profil sayfasinin manset sayilari hala dogru mu.
 
-    Profil "24 public repositories, 4,481 tests" diyor ve TESTLER.md o
+    Profil "24 public repositories, 4,496 tests" diyor ve TESTLER.md o
     sayinin nereden geldigini yaziyor. Bir depoya test eklenince ya da yeni
     bir depo acilinca bu sayilar sessizce yanlis olur -- ve yanlis bir sayi,
     hic sayi olmamasindan kotudur. Kaynak TESTLER.md basligi: sayinin tek
@@ -341,9 +580,11 @@ BASLIK = {
     "ci": "CI",
     "baglanti": "Yayindaki adres cevap vermiyor",
     "guvenlik": "Acik guvenlik uyarisi",
+    "olcum": "Yayimlanan sayi kosunun yazdigiyla ayni degil",
+    "surum": "Surum zinciri yarim kalmis",
 }
-SIRA = ["metadata", "guvenlik", "kayit", "ci", "baglanti", "ayrisma",
-        "belge", "vitrin"]
+SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "baglanti",
+        "ayrisma", "belge", "vitrin"]
 
 
 def _rapor(bulgular, iskeletler, depo_sayisi):

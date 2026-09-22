@@ -1,12 +1,12 @@
-# Where the 4,481 comes from
+# Where the 4,496 comes from
 
-The hero image on this profile claims 4,481 tests. This file is that claim,
+The hero image on this profile claims 4,496 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
 the end of a run — not a count of `def test_` or `it(` in the source. Those
 two disagree, sometimes badly: `buradane`'s backend has 68 test functions and
-96 test cases, `mini-creative-toolkit` has 208 functions and 326 cases,
+96 test cases, `mini-creative-toolkit` has 208 functions and 327 cases,
 because parametrised tests expand at collection time. `ai-job-gateway` has 9
 test functions and 156 cases. An early version of the hero said "1,426 tests"
 and was wrong in both directions, having been produced by grepping the tree.
@@ -22,7 +22,7 @@ profile README.
 | [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) | 853 | CI log: `=== SONUC: 853 gecti, 0 hata ===` | 22 Sep 2026 |
 | [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) | 841 | CI log: `841 dogrulama, 0 hata` → `TESTLER GECTI` | 22 Sep 2026 |
 | [derin-kazi](https://github.com/Furkiozknn/derin-kazi) | 460 | CI log, two jobs: `== 304 sinama, 0 hata ==` (unit) + `== 156 sinama, 0 hata ==` (gameplay) | 22 Sep 2026 |
-| [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 326 | `326 passed, 1 skipped` | 15 Sep 2026 |
+| [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 327 | `327 passed` | 22 Sep 2026 |
 | [buradane](https://github.com/Furkiozknn/buradane) | 324 | 96 backend (CI log) + 228 frontend (vitest) | 15 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 289 | `289 passed` | 15 Sep 2026 |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
@@ -36,16 +36,16 @@ profile README.
 | [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness) | 74 | `74 passed` | 15 Sep 2026 |
 | [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) | 72 | `72 passed` | 15 Sep 2026 |
 | [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager) | 61 | `61 passed` | 15 Sep 2026 |
-| [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 50 | `50 passed, 14 skipped` | 15 Sep 2026 |
+| [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) | 64 | `64 passed, 1 warning` | 22 Sep 2026 |
 | [mcp-census](https://github.com/Furkiozknn/mcp-census) | 44 | CI log: `44 passed in 0.13s` | 21 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | `28 passed` (Playwright) | 15 Sep 2026 |
-| **Total** | **4,481** | | |
+| **Total** | **4,496** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
-`local-notes-search-mcp`'s 14 skips are the embedding-model tests, which need
-a model download the CI runner does not do — the repository's own README says
-so too.
+`local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
+runner did not download the model; its newest run reports `64 passed, 1 warning`
+with nothing skipped, so all 64 are counted.
 
 ## What moved, and why
 
@@ -62,9 +62,17 @@ with suites that run headlessly in CI:
 | mcp-census | 44 | 21 Sep 2026 |
 | | **+2,313** | |
 
-2,168 + 2,313 = 4,481. The sixteen earlier counts were not re-measured for
-this update; their CI has been green on every run since 15 September, and the
-recheck command below re-derives any of them in one line.
+2,168 + 2,313 = 4,481 was the figure published on 21 September. Two of the
+sixteen earlier counts have since been re-measured against the newest run that
+printed them — `mini-creative-toolkit` 326 → 327, a test that used to skip now
+runs, and `local-notes-search-mcp` 50 → 64, its embedding tests no longer skip
+— which makes the current total **4,496**.
+
+Those two were not found by rereading this file. The daily audit now goes back
+to the run each number came from, re-reads the line in the `Source` column
+above and compares: fourteen of these counts are verified that way every
+morning. The rest are composed from more than one run line and are marked as
+such rather than checked against a line that does not exist.
 
 The four game repositories are worth a note of their own: the counts are large
 because these suites exercise gameplay, not just functions. `yercekimi-cevir`'s
