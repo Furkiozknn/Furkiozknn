@@ -10,7 +10,7 @@
   "platform": [
     "github"
   ],
-  "primary_language": null,
+  "primary_language": "Python",
   "technologies": [
     "hand-written SVG",
     "Markdown"
@@ -42,8 +42,10 @@
   },
   "tests": null,
   "ci": {
-    "workflows": [],
-    "badge": null
+    "workflows": [
+      "projeler.yml"
+    ],
+    "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/projeler.yml/badge.svg"
   },
   "docs": {
     "readme": "README.md",
