@@ -13,6 +13,7 @@ Depo basina olculenler:
   - LICENSE ve README yerinde mi
   - hic is akisi var mi
   - varsayilan dalda en son tamamlanan kosular kirmizi mi
+  - yayindaki adres (homepage) hala aciliyor mu
 
 Cikti: markdown rapor (stdout) + schema/denetim.json.
 
@@ -30,6 +31,7 @@ import hashlib
 import importlib.util
 import json
 import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -101,6 +103,25 @@ def _kirmizi_kosular(ad, dal, akislar):
                   if k["conclusion"] in ("failure", "timed_out", "startup_failure"))
 
 
+def _canli_mi(url):
+    """Yayindaki adres hala aciliyor mu.
+
+    Bir Pages sitesi sessizce olebilir: depo yesil, README dogru, baglanti
+    olu. Kimse tiklamadan fark edilmez -- bu yuzden her gun tiklanir.
+    None doner: agdan bir cevap alinamadi, yani "olu" demek dogru olmaz.
+    """
+    istek = urllib.request.Request(url, method="GET", headers={
+        "User-Agent": "ekosistem-denetim",
+    })
+    try:
+        with urllib.request.urlopen(istek, timeout=20) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception:
+        return None
+
+
 def _iskelet(r):
     """Kayitsiz bir depo icin meta-source.json taslagi.
 
@@ -170,6 +191,12 @@ def _depoyu_olc(r, kaynak):
         for m in _ayrismalar(meta, r, akislar, kok):
             bulgular.append(("ayrisma", m))
 
+    ana = (meta or {}).get("homepage") or (r.get("homepage") or "").strip() or None
+    if ana:
+        kod = _canli_mi(ana)
+        if kod is not None and kod >= 400:
+            bulgular.append(("baglanti", "yayindaki adres %s -> HTTP %d" % (ana, kod)))
+
     if "LICENSE" not in kok and "LICENSE.md" not in kok:
         bulgular.append(("belge", "LICENSE yok"))
     if not any(a.lower().startswith("readme.") for a in kok):
@@ -197,8 +224,9 @@ BASLIK = {
     "belge": "Temel belge eksik",
     "vitrin": "Vitrin alani bos",
     "ci": "CI",
+    "baglanti": "Yayindaki adres cevap vermiyor",
 }
-SIRA = ["metadata", "kayit", "ci", "ayrisma", "belge", "vitrin"]
+SIRA = ["metadata", "kayit", "ci", "baglanti", "ayrisma", "belge", "vitrin"]
 
 
 def _rapor(bulgular, iskeletler, depo_sayisi):
