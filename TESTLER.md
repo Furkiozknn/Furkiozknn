@@ -1,6 +1,6 @@
-# Where the 4,496 comes from
+# Where the 4,567 comes from
 
-The hero image on this profile claims 4,496 tests. This file is that claim,
+The hero image on this profile claims 4,567 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
@@ -11,7 +11,7 @@ because parametrised tests expand at collection time. `ai-job-gateway` has 9
 test functions and 156 cases. An early version of the hero said "1,426 tests"
 and was wrong in both directions, having been produced by grepping the tree.
 
-Twenty-four repositories are public. Twenty-one of them have a suite and are
+Twenty-five repositories are public. Twenty-two of them have a suite and are
 counted here. The three that are not: `godot-2d-sablon` (two starter
 templates, no suite), `claude-quota-monitor` (43 passing tests, archived —
 `claude-code-intelligence` superseded it) and this repository, which holds the
@@ -25,6 +25,7 @@ profile README.
 | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) | 327 | `327 passed` | 22 Sep 2026 |
 | [buradane](https://github.com/Furkiozknn/buradane) | 324 | 96 backend (CI log) + 228 frontend (vitest) | 15 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 289 | `289 passed` | 15 Sep 2026 |
+| [repo-vet](https://github.com/Furkiozknn/repo-vet) | 71 | CI log: `=== 71 tests passed ===` | 22 Sep 2026 |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed`. A local run without the `media` extra gives `150 passed, 6 skipped`. | 15 Sep 2026 |
 | [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | `node --test`: `pass 142` | 15 Sep 2026 |
@@ -40,7 +41,7 @@ profile README.
 | [mcp-census](https://github.com/Furkiozknn/mcp-census) | 44 | CI log: `44 passed in 0.13s` | 21 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | `28 passed` (Playwright) | 15 Sep 2026 |
-| **Total** | **4,496** | | |
+| **Total** | **4,567** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -66,7 +67,8 @@ with suites that run headlessly in CI:
 sixteen earlier counts have since been re-measured against the newest run that
 printed them — `mini-creative-toolkit` 326 → 327, a test that used to skip now
 runs, and `local-notes-search-mcp` 50 → 64, its embedding tests no longer skip
-— which makes the current total **4,496**.
+— which makes the total **4,496**. `repo-vet` was published on 22 September
+with **71** tests of its own, taking it to **4,567**.
 
 Those two were not found by rereading this file. The daily audit now goes back
 to the run each number came from, re-reads the line in the `Source` column
@@ -82,10 +84,10 @@ kind that catches a level becoming unfinishable.
 
 ## The other two numbers
 
-**24 public repositories.** Every repository on this account is public except
+**25 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**848 commits.** `git rev-list --count HEAD`, summed over those 24
+**968 commits.** `git rev-list --count HEAD`, summed over those 25
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 

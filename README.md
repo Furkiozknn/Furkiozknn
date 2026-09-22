@@ -1,9 +1,9 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 24 public repositories, 4,496 tests, 848 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 25 public repositories, 4,567 tests, 968 commits." width="100%">
 
 <p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C496_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,496 tests passing"></a>
+  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C567_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,567 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
-  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-24-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="24 public repositories"></a>
+  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-25-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="25 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
 </p>
 
@@ -88,6 +88,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 | | Project | What it does | Tests |
 |:--:|---|---|---:|
+| 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Your README is a promise: it tries the install command, the badges, the links and the tags, over the API, without cloning. | `71` |
 | 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `289` |
 | 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `324` |
 | 📊 | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** | Where the tokens went and when the limit resets. No prompt or file content exists in any type — a privacy review is a `grep`. | `261` |
@@ -116,7 +117,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
 | ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `460` |
 | 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| | | **Total, across 21 repositories with suites** | **`4,496`** |
+| | | **Total, across 22 repositories with suites** | **`4,567`** |
 
 <sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
 
@@ -194,7 +195,7 @@ Remote · Türkiye · European hours
 <br>
 
 <sub>
-  <a href="TESTLER.md">Where the 4,496 comes from</a> ·
+  <a href="TESTLER.md">Where the 4,567 comes from</a> ·
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·

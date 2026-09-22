@@ -61,7 +61,7 @@ first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
 
 ## The evidence
 
-- **[4,496 tests across 21 repositories](TESTLER.md)** — every count traced to
+- **[4,567 tests across 22 repositories](TESTLER.md)** — every count traced to
   the suite run that printed it, not grepped from the source. An earlier version
   of this profile said 1,426 and was wrong; that file exists so the claim is
   checkable rather than believable.
