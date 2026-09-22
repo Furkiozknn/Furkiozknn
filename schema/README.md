@@ -143,6 +143,41 @@ note when everything clears. A repository that has no entry in
 mechanical fields filled and the editorial ones left `null` — a new project is
 onboarded by writing four fields, not by remembering that the layer exists.
 
+## Taking a published number back to the run that printed it
+
+The whole claim of this profile is that its numbers can be checked. Until
+now that check happened once, by hand, and the result was written down in
+two places — the README row and `project-meta.json`. Two copies of a stale
+number agree with each other perfectly.
+
+`tests.source` already records *which line* a count came from. The audit now
+uses it as an instruction rather than a footnote: it finds the newest
+successful `ci.yml` run, downloads its log, looks for that exact line, and
+reads the number out again. Fourteen of the twenty-two suites are verified
+this way every morning. The rest compose their count from more than one run
+line — `derin-kazi` adds a unit job to a gameplay job, `buradane` adds a
+backend suite to a frontend one — and those are marked unverifiable rather
+than measured against a line that does not exist.
+
+Its first run found two published numbers that had gone stale:
+`local-notes-search-mcp` 50 → 64 and `mini-creative-toolkit` 326 → 327,
+which moved the profile total from 4,481 to 4,496. Neither would have been
+caught by rereading the page.
+
+Three more checks were added at the same time, and all four are silent
+today — each one speaks exactly when something real happens:
+
+| Check | Fires when |
+|---|---|
+| Newest tag without a Release | a tag was pushed and the release never followed |
+| Tag without the matching PyPI version | the publish workflow failed or never ran |
+| `status: active`, no push in six months | the page says a project is live when it is not |
+| Pages answering at the conventional URL while `homepage` is null | a site went live and nobody wrote it down |
+
+Reading run logs needs `Actions: Read`, so the count check runs only when
+`DEPO_JETONU` is set. Without it the audit stays quiet about counts rather
+than pretending they were verified.
+
 ## Fixing the drift, not just finding it
 
 The audit can see that a `project-meta.json` no longer matches its
