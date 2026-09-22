@@ -1,6 +1,6 @@
-# Where the 5,226 comes from
+# Where the 5,247 comes from
 
-The hero image on this profile claims 5,226 tests. This file is that claim,
+The hero image on this profile claims 5,247 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
@@ -13,13 +13,21 @@ once and never re-collected, which is the same failure this file exists to
 prevent, one level up.) An early version of the hero said "1,426 tests" and
 was wrong in both directions, having been produced by grepping the tree.
 
-Twenty-eight repositories are public. Twenty-five of them have a suite and are
-counted here. The three that are not: `godot-2d-sablon` (two starter
-templates, no suite), `claude-quota-monitor` (43 passing tests, archived —
-`claude-code-intelligence` superseded it) and this repository. That last one
-does have a suite — 68 tests over the scripts in `schema/`, including the one
-that checks this file — and it is left out on purpose: the page that publishes
-the total should not be able to raise it.
+Twenty-eight repositories are public. Twenty-six of them have a suite and are
+counted here. The two that are not: `claude-quota-monitor` (43 passing tests,
+archived — `claude-code-intelligence` superseded it) and this repository. The
+latter does have a suite — 88 tests over the scripts in `schema/`, including
+the one that checks this file — and it is left out on purpose: the page that
+publishes the total should not be able to raise it.
+
+`godot-2d-sablon` was on that list as "two starter templates, no suite". It
+stopped being true on 22 September, when the templates got 21 behavioural
+tests over the jump simulation, and the list was not updated — so a
+repository with a suite in CI was being left out of a total that exists to be
+checkable. It is counted now, which is also why the hub page and this page
+finally agree: the hub publishes every non-archived repository's own
+`project-meta.json`, this page publishes `schema/meta-source.json`, and until
+today nothing compared the two.
 
 `Furkiozknn.github.io` used to be on that list — "generated rather than
 written". It is still generated, and that turned out to be the argument for
@@ -55,7 +63,8 @@ fired. It now has 37 tests and is counted.
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 38 | `38 passed` (Playwright) | 22 Sep 2026 |
 | [Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io) | 37 | `37 passed` | 22 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
-| **Total** | **5,226** | | |
+| [godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon) | 21 | CI log: `21 passed` | 22 Sep 2026 |
+| **Total** | **5,247** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -147,7 +156,7 @@ kind that catches a level becoming unfinishable.
 **28 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**1,089 commits.** `git rev-list --count HEAD`, summed over those 27
+**1,096 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 
@@ -196,6 +205,12 @@ one it used to skip that check in silence: the report said "clean" on days
 when the most load-bearing number in this repository had not been looked at at
 all. The report now opens with how many counts were actually compared and how
 many could not be, and why. A number nobody could check is not a clean number.
+
+The same run hit GitHub's rate limit and the audit died with a Python
+traceback — a tool built to say "I could not look" being unable to say
+anything at all. A rate limit is now a per-repository result, not a crash: the
+run continues, the report names the repositories it could not read, and the
+"clean, N repositories" line counts only the ones it actually measured.
 
 Each repository also carries a `project-meta.json` at its root with the same
 count, the line it came from and the date — see

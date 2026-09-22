@@ -337,7 +337,11 @@
       "GL Compatibility throughout, so it runs on integrated graphics",
       "Export settings and project layout documented, ready to fork"
     ],
-    "tests": null,
+    "tests": {
+      "count": 21,
+      "source": "CI log: `21 passed`",
+      "measured": "2026-09-22"
+    },
     "social": {
       "headline": "Two Godot 4 starters whose jump feel was measured, not guessed.",
       "hashtags": [
