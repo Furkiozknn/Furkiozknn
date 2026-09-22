@@ -30,6 +30,7 @@ goremedigi bir seyi "temiz" diye yazmaktansa hic yazmiyor.
 import hashlib
 import importlib.util
 import json
+import re
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -208,13 +209,51 @@ def _depoyu_olc(r, kaynak):
 
     if r["archived"]:
         # Arsivli depoda is akisi kosmaz; kirmizi aramak yanlis alarm uretir.
-        return bulgular, iskelet
+        return bulgular, iskelet, meta
     if not akislar:
         bulgular.append(("ci", "hic is akisi yok"))
     else:
         for w in _kirmizi_kosular(ad, dal, akislar):
             bulgular.append(("ci", "son kosu kirmizi: %s" % w))
-    return bulgular, iskelet
+    return bulgular, iskelet, meta
+
+
+def _profil_sayilari(metalar, depo_sayisi):
+    """Profil sayfasinin manset sayilari hala dogru mu.
+
+    Profil "24 public repositories, 4,481 tests" diyor ve TESTLER.md o
+    sayinin nereden geldigini yaziyor. Bir depoya test eklenince ya da yeni
+    bir depo acilinca bu sayilar sessizce yanlis olur -- ve yanlis bir sayi,
+    hic sayi olmamasindan kotudur. Kaynak TESTLER.md basligi: sayinin tek
+    bir kanonik yeri olsun diye.
+    """
+    f = []
+    testler = KOK / "TESTLER.md"
+    readme = KOK / "README.md"
+    if not testler.is_file() or not readme.is_file():
+        return f
+
+    m = re.search(r"#\s*Where the ([\d,]+) comes from", testler.read_text(encoding="utf-8"))
+    if not m:
+        f.append(("Furkiozknn", "vitrin", "TESTLER.md basligindaki sayi okunamadi"))
+        return f
+    iddia = int(m.group(1).replace(",", ""))
+
+    # Arsivli depo profilde sayilmiyor (TESTLER.md bunu acikca yaziyor).
+    toplam = sum(meta["tests"]["count"] for r, meta in metalar.values()
+                 if meta.get("tests") and not r["archived"])
+    if toplam != iddia:
+        f.append(("Furkiozknn", "vitrin",
+                  "TESTLER.md %d test diyor, metadata toplami %d" % (iddia, toplam)))
+
+    metin = readme.read_text(encoding="utf-8")
+    if m.group(1) not in metin:
+        f.append(("Furkiozknn", "vitrin",
+                  "README, TESTLER.md'deki %s sayisini hic gecirmiyor" % m.group(1)))
+    if not re.search(r"\b%d public repositories\b" % depo_sayisi, metin):
+        f.append(("Furkiozknn", "vitrin",
+                  "README'deki public repo sayisi %d ile uyusmuyor" % depo_sayisi))
+    return f
 
 
 BASLIK = {
@@ -260,13 +299,17 @@ def main():
     kaynak = json.loads(KAYNAK.read_text(encoding="utf-8"))
     depolar = [r for r in D._repos() if not r.get("fork")]
 
-    bulgular, iskeletler = [], {}
+    bulgular, iskeletler, metalar = [], {}, {}
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
-        alt, iskelet = _depoyu_olc(r, kaynak)
+        alt, iskelet, meta = _depoyu_olc(r, kaynak)
+        if meta is not None:
+            metalar[r["name"]] = (r, meta)
         for tur, mesaj in alt:
             bulgular.append((r["name"], tur, mesaj))
         if iskelet is not None:
             iskeletler[r["name"]] = iskelet
+
+    bulgular.extend(_profil_sayilari(metalar, len(depolar)))
 
     # Kayitli ama artik var olmayan depo: silinmis ya da adi degismis.
     adlar = {r["name"] for r in depolar}
