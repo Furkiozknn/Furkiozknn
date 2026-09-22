@@ -49,6 +49,32 @@ anything is pushed, and a stale index is worse than no index. Build it when you
 need it, or run the *projeler* workflow from the Actions tab, which runs the
 same script and uploads the result as an artifact.
 
+## What changed this week, and what to say about it
+
+[`haftalik.py`](haftalik.py) answers the question the metadata exists for.
+It reads every repository's `project-meta.json`, then asks the API what
+actually happened in a window — commits by conventional-commit type,
+releases published — and prints a digest plus one draft post per project
+that moved.
+
+```bash
+python3 schema/haftalik.py            # last 7 days
+python3 schema/haftalik.py --gun 14
+python3 schema/haftalik.py --json     # machine-readable
+```
+
+Every sentence in a draft comes either from a written field in
+`project-meta.json` or from real git/release data in that window. No
+adjective and no number is invented: where there is no data, there is no
+sentence. The drafts are drafts — they are meant to be read before
+anything is posted anywhere.
+
+This is the first real link of `CODE → BUILD → MEDIA → GITHUB → SOCIAL`.
+The last hop needs an account that does not exist yet, so nothing is
+posted and no account is assumed.
+
+`hafta.json` is not committed, for the same reason `projects.json` is not.
+
 ## Fields that matter to a reader
 
 | Field | What it is for |

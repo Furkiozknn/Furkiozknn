@@ -28,3 +28,4 @@ service-account*.json
 # schema/derle.py ciktisi. Islenmis bir dizin bir sonraki push'ta
 # eskir; eskimis bir dizin hic dizin olmamasindan kotudur.
 schema/projects.json
+schema/hafta.json
