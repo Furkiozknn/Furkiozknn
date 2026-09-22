@@ -1,6 +1,6 @@
-# Where the 4,666 comes from
+# Where the 4,700 comes from
 
-The hero image on this profile claims 4,666 tests. This file is that claim,
+The hero image on this profile claims 4,700 tests. This file is that claim,
 broken down, so you can check it instead of believing it.
 
 Every number below is a **suite result** — the line a test runner printed at
@@ -26,7 +26,7 @@ profile README.
 | [buradane](https://github.com/Furkiozknn/buradane) | 324 | 96 backend (CI log) + 228 frontend (vitest) | 15 Sep 2026 |
 | [mcp-vet](https://github.com/Furkiozknn/mcp-vet) | 289 | `289 passed` | 15 Sep 2026 |
 | [repo-vet](https://github.com/Furkiozknn/repo-vet) | 97 | CI log: `=== 97 tests passed ===` | 22 Sep 2026 |
-| [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) | 73 | CI log: `=== 73 tests passed ===` | 22 Sep 2026 |
+| [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) | 107 | CI log: `=== 107 tests passed ===` | 22 Sep 2026 |
 | [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence) | 261 | `261 passed` | 15 Sep 2026 |
 | [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway) | 156 | CI log: `156 passed`. A local run without the `media` extra gives `150 passed, 6 skipped`. | 15 Sep 2026 |
 | [ajans-os](https://github.com/Furkiozknn/ajans-os) | 142 | `node --test`: `pass 142` | 15 Sep 2026 |
@@ -42,7 +42,7 @@ profile README.
 | [mcp-census](https://github.com/Furkiozknn/mcp-census) | 44 | CI log: `44 passed in 0.13s` | 21 Sep 2026 |
 | [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) | 35 | `35 passed, 2 skipped` | 15 Sep 2026 |
 | [nova-drift](https://github.com/Furkiozknn/nova-drift) | 28 | `28 passed` (Playwright) | 15 Sep 2026 |
-| **Total** | **4,666** | | |
+| **Total** | **4,700** | | |
 
 Skipped tests are excluded from every count; a skipped test proves nothing.
 `local-notes-search-mcp`'s embedding-model tests used to skip, because the CI
@@ -71,8 +71,10 @@ runs, and `local-notes-search-mcp` 50 → 64, its embedding tests no longer skip
 — which makes the total **4,496**. `repo-vet` was published on 22 September and
 matured against thirty outside repositories the same day, taking its own
 suite to **97** and the total to **4,593**. `godot-refcheck` was published later
-on 22 September with **73** tests of its own, which makes the total **4,666**
-across twenty-three suites.
+on 22 September with **73** tests of its own, which made the total **4,666**
+across twenty-three suites. Later the same day it grew a repair pass and two
+checks for breakage the engine never reports, taking its own suite to **107**
+and the total to **4,700**.
 
 Those two were not found by rereading this file. The daily audit now goes back
 to the run each number came from, re-reads the line in the `Source` column
@@ -91,7 +93,7 @@ kind that catches a level becoming unfinishable.
 **26 public repositories.** Every repository on this account is public except
 one unreleased game.
 
-**976 commits.** `git rev-list --count HEAD`, summed over those 26
+**978 commits.** `git rev-list --count HEAD`, summed over those 26
 repositories minus this one, on 22 September 2026. This repository's own
 commits are not included.
 

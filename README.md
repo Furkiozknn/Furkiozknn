@@ -1,7 +1,7 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 26 public repositories, 4,666 tests, 976 commits." width="100%">
+<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 26 public repositories, 4,700 tests, 978 commits." width="100%">
 
 <p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C666_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,666 tests passing"></a>
+  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-4%2C700_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="4,700 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
   <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-26-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="26 public repositories"></a>
   <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
@@ -88,7 +88,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 | | Project | What it does | Tests |
 |:--:|---|---|---:|
-| 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Godot names a broken resource reference only when that scene loads. This reads the project files instead: missing paths, case-only breakage, uid clashes. One binary, no dependencies. | `73` |
+| 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Godot names a broken reference only when that scene loads, and a dead signal connection never. Finds both, and repairs what has one provable answer. | `107` |
 | 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Your README is a promise: it tries the install command, the badges, the links and the tags, over the API, without cloning. | `97` |
 | 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `289` |
 | 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `324` |
@@ -118,7 +118,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
 | ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `460` |
 | 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| | | **Total, across 23 repositories with suites** | **`4,666`** |
+| | | **Total, across 23 repositories with suites** | **`4,700`** |
 
 <sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
 
@@ -196,7 +196,7 @@ Remote · Türkiye · European hours
 <br>
 
 <sub>
-  <a href="TESTLER.md">Where the 4,666 comes from</a> ·
+  <a href="TESTLER.md">Where the 4,700 comes from</a> ·
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
