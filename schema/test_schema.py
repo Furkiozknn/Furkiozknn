@@ -475,5 +475,54 @@ class BayatlikTesti(unittest.TestCase):
         self.assertIsNone(denetim._bayat_mi(r, {"status": "active"}))
 
 
+class KurulumTesti(unittest.TestCase):
+    """README'nin kurmayi soyledigi dagitim adlari."""
+
+    def _blok(self, *satirlar):
+        return "```bash\n" + "\n".join(satirlar) + "\n```"
+
+    def test_pypi_adi_bulunur(self):
+        self.assertEqual(denetim.kurulum_adlari(self._blok("uv tool install ptm-cli")),
+                         {"ptm-cli"})
+        self.assertEqual(denetim.kurulum_adlari(self._blok("pip install mcp-vet")),
+                         {"mcp-vet"})
+        self.assertEqual(denetim.kurulum_adlari(self._blok("pipx install ptm-cli")),
+                         {"ptm-cli"})
+
+    def test_git_url_paket_adi_degildir(self):
+        # Duzeltmeden sonra README'de duran komut tam olarak bu; PyPI'da
+        # aranacak bir ad yok, yani bulgu da yok.
+        self.assertEqual(denetim.kurulum_adlari(self._blok(
+            "uv tool install git+https://github.com/Furkiozknn/prompt-template-manager")),
+            set())
+        self.assertEqual(denetim.kurulum_adlari(self._blok(
+            "uvx --from git+https://github.com/x/y ptm --help")), set())
+
+    def test_yerel_kurulum_sayilmaz(self):
+        self.assertEqual(denetim.kurulum_adlari(self._blok("pip install -e .")), set())
+        self.assertEqual(
+            denetim.kurulum_adlari(self._blok("pip install -r requirements.txt")), set())
+
+    def test_bayraklar_paket_sanilmaz(self):
+        self.assertEqual(
+            denetim.kurulum_adlari(self._blok("uv pip install --system pyyaml")),
+            {"pyyaml"})
+
+    def test_cumle_icindeki_komut_calistirilacak_komut_degildir(self):
+        # Yasanan yanlis bulgu: README "yayimlandiginda `uv tool install
+        # ptm-cli` kisa yol olacak" diyordu ve kontrol bunu ziyaretcinin
+        # calistiracagi komut sandi. Kopyalanan sey kod blogudur.
+        prose = ("Once `ptm-cli` is published, `uv tool install ptm-cli` will be "
+                 "the shorter route.")
+        self.assertEqual(denetim.kurulum_adlari(prose), set())
+        self.assertEqual(
+            denetim.kurulum_adlari(prose + "\n" + self._blok("pip install mcp-vet")),
+            {"mcp-vet"})
+
+    def test_bos_metin(self):
+        self.assertEqual(denetim.kurulum_adlari(""), set())
+        self.assertEqual(denetim.kurulum_adlari(None), set())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

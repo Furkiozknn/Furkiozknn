@@ -173,6 +173,14 @@ today — each one speaks exactly when something real happens:
 | Tag without the matching PyPI version | the publish workflow failed or never ran |
 | `status: active`, no push in six months | the page says a project is live when it is not |
 | Pages answering at the conventional URL while `homepage` is null | a site went live and nobody wrote it down |
+| A README code block installs a distribution that is not on PyPI | the first command a visitor copies would fail |
+
+The last one was written after it happened: `prompt-template-manager`'s
+install section opened with `uv tool install ptm-cli`, and `ptm-cli` has
+not been published, so a first-time visitor's first command died with
+*"ptm-cli was not found in the package registry"*. Only fenced code blocks
+are checked — a sentence mentioning a command is discussing it, not asking
+anyone to run it.
 
 Reading run logs needs `Actions: Read`, so the count check runs only when
 `DEPO_JETONU` is set. Without it the audit stays quiet about counts rather

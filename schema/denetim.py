@@ -20,6 +20,7 @@ Depo basina olculenler:
   - en yeni etiketin release'i var mi, PyPI'a gitmis mi
   - 'active' diyen bir depo aylardir sessiz mi
   - alisilmis Pages adresi acik ama metadata bos mu
+  - README'nin soyledigi kurulum komutu bugun calisir mi
 
 Cikti: markdown rapor (stdout) + schema/denetim.json.
 
@@ -118,6 +119,7 @@ def _kirmizi_kosular(ad, dal, akislar):
 
 GENIS = os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
+KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
 
 
 def _uyarilar(ad):
@@ -292,6 +294,98 @@ def _canli_mi(url):
         return e.code
     except Exception:
         return None
+
+
+KURULUM = re.compile(
+    r"(?:pip3?\s+install|pipx\s+install|uv\s+pip\s+install|uv\s+tool\s+install|uvx)"
+    r"([^\n`]*)")
+
+# Kendisinden SONRAKI sozcugu de yutan bayraklar: ardindan gelen sey bir
+# dagitim adi degil, bir dosya ya da yol.
+YUTAN = {"-r", "--requirement", "-e", "--editable", "-c", "--constraint",
+         "--index-url", "-i", "--extra-index-url", "--find-links", "-f",
+         "--python", "-p", "--with", "--index"}
+
+# Bir dagitim adi olamayacak isaretler.
+AD_DISI = ("+", ":", "/", "\\", "$", "<", ">", "=", "\"", "'")
+DOSYA_SONU = (".txt", ".py", ".toml", ".cfg", ".lock", ".json", ".yaml", ".yml")
+
+
+KOD_BLOGU = re.compile(r"```[^\n]*\n(.*?)```", re.S)
+
+
+def kod_bloklari(metin):
+    """Yalnizca ``` citleri arasindaki metin.
+
+    Kontrolun sordugu soru "ziyaretcinin kopyalayip calistiracagi komut
+    calisiyor mu". Bir cumlenin icinde gecen komut adi calistirilmak icin
+    orada degil: "yayimlandiginda `pip install x` kisa yol olacak" demek,
+    `pip install x` demek degildir.
+    """
+    return "\n".join(KOD_BLOGU.findall(metin or ""))
+
+
+def kurulum_adlari(metin):
+    """README'nin kod bloklarinda kurmayi soyledigi dagitim adlari.
+
+    Yalnizca gercekten bir REGISTRY adi olanlar sayilir. `git+https://...`
+    ile kurulum, `-e .`, `-r requirements.txt` ya da bir yol bir dagitim
+    adi degildir ve PyPI'da aranmaz. `uvx --from <sey> <komut>` bicimi de
+    disarida: oradaki dagitim `--from`un ardindaki sey, sondaki sozcuk ise
+    calistirilan komutun adi -- ikisini karistirmak yanlis bulgu uretir.
+    """
+    adlar = set()
+    for kuyruk in KURULUM.findall(kod_bloklari(metin)):
+        parcalar = kuyruk.split()
+        if "--from" in parcalar:
+            continue
+        i = 0
+        while i < len(parcalar):
+            s = parcalar[i]
+            if s in YUTAN:
+                i += 2
+                continue
+            if s.startswith("-"):
+                i += 1
+                continue
+            aday = s.strip("`,;")
+            if (aday and not aday.startswith(".")
+                    and not any(k in aday for k in AD_DISI)
+                    and not aday.lower().endswith(DOSYA_SONU)):
+                adlar.add(aday)
+            break
+    return adlar
+
+
+def _readme_metni(ad, dal):
+    blob = _belki(f"{API}/repos/{OWNER}/{ad}/readme?ref={dal}")
+    if not blob or "content" not in blob:
+        return None
+    return base64.b64decode(blob["content"]).decode("utf-8", "replace")
+
+
+def _kurulum_calisiyor_mu(ad, dal, onbellek):
+    """README'nin ilk soyledigi kurulum komutu bugun calisir mi.
+
+    Bir ziyaretcinin carptigi ilk sey budur. `pip install filanca` diyen
+    bir README, o dagitim PyPI'da yoksa projeyi bozuk gosterir -- ve bunu
+    kimse depoyu okuyarak fark etmez, yalnizca komutu deneyen fark eder.
+    Tam olarak bu oldu: prompt-template-manager `uv tool install ptm-cli`
+    diyordu, ptm-cli yayimlanmamisti.
+    """
+    f = []
+    metin = _readme_metni(ad, dal)
+    if metin is None:
+        return f
+    for paket in sorted(kurulum_adlari(metin)):
+        if paket not in onbellek:
+            onbellek[paket] = _pypi_surumleri(paket)
+        surumler = onbellek[paket]
+        if surumler is not None and not surumler:
+            f.append("README `%s` kurmayi soyluyor ama PyPI'da boyle bir "
+                     "dagitim yok -- ziyaretcinin denedigi ilk komut duser"
+                     % paket)
+    return f
 
 
 def _pypi_surumleri(paket):
@@ -494,6 +588,9 @@ def _depoyu_olc(r, kaynak):
     for m in _surum_zinciri(ad, dal, akislar):
         bulgular.append(("surum", m))
 
+    for m in _kurulum_calisiyor_mu(ad, dal, KURULUM_ONBELLEK):
+        bulgular.append(("vitrin", m))
+
     sapma = _test_sayisi(ad, dal, meta, akislar)
     if sapma:
         bulgular.append(("olcum", sapma))
@@ -619,6 +716,7 @@ def main():
     depolar = [r for r in D._repos() if not r.get("fork")]
 
     bulgular, iskeletler, metalar = [], {}, {}
+    KURULUM_ONBELLEK.clear()
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
         alt, iskelet, meta = _depoyu_olc(r, kaynak)
         if meta is not None:
