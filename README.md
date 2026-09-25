@@ -3,14 +3,31 @@
   <img src="assets/hero.svg" alt="Furki Özkan — agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits." width="100%">
 </picture>
 
-**I build the infrastructure AI agents run on — MCP servers, async job contracts, pipeline DAGs — and the tools that check whether any of it actually works.**
-Independent, based in Türkiye (UTC+3), available for remote contract work. Some evenings, a game engine instead.
+MCP servers, an async job contract with a pipeline engine on top, and audit tools that were each run against real outside projects before release. Independent, based in Türkiye (UTC+3), available for remote contract work. Some evenings, a game engine instead.
 
-<sub>**[Hire me →](HIRE.md)** · [Every repository, searchable](https://furkiozknn.github.io/) · [Where every number comes from](TESTLER.md) · [@furkiozkan](https://x.com/furkiozkan)</sub>
+<sub>**[Start here](#start-here)** · [Try one in your browser](#try-it-in-your-browser) · [What I build](#what-i-build) · [All projects](#every-project) · **[Work with me](#work-with-me)** · [Searchable directory](https://furkiozknn.github.io/)</sub>
 
 ---
 
 ## Start here
+
+| If you want to… | Open |
+|---|---|
+| check an MCP server before you install it | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** |
+| find broken references in a Godot project, without the editor | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** |
+| test what a README promises — install, badges, links, releases | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** |
+| see where your Claude Code tokens went | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** |
+| run image and video jobs behind one HTTP contract | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** → [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine) |
+| give Claude Code local tools: media, your notes, speech | [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit) · [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp) · [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp) |
+| find the nearest free toilet, park or fountain in Türkiye | **[buradane](https://github.com/Furkiozknn/buradane)** |
+| play something, right now | [the browser games ↓](#try-it-in-your-browser) |
+| know how any of this was measured | [Writing ↓](#recently) · [where every number comes from](TESTLER.md) |
+
+---
+
+## Featured
+
+<sub>Chosen by one rule: finished, documented, tested, and useful to someone who is not me today.</sub>
 
 <table>
 <tr>
@@ -47,7 +64,17 @@ Independent, based in Türkiye (UTC+3), available for remote contract work. Some
 </tr>
 </table>
 
-**Open in a browser, nothing to install:** 🚀 [nova-drift](https://furkiozknn.github.io/nova-drift/) — an endless space-runner, 0.7 MB first load · 🎵 [tek-tus-kosu](https://furkiozknn.github.io/tek-tus-kosu/) — a one-button rooftop runner on the music's beat grid · 📖 [masal](https://furkiozknn.github.io/masal/) — a bedtime story built around one child's name · 🇹🇷 [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) — 70 Claude Code sub-agents that think in Turkish
+---
+
+## Try it in your browser
+
+Nothing to install; each one is a static page.
+
+- 🚀 **[nova-drift](https://furkiozknn.github.io/nova-drift/)** — an endless space-runner with real bloom and live-synthesized audio. 0.7 MB first load. <sub>[source](https://github.com/Furkiozknn/nova-drift)</sub>
+- 📖 **[masal](https://furkiozknn.github.io/masal/)** — a bedtime story built around one child's name, with Turkish suffixes that come out right. <sub>[source](https://github.com/Furkiozknn/masal)</sub>
+- 🇹🇷 **[turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/)** — browse 70 Claude Code sub-agents that think in Turkish. <sub>[source](https://github.com/Furkiozknn/turkce-ajanlar)</sub>
+
+<sub>Godot games with a web build, pages not published yet: [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) (one button, on the beat) · [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) (flip gravity) · [derin-kazi](https://github.com/Furkiozknn/derin-kazi) (dig to the core) · [kanca](https://github.com/Furkiozknn/kanca) (hook and swing). Each README has a downloadable build.</sub>
 
 ---
 
@@ -64,23 +91,19 @@ Independent, based in Türkiye (UTC+3), available for remote contract work. Some
 
 ---
 
-## What I can do for you
+## What I build
 
-| Engagement | What you get | Price |
-|---|---|---:|
-| **MCP / agent security review** | I read a third-party MCP server before you run it — install scripts, what leaves the machine, and what its tool descriptions tell the model to do. You get a report with `file:line` on every finding, and the tooling to re-run it. | from $900 |
-| **Make it shippable** | Code that works on your machine gets a test suite that fails when the code is wrong, CI on every push, and a release path that cannot ship a broken artifact. | from $1,500 |
-| **Ongoing contract** | Agent and MCP systems, Python and TypeScript, job orchestration, pipelines, cost accounting — including Windows and Turkish-locale setups, where things break that nobody documents. | $50 / hour |
-
-<sub>Scope, evidence and how to start: **[HIRE.md](HIRE.md)**. A short paid trial task before anything larger is fine.</sub>
-
----
-
-## One system, not a pile of side projects
+- **Agent infrastructure** — one async job contract and what composes on top of it: [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway), [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine), [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness), [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager), [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit).
+- **MCP servers** — local-first tools for Claude Code: [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit), [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp), [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp), [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp).
+- **Tools that check other work** — each calibrated on real outside projects before release: [mcp-vet](https://github.com/Furkiozknn/mcp-vet), [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck), [repo-vet](https://github.com/Furkiozknn/repo-vet), [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence), [mcp-census](https://github.com/Furkiozknn/mcp-census).
+- **Apps** — [buradane](https://github.com/Furkiozknn/buradane) (maps, PostGIS), [ajans-os](https://github.com/Furkiozknn/ajans-os) (an agency operating system), [turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar).
+- **Games** — Godot 4 and Three.js, each played headlessly in CI: [nova-drift](https://github.com/Furkiozknn/nova-drift), [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu), [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir), [derin-kazi](https://github.com/Furkiozknn/derin-kazi), [kanca](https://github.com/Furkiozknn/kanca), [masal](https://github.com/Furkiozknn/masal), plus a [measured starter template](https://github.com/Furkiozknn/godot-2d-sablon).
 
 <a href="https://furkiozknn.github.io/"><img src="assets/ecosystem.svg" alt="How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath" width="100%"></a>
 
 Four repositories share one job contract and no Python dependency. Four more exist to check work — a README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. Underneath all of them: one metadata file per repository, and an audit that runs every morning.
+
+## Every project
 
 <details>
 <summary><b>Every public repository, with its test count</b> — 5,247 tests, each traced to the run that printed it</summary>
@@ -145,6 +168,16 @@ Four repositories share one job contract and no Python dependency. Four more exi
 <sub>Python · TypeScript · Rust · GDScript · FastAPI · PostGIS · Next.js · Three.js · Godot 4 · MCP · OpenTelemetry · Playwright</sub>
 
 ---
+
+## Work with me
+
+| Engagement | What you get | Price |
+|---|---|---:|
+| **MCP / agent security review** | I read a third-party MCP server before you run it — install scripts, what leaves the machine, and what its tool descriptions tell the model to do. You get a report with `file:line` on every finding, and the tooling to re-run it. | from $900 |
+| **Make it shippable** | Code that works on your machine gets a test suite that fails when the code is wrong, CI on every push, and a release path that cannot ship a broken artifact. | from $1,500 |
+| **Ongoing contract** | Agent and MCP systems, Python and TypeScript, job orchestration, pipelines, cost accounting — including Windows and Turkish-locale setups, where things break that nobody documents. | $50 / hour |
+
+<sub>Scope, evidence and how to start: **[HIRE.md](HIRE.md)**. A short paid trial task before anything larger is fine.</sub>
 
 <p align="center">
   <b>Have an MCP server to vet, or code that works but doesn't ship yet?</b><br>
