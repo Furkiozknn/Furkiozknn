@@ -155,14 +155,14 @@ sync.
 
 | # | Operation | How it works today | Automation | Status |
 |---|---|---|---|---|
-| 1 | Merge Dependabot PRs | one PR per action per week, merged one by one | `groups` + monthly: one PR per ecosystem | rolling out: one commit per repository on its open PR |
-| 2 | Keep upload/download-artifact in step | remembered by a person | same group → same PR | done |
+| 1 | Merge Dependabot PRs | one PR per action per week, merged one by one | `groups` + monthly: one PR per ecosystem | done on every open PR (27/27 CI green); live when they merge |
+| 2 | Keep upload/download-artifact in step | remembered by a person | same group → same PR | done on every open PR (27/27 CI green); live when they merge |
 | 3 | Update profile counts after a merge | hand-edited in 7 places | `sayilar.yml` measures and commits | needs `DEPO_JETONU` |
 | 4 | Check a published count is real | nobody could, for 26 repos | `denetim.py` reads the run log | needs `DEPO_JETONU` |
-| 5 | Notice a hung job | 6 h of runner time, then red | measured `timeout-minutes` everywhere | rolling out: one commit per repository on its open PR |
+| 5 | Notice a hung job | 6 h of runner time, then red | measured `timeout-minutes` everywhere | done on every open PR (27/27 CI green); live when they merge |
 | 6 | Notice a workflow GitHub switched off | not noticed | daily audit reports `disabled_inactivity` | done |
 | 7 | Keep new workflows to the rules | code review | policy in the daily audit + this repo's CI | done |
-| 8 | Keep action versions current | never | Dependabot in all 27 repositories | rolling out: one commit per repository on its open PR |
+| 8 | Keep action versions current | never | Dependabot in all 27 repositories | done on every open PR (27/27 CI green); live when they merge |
 | 9 | Know a tag reached PyPI | by hand | daily audit (tag → release → PyPI) | existing |
 | 10 | Apply About texts | `about/uygula.py --uygula` by hand | a workflow with an admin-scoped token | proposed |
 | 11 | Register Trusted Publishers | pypi.org UI, 13 times | none possible — values listed below | manual, one-time |
