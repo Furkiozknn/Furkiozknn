@@ -400,7 +400,7 @@
       "GL Compatibility renderer"
     ],
     "key_features": [
-      "Swing physics with no jump button: hook a ceiling anchor, swing, release at the right moment and keep the momentum",
+      "Swing physics built on momentum: hook a ceiling anchor, swing, release at the right moment and keep the speed you built",
       "14 hand-built levels; medal times on 13 of them measured by a scripted bot rather than guessed",
       "All sprites generated from code (tools/sprite_uret.gd), so the art is reproducible from the repository",
       "Single-finger control scheme for touch, documented alongside the keyboard layout",
@@ -412,7 +412,7 @@
       "measured": "2026-09-22"
     },
     "social": {
-      "headline": "One key. One rope. All the momentum you can carry.",
+      "headline": "One rope. All the momentum you can carry.",
       "hashtags": [
         "godot",
         "godot4",
