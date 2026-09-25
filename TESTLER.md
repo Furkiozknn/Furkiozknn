@@ -154,7 +154,7 @@ kind that catches a level becoming unfinishable.
 ## The other two numbers
 
 **28 public repositories.** Every repository on this account is public except
-one unreleased game.
+two unreleased games.
 
 **1,096 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own

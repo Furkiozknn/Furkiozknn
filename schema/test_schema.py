@@ -874,6 +874,21 @@ class VitrinTesti(unittest.TestCase):
                  + vitrin.SON + "\ny")
         self.assertEqual(vitrin.mevcut_surum_satirlari(metin), ["- [a v1](u) <sub>d</sub>"])
 
+    def test_bos_depo_listesi_surumleri_silmez(self):
+        # API bos liste dondururse vitrin durmali; "surum yok" diye
+        # Releases satirlarini sessizce silmemeli.
+        import types
+        sahte = types.ModuleType("derle")
+        sahte._repos = lambda: []
+        sahte._release = lambda ad: None
+        gercek = vitrin._derle
+        vitrin._derle = lambda: sahte
+        try:
+            with self.assertRaises(SystemExit):
+                vitrin.surumler()
+        finally:
+            vitrin._derle = gercek
+
     def test_readme_isaretleri_ve_yazilari_tutarli(self):
         # Gercek README ve gercek yazilar/: CI'daki --kontrol ile ayni soru.
         metin = vitrin.README.read_text(encoding="utf-8")

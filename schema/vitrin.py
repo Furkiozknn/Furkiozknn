@@ -74,13 +74,23 @@ def gun(d):
     return "%d %s %d" % (d.day, AY[d.month - 1], d.year)
 
 
-def surumler():
-    """Her deponun en son surumu, yeniden eskiye. derle.py'nin istemcisiyle."""
+def _derle():
     spec = importlib.util.spec_from_file_location("derle", KOK / "schema" / "derle.py")
     derle = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(derle)
+    return derle
+
+
+def surumler():
+    """Her deponun en son surumu, yeniden eskiye. derle.py'nin istemcisiyle."""
+    derle = _derle()
+    depolar = derle._repos()
+    if not depolar:
+        # Bos bir liste "hic surum yok" degil, "API bir sey dondurmedi" demek.
+        # Sessizce devam etmek Releases satirlarini README'den silerdi.
+        raise SystemExit("vitrin: GitHub depo listesi bos dondu; README'ye dokunulmadi")
     bulunan = []
-    for r in derle._repos():
+    for r in depolar:
         if r.get("fork") or r.get("archived") or r.get("private"):
             continue
         s = derle._release(r["name"])
