@@ -151,6 +151,7 @@ SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
 OKUNAMADI = []             # hiz siniri yuzunden hic olculemeyen depolar
 KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
 POLITIKA_BAKILAMADI = {}   # depo -> neden is akisi politikasina bakilamadi
+KUYRUK = {"acik": 0, "dependabot": 0, "kirmizi": 0, "kosusuz": 0, "depo": 0}  # acik PR kuyrugu
 
 
 def _uyarilar(ad):
@@ -577,6 +578,54 @@ def _politika(ad, dal):
     return cikti
 
 
+KIRMIZI_SONUC = ("failure", "timed_out", "startup_failure", "action_required")
+
+
+def _pr_kuyrugu(ad):
+    """Acik PR'lar ve basi kirmizi olanlar.
+
+    Denetim varsayilan dallara bakiyordu; bekleyen isin tamami ise acik PR
+    kuyrugundaydi (25 Eylul'de 46 Claude + 36 Dependabot PR'i) ve hangisinin
+    kirmizi oldugunu yalnizca tek tek bakan biri biliyordu. `cancelled`
+    sayilmaz: concurrency, yeni bir push gelince eskisini iptal eder.
+    """
+    prlar = _belki(f"{API}/repos/{OWNER}/{ad}/pulls?state=open&per_page=100", []) or []
+    if prlar:
+        KUYRUK["depo"] += 1
+    kirmizi = []
+    for p in prlar:
+        KUYRUK["acik"] += 1
+        if (p.get("user") or {}).get("login", "").startswith("dependabot"):
+            KUYRUK["dependabot"] += 1
+        sha = (p.get("head") or {}).get("sha")
+        if not sha:
+            continue
+        kosular = (_belki(f"{API}/repos/{OWNER}/{ad}/commits/{sha}/check-runs?per_page=100", {})
+                   or {}).get("check_runs") or []
+        if not kosular:
+            # Ilk kez katki veren birinin fork'undan gelen PR'da is akislari,
+            # biri "Approve and run" diyene kadar hic kosmaz. Kirmizi degil,
+            # ama yesil de degil: bekleyen bir insan karari.
+            KUYRUK["kosusuz"] += 1
+            kirmizi.append("PR #%s: hic kontrol kosusu yok (dis katkiysa Actions onayi bekliyor)"
+                           % p.get("number"))
+            continue
+        dusen = sorted({k.get("name", "?") for k in kosular
+                        if k.get("status") == "completed" and k.get("conclusion") in KIRMIZI_SONUC})
+        if dusen:
+            KUYRUK["kirmizi"] += 1
+            kirmizi.append("PR #%s kirmizi: %s" % (p.get("number"), ", ".join(dusen[:4])))
+    return kirmizi
+
+
+def _kuyruk_satiri():
+    if not KUYRUK["acik"]:
+        return ""
+    return ("Acik PR: %d (%d Dependabot), %d depoda; basi kirmizi olan: %d; hic kosusu olmayan: %d."
+            % (KUYRUK["acik"], KUYRUK["dependabot"], KUYRUK["depo"], KUYRUK["kirmizi"],
+               KUYRUK["kosusuz"]))
+
+
 def _bayat_mi(r, meta, gun=180):
     """'active' diyen ama aylardir dokunulmamis depo.
 
@@ -726,6 +775,9 @@ def _depoyu_olc(r, kaynak):
     for m in _politika(ad, dal):
         bulgular.append(("politika", m))
 
+    for m in _pr_kuyrugu(ad):
+        bulgular.append(("kuyruk", m))
+
     for m in _kurulum_calisiyor_mu(ad, dal, KURULUM_ONBELLEK):
         bulgular.append(("vitrin", m))
 
@@ -821,8 +873,9 @@ BASLIK = {
     "olcum": "Yayimlanan sayi kosunun yazdigiyla ayni degil",
     "surum": "Surum zinciri yarim kalmis",
     "politika": "Is akisi ve tedarik zinciri politikasi (schema/politika.py)",
+    "kuyruk": "Acik PR bekliyor: basi kirmizi ya da hic kosmamis",
 }
-SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "politika",
+SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "kuyruk", "surum", "politika",
         "baglanti", "ayrisma", "belge", "vitrin"]
 
 
@@ -875,7 +928,8 @@ def _politika_satiri():
 
 
 def _rapor(bulgular, iskeletler, depo_sayisi):
-    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri(), _politika_satiri()) if x]
+    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri(), _politika_satiri(),
+                            _kuyruk_satiri()) if x]
     if not bulgular:
         metin = "Denetim temiz: %d depo, bulgu yok." % (depo_sayisi - len(OKUNAMADI))
         return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
@@ -930,6 +984,8 @@ def main():
     SAYI_BAKILAMADI.clear()
     OKUNAMADI.clear()
     POLITIKA_BAKILAMADI.clear()
+    for k in KUYRUK:
+        KUYRUK[k] = 0
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
         # Hiz siniri "bakilamadi" demek, "temiz" degil -- ve kesinlikle
         # "butun denetimi dusur" degil. Bu tur bir yigin izi yuzunden
@@ -971,6 +1027,7 @@ def main():
         "repos_unreadable": list(OKUNAMADI),
         "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
         "policy_unchecked": dict(sorted(POLITIKA_BAKILAMADI.items())),
+        "open_prs": dict(KUYRUK),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
                    "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "

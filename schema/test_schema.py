@@ -1267,5 +1267,49 @@ class SurumTesti2(unittest.TestCase):
             self._hazirlik(hiz=True)
 
 
+class KuyrukTesti(unittest.TestCase):
+    """Acik PR kuyrugu: kirmizi baslar bulgu olur, iptal edilen kosu olmaz."""
+
+    def setUp(self):
+        self.gercek = denetim._belki
+        for k in denetim.KUYRUK:
+            denetim.KUYRUK[k] = 0
+
+    def tearDown(self):
+        denetim._belki = self.gercek
+        for k in denetim.KUYRUK:
+            denetim.KUYRUK[k] = 0
+
+    def test_kirmizi_bas_bulgu_iptal_ve_basari_degil(self):
+        kosular = {
+            "k1": [{"name": "test", "status": "completed", "conclusion": "failure"},
+                   {"name": "lint", "status": "completed", "conclusion": "success"}],
+            "k2": [{"name": "test", "status": "completed", "conclusion": "cancelled"}],
+            "k3": [{"name": "test", "status": "in_progress", "conclusion": None}],
+            "k4": [],
+        }
+        def belki(url, v=None):
+            if "/pulls?" in url:
+                return [{"number": 1, "user": {"login": "Furkiozknn"}, "head": {"sha": "k1"}},
+                        {"number": 2, "user": {"login": "dependabot[bot]"}, "head": {"sha": "k2"}},
+                        {"number": 3, "user": {"login": "Furkiozknn"}, "head": {"sha": "k3"}},
+                        {"number": 4, "user": {"login": "hy3560"}, "head": {"sha": "k4"}}]
+            sha = url.split("/commits/")[1].split("/")[0]
+            return {"check_runs": kosular[sha]}
+        denetim._belki = belki
+        self.assertEqual(denetim._pr_kuyrugu("depo"),
+                         ["PR #1 kirmizi: test",
+                          "PR #4: hic kontrol kosusu yok (dis katkiysa Actions onayi bekliyor)"])
+        self.assertEqual(denetim.KUYRUK, {"acik": 4, "dependabot": 1, "kirmizi": 1, "kosusuz": 1,
+                                          "depo": 1})
+        self.assertIn("Acik PR: 4 (1 Dependabot), 1 depoda; basi kirmizi olan: 1; "
+                      "hic kosusu olmayan: 1.", denetim._kuyruk_satiri())
+
+    def test_pr_yoksa_satir_yok(self):
+        denetim._belki = lambda url, v=None: []
+        self.assertEqual(denetim._pr_kuyrugu("depo"), [])
+        self.assertEqual(denetim._kuyruk_satiri(), "")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
