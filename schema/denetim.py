@@ -71,6 +71,18 @@ OWNER = D.OWNER
 API = D.API
 
 
+def _politika_modulu():
+    """schema/politika.py: is akisi ve tedarik zinciri kurallari (tek kaynak)."""
+    yol = KOK / "schema" / "politika.py"
+    spec = importlib.util.spec_from_file_location("ekosistem_politika", yol)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+P = _politika_modulu()
+
+
 def _belki(url, varsayilan=None):
     """404'u veri olarak kabul eder; digerlerini yukari birakir."""
     try:
@@ -117,12 +129,28 @@ def _kirmizi_kosular(ad, dal, akislar):
                   if k["conclusion"] in ("failure", "timed_out", "startup_failure"))
 
 
+def _kapanmis_akislar(ad):
+    """GitHub'in kendiliginden kapattigi zamanlanmis is akislari.
+
+    Public bir depoda 60 gun hic hareket olmazsa GitHub zamanlanmis is
+    akislarini kapatir (`disabled_inactivity`) ve kimseye haber vermez: akis
+    listede durur, kirmizi yanmaz, sadece bir daha hic kosmaz. Kirmizi kosu
+    kontrolu bunu goremez, cunku ortada kosu yok. Elle kapatilan
+    (`disabled_manually`) bilincli bir karar sayilir ve raporlanmaz.
+    """
+    veri = _belki(f"{API}/repos/{OWNER}/{ad}/actions/workflows?per_page=100", {})
+    return sorted(w.get("path", w.get("name", "?")).rsplit("/", 1)[-1]
+                  for w in (veri or {}).get("workflows", [])
+                  if w.get("state") == "disabled_inactivity")
+
+
 GENIS = os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
 SAYI_OKUNAN = []           # yayimlanan test sayisi kosuya karsi GERCEKTEN karsilastirilan depolar
 SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
 OKUNAMADI = []             # hiz siniri yuzunden hic olculemeyen depolar
 KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
+POLITIKA_BAKILAMADI = {}   # depo -> neden is akisi politikasina bakilamadi
 
 
 def _uyarilar(ad):
@@ -494,6 +522,61 @@ def _surum_zinciri(ad, dal, akislar):
     return f
 
 
+def _politika_dosyalari(ad, dal):
+    """Politikanin baktigi dosyalar, tek agac istegi + gereken icerikler.
+
+    uv.lock icerigi okunmaz: kural yalnizca varligina bakiyor, ve buyuk bir
+    kilidi her gun indirmenin karsiligi yok. Cargo.lock ve package-lock.json
+    okunur, cunku "hic bagimliligi yok" istisnasi icerige bakiyor.
+    """
+    agac = _belki(f"{API}/repos/{OWNER}/{ad}/git/trees/{dal}?recursive=1")
+    if not agac or agac.get("truncated"):
+        return None
+    dosyalar = {}
+    for g in agac.get("tree") or []:
+        yol = g.get("path", "")
+        if g.get("type") != "blob" or "node_modules/" in yol:
+            continue
+        akis = yol.startswith(".github/workflows/") and yol.endswith((".yml", ".yaml"))
+        db = yol in (".github/dependabot.yml", ".github/dependabot.yaml")
+        kilit = yol.rsplit("/", 1)[-1] in P.KILIT_EKOSISTEM
+        if not (akis or db or kilit):
+            continue
+        if yol.endswith("uv.lock"):
+            dosyalar[yol] = None
+            continue
+        blob = _belki(f"{API}/repos/{OWNER}/{ad}/contents/{yol}?ref={dal}")
+        if not blob or "content" not in blob:
+            return None
+        dosyalar[yol] = base64.b64decode(blob["content"]).decode("utf-8", "replace")
+    return dosyalar
+
+
+def _politika(ad, dal):
+    """FAIL'ler tek tek; WARN'lar depo basina tek satirda sayilir.
+
+    Ilk envanterde 27 deponun toplam 178 WARN satiri vardi. Hepsi konuya
+    tek tek yazilsa, bir FAIL o kalabalikta kaybolurdu.
+    """
+    if P.yaml_yok():
+        POLITIKA_BAKILAMADI[ad] = "PyYAML yok"
+        return []
+    dosyalar = _politika_dosyalari(ad, dal)
+    if dosyalar is None:
+        POLITIKA_BAKILAMADI[ad] = "dosyalar okunamadi"
+        return []
+    bulgular = P.depo_bulgulari(dosyalar)
+    cikti = ["FAIL %s" % m for s, _, m in bulgular if s == P.FAIL]
+    uyarilar = {}
+    for s, k, _ in bulgular:
+        if s == P.WARN:
+            uyarilar[k] = uyarilar.get(k, 0) + 1
+    if uyarilar:
+        cikti.append("WARN " + ", ".join("%s x%d" % (P.KURAL_ADI.get(k, k), n)
+                                         for k, n in sorted(uyarilar.items())))
+    return cikti
+
+
 def _bayat_mi(r, meta, gun=180):
     """'active' diyen ama aylardir dokunulmamis depo.
 
@@ -640,6 +723,9 @@ def _depoyu_olc(r, kaynak):
     for m in _surum_zinciri(ad, dal, akislar):
         bulgular.append(("surum", m))
 
+    for m in _politika(ad, dal):
+        bulgular.append(("politika", m))
+
     for m in _kurulum_calisiyor_mu(ad, dal, KURULUM_ONBELLEK):
         bulgular.append(("vitrin", m))
 
@@ -651,6 +737,9 @@ def _depoyu_olc(r, kaynak):
     else:
         for w in _kirmizi_kosular(ad, dal, akislar):
             bulgular.append(("ci", "son kosu kirmizi: %s" % w))
+        for w in _kapanmis_akislar(ad):
+            bulgular.append(("ci", "GitHub 60 gun hareketsizlik yuzunden kapatmis: %s "
+                                   "(Actions -> is akisi -> Enable workflow)" % w))
     return bulgular, iskelet, meta
 
 
@@ -731,9 +820,10 @@ BASLIK = {
     "guvenlik": "Acik guvenlik uyarisi",
     "olcum": "Yayimlanan sayi kosunun yazdigiyla ayni degil",
     "surum": "Surum zinciri yarim kalmis",
+    "politika": "Is akisi ve tedarik zinciri politikasi (schema/politika.py)",
 }
-SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "baglanti",
-        "ayrisma", "belge", "vitrin"]
+SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "politika",
+        "baglanti", "ayrisma", "belge", "vitrin"]
 
 
 def _okunamayan_satiri():
@@ -772,8 +862,20 @@ def _kapsam_satiri():
             % (okunan, bakilamayan, parca))
 
 
+def _politika_satiri():
+    """Politikasina bakilamayan depo "temiz" sayilmaz; sayisi yazilir."""
+    if not POLITIKA_BAKILAMADI:
+        return ""
+    nedenler = {}
+    for ad, neden in POLITIKA_BAKILAMADI.items():
+        nedenler.setdefault(neden, []).append(ad)
+    return ("Is akisi politikasina %d depoda **bakilamadi** (%s)."
+            % (len(POLITIKA_BAKILAMADI),
+               "; ".join("%d: %s" % (len(v), k) for k, v in sorted(nedenler.items()))))
+
+
 def _rapor(bulgular, iskeletler, depo_sayisi):
-    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri()) if x]
+    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri(), _politika_satiri()) if x]
     if not bulgular:
         metin = "Denetim temiz: %d depo, bulgu yok." % (depo_sayisi - len(OKUNAMADI))
         return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
@@ -827,6 +929,7 @@ def main():
     SAYI_OKUNAN.clear()
     SAYI_BAKILAMADI.clear()
     OKUNAMADI.clear()
+    POLITIKA_BAKILAMADI.clear()
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
         # Hiz siniri "bakilamadi" demek, "temiz" degil -- ve kesinlikle
         # "butun denetimi dusur" degil. Bu tur bir yigin izi yuzunden
@@ -867,6 +970,7 @@ def main():
         "test_counts_verified": len(SAYI_OKUNAN),
         "repos_unreadable": list(OKUNAMADI),
         "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
+        "policy_unchecked": dict(sorted(POLITIKA_BAKILAMADI.items())),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
                    "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "

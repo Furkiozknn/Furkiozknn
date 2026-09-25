@@ -35,6 +35,7 @@ concurrency:
 jobs:
   denetle:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +43,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
+      # Is akisi politikasi (schema/politika.py) YAML okuyor; o tek bagimlilik
+      # icin pyyaml, surumu sabit. Kurulamazsa denetim yine kosar ve raporun
+      # basinda politikaya kac depoda BAKILAMADIGINI yazar.
+      - name: pyyaml
+        run: python3 -m pip install --quiet pyyaml==6.0.3
+
+      # Geri kalan her sey standart kutuphane.
       # DEPO_JETONU tanimliysa kosu loglari da okunabiliyor, yani
       # "yayimlanan test sayisi hala kosunun yazdigi sayi mi" sorusu
       # gercekten soruluyor. Tanimli degilse denetim yine kosuyor ama

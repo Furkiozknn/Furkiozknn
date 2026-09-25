@@ -1,0 +1,17 @@
+# Action surumleri kendiliginden guncellenir; ayda bir, tek PR.
+#
+# Gruplama bilerek: her action icin ayri PR, 25 Eylul 2026'da hesapta 36
+# acik Dependabot PR'i demekti ve her biri elle birlestirilmeyi bekliyordu.
+# Tek grup ayrica upload-artifact / download-artifact gibi birlikte
+# yukselmesi gereken ciftleri ayni PR'da tutar. Kural schema/politika.py'de.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
+    groups:
+      actions:
+        patterns: ["*"]

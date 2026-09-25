@@ -46,6 +46,7 @@ haftalik = _yukle("haftalik")
 denetim = _yukle("denetim")
 vitrin = _yukle("vitrin")
 derle = _yukle("derle")
+politika = _yukle("politika")
 
 
 class GeciciDepo:
@@ -924,7 +925,12 @@ class DerleTesti(unittest.TestCase):
         # API bos liste dondururse derle durmali, projects.json'u sifir
         # projeyle yeniden yazmamali.
         yol = os.path.join(BURASI, "projects.json")
-        once = open(yol, encoding="utf-8").read() if os.path.exists(yol) else None
+        def oku():
+            if not os.path.exists(yol):
+                return None
+            with open(yol, encoding="utf-8") as f:
+                return f.read()
+        once = oku()
         gercek, derle._repos = derle._repos, lambda: []
         eski_argv = sys.argv
         sys.argv = ["derle.py"]
@@ -933,8 +939,219 @@ class DerleTesti(unittest.TestCase):
         finally:
             derle._repos = gercek
             sys.argv = eski_argv
-        sonra = open(yol, encoding="utf-8").read() if os.path.exists(yol) else None
+        sonra = oku()
         self.assertEqual(once, sonra)
+
+
+class PolitikaTesti(unittest.TestCase):
+    """schema/politika.py: her kural hem yakaliyor hem susuyor mu."""
+
+    TEMIZ = (
+        "name: CI\n"
+        "on: [push, pull_request]\n"
+        "permissions:\n  contents: read\n"
+        "jobs:\n"
+        "  test:\n"
+        "    runs-on: ubuntu-24.04\n"
+        "    timeout-minutes: 15\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v5\n"
+        "      - uses: astral-sh/setup-uv@0123456789abcdef0123456789abcdef01234567  # v7.1.0\n"
+        "      - run: |\n"
+        "          set -euo pipefail\n"
+        "          uv run pytest -v | tee log.txt\n")
+    DEPENDABOT = (
+        "version: 2\nupdates:\n"
+        "  - package-ecosystem: github-actions\n    directory: /\n"
+        "    schedule: {interval: monthly}\n"
+        "    groups:\n      actions: {patterns: ['*']}\n")
+
+    def _kurallar(self, dosyalar):
+        return sorted({k for _, k, _ in politika.depo_bulgulari(dosyalar)})
+
+    def setUp(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+
+    def test_temiz_depo_pass(self):
+        d = {".github/workflows/ci.yml": self.TEMIZ, ".github/dependabot.yml": self.DEPENDABOT}
+        self.assertEqual(politika.depo_bulgulari(d), [])
+        self.assertEqual(politika.durum([]), "PASS")
+
+    def test_timeout_yoksa_uyarir(self):
+        wf = self.TEMIZ.replace("    timeout-minutes: 15\n", "")
+        b = politika.is_akisi_bulgulari(".github/workflows/ci.yml", wf)
+        self.assertEqual([(s, k) for s, k, _ in b], [("WARN", "sure")])
+
+    def test_ucuncu_taraf_etiketle_pinlenmemis(self):
+        wf = self.TEMIZ.replace("0123456789abcdef0123456789abcdef01234567  # v7.1.0", "v7")
+        self.assertEqual(self._kurallar({".github/workflows/ci.yml": wf,
+                                         ".github/dependabot.yml": self.DEPENDABOT}), ["pin"])
+        # GitHub'in kendi action'lari ve yerel action'lar kapsam disi.
+        wf2 = self.TEMIZ.replace("      - uses: astral-sh/setup-uv@0123456789abcdef0123456789abcdef01234567  # v7.1.0\n",
+                                 "      - uses: ./.github/actions/kur\n")
+        self.assertEqual(politika.is_akisi_bulgulari("ci.yml", wf2), [])
+
+    def test_pipefail_olmadan_test_borusu_fail(self):
+        # tee 0 doner, varsayilan kabukta pipefail yok: dusen test yesil gorunur.
+        wf = self.TEMIZ.replace("          set -euo pipefail\n", "")
+        b = politika.is_akisi_bulgulari("ci.yml", wf)
+        self.assertEqual([(s, k) for s, k, _ in b], [("FAIL", "boru")])
+        self.assertEqual(politika.durum(b), "FAIL")
+
+    def test_shell_bash_acikca_yazilinca_pipefail_var(self):
+        wf = self.TEMIZ.replace("          set -euo pipefail\n", "").replace(
+            "      - run: |\n", "      - shell: bash\n        run: |\n")
+        self.assertEqual(politika.is_akisi_bulgulari("ci.yml", wf), [])
+
+    def test_test_olmayan_boru_ve_mantiksal_veya_yakalanmaz(self):
+        wf = self.TEMIZ.replace("          uv run pytest -v | tee log.txt\n",
+                                "          uv run pytest -v || exit 1\n"
+                                "          grep -m1 version pyproject.toml | cut -d= -f2\n").replace(
+            "          set -euo pipefail\n", "")
+        self.assertEqual(politika.is_akisi_bulgulari("ci.yml", wf), [])
+
+    def test_guvensiz_ifade_kabukta_fail(self):
+        wf = self.TEMIZ.replace("          uv run pytest -v | tee log.txt\n",
+                                '          echo "${{ github.event.pull_request.title }}"\n')
+        b = politika.is_akisi_bulgulari("ci.yml", wf)
+        self.assertEqual([(s, k) for s, k, _ in b], [("FAIL", "enjeksiyon")])
+        # Ayni deger env ile verilince kabuk onu veri olarak gorur.
+        wf2 = self.TEMIZ.replace("          uv run pytest -v | tee log.txt\n",
+                                 '          echo "$BASLIK"\n')
+        self.assertEqual(politika.is_akisi_bulgulari("ci.yml", wf2), [])
+
+    def test_pull_request_target_pr_kodunu_checkout_ederse_fail(self):
+        wf = self.TEMIZ.replace("on: [push, pull_request]", "on: [pull_request_target]").replace(
+            "      - uses: actions/checkout@v5\n",
+            "      - uses: actions/checkout@v5\n        with:\n"
+            "          ref: ${{ github.event.pull_request.head.sha }}\n")
+        b = politika.is_akisi_bulgulari("ci.yml", wf)
+        self.assertIn(("FAIL", "tetik"), [(s, k) for s, k, _ in b])
+        wf2 = self.TEMIZ.replace("on: [push, pull_request]", "on: [pull_request_target]")
+        self.assertEqual([(s, k) for s, k, _ in politika.is_akisi_bulgulari("ci.yml", wf2)],
+                         [("WARN", "tetik")])
+
+    def test_izin_tanimsizsa_uyarir(self):
+        wf = self.TEMIZ.replace("permissions:\n  contents: read\n", "")
+        b = politika.is_akisi_bulgulari("ci.yml", wf)
+        self.assertEqual([(s, k) for s, k, _ in b], [("WARN", "izin")])
+
+    def test_on_anahtari_bool_okunmaz(self):
+        # YAML 1.1'de `on` true demek; okunursa tetikleyiciler kaybolur ve
+        # pull_request_target hic gorulmez.
+        wf = self.TEMIZ.replace("on: [push, pull_request]", "on:\n  pull_request_target:\n")
+        self.assertIn("tetik", {k for _, k, _ in politika.is_akisi_bulgulari("ci.yml", wf)})
+
+    def test_dependabot_yoksa_ve_gruplanmamissa(self):
+        self.assertEqual(self._kurallar({".github/workflows/ci.yml": self.TEMIZ}), ["dependabot"])
+        tek = self.DEPENDABOT.split("    groups:")[0]
+        self.assertEqual(self._kurallar({".github/workflows/ci.yml": self.TEMIZ,
+                                         ".github/dependabot.yml": tek}), ["grup"])
+
+    def test_alt_dizindeki_kilit_kendi_girdisini_ister(self):
+        # buradane: frontend/package-lock.json, backend/uv.lock.
+        d = {".github/workflows/ci.yml": self.TEMIZ, ".github/dependabot.yml": self.DEPENDABOT,
+             "frontend/package-lock.json": json.dumps({"packages": {"": {}, "node_modules/x": {}}}),
+             "backend/uv.lock": "version = 1\n"}
+        mesajlar = [m for _, k, m in politika.depo_bulgulari(d) if k == "kilit"]
+        self.assertEqual(len(mesajlar), 2)
+        ek = ("  - package-ecosystem: npm\n    directory: /frontend\n"
+              "    schedule: {interval: monthly}\n    groups:\n      npm: {patterns: ['*']}\n"
+              "  - package-ecosystem: uv\n    directory: backend/\n"
+              "    schedule: {interval: monthly}\n    groups:\n      uv: {patterns: ['*']}\n")
+        d[".github/dependabot.yml"] = self.DEPENDABOT + ek
+        self.assertEqual(politika.depo_bulgulari(d), [])
+
+    def test_bagimliliksiz_cargo_kilidi_sessiz(self):
+        # godot-refcheck: sifir bagimlilik; kilidin guncellenecek bir sey yok.
+        d = {".github/workflows/ci.yml": self.TEMIZ, ".github/dependabot.yml": self.DEPENDABOT,
+             "Cargo.lock": "version = 4\n\n[[package]]\nname = \"godot-refcheck\"\n"}
+        self.assertEqual(politika.depo_bulgulari(d), [])
+        d["Cargo.lock"] += "\n[[package]]\nname = \"serde\"\n"
+        self.assertEqual(self._kurallar(d), ["kilit"])
+
+    def test_bozuk_yaml_fail_olur_sessizce_gecilmez(self):
+        b = politika.is_akisi_bulgulari("ci.yml", "jobs: [\n")
+        self.assertEqual([(s, k) for s, k, _ in b], [("FAIL", "yaml")])
+
+    def test_bu_deponun_kendi_is_akislari_temiz(self):
+        # Kurallari koyan depo onlara ilk uyan olmali.
+        kok = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        b = politika.depo_bulgulari(politika.klondan_oku(kok))
+        self.assertEqual(b, [], "\n".join(m for _, _, m in b))
+
+
+class DenetimPolitikaTesti(unittest.TestCase):
+    """denetim.py politikayi API'den okur; FAIL tek tek, WARN depo basina."""
+
+    def setUp(self):
+        if denetim.P.yaml_yok():
+            self.skipTest("PyYAML yok")
+        self.gercek = denetim._belki
+        denetim.POLITIKA_BAKILAMADI.clear()
+
+    def tearDown(self):
+        denetim._belki = self.gercek
+        denetim.POLITIKA_BAKILAMADI.clear()
+
+    def _sahte(self, dosyalar, truncated=False):
+        import base64 as b64
+        def belki(url, varsayilan=None):
+            if "/git/trees/" in url:
+                return {"truncated": truncated,
+                        "tree": [{"path": y, "type": "blob"} for y in dosyalar]
+                        + [{"path": "src/app.py", "type": "blob"}]}
+            yol = url.split("/contents/", 1)[1].split("?", 1)[0]
+            self.okunan.append(yol)
+            return {"content": b64.b64encode(dosyalar[yol].encode()).decode()}
+        self.okunan = []
+        denetim._belki = belki
+
+    def test_warn_depo_basina_tek_satir_fail_ayri(self):
+        wf = PolitikaTesti.TEMIZ.replace("    timeout-minutes: 15\n", "").replace(
+            "0123456789abcdef0123456789abcdef01234567  # v7.1.0", "v7")
+        kotu = wf.replace("          set -euo pipefail\n", "")
+        self._sahte({".github/workflows/ci.yml": wf, ".github/workflows/b.yml": kotu,
+                     "backend/uv.lock": "x"})
+        cikti = denetim._politika("depo", "main")
+        self.assertEqual(len([c for c in cikti if c.startswith("FAIL")]), 1)
+        warn = [c for c in cikti if c.startswith("WARN")]
+        self.assertEqual(len(warn), 1)
+        self.assertIn("timeout-minutes yok x2", warn[0])
+        self.assertIn("Dependabot eksik x1", warn[0])
+        self.assertIn("kapsam disi kilit dosyasi x1", warn[0])
+        # uv.lock icerigi hic indirilmez; varligi yeterli.
+        self.assertNotIn("backend/uv.lock", self.okunan)
+
+    def test_okunamayan_agac_temiz_sayilmaz(self):
+        self._sahte({".github/workflows/ci.yml": "x"}, truncated=True)
+        self.assertEqual(denetim._politika("depo", "main"), [])
+        self.assertEqual(denetim.POLITIKA_BAKILAMADI, {"depo": "dosyalar okunamadi"})
+        self.assertIn("1 depoda **bakilamadi**", denetim._politika_satiri())
+
+
+class KapanmisAkisTesti(unittest.TestCase):
+    """60 gun hareketsizlikle kapanan zamanlanmis akis sessiz kalmamali."""
+
+    def test_yalnizca_hareketsizlikten_kapananlar(self):
+        gercek = denetim._belki
+        denetim._belki = lambda url, v=None: {"workflows": [
+            {"path": ".github/workflows/denetim.yml", "state": "disabled_inactivity"},
+            {"path": ".github/workflows/eski.yml", "state": "disabled_manually"},
+            {"path": ".github/workflows/ci.yml", "state": "active"}]}
+        try:
+            self.assertEqual(denetim._kapanmis_akislar("depo"), ["denetim.yml"])
+        finally:
+            denetim._belki = gercek
+
+    def test_okunamazsa_bulgu_uydurmaz(self):
+        gercek = denetim._belki
+        denetim._belki = lambda url, v=None: v
+        try:
+            self.assertEqual(denetim._kapanmis_akislar("depo"), [])
+        finally:
+            denetim._belki = gercek
 
 
 if __name__ == "__main__":
