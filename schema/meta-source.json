@@ -569,7 +569,7 @@
     ],
     "key_features": [
       "23 CPU-first media tools behind one MCP server: background removal, EXIF/GPS stripping, resize, thumbnails, GIFs, video trim",
-      "22 of them report \"network\": \"none\" in their own response payload rather than in a README",
+      "21 of them report \"network\": \"none\" in their own response payload rather than in a README; remove_background fetches its model weights once",
       "A test fails if any other module ever imports an HTTP client",
       "No GPU and no paid API; rembg's CC-BY-NC default model is refused unless you opt in knowingly"
     ],
