@@ -13,7 +13,8 @@ done by hand, and why. It started as the **System ×4 audit of 25 September
                     ├─ release chain: tag ─► release ─► PyPI
                     ├─ metadata vs live repository, links, install commands
                     ├─ published test counts vs the run that printed them  [DEPO_JETONU]
-                    └─ workflow + supply-chain policy (schema/politika.py)
+                    ├─ workflow + supply-chain policy (schema/politika.py)
+                    └─ open PR queue: red heads, PRs whose checks never ran
                  ──► sayilar.yml (daily 05:40) ──► profile counts, committed  [DEPO_JETONU]
                  ──► vitrin.yml  (daily 05:17) ──► README "Recently", committed
                  ──► yenile.yml  (weekly)      ──► project-meta.json per repo [DEPO_JETONU]
@@ -162,6 +163,7 @@ sync.
 | 13 | Tag a release on the right commit | a command typed by hand | `schema/surum.py` / Actions → surum: refuses an unmerged PR's trial-merge SHA, checks branch, version, CHANGELOG, existing tag, CI and PyPI, then prints the exact command | done (tagging stays human) |
 | 14 | Simulate a merge chain for conflicts | a script run by hand | same script in `yenile.yml` | proposed |
 | 15 | Social preview images | upload by hand | none possible — no API | manual, one-time |
+| 16 | Know which open PRs are red or waiting | open each one | daily audit: open PRs, red heads, and PRs with no run at all (an outside contributor's PR waits for "Approve and run") | done |
 
 ### Trusted Publisher values (pypi.org → Publishing → Add a pending publisher)
 
