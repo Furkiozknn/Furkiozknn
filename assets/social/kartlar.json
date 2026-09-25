@@ -1,0 +1,158 @@
+{
+  "ai-job-gateway": {
+    "baslik": "One async job contract for AI generation backends.",
+    "alt": "idempotent across restarts, SSRF-guarded webhooks",
+    "dil": "Python",
+    "alan": "altyapi"
+  },
+  "ai-workflow-engine": {
+    "baslik": "AI pipelines as YAML DAGs, validated before they run.",
+    "alt": "an undeclared dependency fails at load time",
+    "dil": "Python",
+    "alan": "altyapi"
+  },
+  "ajans-os": {
+    "baslik": "A research-first agency operating system.",
+    "alt": "its acceptance run is killed mid-task, reloaded from disk and resumed",
+    "dil": "JavaScript",
+    "alan": "uygulama"
+  },
+  "asset-provenance-toolkit": {
+    "baslik": "Records which model made a file inside the file itself.",
+    "alt": "JPEG gets the marker without re-encoding",
+    "dil": "Python",
+    "alan": "altyapi"
+  },
+  "buradane": {
+    "baslik": "The nearest toilet, park or fountain in Türkiye.",
+    "alt": "167,829 OpenStreetMap places · FastAPI + PostGIS",
+    "dil": "TypeScript",
+    "alan": "uygulama"
+  },
+  "claude-code-intelligence": {
+    "baslik": "Where your Claude Code tokens went.",
+    "alt": "and when the quota resets · local-first · stores no prompt or file content",
+    "dil": "Python",
+    "alan": "denetim"
+  },
+  "derin-kazi": {
+    "baslik": "Dig, sell, upgrade, go deeper.",
+    "alt": "the fuel gauge is the real timer · five layers down to the core",
+    "dil": "Godot 4",
+    "alan": "oyun"
+  },
+  "Furkiozknn.github.io": {
+    "baslik": "Every repository on this account, on one page.",
+    "alt": "generated from each repository's project-meta.json",
+    "dil": "HTML",
+    "alan": "denetim"
+  },
+  "godot-2d-sablon": {
+    "baslik": "Two Godot 4 2D starter projects with measured jump feel.",
+    "alt": "coyote time, buffering, variable height",
+    "dil": "Godot 4",
+    "alan": "oyun"
+  },
+  "godot-refcheck": {
+    "baslik": "Finds broken references in Godot projects, without the editor.",
+    "alt": "dead signal connections too · fixes the ones with one provable answer",
+    "dil": "Rust",
+    "alan": "denetim"
+  },
+  "kanca": {
+    "baslik": "Hook the ceiling, swing, keep your momentum.",
+    "alt": "a grappling platformer · medal times measured by a bot",
+    "dil": "Godot 4",
+    "alan": "oyun"
+  },
+  "local-notes-search-mcp": {
+    "baslik": "Semantic search over your own files as an MCP server.",
+    "alt": "Local ONNX model and sqlite-vec · no API key",
+    "dil": "Python",
+    "alan": "mcp"
+  },
+  "masal": {
+    "baslik": "A bedtime story built around one child's name.",
+    "alt": "a Turkish suffix engine gets the grammar right · plays in the browser",
+    "dil": "JavaScript",
+    "alan": "oyun"
+  },
+  "mcp-census": {
+    "baslik": "A reproducible count of the official MCP Registry.",
+    "alt": "rows, distinct servers, and which have code to read",
+    "dil": "Python",
+    "alan": "denetim"
+  },
+  "mcp-vet": {
+    "baslik": "Audits an MCP server's source before you install it.",
+    "alt": "file:line on every finding · never runs what it audits · zero dependencies",
+    "dil": "Python",
+    "alan": "denetim"
+  },
+  "mini-creative-toolkit": {
+    "baslik": "CPU-first media tools in one MCP server.",
+    "alt": "nearly all of them never touch the network",
+    "dil": "Python",
+    "alan": "mcp"
+  },
+  "model-comparison-harness": {
+    "baslik": "One prompt, many providers, one report.",
+    "alt": "plus a judge model scoring each answer against your rubric",
+    "dil": "Python",
+    "alan": "altyapi"
+  },
+  "nova-drift": {
+    "baslik": "An endless space-runner in the browser.",
+    "alt": "real bloom · synthesized audio · 0.7 MB first load",
+    "dil": "Three.js",
+    "alan": "oyun"
+  },
+  "nvidia-nim-mcp": {
+    "baslik": "NVIDIA NIM's free tier inside Claude Code as an MCP server.",
+    "alt": "Two of its tools need no API key",
+    "dil": "Python",
+    "alan": "mcp"
+  },
+  "prompt-template-manager": {
+    "baslik": "Prompts versioned in git, rendered strictly.",
+    "alt": "a prompt change becomes a reviewable diff",
+    "dil": "Python",
+    "alan": "altyapi"
+  },
+  "repo-ratchet": {
+    "baslik": "Picks the repository to work on next.",
+    "alt": "from measured signals · records no progress without a commit",
+    "dil": "Python",
+    "alan": "denetim"
+  },
+  "repo-vet": {
+    "baslik": "Checks what a README promises.",
+    "alt": "install commands, badges, links and releases, over the GitHub API · no clone",
+    "dil": "Python",
+    "alan": "denetim"
+  },
+  "tek-tus-kosu": {
+    "baslik": "One button, every obstacle on the beat.",
+    "alt": "a Godot 4 rooftop runner · web build included",
+    "dil": "Godot 4",
+    "alan": "oyun"
+  },
+  "turkce-ajanlar": {
+    "baslik": "70 Claude Code sub-agents that think in Turkish.",
+    "alt": "searchable in the browser · exported to Cursor, Codex and Copilot",
+    "dil": "Claude Code",
+    "alan": "uygulama"
+  },
+  "voice-io-mcp": {
+    "baslik": "Speech in and out for MCP clients with no API key.",
+    "alt": "refuses paths like .env before opening them",
+    "dil": "Python",
+    "alan": "mcp"
+  },
+  "yercekimi-cevir": {
+    "baslik": "No jump button: one key flips gravity.",
+    "alt": "twenty precision rooms, each finished by the test suite",
+    "dil": "Godot 4",
+    "alan": "oyun"
+  }
+}
