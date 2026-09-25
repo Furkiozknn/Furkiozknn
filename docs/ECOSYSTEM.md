@@ -129,3 +129,20 @@ GitHub gives no API, or no API a session token may use, for these:
 - writing repository settings (description, homepage) — run
   `python3 about/uygula.py --uygula` once with `gh`,
 - uploading social preview images.
+
+## README banners
+
+Every repository except nova-drift (its own game logo) and turkce-ajanlar
+(whose banner is generated from the live agent count by its own tested
+script) uses one banner template: `assets/banner/banner.py` renders
+`assets/banner/banners.json` into `assets/banner/out/<repo>.svg`, which is
+copied to the repository's existing banner path.
+
+- 1280×320 SVG, system fonts only, no external requests.
+- Area colour from the same table as the social cards.
+- Left: area label, name, a one- or two-line pitch, up to three chips.
+- Right: five fact rows, each a verifiable property of the code.
+- **No counts.** No test numbers, versions or totals: those drift, and a
+  banner that cannot drift is the point. `--kontrol` rejects a count.
+- Long names are fitted with `textLength`, so they never cross the divider
+  whatever font the viewer has.

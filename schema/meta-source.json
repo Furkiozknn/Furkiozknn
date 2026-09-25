@@ -565,11 +565,11 @@
       "Python 3.11+",
       "Pillow",
       "FFmpeg",
-      "CPU-only"
+      "CPU-first"
     ],
     "key_features": [
       "23 CPU-first media tools behind one MCP server: background removal, EXIF/GPS stripping, resize, thumbnails, GIFs, video trim",
-      "21 of them report \"network\": \"none\" in their own response payload rather than in a README; remove_background fetches its model weights once",
+      "20 of them never touch the network and say so in their own response payload; remove_background fetches its model weights once, and generate_image_free is the one hosted tool",
       "A test fails if any other module ever imports an HTTP client",
       "No GPU and no paid API; rembg's CC-BY-NC default model is refused unless you opt in knowingly"
     ],
@@ -579,7 +579,7 @@
       "measured": "2026-09-22"
     },
     "social": {
-      "headline": "23 media tools that prove they are offline in their own response payload.",
+      "headline": "23 media tools that state their network use in their own response payload.",
       "hashtags": [
         "mcp",
         "ffmpeg",
