@@ -21,6 +21,7 @@ import importlib.util
 import json
 import os
 import re
+import sys
 import shutil
 import subprocess
 import tempfile
@@ -44,6 +45,7 @@ dogrula = _yukle("dogrula")
 haftalik = _yukle("haftalik")
 denetim = _yukle("denetim")
 vitrin = _yukle("vitrin")
+derle = _yukle("derle")
 
 
 class GeciciDepo:
@@ -895,6 +897,27 @@ class VitrinTesti(unittest.TestCase):
         i, j = vitrin.mevcut_blok(metin)
         self.assertEqual(metin[i:j], vitrin.blok(vitrin.yazilar(),
                                                   vitrin.mevcut_surum_satirlari(metin)))
+
+
+
+class DerleTesti(unittest.TestCase):
+    """derle.py: projects.json her depoyu API'den toplar."""
+
+    def test_bos_depo_listesi_projeleri_silmez(self):
+        # API bos liste dondururse derle durmali, projects.json'u sifir
+        # projeyle yeniden yazmamali.
+        yol = os.path.join(BURASI, "projects.json")
+        once = open(yol, encoding="utf-8").read() if os.path.exists(yol) else None
+        gercek, derle._repos = derle._repos, lambda: []
+        eski_argv = sys.argv
+        sys.argv = ["derle.py"]
+        try:
+            self.assertEqual(derle.main(), 1)
+        finally:
+            derle._repos = gercek
+            sys.argv = eski_argv
+        sonra = open(yol, encoding="utf-8").read() if os.path.exists(yol) else None
+        self.assertEqual(once, sonra)
 
 
 if __name__ == "__main__":
