@@ -27,8 +27,8 @@ first is an attack that a normal code review walks straight past.
 machine, what is worth acting on and what is noise, each finding quoted with
 file and line. Plus the scan tooling, so you can re-run it yourself.
 
-**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 289
-tests — and ran it against 17 widely-used MCP servers. Roughly half of all
+**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) and ran
+it against 17 widely-used MCP servers. Roughly half of all
 findings landed outside the code a server actually ships: test fixtures, issue
 templates, developer scripts. That is the number that matters, because it is
 why nobody reads scanner output. I spent the work separating the two rather
@@ -61,10 +61,12 @@ first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
 
 ## The evidence
 
-- **[4,700 tests across 23 repositories](TESTLER.md)** — every count traced to
-  the suite run that printed it, not grepped from the source. An earlier version
-  of this profile said 1,426 and was wrong; that file exists so the claim is
-  checkable rather than believable.
+- **[The test ledger](TESTLER.md)** — every count on the profile traced to the
+  suite run that printed it, not grepped from the source. An earlier version of
+  this profile said 1,426 and was wrong; that file exists so the claim is
+  checkable rather than believable. (This page carries no totals of its own:
+  it is not rewritten when they change, so it would be the first thing to go
+  stale.)
 - **Everything is public.** [Play the game](https://furkiozknn.github.io/nova-drift/),
   [read a story](https://furkiozknn.github.io/masal/), read the tests.
 - **The demos are real runs**, captured by scripts committed in their

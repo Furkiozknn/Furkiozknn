@@ -16,7 +16,7 @@ was wrong in both directions, having been produced by grepping the tree.
 Twenty-eight repositories are public. Twenty-six of them have a suite and are
 counted here. The two that are not: `claude-quota-monitor` (43 passing tests,
 archived — `claude-code-intelligence` superseded it) and this repository. The
-latter does have a suite — 88 tests over the scripts in `schema/`, including
+latter does have a suite — 89 tests over the scripts in `schema/`, including
 the one that checks this file — and it is left out on purpose: the page that
 publishes the total should not be able to raise it.
 

@@ -1,231 +1,140 @@
-<img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits." width="100%">
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img src="assets/hero.svg" alt="Furki Özkan — agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits." width="100%">
+</picture>
 
-<p align="center">
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C247_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,247 tests passing"></a>
-  <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
-  <a href="https://github.com/Furkiozknn?tab=repositories"><img src="https://img.shields.io/badge/public_repos-28-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="28 public repositories"></a>
-  <a href="HIRE.md"><img src="https://img.shields.io/badge/available-for_contract_work-2ea043?style=for-the-badge&labelColor=0b0b0f" alt="Available for contract work"></a>
-</p>
+**I build the infrastructure AI agents run on — MCP servers, async job contracts, pipeline DAGs — and the tools that check whether any of it actually works.**
+Independent, based in Türkiye (UTC+3), available for remote contract work. Some evenings, a game engine instead.
 
-<p align="center">
-  <b>I build the infrastructure AI agents run on</b> — async job contracts, pipeline DAGs, MCP servers —<br>
-  <b>and the tooling that checks whether any of it actually works.</b><br>
-  <sub>Some evenings, a game engine instead.</sub>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-0b0b0f?style=flat-square&logo=python&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/TypeScript-0b0b0f?style=flat-square&logo=typescript&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/FastAPI-0b0b0f?style=flat-square&logo=fastapi&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/PostGIS-0b0b0f?style=flat-square&logo=postgresql&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/Next.js-0b0b0f?style=flat-square&logo=nextdotjs&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/Three.js-0b0b0f?style=flat-square&logo=threedotjs&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/Godot-0b0b0f?style=flat-square&logo=godotengine&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/MCP-0b0b0f?style=flat-square&logo=anthropic&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/OpenTelemetry-0b0b0f?style=flat-square&logo=opentelemetry&logoColor=c9a961">
-  <img src="https://img.shields.io/badge/Playwright-0b0b0f?style=flat-square&logo=playwright&logoColor=c9a961">
-</p>
+<sub>**[Hire me →](HIRE.md)** · [Every repository, searchable](https://furkiozknn.github.io/) · [Where every number comes from](TESTLER.md) · [@furkiozkan](https://x.com/furkiozkan)</sub>
 
 ---
 
-## ▸ No install, no signup — just click
+## Start here
 
 <table>
 <tr>
-<td width="34%" valign="top">
+<td width="50%" valign="top">
 
-### 🚀 [nova-drift →](https://furkiozknn.github.io/nova-drift/)
+**🛡️ [mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Reads the source, not the star count; every finding carries a `file:line`; it never executes what it audits. Zero dependencies.
 
-An endless browser space-runner with **real bloom post-processing**, fully
-synthesized audio and a seeded daily run everyone plays the same.
-**0.7 MB first load. No build step.** It is flying before you finish reading this.
+<a href="https://github.com/Furkiozknn/mcp-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/mcp-vet/master/assets/audit.gif" alt="mcp-vet auditing an MCP server and listing findings with file and line" width="100%"></a>
 
 </td>
-<td width="33%" valign="top">
+<td width="50%" valign="top">
 
-### 📖 [masal →](https://furkiozknn.github.io/masal/)
+**🧩 [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — finds the broken references and dead signal connections Godot only reports when a scene loads, or never. Repairs the ones with a single provable answer. Checked against 237 real projects.
 
-A bedtime story written around **one child's name, age and hometown**, with the
-colouring page drawn into the page itself. A Turkish suffix engine gets the name
-right where template substitution never could — *Sinop* takes `-ta`, *Trabzon* takes `-da`.
+<a href="https://github.com/Furkiozknn/godot-refcheck"><img src="https://raw.githubusercontent.com/Furkiozknn/godot-refcheck/main/assets/demo.gif" alt="godot-refcheck finding three broken references, repairing them with --fix, then passing clean" width="100%"></a>
 
 </td>
-<td width="33%" valign="top">
+</tr>
+<tr>
+<td width="50%" valign="top">
 
-### 🇹🇷 [turkce-ajanlar →](https://furkiozknn.github.io/turkce-ajanlar/)
+**🗺️ [buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* 167,829 OpenStreetMap places across all 81 provinces of Türkiye. FastAPI + PostGIS, Next.js + MapLibre.
 
-All **70** Claude Code sub-agents, searchable in the browser before you install anything. `/` jumps to the search box, `Enter` opens the first hit. Taking one means copying **one markdown file** into `.claude/agents/`.
+<a href="https://github.com/Furkiozknn/buradane"><img src="https://raw.githubusercontent.com/Furkiozknn/buradane/main/assets/demo.gif" alt="buradane: typing 'ücretsiz tuvalet' narrows 167,829 places on a map of Istanbul to the 19 nearest free toilets" width="100%"></a>
+
+</td>
+<td width="50%" valign="top">
+
+**🔎 [repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise. It tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on 30 public repositories so it stays quiet on the ones that work.
+
+<a href="https://github.com/Furkiozknn/repo-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/repo-vet/main/assets/demo.gif" alt="repo-vet checking a repository's README claims over the GitHub API" width="100%"></a>
 
 </td>
 </tr>
 </table>
 
-<p align="center">
-  <a href="https://github.com/Furkiozknn/buradane">
-    <img src="https://raw.githubusercontent.com/Furkiozknn/buradane/main/assets/demo.gif" alt="buradane: picking categories on a map of Istanbul, then typing free text and watching the results narrow to 19" width="760">
-  </a>
-</p>
-
-<p align="center"><sub><b>A real session, captured by a script committed in that repo.</b> Typing “ücretsiz tuvalet” takes <b>167,829 places</b> down to the 19 nearest free toilets.</sub></p>
+**Open in a browser, nothing to install:** 🚀 [nova-drift](https://furkiozknn.github.io/nova-drift/) — an endless space-runner, 0.7 MB first load · 📖 [masal](https://furkiozknn.github.io/masal/) — a bedtime story built around one child's name · 🇹🇷 [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) — 70 Claude Code sub-agents that think in Turkish
 
 ---
 
-## ▸ This is one system, not twenty-seven side projects
+## What I can do for you
 
-![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
+| Engagement | What you get | Price |
+|---|---|---:|
+| **MCP / agent security review** | I read a third-party MCP server before you run it — install scripts, what leaves the machine, and what its tool descriptions tell the model to do. You get a report with `file:line` on every finding, and the tooling to re-run it. | from $900 |
+| **Make it shippable** | Code that works on your machine gets a test suite that fails when the code is wrong, CI on every push, and a release path that cannot ship a broken artifact. | from $1,500 |
+| **Ongoing contract** | Agent and MCP systems, Python and TypeScript, job orchestration, pipelines, cost accounting — including Windows and Turkish-locale setups, where things break that nobody documents. | $50 / hour |
 
-<p align="center"><b><a href="https://furkiozknn.github.io/">Every repository, searchable, in one page →</a></b><br>
-<sub>Generated from the <code>project-meta.json</code> each one carries, rebuilt weekly. Nothing on it is hand-written.</sub></p>
-
-<sub>Four repositories share one job contract and no Python dependency. Four more exist to check work — a repository's README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. Underneath all of them, one metadata schema and one audit that runs every morning.</sub>
-
----
-
-## ▸ Start here
-
-> 🛡️ **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Every claim carries a file and a line, it reads the code rather than the star count, and **it never executes what it audits**. Standard library only, zero dependencies. <sub>`319 tests`</sub>
->
-> 🧩 **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — Godot names a broken reference only when that scene loads, and a dead signal connection never. This finds both without opening the editor, and **repairs the ones with a single provable answer**. Checked against **237 real Godot projects** and against a headless engine. <sub>`133 tests`</sub>
->
-> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise: it tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on **30 public repositories** so it stays quiet on the ones that work. <sub>`103 tests`</sub>
->
-> 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`347 tests`</sub>
->
-> 📊 **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** — where the tokens went, what it cost, and when the quota resets. An OTLP receiver and transcript parser that **never phones home**. <sub>`273 tests`</sub>
-
-<p align="center">
-  <a href="https://github.com/Furkiozknn/godot-refcheck">
-    <img src="https://raw.githubusercontent.com/Furkiozknn/godot-refcheck/main/assets/demo.gif" alt="godot-refcheck finding three broken references in a Godot project, repairing them with --fix, and finding nothing on the next run" width="760">
-  </a>
-</p>
-
-<p align="center"><sub><b>A real run, on a fixture committed in that repository.</b> Three references broken by a moved folder, three repairs, then a clean pass — and a headless Godot agrees before and after.</sub></p>
+<sub>Scope, evidence and how to start: **[HIRE.md](HIRE.md)**. A short paid trial task before anything larger is fine.</sub>
 
 ---
 
-## ▸ Everything, in one table
+## One system, not a pile of side projects
 
-<sub>Every test count below is traced to the suite run that printed it. **[The full ledger →](TESTLER.md)**</sub>
+<a href="https://furkiozknn.github.io/"><img src="assets/ecosystem.svg" alt="How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath" width="100%"></a>
 
-### Agent infrastructure, MCP and developer tooling
+Four repositories share one job contract and no Python dependency. Four more exist to check work — a README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. Underneath all of them: one metadata file per repository, and an audit that runs every morning.
 
-| | Project | What it does | Tests |
-|:--:|---|---|---:|
-| 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Godot names a broken reference only when that scene loads, and a dead signal connection never. Finds both, and repairs what has one provable answer. | `133` |
-| 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Your README is a promise: it tries the install command, the badges, the links and the tags, over the API, without cloning. | `103` |
-| 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `319` |
-| 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `347` |
-| 📊 | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** | Where the tokens went and when the limit resets. No prompt or file content exists in any type — a privacy review is a `grep`. | `273` |
-| 🎨 | **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)** | 23 CPU-first media tools in one MCP server. 22 report `"network": "none"` in their own payload, not in a README. | `327` |
-| 🏛️ | **[ajans-os](https://github.com/Furkiozknn/ajans-os)** | An agency OS built research-first. Its acceptance run is killed mid-task, reloaded from disk and resumed. | `142` |
-| 📚 | **[masal](https://github.com/Furkiozknn/masal)** | A bedtime story around one child's name. Six themes, a branch on page three — twelve readings. | `92` |
-| 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | **70** Claude Code sub-agents that *think* in Turkish, not translate into it. Exported to Cursor, OpenCode, Copilot, Codex. | `160` |
-| 🔁 | **[repo-ratchet](https://github.com/Furkiozknn/repo-ratchet)** | Decides which repository to open next from twelve measured signals — and will not record an improvement that left no commit and no passing check. | `131` |
-| 🔖 | **[asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit)** | Which model made this file, written **into** the file. JPEG gets a marker spliced in with no re-encoding. | `125` |
-| ⚡ | **[nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)** | NVIDIA NIM's free tier in Claude Code. Two of its seven tools need no API key at all. | `80` |
-| ⚖️ | **[model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness)** | One prompt, N providers, one report — plus a judge model scoring each answer against your own rubric. | `74` |
-| 🔗 | **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** | Pipelines as YAML DAGs, validated *before* they run. An undeclared dependency is rejected at load time, typo and all. | `80` |
-| ✍️ | **[prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager)** | Prompts versioned in git, so a change is a diff instead of an argument. `StrictUndefined` throughout. | `61` |
-| 🔍 | **[local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)** | Ask your own files a question, in any language the multilingual model covers. No server, no API key, no network. | `64` |
-| 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `55` |
-| 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, needing no key at all. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
-| 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
-| 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
-
-### Games — Godot 4, each one tested headlessly in CI
-
-<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Windows and web (HTML5) export presets ship in every repository; there is no hosted build yet.</sub>
-
-| | Project | The one idea it is built on | Tests |
-|:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
-| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
-| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
-| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| | | **Total, across 26 repositories with suites** | **`5,247`** |
-
-<sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
-
----
-
-## ▸ Every repository carries its own metadata
-
-Each one has a `project-meta.json` at its root: identity, version, status,
-platform, the images its README actually shows, and the test count together
-with the runner line it came from and the date of that run.
-
-Mechanical fields are read from the repository; editorial fields are written
-by hand and checked against the code. **Nothing is filled in with a guess** — an
-unknown value is `null` rather than a plausible-looking string, and a test
-count with no source line does not go in the file at all.
-
-**[The schema and the rule it follows →](schema/README.md)**
-
----
-
-## ▸ How I work
-
-<table>
-<tr><td width="33%" valign="top">
-
-### 🧪 Tests before claims
-
-Every count here is re-derived, not remembered. **This page has lost three numbers that way:** a “1,426 tests” figure that turned out to be a grep rather than a suite, a 1.4 MB load that measured 0.7 MB, and a commit count taken from clones that had not been fetched, undercounting by 53.
-
-</td><td width="33%" valign="top">
-
-### 🔒 Hermetic CI
-
-Suites run offline, so a CDN outage cannot redden a build. **The gate is tested too** — `ajans-os` plants a deliberate violation in its own tree and fails if its own validator misses it.
-
-</td><td width="33%" valign="top">
-
-### 📄 Honest READMEs
-
-Known limits are listed, not hidden: a measured seven-minute upscale stall on integrated graphics, a gateway column headed *deliberately absent*, voice cloning left out on purpose.
-
-</td></tr>
-<tr><td valign="top">
-
-### ⚖️ Licences checked down the tree
-
-`rembg`'s default model is **CC-BY-NC** — caught by reading the dependency tree, and refused unless you opt in knowingly. `buradane` splits ODbL data from MIT code in a `NOTICE` file.
-
-</td><td valign="top">
-
-### 🔧 Windows and Turkish locales
-
-Where things break that nobody documents: `cp1254` killing a tool before it prints its first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
-
-</td><td valign="top">
-
-### 🔢 No generated stat cards
-
-Every badge on this page carries a **hand-checked** value, traced to the run that printed it. A number is checkable, or it is not on the page. **[Check them →](TESTLER.md)**
-
-</td></tr>
-</table>
-
----
-
-<div align="center">
-
-## ▸ Available for remote contract work
-
-**MCP and agent infrastructure** · **turning code that works into code that ships**<br>
-Remote · Türkiye · European hours
-
-### [→ What I can be hired for, and what it costs](HIRE.md)
+<details>
+<summary><b>Every public repository, with its test count</b> — 5,247 tests, each traced to the run that printed it</summary>
 
 <br>
 
-<sub>
-  <a href="https://furkiozknn.github.io/">Project directory</a> ·
-  <a href="TESTLER.md">Where the 5,247 comes from</a> ·
-  <a href="schema/README.md">project-meta.json</a> ·
-  <a href="HIRE.md">Hire me</a> ·
-  <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
-  <a href="https://x.com/furkiozkan">@furkiozkan</a>
-</sub>
+**Agent infrastructure and MCP**
 
-</div>
+| | Project | What it does | Tests |
+|:--:|---|---|---:|
+| 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `319` |
+| 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
+| 🔗 | **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** | Pipelines as YAML DAGs, validated *before* they run. An undeclared dependency is rejected at load time. | `80` |
+| ⚖️ | **[model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness)** | One prompt, N providers, one report — plus a judge model scoring each answer against your own rubric. | `74` |
+| ✍️ | **[prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager)** | Prompts versioned in git, so a change is a diff instead of an argument. `StrictUndefined` throughout. | `61` |
+| 🔖 | **[asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit)** | Which model made this file, written **into** the file. JPEG gets a marker spliced in with no re-encoding. | `125` |
+| 🎨 | **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)** | 23 CPU-first media tools in one MCP server. 22 report `"network": "none"` in their own payload. | `327` |
+| ⚡ | **[nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)** | NVIDIA NIM's free tier in Claude Code. Two of its seven tools need no API key at all. | `80` |
+| 🔍 | **[local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)** | Ask your own files a question, in any language the multilingual model covers. No server, no key, no network. | `64` |
+| 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, no key needed. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
+| 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `55` |
+| 🏛️ | **[ajans-os](https://github.com/Furkiozknn/ajans-os)** | An agency OS built research-first. Its acceptance run is killed mid-task, reloaded from disk and resumed. | `142` |
+| 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | 70 Claude Code sub-agents that *think* in Turkish. Exported to Cursor, OpenCode, Copilot and Codex. | `160` |
+
+**Developer tooling — tools that check other work**
+
+| | Project | What it does | Tests |
+|:--:|---|---|---:|
+| 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Broken references and dead signal connections in Godot projects, found without the editor and repaired where the answer is provable. | `133` |
+| 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Tries a README's install command, badges, links and tags over the API, without cloning. | `103` |
+| 📊 | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** | Where the tokens went and when the limit resets. No prompt or file content exists in any type — a privacy review is a `grep`. | `273` |
+| 🔁 | **[repo-ratchet](https://github.com/Furkiozknn/repo-ratchet)** | Picks the repository to open next from twelve measured signals, and will not record an improvement that left no commit. | `131` |
+| 🗂️ | **[Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io)** | The project directory, generated from every repository's `project-meta.json`. Nothing on it is hand-written. | `37` |
+
+**Apps, and games — Godot 4, each one played headlessly in CI**
+
+| | Project | The one idea it is built on | Tests |
+|:--:|---|---|---:|
+| 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `347` |
+| 📚 | **[masal](https://github.com/Furkiozknn/masal)** | A bedtime story around one child's name. A Turkish suffix engine gets *Sinop'ta* and *Trabzon'da* right. | `92` |
+| 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, every obstacle on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
+| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | No jump button — one key flips gravity. 20 precision rooms, each finished by the suite. | `841` |
+| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — the fuel gauge is the real timer. Five layers down to the core. | `477` |
+| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook, swing, release and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
+| 🧱 | **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** | Two Godot 4 starter projects whose jump feel was *measured*: coyote time, jump buffering, variable jump height. | `21` |
+| | | **Total, across 26 repositories with suites** | **`5,247`** |
+
+<sub>Not counted: this repository (its suite checks the page, so it should not be able to raise the total) and the archived `claude-quota-monitor`, superseded by `claude-code-intelligence`. **[The full ledger →](TESTLER.md)**</sub>
+
+</details>
+
+---
+
+## How I work
+
+- **A number is checkable, or it is not on the page.** Every test count here is re-derived from the run that printed it. This page has lost three numbers that way — a grep passed off as a suite, a 1.4 MB load that measured 0.7 MB, a commit count off by 53.
+- **Hermetic CI, and the gate is tested too.** Suites run offline, so a CDN outage cannot redden a build; `ajans-os` plants a violation in its own tree and fails if its validator misses it.
+- **Known limits go in the README.** A measured seven-minute stall on integrated graphics, a column headed *deliberately absent*, voice cloning left out on purpose.
+- **Licences are read down the dependency tree.** `rembg`'s default model is CC-BY-NC — caught there, and refused unless you opt in knowingly.
+
+<sub>Python · TypeScript · Rust · GDScript · FastAPI · PostGIS · Next.js · Three.js · Godot 4 · MCP · OpenTelemetry · Playwright</sub>
+
+---
+
+<p align="center">
+  <b>Have an MCP server to vet, or code that works but doesn't ship yet?</b><br>
+  <a href="HIRE.md">What I can be hired for, and what it costs →</a><br>
+  <sub>or open an issue on any repository · <a href="https://x.com/furkiozkan">@furkiozkan</a></sub>
+</p>

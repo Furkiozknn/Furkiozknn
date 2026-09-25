@@ -19,6 +19,7 @@ Bagimlilik yok.
 
 import importlib.util
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -808,6 +809,17 @@ class TestlerAraciTesti(unittest.TestCase):
     def test_tek_is_tek_sayi(self):
         log = "=== 319 passed in 2s ==="
         self.assertEqual(testler.tum_sayilar(log, "319 passed", denetim), [319])
+
+    def test_iki_tema_ayni_sayiyi_tasir(self):
+        # README hero'yu <picture> ile iki temada gosteriyor. Biri
+        # guncellenip digeri unutulursa acik temadaki okur eski sayiyi gorur.
+        def sayilar(yol):
+            return re.findall(r'id="(sayi-[a-z]+)"[^>]*>([\d,]+)',
+                              yol.read_text(encoding="utf-8"))
+        koyu, acik = testler.HEROLAR
+        self.assertTrue(koyu.is_file() and acik.is_file())
+        self.assertEqual(len(sayilar(koyu)), 3)
+        self.assertEqual(sayilar(koyu), sayilar(acik))
 
 
 if __name__ == "__main__":
