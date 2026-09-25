@@ -47,7 +47,7 @@ Independent, based in Türkiye (UTC+3), available for remote contract work. Some
 </tr>
 </table>
 
-**Open in a browser, nothing to install:** 🚀 [nova-drift](https://furkiozknn.github.io/nova-drift/) — an endless space-runner, 0.7 MB first load · 📖 [masal](https://furkiozknn.github.io/masal/) — a bedtime story built around one child's name · 🇹🇷 [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) — 70 Claude Code sub-agents that think in Turkish
+**Open in a browser, nothing to install:** 🚀 [nova-drift](https://furkiozknn.github.io/nova-drift/) — an endless space-runner, 0.7 MB first load · 🎵 [tek-tus-kosu](https://furkiozknn.github.io/tek-tus-kosu/) — a one-button rooftop runner on the music's beat grid · 📖 [masal](https://furkiozknn.github.io/masal/) — a bedtime story built around one child's name · 🇹🇷 [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) — 70 Claude Code sub-agents that think in Turkish
 
 ---
 
