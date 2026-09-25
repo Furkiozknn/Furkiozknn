@@ -15,12 +15,14 @@ makinede calistirin.
     python3 about/uygula.py --uygula     # gh repo edit ile yazar
     python3 about/uygula.py --kontrol    # agsiz: dosya kurallara uyuyor mu (CI)
 
-Konular (topics) burada yok: 28 deponun her birinde 5-16 ilgili konu zaten
-duruyor ve bu dosya onlara dokunmuyor.
+Konular (topics) yalnizca eklenir, hic silinmez: bir kayitta `topics_add`
+varsa ve o konu depoda yoksa eklenir. Ornek: asset-provenance-toolkit'in
+project-meta.json'u mp4, ffmpeg ve video diyor ama GitHub'da yoklar.
 """
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -47,6 +49,9 @@ def kontrol(veri):
             sorunlar.append("%s: aciklamada HTML varligi kalmis" % ad)
         if not d.rstrip().endswith((".", ")")):
             sorunlar.append("%s: aciklama tam bir cumle olarak bitmiyor" % ad)
+        for t in a.get("topics_add", []):
+            if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,49}", t):
+                sorunlar.append("%s: gecersiz konu %r" % (ad, t))
         h = a.get("homepage", "")
         if not h.startswith("https://"):
             sorunlar.append("%s: homepage https ile baslamiyor" % ad)
@@ -59,7 +64,8 @@ def simdiki(ad):
     if cikti.returncode != 0:
         return None
     d = json.loads(cikti.stdout)
-    return {"description": d.get("description") or "", "homepage": d.get("homepage") or ""}
+    return {"description": d.get("description") or "", "homepage": d.get("homepage") or "",
+            "topics": d.get("topics") or []}
 
 
 def main():
@@ -87,7 +93,11 @@ def main():
         if eski is None:
             print("ATLANDI  %s (okunamadi)" % ad)
             continue
-        fark = {k: v for k, v in yeni.items() if eski.get(k) != v}
+        fark = {k: v for k, v in yeni.items()
+                if k in ("description", "homepage") and eski.get(k) != v}
+        eksik = [t for t in yeni.get("topics_add", []) if t not in eski["topics"]]
+        if eksik:
+            fark["topics_add"] = eksik
         if not fark:
             continue
         degisen += 1
@@ -100,6 +110,8 @@ def main():
                 komut += ["--description", fark["description"]]
             if "homepage" in fark:
                 komut += ["--homepage", fark["homepage"]]
+            for t in fark.get("topics_add", []):
+                komut += ["--add-topic", t]
             subprocess.run(komut, check=True)
     print("\n%d depo %s." % (degisen, "guncellendi" if args.uygula else
                               "degisecek (yazmak icin --uygula)"))

@@ -13,7 +13,12 @@
   },
   "asset-provenance-toolkit": {
     "description": "Records which model made a file inside the file itself. JPEG gets the marker without re-encoding.",
-    "homepage": "https://furkiozknn.github.io/#asset-provenance-toolkit"
+    "homepage": "https://furkiozknn.github.io/#asset-provenance-toolkit",
+    "topics_add": [
+      "mp4",
+      "ffmpeg",
+      "video"
+    ]
   },
   "buradane": {
     "description": "The nearest toilet, park or fountain in Türkiye: 167,829 OpenStreetMap places on FastAPI + PostGIS.",
