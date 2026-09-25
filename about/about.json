@@ -12,7 +12,7 @@
     "homepage": "https://furkiozknn.github.io/#ajans-os"
   },
   "asset-provenance-toolkit": {
-    "description": "Records which model made a file inside the file itself. JPEG gets the marker without re-encoding.",
+    "description": "Records which model made a file inside the file itself. JPEG and MP4 get it without re-encoding.",
     "homepage": "https://furkiozknn.github.io/#asset-provenance-toolkit",
     "topics_add": [
       "mp4",
