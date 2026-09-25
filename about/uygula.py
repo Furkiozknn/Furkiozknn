@@ -15,9 +15,11 @@ makinede calistirin.
     python3 about/uygula.py --uygula     # gh repo edit ile yazar
     python3 about/uygula.py --kontrol    # agsiz: dosya kurallara uyuyor mu (CI)
 
-Konular (topics) yalnizca eklenir, hic silinmez: bir kayitta `topics_add`
-varsa ve o konu depoda yoksa eklenir. Ornek: asset-provenance-toolkit'in
-project-meta.json'u mp4, ffmpeg ve video diyor ama GitHub'da yoklar.
+Konular (topics) yalnizca acikca istenirse degisir: `topics_add` depoda
+olmayan konulari ekler, `topics_remove` depoda olan ve artik yanlis olan
+konulari kaldirir. Ornek: asset-provenance-toolkit'e mp4/ffmpeg/video
+eklenir; mini-creative-toolkit'ten cpu-only kalkar (upscale_image GPU
+kullanir) ve yerine cpu-first gelir.
 """
 
 import argparse
@@ -49,7 +51,7 @@ def kontrol(veri):
             sorunlar.append("%s: aciklamada HTML varligi kalmis" % ad)
         if not d.rstrip().endswith((".", ")")):
             sorunlar.append("%s: aciklama tam bir cumle olarak bitmiyor" % ad)
-        for t in a.get("topics_add", []):
+        for t in a.get("topics_add", []) + a.get("topics_remove", []):
             if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,49}", t):
                 sorunlar.append("%s: gecersiz konu %r" % (ad, t))
         h = a.get("homepage", "")
@@ -98,6 +100,9 @@ def main():
         eksik = [t for t in yeni.get("topics_add", []) if t not in eski["topics"]]
         if eksik:
             fark["topics_add"] = eksik
+        fazla = [t for t in yeni.get("topics_remove", []) if t in eski["topics"]]
+        if fazla:
+            fark["topics_remove"] = fazla
         if not fark:
             continue
         degisen += 1
@@ -112,6 +117,8 @@ def main():
                 komut += ["--homepage", fark["homepage"]]
             for t in fark.get("topics_add", []):
                 komut += ["--add-topic", t]
+            for t in fark.get("topics_remove", []):
+                komut += ["--remove-topic", t]
             subprocess.run(komut, check=True)
     print("\n%d depo %s." % (degisen, "guncellendi" if args.uygula else
                               "degisecek (yazmak icin --uygula)"))

@@ -70,7 +70,13 @@
   },
   "mini-creative-toolkit": {
     "description": "CPU-first media tools in one MCP server; nearly all of them never touch the network.",
-    "homepage": "https://furkiozknn.github.io/#mini-creative-toolkit"
+    "homepage": "https://furkiozknn.github.io/#mini-creative-toolkit",
+    "topics_add": [
+      "cpu-first"
+    ],
+    "topics_remove": [
+      "cpu-only"
+    ]
   },
   "model-comparison-harness": {
     "description": "One prompt, many providers, one report, plus a judge model scoring each answer against your rubric.",
