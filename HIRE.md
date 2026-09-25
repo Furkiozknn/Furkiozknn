@@ -28,7 +28,7 @@ machine, what is worth acting on and what is noise, each finding quoted with
 file and line. Plus the scan tooling, so you can re-run it yourself.
 
 **Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) and ran
-it against 17 widely-used MCP servers. Roughly half of all
+it against widely-used MCP servers. In the first six I measured, 62% of all
 findings landed outside the code a server actually ships: test fixtures, issue
 templates, developer scripts. That is the number that matters, because it is
 why nobody reads scanner output. I spent the work separating the two rather
