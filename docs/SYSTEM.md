@@ -39,6 +39,7 @@ obeys them first) and in the daily audit over the GitHub API.
 | `enjeksiyon` — `${{ github.event.* }}` / `head_ref` text inside `run:` | FAIL | anyone who opens a PR controls that text; the shell runs it |
 | `tetik` — `pull_request_target` / `workflow_run` | FAIL if it checks out the PR's code, else WARN | secrets + untrusted code in one job is the "pwn request" |
 | `yaml` — a workflow that does not parse | FAIL | a broken file must not read as "no findings" |
+| `dbgecersiz` — `dependabot.yml` without `version: 2`, or unparseable | FAIL | GitHub rejects the whole file: no update is ever opened, and nothing turns red |
 | `sure` — a job without `timeout-minutes` | WARN | a hung test runs for GitHub's default 6 hours |
 | `pin` — third-party action on a tag, not a commit SHA | WARN | a tag can be moved under you; a SHA cannot |
 | `izin` — no `permissions` | WARN | the token then gets whatever the repository default is |
@@ -76,7 +77,13 @@ third-party actions on moving tags (`astral-sh/setup-uv@v7`,
 publish the PyPI artifact.
 
 **D. Dependencies.** 16 Dependabot configurations, **none grouped**, all
-weekly → 36 open Dependabot PRs. 11 repositories with none, which is why
+weekly → 36 open Dependabot PRs. Worse, found only when the policy PRs
+touched the files: in **11 of the 16 the file was invalid on the default
+branch** — `version: 2` had been glued to the end of a comment line
+(`# ...guncelliyor.version: 2`) by the 14 Sep change that moved them from
+`pip` to `uv`. GitHub rejects such a file whole, so no new version update
+could be opened there for eleven days, and nothing anywhere turned red.
+The policy now fails on it; the fix rides each repository's open PR. 11 repositories with none, which is why
 `actions/checkout` ran as v4, v5, v6 and v7 at once. buradane's
 `frontend/package-lock.json` and `backend/uv.lock` were covered by nothing.
 

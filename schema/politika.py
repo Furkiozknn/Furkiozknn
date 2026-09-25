@@ -100,6 +100,7 @@ KURAL_ADI = {
     "grup": "gruplanmamis Dependabot", "kilit": "kapsam disi kilit dosyasi",
     "tetik": "riskli tetikleyici", "enjeksiyon": "kabukta dis girdi",
     "boru": "pipefail'siz test borusu", "yaml": "okunamayan YAML",
+    "dbgecersiz": "gecersiz Dependabot yapilandirmasi",
 }
 
 
@@ -211,11 +212,21 @@ def is_akisi_bulgulari(yol, metin):
 
 
 def _dependabot(metin):
+    """-> (guncellemeler, sorun). sorun None degilse GitHub dosyanin TAMAMINI reddeder."""
     try:
         y = _yukle(metin)
-    except yaml.YAMLError:
-        return None
-    return [u for u in (y.get("updates") or []) if isinstance(u, dict)]
+    except yaml.YAMLError as e:
+        return [], "YAML okunamadi: %s" % str(e).splitlines()[0]
+    if not isinstance(y, dict):
+        return [], "bir yapilandirma degil"
+    guncellemeler = [u for u in (y.get("updates") or []) if isinstance(u, dict)]
+    # 11 depoda `version: 2` bir yorum satirinin sonuna yapismisti
+    # ("...guncelliyor.version: 2"): YAML icin o bir yorum, dosyada surum yok.
+    # GitHub yapilandirmanin tamamini reddeder ve hicbir guncelleme acilmaz --
+    # hic kirmizi yanmadan. Dogrulayici yalnizca dosya bir PR'da degisince kosar.
+    if str(y.get("version")) != "2":
+        return guncellemeler, "`version: 2` yok -- GitHub dosyanin tamamini reddeder, hicbir guncelleme acilmaz"
+    return guncellemeler, None
 
 
 def _kilit_bos_mu(yol, metin):
@@ -251,7 +262,11 @@ def depo_bulgulari(dosyalar):
 
     db_yol = next((y for y in (".github/dependabot.yml", ".github/dependabot.yaml")
                    if y in dosyalar), None)
-    guncellemeler = _dependabot(dosyalar[db_yol]) if db_yol and dosyalar[db_yol] else None
+    guncellemeler = None
+    if db_yol and dosyalar[db_yol]:
+        guncellemeler, sorun = _dependabot(dosyalar[db_yol])
+        if sorun:
+            b.append((FAIL, "dbgecersiz", "%s: %s" % (db_yol.rsplit("/", 1)[-1], sorun)))
     action_var = any("uses:" in (m or "") for m in akislar.values())
 
     if guncellemeler is None:

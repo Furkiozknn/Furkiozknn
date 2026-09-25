@@ -1050,6 +1050,18 @@ class PolitikaTesti(unittest.TestCase):
         self.assertEqual(self._kurallar({".github/workflows/ci.yml": self.TEMIZ,
                                          ".github/dependabot.yml": tek}), ["grup"])
 
+    def test_yoruma_yapismis_version_fail(self):
+        # 11 deponun varsayilan dalindaki gercek bicim: YAML icin bu bir yorum.
+        bozuk = ('# "uv" ekosistemi ikisini birlikte guncelliyor.version: 2\n'
+                 + self.DEPENDABOT.split("\n", 1)[1])
+        d = {".github/workflows/ci.yml": self.TEMIZ, ".github/dependabot.yml": bozuk}
+        b = politika.depo_bulgulari(d)
+        self.assertEqual([(s, k) for s, k, _ in b], [("FAIL", "dbgecersiz")])
+        self.assertEqual(politika.durum(b), "FAIL")
+        # Ayni icerik, version kendi satirinda: temiz.
+        d[".github/dependabot.yml"] = bozuk.replace("guncelliyor.version: 2", "guncelliyor.\nversion: 2")
+        self.assertEqual(politika.depo_bulgulari(d), [])
+
     def test_alt_dizindeki_kilit_kendi_girdisini_ister(self):
         # buradane: frontend/package-lock.json, backend/uv.lock.
         d = {".github/workflows/ci.yml": self.TEMIZ, ".github/dependabot.yml": self.DEPENDABOT,
