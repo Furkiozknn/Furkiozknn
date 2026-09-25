@@ -129,6 +129,21 @@ class MedyaTesti(unittest.TestCase):
             self.assertNotIn("https://img.shields.io/badge/x-y.svg", json.dumps(m))
             self.assertNotIn("data:image", json.dumps(m))
 
+    def test_animasyonlu_webp_ekran_goruntusu_sayilmaz(self):
+        # nova-drift'in oynanis kaydi animasyonlu bir WebP; ekran goruntusu
+        # listesine dusuyordu ve gifs bos kaliyordu.
+        vp8x = lambda bayrak: b"RIFF\x00\x00\x00\x00WEBPVP8X\x0a\x00\x00\x00" + bytes([bayrak]) + b"\x00" * 9
+        with GeciciDepo() as d:
+            d.yaz("README.md", "![a](assets/oyun.webp)\n![b](assets/kare.webp)\n")
+            os.makedirs(os.path.join(d.yol, "assets"), exist_ok=True)
+            with open(os.path.join(d.yol, "assets/oyun.webp"), "wb") as f:
+                f.write(vp8x(0x02))
+            with open(os.path.join(d.yol, "assets/kare.webp"), "wb") as f:
+                f.write(vp8x(0x00))
+            m = uret.medya(d.yol)
+            self.assertEqual(m["gifs"], ["assets/oyun.webp"])
+            self.assertEqual(m["screenshots"], ["assets/kare.webp"])
+
     def test_readme_yoksa_hero_yok(self):
         with GeciciDepo() as d:
             self.assertIsNone(uret.medya(d.yol)["hero"])
