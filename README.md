@@ -39,7 +39,7 @@ Independent, based in Türkiye (UTC+3), available for remote contract work. Some
 </td>
 <td width="50%" valign="top">
 
-**🔎 [repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise. It tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on 30 public repositories so it stays quiet on the ones that work.
+**🔎 [repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise. It tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on 29 public repositories so it stays quiet on the ones that work.
 
 <a href="https://github.com/Furkiozknn/repo-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/repo-vet/main/assets/demo.gif" alt="repo-vet checking a repository's README claims over the GitHub API" width="100%"></a>
 
@@ -48,6 +48,19 @@ Independent, based in Türkiye (UTC+3), available for remote contract work. Some
 </table>
 
 **Open in a browser, nothing to install:** 🚀 [nova-drift](https://furkiozknn.github.io/nova-drift/) — an endless space-runner, 0.7 MB first load · 📖 [masal](https://furkiozknn.github.io/masal/) — a bedtime story built around one child's name · 🇹🇷 [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) — 70 Claude Code sub-agents that think in Turkish
+
+---
+
+## Recently
+
+<!-- vitrin:bas -->
+
+**Writing**
+
+- [Fifty broken references in 237 Godot projects](yazilar/godot-demolarindaki-kirik-referanslar.md) — The official demos, material-maker and godot-open-rpg, checked without opening the editor. Most of what turned up, Godot never mentions. <sub>25 Sep 2026</sub>
+- [Your README is a promise](yazilar/readme-bir-sozdur.md) — Checking the install commands, badges, links and releases of 29 well-known repositories over the GitHub API, without cloning anything. <sub>25 Sep 2026</sub>
+
+<!-- vitrin:son -->
 
 ---
 

@@ -19,8 +19,8 @@ Bagimlilik yok.
 
 import importlib.util
 import json
-import re
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -43,6 +43,7 @@ koruma = _yukle("koruma")
 dogrula = _yukle("dogrula")
 haftalik = _yukle("haftalik")
 denetim = _yukle("denetim")
+vitrin = _yukle("vitrin")
 
 
 class GeciciDepo:
@@ -820,6 +821,65 @@ class TestlerAraciTesti(unittest.TestCase):
         self.assertTrue(koyu.is_file() and acik.is_file())
         self.assertEqual(len(sayilar(koyu)), 3)
         self.assertEqual(sayilar(koyu), sayilar(acik))
+
+
+class VitrinTesti(unittest.TestCase):
+    """vitrin.py: profilin "Recently" bolumu yazilar/ ve surumlerden."""
+
+    def _yazi(self, d, ad, **alan):
+        govde = "".join("%s: %s\n" % kv for kv in alan.items())
+        d.yaz("yazilar/" + ad, "---\n" + govde + "---\n\n# baslik\n")
+
+    def test_yazilar_yeniden_eskiye_taslak_disarida(self):
+        from pathlib import Path
+        with GeciciDepo() as d:
+            self._yazi(d, "eski.md", title="Eski", date="2026-09-01", summary="a")
+            self._yazi(d, "yeni.md", title="Yeni", date="2026-09-20", summary="b")
+            self._yazi(d, "taslak.md", title="T", date="2026-09-30", summary="c",
+                       draft="true")
+            d.yaz("yazilar/README.md", "dizin")
+            liste = vitrin.yazilar(Path(d.yol) / "yazilar")
+        self.assertEqual([y["title"] for y in liste], ["Yeni", "Eski"])
+
+    def test_eksik_alanli_yazi_sessizce_girmez(self):
+        # Tarihsiz bir satir, tarihe gore siralanan listede yanlis yere oturur.
+        from pathlib import Path
+        with GeciciDepo() as d:
+            self._yazi(d, "x.md", title="X", summary="s")
+            with self.assertRaises(ValueError):
+                vitrin.yazilar(Path(d.yol) / "yazilar")
+
+    def test_ayni_gunun_yazilari_hep_ayni_sirada(self):
+        from pathlib import Path
+        with GeciciDepo() as d:
+            self._yazi(d, "b.md", title="B", date="2026-09-25", summary="s")
+            self._yazi(d, "a.md", title="A", date="2026-09-25", summary="s")
+            liste = vitrin.yazilar(Path(d.yol) / "yazilar")
+        self.assertEqual([y["title"] for y in liste], ["A", "B"])
+
+    def test_blok_isaretler_arasinda_ve_sinirli(self):
+        from datetime import date
+        yazi = [{"title": "T%d" % i, "date": date(2026, 9, i + 1), "summary": "s",
+                 "path": "yazilar/%d.md" % i} for i in range(5)]
+        surum = ["- [r v%d](u) <sub>x</sub>" % i for i in range(2)]
+        b = vitrin.blok(yazi, surum)
+        self.assertTrue(b.startswith(vitrin.BAS) and b.endswith(vitrin.SON))
+        self.assertEqual(b.count("](yazilar/"), vitrin.YAZI_SAYISI)
+        self.assertIn("**Releases**", b)
+        self.assertIn("<sub>1 Sep 2026</sub>", b)
+
+    def test_surum_satirlari_korunur(self):
+        # Agsiz kip, API'nin yazdigi surum satirlarini silmemeli.
+        metin = ("x\n" + vitrin.BAS + "\n\n**Releases**\n\n- [a v1](u) <sub>d</sub>\n\n"
+                 + vitrin.SON + "\ny")
+        self.assertEqual(vitrin.mevcut_surum_satirlari(metin), ["- [a v1](u) <sub>d</sub>"])
+
+    def test_readme_isaretleri_ve_yazilari_tutarli(self):
+        # Gercek README ve gercek yazilar/: CI'daki --kontrol ile ayni soru.
+        metin = vitrin.README.read_text(encoding="utf-8")
+        i, j = vitrin.mevcut_blok(metin)
+        self.assertEqual(metin[i:j], vitrin.blok(vitrin.yazilar(),
+                                                  vitrin.mevcut_surum_satirlari(metin)))
 
 
 if __name__ == "__main__":

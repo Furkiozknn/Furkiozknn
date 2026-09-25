@@ -56,6 +56,12 @@ jobs:
       - name: Yayimlanan sayilar tutarli mi
         run: python3 schema/testler.py --kontrol
 
+      # "Recently" bolumu yazilar/'dan uretiliyor. Elle duzenlenip
+      # yazilarla ayrisirsa ya da yeni bir yazi README'ye hic girmezse, bu
+      # kapi kirmizi olur. Agsiz: surum satirlarina dokunmaz.
+      - name: Recently bolumu yazilar/ ile ayni mi
+        run: python3 schema/vitrin.py --kontrol
+
       - name: Is akisi YAML'leri
         run: |
           set -euo pipefail

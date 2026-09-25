@@ -49,6 +49,7 @@
       "denetim.yml",
       "haftalik.yml",
       "projeler.yml",
+      "vitrin.yml",
       "yenile.yml"
     ],
     "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/ci.yml/badge.svg"
