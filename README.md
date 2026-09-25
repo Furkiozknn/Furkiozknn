@@ -72,7 +72,7 @@ Nothing to install; each one is a static page.
 
 - 🚀 **[nova-drift](https://furkiozknn.github.io/nova-drift/)** — an endless space-runner with real bloom and live-synthesized audio. 0.7 MB first load. <sub>[source](https://github.com/Furkiozknn/nova-drift)</sub>
 - 📖 **[masal](https://furkiozknn.github.io/masal/)** — a bedtime story built around one child's name, with Turkish suffixes that come out right. <sub>[source](https://github.com/Furkiozknn/masal)</sub>
-- 🇹🇷 **[turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/)** — browse 70 Claude Code sub-agents that think in Turkish. <sub>[source](https://github.com/Furkiozknn/turkce-ajanlar)</sub>
+- 🇹🇷 **[turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/)** — browse 71 Claude Code sub-agents that think in Turkish. <sub>[source](https://github.com/Furkiozknn/turkce-ajanlar)</sub>
 
 <sub>Godot games with a web build, pages not published yet: [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) (one button, on the beat) · [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) (flip gravity) · [derin-kazi](https://github.com/Furkiozknn/derin-kazi) (dig to the core) · [kanca](https://github.com/Furkiozknn/kanca) (hook and swing). Until Pages is on, builds come from each repo's Actions workflow.</sub>
 
@@ -126,7 +126,7 @@ Four repositories share one job contract and no Python dependency. Four more exi
 | 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, no key needed. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
 | 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `55` |
 | 🏛️ | **[ajans-os](https://github.com/Furkiozknn/ajans-os)** | An agency OS built research-first. Its acceptance run is killed mid-task, reloaded from disk and resumed. | `142` |
-| 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | 70 Claude Code sub-agents that *think* in Turkish. Exported to Cursor, OpenCode, Copilot and Codex. | `160` |
+| 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | 71 Claude Code sub-agents that *think* in Turkish. Exported to Cursor, OpenCode, Copilot and Codex. | `160` |
 
 **Developer tooling — tools that check other work**
 

@@ -807,7 +807,7 @@
       "Markdown agent definitions"
     ],
     "key_features": [
-      "70 sub-agents that think in Turkish rather than translate into it",
+      "71 sub-agents that think in Turkish rather than translate into it",
       "Encodes the traps that actually bite on Turkish Windows: no && in PowerShell 5.1, cp1254 killing a tool before its first line, heredocs eating backslashes",
       "3 commands, 2 skills and an eval suite alongside the agents",
       "One source of truth, exported to Cursor, OpenCode, Copilot and Codex; CI fails if the web UI drifts from the agent files"
@@ -818,7 +818,7 @@
       "measured": "2026-09-22"
     },
     "social": {
-      "headline": "70 Claude Code sub-agents that think in Turkish, not translate into it.",
+      "headline": "71 Claude Code sub-agents that think in Turkish, not translate into it.",
       "hashtags": [
         "claudecode",
         "aiagents",
