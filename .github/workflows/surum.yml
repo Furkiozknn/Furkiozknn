@@ -1,0 +1,61 @@
+name: surum
+
+# "Bu surum etiketlenmeye hazir mi, ve hangi commit'e?" -- telefondan bile.
+#
+# Actions -> surum -> Run workflow: depo adi ve (varsa) birlestirilen PR'in
+# numarasi. schema/surum.py bakar: PR gercekten birlesmis mi (acik bir PR'in
+# merge_commit_sha'si varsayilan dalda olmayan bir DENEME birlesmesidir),
+# SHA varsayilan dalda mi, o commit'teki surum, CHANGELOG bolumu, etiketin
+# zaten olup olmadigi, CI ve PyPI. Hazirsa tam komutu ozet sayfasina yazar.
+#
+# Etiketi ATMAZ. Etiket PyPI yayinini tetikler ve PyPI'a giden bir surum geri
+# alinamaz; o karar insanda kalir. Bu is akisi yalnizca okur.
+
+on:
+  workflow_dispatch:
+    inputs:
+      depo:
+        description: "Depo adi (ornek: godot-refcheck)"
+        required: true
+      pr:
+        description: "Birlesen PR numarasi (bos: varsayilan dalin ucu)"
+        required: false
+      surum:
+        description: "Beklenen surum (ornek: 0.3.0; bos: kontrol etme)"
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  bak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Hazir mi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DEPO: ${{ inputs.depo }}
+          PR: ${{ inputs.pr }}
+          SURUM: ${{ inputs.surum }}
+        run: |
+          set -uo pipefail
+          arg=("$DEPO")
+          [ -n "$PR" ] && arg+=(--pr "$PR")
+          [ -n "$SURUM" ] && arg+=(--surum "$SURUM")
+          python3 schema/surum.py "${arg[@]}" | tee sonuc.txt
+          kod=${PIPESTATUS[0]}
+          {
+            echo "### surum: $DEPO${PR:+ (PR #$PR)}"
+            echo
+            echo '```'
+            cat sonuc.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$kod"

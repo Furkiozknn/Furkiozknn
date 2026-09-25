@@ -18,6 +18,8 @@ done by hand, and why. It started as the **System ×4 audit of 25 September
                  ──► vitrin.yml  (daily 05:17) ──► README "Recently", committed
                  ──► yenile.yml  (weekly)      ──► project-meta.json per repo [DEPO_JETONU]
 human ──► merge · tag · release · settings · secrets   (never automated)
+      ▲
+      └── surum.yml (on demand): is this version ready to tag, and on which SHA?
 ```
 
 Everything that can go stale is generated or checked; everything with an
@@ -157,7 +159,7 @@ sync.
 | 10 | Apply About texts | `about/uygula.py --uygula` by hand | a workflow with an admin-scoped token | proposed |
 | 11 | Register Trusted Publishers | pypi.org UI, 13 times | none possible — values listed below | manual, one-time |
 | 12 | Enable Pages | repository settings, 4 times | none possible without an admin token | manual, one-time |
-| 13 | Tag a release on the right commit | a command typed by hand | readiness check that prints the exact command from the merge SHA | proposed |
+| 13 | Tag a release on the right commit | a command typed by hand | `schema/surum.py` / Actions → surum: refuses an unmerged PR's trial-merge SHA, checks branch, version, CHANGELOG, existing tag, CI and PyPI, then prints the exact command | done (tagging stays human) |
 | 14 | Simulate a merge chain for conflicts | a script run by hand | same script in `yenile.yml` | proposed |
 | 15 | Social preview images | upload by hand | none possible — no API | manual, one-time |
 

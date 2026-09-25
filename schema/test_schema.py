@@ -47,6 +47,7 @@ denetim = _yukle("denetim")
 vitrin = _yukle("vitrin")
 derle = _yukle("derle")
 politika = _yukle("politika")
+surum = _yukle("surum")
 
 
 class GeciciDepo:
@@ -1152,6 +1153,118 @@ class KapanmisAkisTesti(unittest.TestCase):
             self.assertEqual(denetim._kapanmis_akislar("depo"), [])
         finally:
             denetim._belki = gercek
+
+
+class SurumTesti2(unittest.TestCase):
+    """schema/surum.py: etiket hangi commit'e, ve ne zaman henuz degil."""
+
+    SHA = "a" * 40
+    DENEME = "d" * 40
+
+    def _get(self, **degis):
+        import base64 as b64, urllib.error
+        durum = {"birlesmis": True, "taban": "main", "compare": "ahead", "etiket": None,
+                 "kosular": [{"name": "test", "status": "completed", "conclusion": "success"}],
+                 "changelog": "# Changelog\n\n## [0.3.0] — 2026-09-26\n\n- x\n",
+                 "surum": "0.3.0", "hiz": False, "manifest": "Cargo.toml"}
+        durum.update(degis)
+        cagrilar = []
+        def icerik(metin):
+            return {"content": b64.b64encode(metin.encode()).decode()} if metin is not None else None
+        def get(url):
+            cagrilar.append(url)
+            if durum["hiz"]:
+                raise surum.D.HizSiniri(url)
+            yol = url.split("/repos/Furkiozknn/", 1)[1]
+            cevap = None
+            if yol == "depo":
+                cevap = {"default_branch": "main"}
+            elif yol == "depo/pulls/12":
+                cevap = {"merged": durum["birlesmis"], "base": {"ref": durum["taban"]},
+                         "merge_commit_sha": self.SHA if durum["birlesmis"] else self.DENEME}
+            elif yol.startswith("depo/compare/"):
+                cevap = {"status": durum["compare"]}
+            elif yol.startswith("depo/contents/" + durum["manifest"]):
+                cevap = icerik('[package]\nname = "depo"\nversion = "%s"\n' % durum["surum"]
+                               if durum["manifest"] == "Cargo.toml" else
+                               '[project]\nname = "depo-cli"\nversion = "%s"\n' % durum["surum"])
+            elif yol.startswith("depo/contents/CHANGELOG.md"):
+                cevap = icerik(durum["changelog"])
+            elif yol.startswith("depo/git/ref/tags/"):
+                cevap = durum["etiket"]
+            elif yol.startswith("depo/commits/") and "check-runs" in yol:
+                cevap = {"check_runs": durum["kosular"]}
+            if cevap is None:
+                raise urllib.error.HTTPError(url, 404, "yok", {}, None)
+            return cevap
+        get.cagrilar = cagrilar
+        return get
+
+    def _hazirlik(self, **degis):
+        return surum.hazirlik("depo", pr=12, get=self._get(**degis), pypi_surumleri=lambda ad: None)
+
+    def test_hazir_ve_komut_birlesme_shasini_kullanir(self):
+        s = self._hazirlik()
+        self.assertTrue(s["hazir"], s["nedenler"])
+        self.assertEqual((s["sha"], s["etiket"]), (self.SHA, "v0.3.0"))
+        k = surum.komut("depo", s)
+        self.assertIn("git tag -a v0.3.0 %s" % self.SHA, k)
+        self.assertNotIn(self.DENEME, k)
+
+    def test_birlesmemis_pr_deneme_shasini_asla_vermez(self):
+        # Acik PR'in merge_commit_sha'si varsayilan dalda olmayan bir deneme
+        # birlesmesi; etikete yazilirsa etiket hicbir dalda olmayan commit'i gosterir.
+        s = self._hazirlik(birlesmis=False)
+        self.assertFalse(s["hazir"])
+        self.assertIsNone(s["sha"])
+        self.assertIn("DENEME", s["nedenler"][0])
+
+    def test_etiket_zaten_varsa(self):
+        s = self._hazirlik(etiket={"object": {"sha": "b" * 40}})
+        self.assertFalse(s["hazir"])
+        self.assertTrue(any("zaten var" in n for n in s["nedenler"]))
+
+    def test_kirmizi_ya_da_bitmemis_ci(self):
+        s = self._hazirlik(kosular=[{"name": "test", "status": "completed", "conclusion": "failure"},
+                                    {"name": "lint", "status": "in_progress", "conclusion": None}])
+        self.assertFalse(s["hazir"])
+        self.assertEqual(sorted(n.split(":")[0] for n in s["nedenler"]),
+                         ["bitmemis kontrol", "gecmeyen kontrol"])
+        self.assertFalse(self._hazirlik(kosular=[])["hazir"])
+
+    def test_sha_varsayilan_dalda_degilse(self):
+        self.assertFalse(self._hazirlik(compare="diverged")["hazir"])
+        self.assertFalse(self._hazirlik(taban="release/v0")["hazir"])
+
+    def test_changelog_bolumu(self):
+        self.assertFalse(self._hazirlik(changelog="## [0.2.0]\n")["hazir"])
+        self.assertIn("CHANGELOG.md yok", " ".join(self._hazirlik(changelog=None)["nedenler"]))
+        var = surum.changelog_bolumu_var
+        for baslik in ("## [0.3.0] — 2026", "## 0.3.0 — Blind spots", "## v0.3.0", "## [0.3.0]", "## 0.3.0"):
+            self.assertTrue(var(baslik + "\n", "0.3.0"), baslik)
+        for baslik in ("## [0.3.00]", "### 0.3.0", "## 0.3.0.1", "text 0.3.0"):
+            self.assertFalse(var(baslik + "\n", "0.3.0"), baslik)
+
+    def test_pypida_ayni_surum_varsa(self):
+        # Cargo projesinin PyPI adi yok: PyPI'a hic bakilmaz.
+        s = surum.hazirlik("depo", pr=12, get=self._get(), pypi_surumleri=lambda ad: {"0.3.0"})
+        self.assertTrue(s["hazir"])
+        # Python projesi: PyPI'da ayni surum varsa ikinci yukleme imkansiz.
+        sorulan = []
+        s = surum.hazirlik("depo", pr=12, get=self._get(manifest="pyproject.toml"),
+                           pypi_surumleri=lambda ad: sorulan.append(ad) or {"0.3.0"})
+        self.assertFalse(s["hazir"])
+        self.assertEqual(sorulan, ["depo-cli"])  # repo adi degil, paketin PyPI adi
+        self.assertTrue(any("PyPI" in n for n in s["nedenler"]))
+        s = surum.hazirlik("depo", pr=12, get=self._get(manifest="pyproject.toml"),
+                           pypi_surumleri=lambda ad: {"0.2.0"})
+        self.assertTrue(s["hazir"], s["nedenler"])
+        self.assertEqual(surum.surumu_oku({"pyproject.toml": 'name = "ptm-cli"\nversion = "0.1.0"\n'}),
+                         ("0.1.0", "pyproject.toml", "ptm-cli"))
+
+    def test_hiz_siniri_bakilamadi_hazir_sayilmaz(self):
+        with self.assertRaises(surum.Bakilamadi):
+            self._hazirlik(hiz=True)
 
 
 if __name__ == "__main__":
