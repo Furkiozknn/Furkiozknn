@@ -74,7 +74,7 @@ Nothing to install; each one is a static page.
 - 📖 **[masal](https://furkiozknn.github.io/masal/)** — a bedtime story built around one child's name, with Turkish suffixes that come out right. <sub>[source](https://github.com/Furkiozknn/masal)</sub>
 - 🇹🇷 **[turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/)** — browse 70 Claude Code sub-agents that think in Turkish. <sub>[source](https://github.com/Furkiozknn/turkce-ajanlar)</sub>
 
-<sub>Godot games with a web build, pages not published yet: [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) (one button, on the beat) · [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) (flip gravity) · [derin-kazi](https://github.com/Furkiozknn/derin-kazi) (dig to the core) · [kanca](https://github.com/Furkiozknn/kanca) (hook and swing). Each README has a downloadable build.</sub>
+<sub>Godot games with a web build, pages not published yet: [tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu) (one button, on the beat) · [yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir) (flip gravity) · [derin-kazi](https://github.com/Furkiozknn/derin-kazi) (dig to the core) · [kanca](https://github.com/Furkiozknn/kanca) (hook and swing). Until Pages is on, builds come from each repo's Actions workflow.</sub>
 
 ---
 
