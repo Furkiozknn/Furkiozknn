@@ -836,7 +836,9 @@ class TestlerAraciTesti(unittest.TestCase):
                               yol.read_text(encoding="utf-8"))
         koyu, acik = testler.HEROLAR
         self.assertTrue(koyu.is_file() and acik.is_file())
-        self.assertEqual(len(sayilar(koyu)), 3)
+        # Iki sayi: repolar ve testler. Commit sayisi 25 Eylul'de kalkti --
+        # guclu profillerin hicbiri gostermiyor ve bir seyi kanitlamiyor.
+        self.assertEqual([k for k, _ in sayilar(koyu)], ["sayi-repos", "sayi-tests"])
         self.assertEqual(sayilar(koyu), sayilar(acik))
 
 

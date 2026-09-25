@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="1200" height="240" role="img" aria-label="Furki Özkan - agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="1200" height="240" role="img" aria-label="Furki Özkan - agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests.">
   <!-- Acik tema. Koyu tema: hero.svg; ikisi ayni cizim.
-       Sayilarin id'si var (sayi-repos, sayi-tests, sayi-commits) ve
+       Sayilarin id'si var (sayi-repos, sayi-tests) ve
        "N with suites" etiketi: schema/testler.py iki hero'yu da oradan
        gunceller; kontrol modu ikisine de bakar. Metin sistem fontlariyla
        ciziliyor: GitHub SVG icindeki dis fontlari yuklemez. -->
@@ -57,22 +57,16 @@
 
   <g font-family="'Cascadia Code', 'SF Mono', Consolas, monospace">
     <g>
-      <rect x="716" y="40" width="120" height="64" rx="10" fill="#fffdf8" stroke="#e0d8c4"/>
-      <text x="734" y="72" fill="#8a6a22" font-size="22" id="sayi-repos">28<tspan
+      <rect x="878" y="40" width="120" height="64" rx="10" fill="#fffdf8" stroke="#e0d8c4"/>
+      <text x="896" y="72" fill="#8a6a22" font-size="22" id="sayi-repos">28<tspan
         fill="#6a665c" font-size="13" dx="7">repos</tspan></text>
-      <text x="734" y="91" fill="#8a8578" font-size="11">26 with suites</text>
+      <text x="896" y="91" fill="#8a8578" font-size="11">26 with suites</text>
     </g>
     <g>
-      <rect x="846" y="40" width="150" height="64" rx="10" fill="#fffdf8" stroke="#e0d8c4"/>
-      <text x="864" y="72" fill="#1a8a4f" font-size="22" id="sayi-tests">5,247<tspan
+      <rect x="1008" y="40" width="150" height="64" rx="10" fill="#fffdf8" stroke="#e0d8c4"/>
+      <text x="1026" y="72" fill="#1a8a4f" font-size="22" id="sayi-tests">5,247<tspan
         fill="#6a665c" font-size="13" dx="7">tests</tspan></text>
-      <text x="864" y="91" fill="#8a8578" font-size="11">each count traced</text>
-    </g>
-    <g>
-      <rect x="1006" y="40" width="152" height="64" rx="10" fill="#fffdf8" stroke="#e0d8c4"/>
-      <text x="1024" y="72" fill="#1f6fd1" font-size="22" id="sayi-commits">1,096<tspan
-        fill="#6a665c" font-size="13" dx="7">commits</tspan></text>
-      <text x="1024" y="91" fill="#8a8578" font-size="11">all public</text>
+      <text x="1026" y="91" fill="#8a8578" font-size="11">each count traced</text>
     </g>
   </g>
 </svg>

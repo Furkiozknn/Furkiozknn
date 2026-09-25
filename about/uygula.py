@@ -32,7 +32,7 @@ from pathlib import Path
 
 KOK = Path(__file__).resolve().parent
 OWNER = "Furkiozknn"
-AZAMI = 120
+AZAMI = 100  # sabitlenmis kart ~100 karakterden sonra kesiyor
 
 
 def yukle():

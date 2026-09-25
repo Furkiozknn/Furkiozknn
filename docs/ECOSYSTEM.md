@@ -11,18 +11,47 @@ or *is this current*. The profile answers in that order:
 
 | Section | Question it answers | Source |
 |---|---|---|
-| Hero (`assets/hero*.svg`) | Whose page, what kind of work, how much of it | hand-drawn; numbers rewritten by `schema/testler.py` |
-| **Start here** | "I want to X — which repository?" | hand-written router, one row per intent |
+| Hero (`assets/hero*.svg`) | Whose page, what kind of work, how much of it (repositories and tests; no commit count) | hand-drawn; numbers rewritten by `schema/testler.py` |
+| Intro, **Currently**, link line | What I build, what I am doing this week, where everything else lives | hand-written; three sentences, one status line, one `<samp>` line |
 | **Featured** | Which four are finished and worth a first look | selection rule below |
-| **Try it in your browser** | What runs with zero install | only repositories whose Pages site is live (`has_pages`) |
+| **More** | Everything else, one line each, by area; ▸ marks what plays in the browser | hand-written, checked against the catalogue |
 | **Recently** | Is the account alive | `schema/vitrin.py`, daily: `yazilar/` + latest releases |
-| **What I build** | The five areas, each linked to its repositories | hand-written, checked against the catalogue |
-| **Every project** | All public repositories, with test counts | table; counts rewritten by `schema/testler.py` |
-| **How I work** | Why the numbers can be trusted | hand-written |
-| **Work with me** | What can be hired, and for what | `HIRE.md` |
+| **Every project** (collapsed) | All public repositories, with test counts | table; counts rewritten by `schema/testler.py` |
+| Closing line + **Work with me** | Why the numbers can be trusted; what can be hired | hand-written; details in `HIRE.md` |
+
+The page is kept short on purpose. The strongest individual profiles on
+GitHub (karpathy, charliermarsh, tiangolo, antfu, simonw) say what they build
+in a sentence or two and let the pinned repositories carry the rest; none of
+them shows stat cards, trophies or a commit count. The long material here -
+the full table, the ledger, the hiring terms - sits one click away.
 
 Anything that can go stale is generated or checked in CI. The rest is
 short enough to reread when it changes.
+
+## Pins and sidebar (set by hand on github.com)
+
+GitHub has no API for pinned repositories or the profile bio, so this part
+is a checklist, not a script. Pins do more work than the README: a visitor
+sees them first, and every strong profile keeps them to six on-theme repos
+with one-line descriptions short enough not to be cut off (`about/uygula.py`
+now holds every description to 100 characters for that reason).
+
+| Pin | Why this one |
+|---|---|
+| mcp-vet | the flagship; audits before install |
+| godot-refcheck | checked against 237 real Godot projects |
+| repo-vet | calibrated on 29 public repositories |
+| claude-code-intelligence | the tool with the widest audience here |
+| buradane | the one full-stack app, with a demo GIF |
+| nova-drift | plays in the browser in one click |
+
+- **Bio** (160 characters at most): *I build what AI agents run on, and the
+  tools that check it works. MCP, Python, Godot. Türkiye, UTC+3.*
+- **Website field:** `https://furkiozknn.github.io/`
+- **Status:** what is being finished right now, matching the README's
+  *Currently* line (today: mcp-vet 0.6.0).
+- **Social preview:** upload `assets/social/<repo>.png` under each pinned
+  repository's Settings → Social preview.
 
 ## Areas
 
@@ -34,8 +63,8 @@ on the profile and the accent colour of its social card.
 | Tools that check other work | `#58a6ff` | mcp-vet, godot-refcheck, repo-vet, claude-code-intelligence, mcp-census, repo-ratchet, Furkiozknn.github.io |
 | Agent infrastructure | `#e3b341` | ai-job-gateway, ai-workflow-engine, model-comparison-harness, prompt-template-manager, asset-provenance-toolkit |
 | MCP servers | `#3fb950` | mini-creative-toolkit, local-notes-search-mcp, voice-io-mcp, nvidia-nim-mcp |
-| Apps | `#39c5cf` | buradane, ajans-os, turkce-ajanlar |
-| Games | `#db61a2` | nova-drift, tek-tus-kosu, yercekimi-cevir, derin-kazi, kanca, masal, godot-2d-sablon |
+| Apps | `#39c5cf` | buradane, ajans-os, turkce-ajanlar, masal |
+| Games | `#db61a2` | nova-drift, tek-tus-kosu, yercekimi-cevir, derin-kazi, kanca, godot-2d-sablon |
 
 `claude-quota-monitor` is archived; `claude-code-intelligence` replaced it.
 

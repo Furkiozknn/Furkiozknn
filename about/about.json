@@ -1,6 +1,6 @@
 {
   "ai-job-gateway": {
-    "description": "One async job contract for AI generation backends: idempotent across restarts, SSRF-guarded webhooks.",
+    "description": "One async job contract for AI generation backends: idempotent keys, SSRF-guarded webhooks.",
     "homepage": "https://furkiozknn.github.io/#ai-job-gateway"
   },
   "ai-workflow-engine": {
@@ -25,7 +25,7 @@
     "homepage": "https://furkiozknn.github.io/#buradane"
   },
   "claude-code-intelligence": {
-    "description": "Where your Claude Code tokens went and when the quota resets. Local-first; stores no prompt or file content.",
+    "description": "Where your Claude Code tokens went and when the quota resets. Local; stores no prompt text.",
     "homepage": "https://furkiozknn.github.io/#claude-code-intelligence"
   },
   "derin-kazi": {
@@ -45,7 +45,7 @@
     "homepage": "https://furkiozknn.github.io/#godot-2d-sablon"
   },
   "godot-refcheck": {
-    "description": "Finds broken references and dead signal connections in Godot projects without the editor, and fixes the provable ones.",
+    "description": "Finds broken references and dead signals in Godot projects, no editor; fixes the provable ones.",
     "homepage": "https://furkiozknn.github.io/#godot-refcheck"
   },
   "kanca": {
@@ -61,11 +61,11 @@
     "homepage": "https://furkiozknn.github.io/masal/"
   },
   "mcp-census": {
-    "description": "A reproducible count of the official MCP Registry: rows, distinct servers, and which have code to read.",
+    "description": "A reproducible count of the MCP Registry: rows, distinct servers, and which have code to read.",
     "homepage": "https://furkiozknn.github.io/#mcp-census"
   },
   "mcp-vet": {
-    "description": "Audits an MCP server's source before you install it. file:line on every finding; never runs what it audits.",
+    "description": "Audits an MCP server's source before you install it: file:line on every finding, never runs it.",
     "homepage": "https://furkiozknn.github.io/#mcp-vet"
   },
   "mini-creative-toolkit": {
@@ -95,19 +95,19 @@
     "homepage": "https://furkiozknn.github.io/#prompt-template-manager"
   },
   "repo-ratchet": {
-    "description": "Picks the repository to work on next from measured signals, and records no progress without a commit.",
+    "description": "Picks the repository to work on next from measured signals; logs no progress without a commit.",
     "homepage": "https://furkiozknn.github.io/#repo-ratchet"
   },
   "repo-vet": {
-    "description": "Checks a README's promises (install commands, badges, links, releases) over the GitHub API, without cloning.",
+    "description": "Tests what a README promises (install, badges, links, releases) over the GitHub API, no clone.",
     "homepage": "https://furkiozknn.github.io/#repo-vet"
   },
   "tek-tus-kosu": {
-    "description": "One-button rooftop runner in Godot 4. Rhythm mode puts every obstacle on the beat; exports to Windows and the web.",
+    "description": "One-button rooftop runner in Godot 4; rhythm mode puts every obstacle on the beat.",
     "homepage": "https://furkiozknn.github.io/#tek-tus-kosu"
   },
   "turkce-ajanlar": {
-    "description": "71 Claude Code sub-agents that think in Turkish, searchable in the browser. Also for Cursor, Codex, Copilot.",
+    "description": "71 Claude Code sub-agents that think in Turkish. Also exported to Cursor, Codex and Copilot.",
     "homepage": "https://furkiozknn.github.io/turkce-ajanlar/"
   },
   "voice-io-mcp": {
