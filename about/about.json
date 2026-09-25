@@ -1,0 +1,110 @@
+{
+  "ai-job-gateway": {
+    "description": "One async job contract for AI generation backends: idempotent across restarts, SSRF-guarded webhooks.",
+    "homepage": "https://furkiozknn.github.io/#ai-job-gateway"
+  },
+  "ai-workflow-engine": {
+    "description": "AI pipelines as YAML DAGs, validated before they run: an undeclared dependency fails at load time.",
+    "homepage": "https://furkiozknn.github.io/#ai-workflow-engine"
+  },
+  "ajans-os": {
+    "description": "A research-first agency operating system whose acceptance run survives being killed mid-task.",
+    "homepage": "https://furkiozknn.github.io/#ajans-os"
+  },
+  "asset-provenance-toolkit": {
+    "description": "Records which model made a file inside the file itself. JPEG gets the marker without re-encoding.",
+    "homepage": "https://furkiozknn.github.io/#asset-provenance-toolkit"
+  },
+  "buradane": {
+    "description": "The nearest toilet, park or fountain in Türkiye: 167,829 OpenStreetMap places on FastAPI + PostGIS.",
+    "homepage": "https://furkiozknn.github.io/#buradane"
+  },
+  "claude-code-intelligence": {
+    "description": "Where your Claude Code tokens went and when the quota resets. Local-first; stores no prompt or file content.",
+    "homepage": "https://furkiozknn.github.io/#claude-code-intelligence"
+  },
+  "derin-kazi": {
+    "description": "Dig, sell, upgrade, go deeper; the fuel gauge is the real timer. A Godot 4 mining game.",
+    "homepage": "https://furkiozknn.github.io/#derin-kazi"
+  },
+  "Furkiozknn": {
+    "description": "Source of the profile page. Every number on it is traced to the run that printed it.",
+    "homepage": "https://furkiozknn.github.io/"
+  },
+  "Furkiozknn.github.io": {
+    "description": "Every repository on this account, searchable on one page, generated from each project-meta.json.",
+    "homepage": "https://furkiozknn.github.io/"
+  },
+  "godot-2d-sablon": {
+    "description": "Two Godot 4 2D starter projects with measured jump feel: coyote time, buffering, variable height.",
+    "homepage": "https://furkiozknn.github.io/#godot-2d-sablon"
+  },
+  "godot-refcheck": {
+    "description": "Finds broken references and dead signal connections in Godot projects without the editor, and fixes the provable ones.",
+    "homepage": "https://furkiozknn.github.io/#godot-refcheck"
+  },
+  "kanca": {
+    "description": "Hook the ceiling, swing, release and keep your momentum. A Godot 4 grappling platformer.",
+    "homepage": "https://furkiozknn.github.io/#kanca"
+  },
+  "local-notes-search-mcp": {
+    "description": "Semantic search over your own files as an MCP server. Local ONNX model and sqlite-vec; no API key.",
+    "homepage": "https://furkiozknn.github.io/#local-notes-search-mcp"
+  },
+  "masal": {
+    "description": "A bedtime story written around one child's name, with a Turkish suffix engine and a colouring page.",
+    "homepage": "https://furkiozknn.github.io/masal/"
+  },
+  "mcp-census": {
+    "description": "A reproducible count of the official MCP Registry: rows, distinct servers, and which have code to read.",
+    "homepage": "https://furkiozknn.github.io/#mcp-census"
+  },
+  "mcp-vet": {
+    "description": "Audits an MCP server's source before you install it. file:line on every finding; never runs what it audits.",
+    "homepage": "https://furkiozknn.github.io/#mcp-vet"
+  },
+  "mini-creative-toolkit": {
+    "description": "CPU-first media tools in one MCP server; nearly all of them never touch the network.",
+    "homepage": "https://furkiozknn.github.io/#mini-creative-toolkit"
+  },
+  "model-comparison-harness": {
+    "description": "One prompt, many providers, one report, plus a judge model scoring each answer against your rubric.",
+    "homepage": "https://furkiozknn.github.io/#model-comparison-harness"
+  },
+  "nova-drift": {
+    "description": "Endless browser space-runner with real bloom and synthesized audio. 0.7 MB, plays in one click.",
+    "homepage": "https://furkiozknn.github.io/nova-drift/"
+  },
+  "nvidia-nim-mcp": {
+    "description": "NVIDIA NIM's free tier inside Claude Code as an MCP server. Two of its tools need no API key.",
+    "homepage": "https://furkiozknn.github.io/#nvidia-nim-mcp"
+  },
+  "prompt-template-manager": {
+    "description": "Prompts versioned in git and rendered strictly, so a prompt change is a reviewable diff.",
+    "homepage": "https://furkiozknn.github.io/#prompt-template-manager"
+  },
+  "repo-ratchet": {
+    "description": "Picks the repository to work on next from measured signals, and records no progress without a commit.",
+    "homepage": "https://furkiozknn.github.io/#repo-ratchet"
+  },
+  "repo-vet": {
+    "description": "Checks a README's promises (install commands, badges, links, releases) over the GitHub API, without cloning.",
+    "homepage": "https://furkiozknn.github.io/#repo-vet"
+  },
+  "tek-tus-kosu": {
+    "description": "One-button rooftop runner in Godot 4. Rhythm mode puts every obstacle on the beat; web build included.",
+    "homepage": "https://furkiozknn.github.io/#tek-tus-kosu"
+  },
+  "turkce-ajanlar": {
+    "description": "70 Claude Code sub-agents that think in Turkish, searchable in the browser. Also for Cursor, Codex, Copilot.",
+    "homepage": "https://furkiozknn.github.io/turkce-ajanlar/"
+  },
+  "voice-io-mcp": {
+    "description": "Speech in and out for MCP clients with no API key; refuses paths like .env before opening them.",
+    "homepage": "https://furkiozknn.github.io/#voice-io-mcp"
+  },
+  "yercekimi-cevir": {
+    "description": "No jump button: one key flips gravity. Twenty precision rooms, in Godot 4.",
+    "homepage": "https://furkiozknn.github.io/#yercekimi-cevir"
+  }
+}

@@ -62,6 +62,11 @@ jobs:
       - name: Recently bolumu yazilar/ ile ayni mi
         run: python3 schema/vitrin.py --kontrol
 
+      # Depo aciklamalari about/about.json'da; burada yalnizca kurallara
+      # uyup uymadigi soruluyor (uzunluk, tam cumle, https). Agsiz.
+      - name: About metinleri kurallara uyuyor mu
+        run: python3 about/uygula.py --kontrol
+
       - name: Is akisi YAML'leri
         run: |
           set -euo pipefail
