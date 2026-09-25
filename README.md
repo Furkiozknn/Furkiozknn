@@ -70,7 +70,7 @@ MCP servers, an async job contract with a pipeline engine on top, and audit tool
 
 Nothing to install; each one is a static page.
 
-- 🚀 **[nova-drift](https://furkiozknn.github.io/nova-drift/)** — an endless space-runner with real bloom and live-synthesized audio. 0.7 MB first load. <sub>[source](https://github.com/Furkiozknn/nova-drift)</sub>
+- 🚀 **[nova-drift](https://furkiozknn.github.io/nova-drift/)** — an endless space-runner with real bloom and live-synthesized audio. 0.8 MB first load. <sub>[source](https://github.com/Furkiozknn/nova-drift)</sub>
 - 📖 **[masal](https://furkiozknn.github.io/masal/)** — a bedtime story built around one child's name, with Turkish suffixes that come out right. <sub>[source](https://github.com/Furkiozknn/masal)</sub>
 - 🇹🇷 **[turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/)** — browse 71 Claude Code sub-agents that think in Turkish. <sub>[source](https://github.com/Furkiozknn/turkce-ajanlar)</sub>
 
@@ -160,7 +160,7 @@ Four repositories share one job contract and no Python dependency. Four more exi
 
 ## How I work
 
-- **A number is checkable, or it is not on the page.** Every test count here is re-derived from the run that printed it. This page has lost three numbers that way — a grep passed off as a suite, a 1.4 MB load that measured 0.7 MB, a commit count off by 53.
+- **A number is checkable, or it is not on the page.** Every test count here is re-derived from the run that printed it. This page has lost three numbers that way — a grep passed off as a suite, a 1.4 MB load that measured 0.8 MB, a commit count off by 53.
 - **Hermetic CI, and the gate is tested too.** Suites run offline, so a CDN outage cannot redden a build; `ajans-os` plants a violation in its own tree and fails if its validator misses it.
 - **Known limits go in the README.** A measured seven-minute stall on integrated graphics, a column headed *deliberately absent*, voice cloning left out on purpose.
 - **Licences are read down the dependency tree.** `rembg`'s default model is CC-BY-NC — caught there, and refused unless you opt in knowingly.

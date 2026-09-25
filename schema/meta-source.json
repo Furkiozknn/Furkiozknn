@@ -637,7 +637,7 @@
       "Endless browser space-runner with real Three.js bloom post-processing and hand-written particles",
       "Audio engine synthesized live in Web Audio - not one sound file in the repository",
       "Skim an obstacle without touching it and take the near-miss bonus",
-      "A daily run seeded from the UTC date deals every player the same obstacles; 0.7 MB first load, no build step"
+      "A daily run seeded from the UTC date deals every player the same obstacles; 0.8 MB first load, no build step"
     ],
     "tests": {
       "count": 38,
@@ -645,7 +645,7 @@
       "measured": "2026-09-22"
     },
     "social": {
-      "headline": "0.7 MB, no build step, real bloom - and every sound synthesized on the fly.",
+      "headline": "0.8 MB, no build step, real bloom - and every sound synthesized on the fly.",
       "hashtags": [
         "threejs",
         "webgl",
