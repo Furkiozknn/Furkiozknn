@@ -1,0 +1,113 @@
+name: sayilar
+
+# Yayimlanan test sayilari: bir depo birlestikten sonra profilin yedi yerini
+# (hero x2, README tablosu ve alt metni, TESTLER.md basligi/tablosu/Toplam,
+# meta-source.json) elle guncellemek yerine olcup yazar.
+#
+# Olcum uydurulmaz: `schema/testler.py --olc` her deponun en yeni BASARILI
+# ci.yml kosusunun logunu indirir ve `tests.source` satirini oradan yeniden
+# okur. Birlesik kaynaklar (`133 backend + 264 frontend`) tek satirdan
+# okunamadigi icin ellenmez; insana kalir.
+#
+# Bu is akisi eklenene kadar birlestirme sonrasi sayilar yalnizca bir
+# oturumun not defterinde bekliyordu -- o not kaybolursa profil eski sayida
+# kalirdi ve bunu yalnizca gunluk denetim, o da DEPO_OKUMA varsa, gorurdu.
+#
+# Guvenlik kemerleri (vitrin.yml ile ayni cizgi):
+#   - yalnizca asagidaki bes dosya commit edilebilir; baska bir dosya
+#     degistiyse hicbir sey push edilmez
+#   - testler.py --kontrol gecmezse push yok
+#   - patlama yaricapi: 6'dan fazla depo ayni anda degisiyorsa push yok;
+#     bu neredeyse her zaman okuyucudaki bir hatadir, gercek bir degisim degil
+#   - DEPO_OKUMA yoksa olcum yapilamaz; bu kosu yesil GORUNMEZ, bir uyari
+#     ve ozet sayfasinda neden yazar
+
+on:
+  schedule:
+    # Denetimden (04:43) sonra. Sira garanti degil (zamanlayici gecikebilir) ve
+    # gerekmiyor: sayilar kosu loglarini kendisi okur, denetime bagli degil.
+    - cron: "40 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sayilar
+  cancel-in-progress: false
+
+jobs:
+  olc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Olc ve yaz
+        id: olc
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DEPO_OKUMA: ${{ secrets.DEPO_OKUMA }}
+        run: |
+          set -uo pipefail
+          if [ -z "${DEPO_OKUMA:-}" ]; then
+            echo "::warning title=sayilar::DEPO_OKUMA tanimli degil: kosu loglari okunamaz, hicbir sayi olculmedi."
+            {
+              echo "### sayilar"
+              echo
+              echo "**Olcum yapilmadi:** DEPO_OKUMA tanimli degil. Kosu loglarini okumak icin"
+              echo "butun depolarda *Actions: Read* yetkili fine-grained bir jeton gerekir."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "yazildi=hayir" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 schema/testler.py --olc --yaz | tee olcum.txt
+          kod=${PIPESTATUS[0]}
+          if [ "$kod" -ne 0 ]; then
+            echo "::error title=sayilar::testler.py $kod ile cikti; hicbir sey push edilmeyecek."
+            exit "$kod"
+          fi
+          echo "yazildi=evet" >> "$GITHUB_OUTPUT"
+
+      - name: Fark varsa kapilardan gecir ve commit et
+        if: steps.olc.outputs.yazildi == 'evet'
+        run: |
+          set -euo pipefail
+          izinli="schema/meta-source.json README.md TESTLER.md assets/hero.svg assets/hero-light.svg"
+          degisen=$(git diff --name-only)
+          if [ -z "$degisen" ]; then
+            echo "degisiklik yok" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          for f in $degisen; do
+            case " $izinli " in
+              *" $f "*) ;;
+              *) echo "::error title=sayilar::izinli olmayan dosya degisti: $f"; exit 1 ;;
+            esac
+          done
+          sapan=$(grep -c '^  !' olcum.txt || true)
+          if [ "$sapan" -gt 6 ]; then
+            echo "::error title=sayilar::$sapan depo ayni anda degisiyor (esik 6); push edilmedi."
+            git --no-pager diff --stat
+            exit 1
+          fi
+          python3 schema/testler.py --kontrol
+          {
+            echo "### sayilar"
+            echo
+            echo "$sapan depoda sayi degisti:"
+            echo
+            echo '```'
+            grep '^  !' olcum.txt || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # shellcheck disable=SC2086 # izinli bilerek kelimelere bolunuyor
+          git add $izinli
+          git commit -m "sayilar: $sapan depoda test sayisi kosunun yazdigina esitlendi"
+          git push

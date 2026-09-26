@@ -1,0 +1,148 @@
+{
+  "mcp-vet": {
+    "alan": "denetim",
+    "ust": "SECURITY AUDIT · MCP",
+    "satirlar": ["Reads an MCP server's source before you install it,", "and cites file:line for every finding."],
+    "cipler": ["never runs what it audits", "zero dependencies", "JSON + CI mode"],
+    "olgular": [["reads", "poisoning, exfiltration, shell"], ["proves", "file:line on every finding"], ["rates", "LOW · MEDIUM · HIGH · CRITICAL"], ["diffs", "two releases of one server"], ["exits", "non-zero at your threshold"]]
+  },
+  "godot-refcheck": {
+    "alan": "denetim",
+    "ust": "GODOT · STATIC CHECK",
+    "satirlar": ["Finds broken references and dead signal connections", "in Godot projects, without opening the editor."],
+    "cipler": ["single binary, no deps", "SARIF", "GitHub Action"],
+    "olgular": [["reads", ".tscn .tres .import .gd shaders"], ["resolves", "instanced and inherited scenes"], ["fixes", "--fix repairs what is provable"], ["proves", "cases confirmed in real Godot"], ["reports", "text, JSON or SARIF 2.1.0"]]
+  },
+  "repo-vet": {
+    "alan": "denetim",
+    "ust": "README AUDIT",
+    "satirlar": ["Your README is a promise. This checks whether", "a visitor can still keep it."],
+    "cipler": ["no clone, GitHub API only", "zero dependencies", "GitHub Action"],
+    "olgular": [["install", "pip / npm commands vs registry"], ["badge", "workflow renamed, badge blank"], ["link", "docs paths that no longer exist"], ["release", "tagged, released, or neither"], ["unknown", "not checked, never called clean"]]
+  },
+  "claude-code-intelligence": {
+    "alan": "denetim",
+    "ust": "USAGE · LOCAL-FIRST",
+    "satirlar": ["Where your Claude Code tokens went, what they cost,", "and when the quota resets."],
+    "cipler": ["local-first", "stores no prompt text", "OTLP receiver"],
+    "olgular": [["collects", "OTLP receiver + transcript scan"], ["labels", "observed · derived · estimated"], ["answers", "cost, tokens, quota reset"], ["serves", "local dashboard, token-guarded"], ["privacy", "no prompt or file content kept"]]
+  },
+  "mcp-census": {
+    "alan": "denetim",
+    "ust": "RESEARCH · MCP REGISTRY",
+    "satirlar": ["A reproducible count of the official MCP Registry:", "one question, asked three ways."],
+    "cipler": ["reproducible", "zero dependencies", "monthly series"],
+    "olgular": [["counts", "rows, distinct servers, sources"], ["finds", "entries with no code to read"], ["repeats", "a dated series, not one snapshot"], ["ships", "sample data + the full pipeline"], ["refuses", "partial counts in the series"]]
+  },
+  "repo-ratchet": {
+    "alan": "denetim",
+    "ust": "MAINTENANCE LOOP",
+    "satirlar": ["Picks the repository to work on next from measured", "signals, and records no progress without a commit."],
+    "cipler": ["zero dependencies", "no shell, ever", "allowlisted checks"],
+    "olgular": [["measures", "signals from each repository"], ["chooses", "the next repository to open"], ["records", "advanced only with a commit"], ["checks", "the repo's own tests must pass"], ["allows", "'nothing to do', with evidence"]]
+  },
+  "ai-job-gateway": {
+    "alan": "altyapi",
+    "satirlar": ["Submit a job, get an id at once, then poll", "or take a signed webhook."],
+    "cipler": ["idempotent across restarts", "SSRF-guarded webhooks"],
+    "olgular": [["submit", "POST /v1/{capability} -> id"], ["poll", "queued · running · ready"], ["webhook", "HMAC-signed, timestamped"], ["guard", "private hosts refused at dial"], ["store", "SQLite WAL, survives restarts"]]
+  },
+  "ai-workflow-engine": {
+    "alan": "altyapi",
+    "satirlar": ["A pipeline is a plain YAML file in git,", "validated before a single job is sent."],
+    "cipler": ["YAML DAG", "sandboxed templating", "CLI: awe"],
+    "olgular": [["loads", "YAML, no anchors or aliases"], ["rejects", "undeclared dependencies"], ["checks", "missing --var before any job"], ["runs", "layers concurrently, capped"], ["talks", "to ai-job-gateway"]]
+  },
+  "model-comparison-harness": {
+    "alan": "altyapi",
+    "satirlar": ["One request, N backends, latency and outcome side", "by side, with an optional judge model."],
+    "cipler": ["CLI: mch", "table · JSON · CSV", "rubric judge"],
+    "olgular": [["fans", "one request out to N backends"], ["reports", "latency, success, output"], ["judges", "pass/fail, score, reason"], ["types", "an error_type per failure"], ["checks", "config before anything runs"]]
+  },
+  "prompt-template-manager": {
+    "alan": "altyapi",
+    "satirlar": ["Prompts versioned in git and rendered strictly,", "so a prompt change is a reviewable diff."],
+    "cipler": ["CLI: ptm", "sandboxed Jinja", "StrictUndefined"],
+    "olgular": [["stores", "templates as plain YAML"], ["renders", "sandboxed, strict variables"], ["keeps", "an integer an integer"], ["checks", "defaults against their types"], ["submits", "to ai-job-gateway"]]
+  },
+  "asset-provenance-toolkit": {
+    "alan": "altyapi",
+    "satirlar": ["Records which model made a file, inside the file.", "The record travels with the asset."],
+    "cipler": ["PNG · JPEG · MP4", "no re-encoding", "sidecar fallback"],
+    "olgular": [["png", "lossless text chunk"], ["jpeg", "private APP1 marker"], ["mp4", "uuid box after the media"], ["other", "a sidecar file, never silence"], ["writes", "atomically, via a temp file"]]
+  },
+  "ajans-os": {
+    "alan": "altyapi",
+    "satirlar": ["A research-first agency operating system whose", "acceptance run survives being killed mid-task."],
+    "cipler": ["zero dependencies", "JSON Schema contracts", "ADRs"],
+    "olgular": [["read", "agent projects, file:line cited"], ["decides", "architecture decision records"], ["defines", "machine-readable contracts"], ["survives", "a kill mid-task, then resumes"], ["gates", "a planted violation must fail"]]
+  },
+  "mini-creative-toolkit": {
+    "alan": "mcp",
+    "satirlar": ["CPU-first media tools behind one MCP server.", "Each response says whether it used the network."],
+    "cipler": ["no GPU", "no API key", "network reported per call"],
+    "olgular": [["edits", "resize, crop, convert, strip EXIF"], ["cuts", "background removal on CPU"], ["video", "trim, GIFs, thumbnails"], ["reports", "\"network\": \"none\" in payload"], ["refuses", "non-commercial model by default"]]
+  },
+  "local-notes-search-mcp": {
+    "alan": "mcp",
+    "satirlar": ["Ask your own files a question in plain language.", "Answers come back as file:line."],
+    "cipler": ["no API key", "offline after one download", "multilingual"],
+    "olgular": [["embeds", "local ONNX model"], ["stores", "sqlite-vec, incremental index"], ["answers", "file:line, not a summary"], ["skips", "hidden files and secrets"], ["asks", "LLM answers only if you opt in"]]
+  },
+  "voice-io-mcp": {
+    "alan": "mcp",
+    "satirlar": ["Speech in and speech out for MCP clients.", "Hosted when a key is set, local when it is not."],
+    "cipler": ["no API key needed", "local fallback", "path-safe"],
+    "olgular": [["hears", "Groq Whisper or faster-whisper"], ["speaks", "Groq TTS or Kokoro-82M"], ["refuses", ".env and symlinks to secrets"], ["reads", "one validated open, size-capped"], ["redacts", "keys from every error"]]
+  },
+  "nvidia-nim-mcp": {
+    "alan": "mcp",
+    "satirlar": ["NVIDIA NIM's free tier inside Claude Code,", "with a fallback chain when a model says no."],
+    "cipler": ["two tools need no key", "provider fallback"],
+    "olgular": [["tools", "image, vision, translate, chat"], ["also", "content safety, embeddings"], ["falls", "Groq, Mistral, Gemini, Cerebras"], ["keeps", "each key with its own provider"], ["checks", "uploads by file signature"]]
+  },
+  "buradane": {
+    "alan": "uygulama",
+    "satirlar": ["The nearest toilet, park or fountain in Türkiye,", "from real OpenStreetMap data."],
+    "cipler": ["FastAPI + PostGIS", "Next.js + MapLibre", "ODbL data"],
+    "olgular": [["covers", "all 81 provinces of Türkiye"], ["shows", "bearing, distance, 'still here?'"], ["verifies", "by consensus, not one report"], ["limits", "rate, body size, CSP nonce"], ["splits", "ODbL data and MIT code"]]
+  },
+  "turkce-ajanlar": {
+    "alan": "uygulama",
+    "ust": "CLAUDE CODE PLUGIN",
+    "satirlar": ["Claude Code sub-agents that think in Turkish,", "not translate into it."],
+    "cipler": ["searchable in the browser", "Cursor · Codex · Copilot"],
+    "olgular": [["ships", "sub-agents, commands, skills"], ["knows", "Turkish Windows pitfalls"], ["exports", "Cursor, OpenCode, Copilot, Codex"], ["checks", "every agent file in CI"], ["browse", "the catalogue on GitHub Pages"]]
+  },
+  "godot-2d-sablon": {
+    "alan": "oyun",
+    "ust": "GODOT 4 · TEMPLATE",
+    "satirlar": ["Two Godot 4 2D starters whose jump feel is", "measured, not guessed."],
+    "cipler": ["Godot 4.7", "top-down + side-view", "GL Compatibility"],
+    "olgular": [["jumps", "coyote time, buffering"], ["varies", "jump height by hold time"], ["measures", "curves in the real engine"], ["exports", "web and Windows presets"], ["updates", "git diff + apply --3way"]]
+  },
+  "tek-tus-kosu": {
+    "alan": "oyun",
+    "satirlar": ["One button. Every obstacle on the music's beat,", "and a histogram of how late you were."],
+    "cipler": ["Godot 4.7", "rhythm mode", "daily run"],
+    "olgular": [["input", "one button: when to press"], ["rhythm", "obstacles on the beat grid"], ["after", "timing histogram per press"], ["daily", "same rooftops for everyone"], ["web", "smoke-tested in a browser"]]
+  },
+  "yercekimi-cevir": {
+    "alan": "oyun",
+    "satirlar": ["There is no jump button. One key flips gravity", "and you fall onto the ceiling."],
+    "cipler": ["Godot 4.7", "precision rooms", "ghost races"],
+    "olgular": [["input", "one key flips gravity"], ["rooms", "hand-built, medal times each"], ["medals", "measured by a bot that plays"], ["modes", "ghost race, level of the day"], ["access", "left-handed layout, storm mode"]]
+  },
+  "derin-kazi": {
+    "alan": "oyun",
+    "satirlar": ["Dig, sell, upgrade, go deeper, with the fuel", "gauge as the real timer."],
+    "cipler": ["Godot 4.7", "seeded worlds", "core at 250 m"],
+    "olgular": [["loop", "mine, haul, sell, upgrade"], ["layers", "five, down to the core"], ["timer", "fuel: get back up or lose it"], ["world", "daily seed and Deep Mode"], ["gate", "a bot must reach the core"]]
+  },
+  "kanca": {
+    "alan": "oyun",
+    "satirlar": ["Hook the ceiling, swing, release at the right", "moment and carry the momentum."],
+    "cipler": ["Godot 4.7", "hand-built levels", "bot-measured medals"],
+    "olgular": [["move", "hook, swing, release, jump"], ["levels", "hand-built, medal times each"], ["medals", "measured by a bot that plays"], ["art", "every sprite generated in code"], ["ci", "the bot re-plays every push"]]
+  }
+}

@@ -14,8 +14,8 @@ Depo basina olculenler:
   - hic is akisi var mi
   - varsayilan dalda en son tamamlanan kosular kirmizi mi
   - yayindaki adres (homepage) hala aciliyor mu
-  - (DEPO_JETONU varsa) acik Dependabot uyarisi var mi
-  - (DEPO_JETONU varsa) yayimlanan test sayisi en yeni CI kosusunun
+  - (DEPO_OKUMA varsa) acik Dependabot uyarisi var mi
+  - (DEPO_OKUMA varsa) yayimlanan test sayisi en yeni CI kosusunun
     yazdigi sayiyla ayni mi
   - en yeni etiketin release'i var mi, PyPI'a gitmis mi
   - 'active' diyen bir depo aylardir sessiz mi
@@ -29,7 +29,7 @@ kirmizi yakmaz; sinyal, acilan/guncellenen konudur.
 
 Yalnizca standart kutuphane. Dependabot uyarilari GITHUB_TOKEN ile baska
 bir depoda okunamaz; o yuzden varsayilan olarak kapsam disi -- goremedigi
-bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_JETONU tanimliysa
+bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_OKUMA tanimliysa
 (Dependabot alerts: Read) kapsama giriyor ve denetim.json bunu
 `dependabot_checked` alaninda soyluyor.
 
@@ -69,6 +69,18 @@ def _derle():
 D = _derle()
 OWNER = D.OWNER
 API = D.API
+
+
+def _politika_modulu():
+    """schema/politika.py: is akisi ve tedarik zinciri kurallari (tek kaynak)."""
+    yol = KOK / "schema" / "politika.py"
+    spec = importlib.util.spec_from_file_location("ekosistem_politika", yol)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+P = _politika_modulu()
 
 
 def _belki(url, varsayilan=None):
@@ -117,19 +129,39 @@ def _kirmizi_kosular(ad, dal, akislar):
                   if k["conclusion"] in ("failure", "timed_out", "startup_failure"))
 
 
-GENIS = os.environ.get("DEPO_JETONU") or ""
+def _kapanmis_akislar(ad):
+    """GitHub'in kendiliginden kapattigi zamanlanmis is akislari.
+
+    Public bir depoda 60 gun hic hareket olmazsa GitHub zamanlanmis is
+    akislarini kapatir (`disabled_inactivity`) ve kimseye haber vermez: akis
+    listede durur, kirmizi yanmaz, sadece bir daha hic kosmaz. Kirmizi kosu
+    kontrolu bunu goremez, cunku ortada kosu yok. Elle kapatilan
+    (`disabled_manually`) bilincli bir karar sayilir ve raporlanmaz.
+    """
+    veri = _belki(f"{API}/repos/{OWNER}/{ad}/actions/workflows?per_page=100", {})
+    return sorted(w.get("path", w.get("name", "?")).rsplit("/", 1)[-1]
+                  for w in (veri or {}).get("workflows", [])
+                  if w.get("state") == "disabled_inactivity")
+
+
+# Salt okunur, butun depolarda: Actions: Read (kosu loglari) ve Dependabot
+# alerts: Read. Yazma yetkisi YOK; yazan tek is yenile.yml'in onayli adimi ve
+# onun jetonu (DEPO_YAZMA) ayri. Eski tek-jeton adi yerelde hala okunur.
+GENIS = os.environ.get("DEPO_OKUMA") or os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
 SAYI_OKUNAN = []           # yayimlanan test sayisi kosuya karsi GERCEKTEN karsilastirilan depolar
 SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
 OKUNAMADI = []             # hiz siniri yuzunden hic olculemeyen depolar
 KURULUM_ONBELLEK = {}      # paket adi -> PyPI surumleri (tur basina)
+POLITIKA_BAKILAMADI = {}   # depo -> neden is akisi politikasina bakilamadi
+KUYRUK = {"acik": 0, "dependabot": 0, "kirmizi": 0, "kosusuz": 0, "depo": 0}  # acik PR kuyrugu
 
 
 def _uyarilar(ad):
     """Acik Dependabot uyarilari.
 
     GITHUB_TOKEN bunu baska bir depoda goremez; goremedigi bir seyi
-    "temiz" diye yazmaktansa hic yazmamak dogru. DEPO_JETONU tanimliysa
+    "temiz" diye yazmaktansa hic yazmamak dogru. DEPO_OKUMA tanimliysa
     (Dependabot alerts: Read yetkisiyle) kapak aciliyor ve uyarilar da
     gunluk denetime giriyor. Jeton yoksa None doner -- "uyari yok" degil,
     "bakilamadi".
@@ -297,7 +329,7 @@ def _test_sayisi(ad, dal, meta, akislar):
     if not testler or not testler.get("count"):
         return None                       # yayimlanan sayi yok: karsilastiracak bir sey de yok
     if not GENIS:
-        SAYI_BAKILAMADI[ad] = "DEPO_JETONU yok: kosu logu okunamaz"
+        SAYI_BAKILAMADI[ad] = "DEPO_OKUMA yok: kosu logu okunamaz"
         return None
     desen = kalip(testler.get("source"))
     if not desen:
@@ -494,6 +526,109 @@ def _surum_zinciri(ad, dal, akislar):
     return f
 
 
+def _politika_dosyalari(ad, dal):
+    """Politikanin baktigi dosyalar, tek agac istegi + gereken icerikler.
+
+    uv.lock icerigi okunmaz: kural yalnizca varligina bakiyor, ve buyuk bir
+    kilidi her gun indirmenin karsiligi yok. Cargo.lock ve package-lock.json
+    okunur, cunku "hic bagimliligi yok" istisnasi icerige bakiyor.
+    """
+    agac = _belki(f"{API}/repos/{OWNER}/{ad}/git/trees/{dal}?recursive=1")
+    if not agac or agac.get("truncated"):
+        return None
+    dosyalar = {}
+    for g in agac.get("tree") or []:
+        yol = g.get("path", "")
+        if g.get("type") != "blob" or "node_modules/" in yol:
+            continue
+        akis = yol.startswith(".github/workflows/") and yol.endswith((".yml", ".yaml"))
+        db = yol in (".github/dependabot.yml", ".github/dependabot.yaml")
+        kilit = yol.rsplit("/", 1)[-1] in P.KILIT_EKOSISTEM
+        if not (akis or db or kilit):
+            continue
+        if yol.endswith("uv.lock"):
+            dosyalar[yol] = None
+            continue
+        blob = _belki(f"{API}/repos/{OWNER}/{ad}/contents/{yol}?ref={dal}")
+        if not blob or "content" not in blob:
+            return None
+        dosyalar[yol] = base64.b64decode(blob["content"]).decode("utf-8", "replace")
+    return dosyalar
+
+
+def _politika(ad, dal):
+    """FAIL'ler tek tek; WARN'lar depo basina tek satirda sayilir.
+
+    Ilk envanterde 27 deponun toplam 178 WARN satiri vardi. Hepsi konuya
+    tek tek yazilsa, bir FAIL o kalabalikta kaybolurdu.
+    """
+    if P.yaml_yok():
+        POLITIKA_BAKILAMADI[ad] = "PyYAML yok"
+        return []
+    dosyalar = _politika_dosyalari(ad, dal)
+    if dosyalar is None:
+        POLITIKA_BAKILAMADI[ad] = "dosyalar okunamadi"
+        return []
+    bulgular = P.depo_bulgulari(dosyalar)
+    cikti = ["FAIL %s" % m for s, _, m in bulgular if s == P.FAIL]
+    uyarilar = {}
+    for s, k, _ in bulgular:
+        if s == P.WARN:
+            uyarilar[k] = uyarilar.get(k, 0) + 1
+    if uyarilar:
+        cikti.append("WARN " + ", ".join("%s x%d" % (P.KURAL_ADI.get(k, k), n)
+                                         for k, n in sorted(uyarilar.items())))
+    return cikti
+
+
+KIRMIZI_SONUC = ("failure", "timed_out", "startup_failure", "action_required")
+
+
+def _pr_kuyrugu(ad):
+    """Acik PR'lar ve basi kirmizi olanlar.
+
+    Denetim varsayilan dallara bakiyordu; bekleyen isin tamami ise acik PR
+    kuyrugundaydi (25 Eylul'de 46 Claude + 36 Dependabot PR'i) ve hangisinin
+    kirmizi oldugunu yalnizca tek tek bakan biri biliyordu. `cancelled`
+    sayilmaz: concurrency, yeni bir push gelince eskisini iptal eder.
+    """
+    prlar = _belki(f"{API}/repos/{OWNER}/{ad}/pulls?state=open&per_page=100", []) or []
+    if prlar:
+        KUYRUK["depo"] += 1
+    kirmizi = []
+    for p in prlar:
+        KUYRUK["acik"] += 1
+        if (p.get("user") or {}).get("login", "").startswith("dependabot"):
+            KUYRUK["dependabot"] += 1
+        sha = (p.get("head") or {}).get("sha")
+        if not sha:
+            continue
+        kosular = (_belki(f"{API}/repos/{OWNER}/{ad}/commits/{sha}/check-runs?per_page=100", {})
+                   or {}).get("check_runs") or []
+        if not kosular:
+            # Ilk kez katki veren birinin fork'undan gelen PR'da is akislari,
+            # biri "Approve and run" diyene kadar hic kosmaz. Kirmizi degil,
+            # ama yesil de degil: bekleyen bir insan karari.
+            KUYRUK["kosusuz"] += 1
+            kirmizi.append("PR #%s: hic kontrol kosusu yok (dis katkiysa Actions onayi bekliyor)"
+                           % p.get("number"))
+            continue
+        dusen = sorted({k.get("name", "?") for k in kosular
+                        if k.get("status") == "completed" and k.get("conclusion") in KIRMIZI_SONUC})
+        if dusen:
+            KUYRUK["kirmizi"] += 1
+            kirmizi.append("PR #%s kirmizi: %s" % (p.get("number"), ", ".join(dusen[:4])))
+    return kirmizi
+
+
+def _kuyruk_satiri():
+    if not KUYRUK["acik"]:
+        return ""
+    return ("Acik PR: %d (%d Dependabot), %d depoda; basi kirmizi olan: %d; hic kosusu olmayan: %d."
+            % (KUYRUK["acik"], KUYRUK["dependabot"], KUYRUK["depo"], KUYRUK["kirmizi"],
+               KUYRUK["kosusuz"]))
+
+
 def _bayat_mi(r, meta, gun=180):
     """'active' diyen ama aylardir dokunulmamis depo.
 
@@ -640,6 +775,12 @@ def _depoyu_olc(r, kaynak):
     for m in _surum_zinciri(ad, dal, akislar):
         bulgular.append(("surum", m))
 
+    for m in _politika(ad, dal):
+        bulgular.append(("politika", m))
+
+    for m in _pr_kuyrugu(ad):
+        bulgular.append(("kuyruk", m))
+
     for m in _kurulum_calisiyor_mu(ad, dal, KURULUM_ONBELLEK):
         bulgular.append(("vitrin", m))
 
@@ -651,6 +792,9 @@ def _depoyu_olc(r, kaynak):
     else:
         for w in _kirmizi_kosular(ad, dal, akislar):
             bulgular.append(("ci", "son kosu kirmizi: %s" % w))
+        for w in _kapanmis_akislar(ad):
+            bulgular.append(("ci", "GitHub 60 gun hareketsizlik yuzunden kapatmis: %s "
+                                   "(Actions -> is akisi -> Enable workflow)" % w))
     return bulgular, iskelet, meta
 
 
@@ -731,9 +875,11 @@ BASLIK = {
     "guvenlik": "Acik guvenlik uyarisi",
     "olcum": "Yayimlanan sayi kosunun yazdigiyla ayni degil",
     "surum": "Surum zinciri yarim kalmis",
+    "politika": "Is akisi ve tedarik zinciri politikasi (schema/politika.py)",
+    "kuyruk": "Acik PR bekliyor: basi kirmizi ya da hic kosmamis",
 }
-SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "surum", "baglanti",
-        "ayrisma", "belge", "vitrin"]
+SIRA = ["metadata", "guvenlik", "olcum", "kayit", "ci", "kuyruk", "surum", "politika",
+        "baglanti", "ayrisma", "belge", "vitrin"]
 
 
 def _okunamayan_satiri():
@@ -755,7 +901,7 @@ def _kapsam_satiri():
     "Bakilamadi" ile "temiz" ayni cumleye giremez. Bu kontrol, sistemin
     kendi hakkinda soyledigi en yuklu cumleyi -- profil sayfasindaki toplam
     test sayisini -- kosunun bugun yazdigi satira geri baglayan kontrol; ve
-    DEPO_JETONU olmadan sessizce atlaniyordu, yani gunluk denetim aylarca
+    DEPO_OKUMA olmadan sessizce atlaniyordu, yani gunluk denetim aylarca
     "temiz" yazarken o cumleye hic bakmamis olabilirdi. Simdi sayiyor.
     """
     okunan, bakilamayan = len(SAYI_OKUNAN), len(SAYI_BAKILAMADI)
@@ -772,8 +918,26 @@ def _kapsam_satiri():
             % (okunan, bakilamayan, parca))
 
 
+def _politika_satiri():
+    """Politikasina bakilamayan depo "temiz" sayilmaz; sayisi yazilir."""
+    if not POLITIKA_BAKILAMADI:
+        return ""
+    nedenler = {}
+    for ad, neden in POLITIKA_BAKILAMADI.items():
+        nedenler.setdefault(neden, []).append(ad)
+    return ("Is akisi politikasina %d depoda **bakilamadi** (%s)."
+            % (len(POLITIKA_BAKILAMADI),
+               "; ".join("%d: %s" % (len(v), k) for k, v in sorted(nedenler.items()))))
+
+
 def _rapor(bulgular, iskeletler, depo_sayisi):
-    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri()) if x]
+    ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri(), _politika_satiri(),
+                            _kuyruk_satiri()) if x]
+    if not bulgular and (OKUNAMADI or POLITIKA_BAKILAMADI):
+        # Bulgu yok ama bakilamayan var: bu "temiz" degil, eksik bir olcum.
+        metin = ("Denetim eksik: %d/%d depo olculebildi, olculenlerde bulgu yok."
+                 % (depo_sayisi - len(OKUNAMADI), depo_sayisi))
+        return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
     if not bulgular:
         metin = "Denetim temiz: %d depo, bulgu yok." % (depo_sayisi - len(OKUNAMADI))
         return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
@@ -808,7 +972,7 @@ def main():
     # Depo listesi olmadan denetim diye bir sey yok, yani bu olumcul -- ama
     # olumcul olmasi yigin izi basmasi anlamina gelmiyor. Ayrica nedeni
     # soylemek gerekiyor: `_get` GITHUB_TOKEN/GH_TOKEN okuyor, kosu loglarini
-    # okuyan taraf DEPO_JETONU; yalnizca ikincisi tanimliyken istekler
+    # okuyan taraf DEPO_OKUMA; yalnizca ikincisi tanimliyken istekler
     # KIMLIKSIZ gidiyor ve saatte 60'ta duruyor. CI'da GITHUB_TOKEN hazir
     # oldugu icin orada hic gorulmez, yerelde hemen gorulur.
     try:
@@ -819,7 +983,7 @@ def main():
         print("Istekler %s gidiyor%s." % (
             "kimlikli" if kimlikli else "KIMLIKSIZ",
             "" if kimlikli else " -- GITHUB_TOKEN ya da GH_TOKEN tanimlayin "
-                               "(DEPO_JETONU yalniz kosu loglari icin kullaniliyor)"))
+                               "(DEPO_OKUMA yalniz kosu loglari icin kullaniliyor)"))
         return 2
 
     bulgular, iskeletler, metalar = [], {}, {}
@@ -827,6 +991,9 @@ def main():
     SAYI_OKUNAN.clear()
     SAYI_BAKILAMADI.clear()
     OKUNAMADI.clear()
+    POLITIKA_BAKILAMADI.clear()
+    for k in KUYRUK:
+        KUYRUK[k] = 0
     for r in sorted(depolar, key=lambda x: x["name"].lower()):
         # Hiz siniri "bakilamadi" demek, "temiz" degil -- ve kesinlikle
         # "butun denetimi dusur" degil. Bu tur bir yigin izi yuzunden
@@ -853,8 +1020,13 @@ def main():
                          "(silinmis, adi degismis ya da gizli)"))
 
     metin = _rapor(bulgular, iskeletler, len(depolar))
+    # Hic bakilamayan depo bulgu degil, ama "temiz" de degil: is akisi konuyu
+    # yalnizca kapsam tamken "temiz" diye kapatir. Eksik kapsam parmaga da
+    # girer (yalnizca varsa; tam kapsamda parmak eskisiyle ayni kalir).
+    eksik = sorted(OKUNAMADI) + sorted("politika:" + a for a in POLITIKA_BAKILAMADI)
     parmak = hashlib.sha256(
-        "\n".join("|".join(b) for b in sorted(bulgular)).encode("utf-8")
+        ("\n".join("|".join(b) for b in sorted(bulgular))
+         + ("\n#eksik:" + ",".join(eksik) if eksik else "")).encode("utf-8")
     ).hexdigest()[:16]
 
     CIKTI.write_text(json.dumps({
@@ -865,11 +1037,14 @@ def main():
         "fingerprint": parmak,
         "dependabot_checked": len(UYARI_OKUNAN),
         "test_counts_verified": len(SAYI_OKUNAN),
+        "coverage_complete": not eksik,
         "repos_unreadable": list(OKUNAMADI),
         "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
+        "policy_unchecked": dict(sorted(POLITIKA_BAKILAMADI.items())),
+        "open_prs": dict(KUYRUK),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
-                   "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "
+                   "DEPO_OKUMA tanimli degil ya da yetkisiz; GITHUB_TOKEN "
                    "onlari baska bir depoda goremiyor."),
         "findings": [{"repo": a, "kind": b, "message": c} for a, b, c in bulgular],
         "onboarding_skeletons": iskeletler,

@@ -16,7 +16,7 @@ was wrong in both directions, having been produced by grepping the tree.
 Twenty-eight repositories are public. Twenty-six of them have a suite and are
 counted here. The two that are not: `claude-quota-monitor` (43 passing tests,
 archived — `claude-code-intelligence` superseded it) and this repository. The
-latter does have a suite — 88 tests over the scripts in `schema/`, including
+latter does have a suite — 95 tests over the scripts in `schema/`, including
 the one that checks this file — and it is left out on purpose: the page that
 publishes the total should not be able to raise it.
 
@@ -154,7 +154,7 @@ kind that catches a level becoming unfinishable.
 ## The other two numbers
 
 **28 public repositories.** Every repository on this account is public except
-one unreleased game.
+two unreleased games.
 
 **1,096 commits.** `git rev-list --count HEAD`, summed over those 27
 repositories minus this one, on 22 September 2026. This repository's own
@@ -187,8 +187,8 @@ what is published here:
 
 ```bash
 python3 schema/testler.py --kontrol                 # offline: does every surface agree?
-DEPO_JETONU=... python3 schema/testler.py --olc     # re-read the run behind each number
-DEPO_JETONU=... python3 schema/testler.py --yaz     # ...and write what it measured
+DEPO_OKUMA=... python3 schema/testler.py --olc     # re-read the run behind each number
+DEPO_OKUMA=... python3 schema/testler.py --yaz     # ...and write what it measured
 ```
 
 `--kontrol` needs no token and runs in CI. `--olc` downloads one run log per

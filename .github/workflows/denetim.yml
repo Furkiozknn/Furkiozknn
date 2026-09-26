@@ -11,17 +11,21 @@ name: denetim
 # tek bir "Ekosistem denetimi" konusuna yazar:
 #   - bulgu varsa ve bulgu KUMESI degistiyse  -> yorum dusurur
 #   - bulgu varsa ama ayni kume duruyorsa     -> susar (365 ayni yorum yok)
-#   - bulgu yoksa ve konu aciksa              -> kapanis yorumu + kapatir
-#   - bulgu yoksa ve konu yoksa               -> hic ses cikarmaz
+#   - bulgu yoksa, kapsam tamsa ve konu aciksa -> kapanis yorumu + kapatir
+#   - bulgu yoksa, kapsam tamsa ve konu yoksa  -> hic ses cikarmaz
+#   - bulgu yok ama bir depoya bakilamadiysa   -> "temiz" sayilmaz; bulgulu
+#     gibi yazilir (hiz siniri ya da okunamayan politika)
 #
 # Kirmizi yanmaz: baska bir deponun eksigi bu deponun rozetini
 # bozmamali. Sinyal konudur, rozet degil.
 
 on:
   schedule:
-    # Her gun 05:00 UTC. Haftalik ozetten (pazartesi 06:00) once kossun ki
-    # ozet yazilirken ayrisma zaten bilinsin.
-    - cron: "0 5 * * *"
+    # Her gun 04:43 UTC. Haftalik ozetten (pazartesi 06:00) once kossun ki
+    # ozet yazilirken ayrisma zaten bilinsin. Saat basi degil: "0 5" iken
+    # 23-25 Eylul'deki uc kosu 09:41-09:58'de basladi (~4 s 40 dk gecikme);
+    # GitHub'in zamanlayicisi saat baslarinda en yogun.
+    - cron: "43 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -35,6 +39,7 @@ concurrency:
 jobs:
   denetle:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -42,8 +47,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Bagimlilik yok: betik yalnizca standart kutuphane kullaniyor.
-      # DEPO_JETONU tanimliysa kosu loglari da okunabiliyor, yani
+      # Is akisi politikasi (schema/politika.py) YAML okuyor; o tek bagimlilik
+      # icin pyyaml, surumu sabit. Kurulamazsa denetim yine kosar ve raporun
+      # basinda politikaya kac depoda BAKILAMADIGINI yazar.
+      - name: pyyaml
+        run: python3 -m pip install --quiet pyyaml==6.0.3
+
+      # Geri kalan her sey standart kutuphane.
+      # DEPO_OKUMA tanimliysa kosu loglari da okunabiliyor, yani
       # "yayimlanan test sayisi hala kosunun yazdigi sayi mi" sorusu
       # gercekten soruluyor. Tanimli degilse denetim yine kosuyor ama
       # raporun basinda kac deponun sayisina BAKILAMADIGI yaziyor --
@@ -52,7 +63,7 @@ jobs:
       - name: Denetim
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
+          DEPO_OKUMA: ${{ secrets.DEPO_OKUMA }}
         run: |
           set -euo pipefail
           python3 schema/denetim.py | tee denetim.md
@@ -72,6 +83,9 @@ jobs:
           set -euo pipefail
           sayi=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8'))['finding_count'])")
           parmak=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8'))['fingerprint'])")
+          # Bulgusuz ama bir depoya hic bakilamadiysa (hiz siniri, politika
+          # okunamadi) bu "temiz" degil: konu kapanmaz, rapor yorum olarak duser.
+          tam=$(python3 -c "import json;print(json.load(open('schema/denetim.json',encoding='utf-8')).get('coverage_complete', False))")
           baslik="Ekosistem denetimi"
 
           # Kapali olanlar dahil aranir: her turda yeni bir konu acmak
@@ -83,7 +97,7 @@ jobs:
           numara=$(printf '%s' "$kayit" | python3 -c "import json,sys;d=sys.stdin.read().strip();print(json.loads(d)['number'] if d and d!='null' else '')")
           durum=$(printf '%s' "$kayit" | python3 -c "import json,sys;d=sys.stdin.read().strip();print(json.loads(d)['state'] if d and d!='null' else '')")
 
-          if [ "$sayi" = "0" ]; then
+          if [ "$sayi" = "0" ] && [ "$tam" = "True" ]; then
             if [ -z "$numara" ] || [ "$durum" = "CLOSED" ]; then
               echo "Temiz; acilacak bir konu yok."
               exit 0

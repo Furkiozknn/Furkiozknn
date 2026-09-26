@@ -114,6 +114,16 @@ def surum(d):
     return None
 
 
+def _animasyonlu_webp(yol):
+    """WebP kapsayicisi: VP8X parcasinin bayrak baytinda 0x02 animasyon demek."""
+    try:
+        with open(yol, "rb") as f:
+            b = f.read(21)
+    except OSError:
+        return False
+    return len(b) == 21 and b[:4] == b"RIFF" and b[8:16] == b"WEBPVP8X" and bool(b[20] & 0x02)
+
+
 def medya(d):
     """Yalnızca README'nin gerçekten gösterdiği yerel görseller."""
     yol = os.path.join(d, "README.md")
@@ -127,7 +137,8 @@ def medya(d):
                 continue
             if hero is None:
                 hero = u
-            if u.lower().endswith(".gif"):
+            if u.lower().endswith(".gif") or (
+                    u.lower().endswith(".webp") and _animasyonlu_webp(os.path.join(d, u))):
                 gifler.append(u)
             elif u.lower().endswith((".png", ".jpg", ".jpeg", ".webp")):
                 kareler.append(u)

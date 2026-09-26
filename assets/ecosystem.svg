@@ -64,13 +64,13 @@
 <text x="830" y="408" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">turkce-ajanlar</text>
 <text x="832" y="423" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">70 sub-agents, searchable</text>
 <text x="830" y="442" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#d8d8e0">4 Godot games + a starter</text>
-<text x="832" y="457" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">853, 841, 460 and 115 checks</text>
+<text x="832" y="457" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="11" fill="#6b6b77">each played headlessly in CI</text>
 <path d="M220 206 L220 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
 <path d="M600 206 L600 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
 <path d="M980 206 L980 240" stroke="#6b6b77" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="4 5" marker-end="url(#a)"/>
 <rect x="40" y="540" width="1120" height="84" rx="14" fill="#101016" stroke="#242430"/>
 <rect x="40" y="540" width="1120" height="3" rx="1.5" fill="#c9a961" opacity="0.7"/>
-<text x="58" y="570" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#c9a961">project-meta.json in all 27 repositories</text>
+<text x="58" y="570" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="14" font-weight="600" fill="#c9a961">project-meta.json in every repository</text>
 <text x="1138" y="570" text-anchor="end" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#4ade9e">furkiozknn.github.io renders this same metadata</text>
 <text x="62" y="590" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="12.5" fill="#c7c2b6">One schema, one validator, and an audit that runs every morning over the GitHub API.</text>
 <text x="62" y="609" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="12.5" fill="#c7c2b6">It re-derives every published number from the run that printed it, and opens an issue the day a repository drifts.</text>

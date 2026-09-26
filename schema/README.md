@@ -132,8 +132,8 @@ is for the metadata layer:
 ```bash
 python3 schema/testler.py --kontrol                 # offline gate, runs in CI
 python3 schema/testler.py --tazele --depo-sayisi N  # write meta-source's numbers everywhere
-DEPO_JETONU=... python3 schema/testler.py --olc     # re-read the run behind each number
-DEPO_JETONU=... python3 schema/testler.py --yaz     # ...and write what it measured
+DEPO_OKUMA=... python3 schema/testler.py --olc     # re-read the run behind each number
+DEPO_OKUMA=... python3 schema/testler.py --yaz     # ...and write what it measured
 ```
 
 `--kontrol` checks one more thing than the daily audit does: `TESTLER.md`'s
@@ -158,7 +158,7 @@ It fixes nothing and commits nothing. It exits 0 even when it finds
 something, because one repository's missing licence should not turn another
 repository's badge red.
 
-The *denetim* workflow runs it daily at 05:00 UTC and keeps a single
+The *denetim* workflow runs it daily at 04:43 UTC and keeps a single
 *Ekosistem denetimi* issue: it comments when the **set** of findings changes,
 stays quiet when the same findings are still open, and closes the issue with a
 note when everything clears. A repository that has no entry in
@@ -206,7 +206,7 @@ are checked — a sentence mentioning a command is discussing it, not asking
 anyone to run it.
 
 Reading run logs needs `Actions: Read`, so the count check runs only when
-`DEPO_JETONU` is set. Without it the audit stays quiet about counts rather
+`DEPO_OKUMA` is set. Without it the audit stays quiet about counts rather
 than pretending they were verified.
 
 ## Fixing the drift, not just finding it
@@ -219,21 +219,29 @@ switched on.
 The *yenile* workflow closes that. Every Monday at 04:30 UTC it clones all
 of them (treeless, no credentials needed — they are public), runs `uret.py`
 over the lot, puts the result through `dogrula.py`, and prints the diff.
-What happens next depends on one secret:
+What happens next is split in two jobs with different powers:
 
-- **No `DEPO_JETONU`** — it stops there and writes what *would* change into
-  the run summary. Useful on its own: a second drift detector that shows the
-  exact diff rather than a description of it.
-- **With `DEPO_JETONU`** — a fine-grained token with `Contents: Read and
-  write` on the repositories — each changed file is committed to its own
-  repository and the layer repairs itself with nobody watching.
+- **`tazele`** holds no secret. It runs `koruma.py` (no filled field may go
+  empty) and `degisim.py` (nothing but `project-meta.json` changed, and it
+  still parses) per repository, writes the full diff into the run summary
+  and records the commit each change was computed against. Without anything
+  else configured, that is the whole run: a second drift detector that shows
+  the exact diff rather than a description of it.
+- **`yaz`** runs in the `meta-yazma` environment, whose *Required reviewers*
+  rule makes GitHub hold it until a person has read that diff and approved.
+  Only then does it see `DEPO_YAZMA` (Contents: Read and write, stored as an
+  environment secret). It skips any repository whose branch moved while the
+  approval waited, re-runs both gates, pushes (CI runs on the commit; no
+  `[skip ci]`) and checks the remote branch tip is the commit it pushed. No
+  reviewer rule on the environment, or no secret: nothing is pushed and the
+  job is red.
 
-Only `project-meta.json` is ever staged, nothing is pushed if the validator
-fails, archived repositories are skipped because they reject pushes, and
-there is no force push anywhere. The same token, given `Dependabot alerts:
-Read`, also turns on the one check the daily audit is otherwise blind to;
-`denetim.json` reports how many repositories it actually managed to read
-rather than claiming a clean bill it could not have seen.
+Archived repositories are skipped because they reject pushes, more than
+`esik` changed repositories means none is written, and there is no force
+push anywhere. Reading run logs and Dependabot alerts for the daily audit is
+a separate, read-only token (`DEPO_OKUMA`); `denetim.json` reports how many
+repositories it actually managed to read rather than claiming a clean bill
+it could not have seen.
 
 ## The gates in front of all of this
 

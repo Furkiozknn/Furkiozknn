@@ -129,7 +129,14 @@ def main():
 
     denetle, sema = _sema_denetleyici()
     projects, missing, bozuk = [], [], []
-    for r in _repos():
+    depolar = _repos()
+    if not depolar:
+        # Bos liste "hic proje yok" degil, API'nin bir sey dondurmedigi:
+        # projects.json'u sifir projeyle yazmak dizini sessizce bosaltirdi.
+        print("derle: GitHub depo listesi bos dondu; projects.json'a dokunulmadi",
+              file=sys.stderr)
+        return 1
+    for r in depolar:
         if r.get("fork"):
             continue
         meta = _meta(r["name"], r["default_branch"])

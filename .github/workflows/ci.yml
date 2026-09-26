@@ -30,6 +30,7 @@ concurrency:
 jobs:
   kapilar:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -37,10 +38,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      # schema/ betiklerinin kendisi bagimliliksiz; pyyaml yalnizca
-      # burada, YAML'i ayristirabilmek icin var.
+      # pyyaml: is akisi YAML'lerini ayristirmak icin (testler ve
+      # schema/politika.py). Surum sabit: CI'da kosan kod her gun ayni olmali.
       - name: pyyaml
-        run: python3 -m pip install --quiet pyyaml
+        run: python3 -m pip install --quiet pyyaml==6.0.3
 
       - name: schema testleri
         run: python3 schema/test_schema.py
@@ -55,6 +56,23 @@ jobs:
       # "hepsi ayni seyi mi soyluyor" diye soruyor.
       - name: Yayimlanan sayilar tutarli mi
         run: python3 schema/testler.py --kontrol
+
+      # "Recently" bolumu yazilar/'dan uretiliyor. Elle duzenlenip
+      # yazilarla ayrisirsa ya da yeni bir yazi README'ye hic girmezse, bu
+      # kapi kirmizi olur. Agsiz: surum satirlarina dokunmaz.
+      - name: Recently bolumu yazilar/ ile ayni mi
+        run: python3 schema/vitrin.py --kontrol
+
+      # Depo aciklamalari about/about.json'da; burada yalnizca kurallara
+      # uyup uymadigi soruluyor (uzunluk, tam cumle, https). Agsiz.
+      - name: About metinleri kurallara uyuyor mu
+        run: python3 about/uygula.py --kontrol
+
+      # Butun depolarin is akislarina uygulanan kurallar (zaman siniri,
+      # SHA'li ucuncu taraf action, pipefail, izinler, Dependabot).
+      # Kurallari koyan depo onlara ilk uyan olmali: --kati WARN'da da kirmizi.
+      - name: Is akisi politikasi (bu depo)
+        run: python3 schema/politika.py --depo . --kati
 
       - name: Is akisi YAML'leri
         run: |

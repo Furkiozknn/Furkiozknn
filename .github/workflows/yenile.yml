@@ -1,45 +1,55 @@
 name: yenile
 
-# Metadata katmanini kendi kendine tazeler.
+# Metadata katmanini kendi kendine tazeler -- son adimda insan onayiyla.
 #
 # Denetim (denetim.yml) ayrismayi GORUYOR ama duzeltemiyor: duzeltmek icin
 # her deponun calisma agaci gerekiyor. Bu is akisi o bosluga bakiyor --
 # butun depolari klonlar, schema/uret.py ile project-meta.json'lari
-# yeniden uretir, schema/dogrula.py kapisindan gecirir ve farki yazar.
+# yeniden uretir, kapilardan gecirir ve farki yazar.
 #
-# Iki kipte calisir ve kip, sir olup olmamasina gore KENDILIGINDEN secilir:
+# Iki is, iki yetki:
 #
-#   DEPO_JETONU yoksa  -> "sadece bak". Klonlamak icin yetki gerekmiyor
-#                         (depolar zaten acik), yani bu kip her zaman
-#                         calisir ve ne degisecegini ozet sayfasina yazar.
-#                         Duzeltme `/meta` ile bu bilgisayardan yurur.
-#   DEPO_JETONU varsa  -> degisen her dosya kendi deposuna push edilir.
-#                         Metadata katmani artik kendi kendini onariyor.
+#   tazele  -> hicbir sir kullanmaz. Klonlar (depolar acik), uretir, dogrular,
+#              her ayrisan depo icin koruma.py ve degisim.py kapisini kosar,
+#              ne yazilacagini ve HANGI taban commit'in ustune yazilacagini
+#              bir artifact'e koyar. Ozet sayfasinda tam diff var.
+#   yaz     -> `meta-yazma` ortaminda kosar. O ortama "Required reviewers"
+#              eklenince GitHub bu isi onay verilene kadar bekletir: insan
+#              diff'i ozet sayfasinda okur, onaylar ya da reddeder. Jeton
+#              (DEPO_YAZMA, butun depolarda yalnizca Contents: Read and write)
+#              o ortamin sirridir; onaysiz hicbir is onu goremez.
 #
-# GITHUB_TOKEN neden yetmiyor: yalnizca kendi deposunda yazabilir.
-# Gereken sir: butun depolarda Contents: Read and write yetkisi olan
-# fine-grained bir PAT, adi DEPO_JETONU.
+# Neden boyle: onceki surum tek bir "her seye yeter" jetonla 26 deponun
+# varsayilan dalina onaysiz ve `[skip ci]` ile push ediyordu. Artik:
+#   - okuyan jeton (DEPO_OKUMA, denetim/sayilar) yazamaz
+#   - yazan jeton yalnizca onaydan sonra, yalnizca bu adimda var
+#   - ortamda onay kurali yoksa yaz isi push ETMEZ ve kirmizi biter
+#     (GitHub olmayan bir ortami kurallar olmadan kendiliginden yaratir)
+#   - onay beklerken dal ilerlediyse o depo atlanir: diff'i okunmamis bir
+#     tabana yazilmaz; bir sonraki tur yeniden uretir
+#   - push'tan sonra uzak dalin ucu yerel commit'le karsilastirilir
+#   - `[skip ci]` yok: her deponun kendi CI'i metadata commit'ini dogrular
 #
-# Guvenlik kemerleri:
-#   - yalnizca `project-meta.json` stage'lenir, baska hicbir dosya
+# Guvenlik kemerleri (iki iste de):
+#   - yalnizca `project-meta.json` degisebilir (degisim.py --dosya)
 #   - dogrula.py kapisi gecmezse hicbir depoya dokunulmaz
-#   - koruma.py: dolu bir alanin bosaldigi degisiklik push edilmez
+#   - koruma.py: dolu bir alanin bosaldigi degisiklik yazilmaz
 #   - patlama yaricapi: `esik`ten fazla depo degisiyorsa hicbirine
 #     dokunulmaz. Ayni anda on depoda gercek ayrisma olmasi beklenmez;
 #     boyle bir sey neredeyse her zaman ureticideki bir hatadir.
 #   - arsivli depo atlanir (push kabul etmez)
 #   - force push yok, dal degistirme yok
-#   - `sadece_bak` girdisi sir varken bile push'u kapatir
+#   - `sadece_bak` girdisi yaz isini hic baslatmaz
 
 on:
   schedule:
-    # Pazartesi 04:30 UTC. Denetimden (05:00) ve haftalik ozetten (06:00)
+    # Pazartesi 04:30 UTC. Denetimden (04:43) ve haftalik ozetten (06:00)
     # once kossun ki ikisi de tazelenmis veriyi gorsun.
     - cron: "30 4 * * 1"
   workflow_dispatch:
     inputs:
       sadece_bak:
-        description: "Sir tanimli olsa bile push etme, yalnizca farki yaz"
+        description: "Yaz isini hic baslatma, yalnizca farki yaz"
         type: boolean
         default: false
       esik:
@@ -57,6 +67,9 @@ concurrency:
 jobs:
   tazele:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      yazilacak: ${{ steps.fark.outputs.yazilacak }}
     steps:
       - uses: actions/checkout@v4
 
@@ -82,7 +95,7 @@ jobs:
           PY
 
           mkdir -p klonlar
-          while read -r ad dal arsiv; do
+          while read -r ad dal _; do
             git clone --quiet --filter=blob:none --branch "$dal" \
               "https://github.com/${GITHUB_REPOSITORY_OWNER}/${ad}.git" "klonlar/${ad}"
           done < depolar.txt
@@ -94,13 +107,22 @@ jobs:
           python3 schema/uret.py --kok klonlar
           python3 schema/dogrula.py --kok klonlar | tail -3
 
-      - name: Farki yaz, guvenliyse push et
+      - name: Farki topla ve kapilardan gecir
+        id: fark
         env:
-          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
           SADECE_BAK: ${{ inputs.sadece_bak && 'evet' || 'hayir' }}
           ESIK: ${{ inputs.esik || '8' }}
         run: |
           set -euo pipefail
+          echo "yazilacak=hayir" >> "$GITHUB_OUTPUT"
+          # Sayi olmayan bir esik `[ -gt ]`'yi hataya dusurur; `if` icinde o
+          # hata "yanlis" sayilir ve patlama yaricapi sessizce atlanirdi.
+          if ! [[ "$ESIK" =~ ^[0-9]+$ ]]; then
+            echo "::error title=yenile::esik bir sayi olmali, '$ESIK' verildi."
+            exit 1
+          fi
+          echo "### yenile" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
 
           # --- 1. tur: neyin degistigini topla, hicbir seye dokunma ---
           : > degisenler.txt
@@ -108,74 +130,171 @@ jobs:
             yol="klonlar/${ad}"
             [ -d "$yol" ] || continue
             [ -n "$(git -C "$yol" status --porcelain -- project-meta.json)" ] || continue
-            echo "$ad $dal $arsiv" >> degisenler.txt
-            echo "#### $ad"
-            git -C "$yol" --no-pager diff -- project-meta.json | head -40
+            echo "$ad $dal $arsiv $(git -C "$yol" rev-parse HEAD)" >> degisenler.txt
+            {
+              echo "<details><summary><code>${ad}</code></summary>"
+              echo
+              echo '```diff'
+              { git -C "$yol" --no-pager diff -- project-meta.json || true; } | head -60
+              echo '```'
+              echo "</details>"
+            } >> "$GITHUB_STEP_SUMMARY"
           done < depolar.txt
           degisen=$(wc -l < degisenler.txt)
-
-          echo "### yenile" >> "$GITHUB_STEP_SUMMARY"
-          echo >> "$GITHUB_STEP_SUMMARY"
 
           if [ "$degisen" = "0" ]; then
             echo "Hicbir depoda ayrisma yok." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-
-          # --- 2. tur: kapilar ---
-          yazabilir="evet"
-          neden=""
-          if [ -z "${DEPO_JETONU:-}" ]; then
-            yazabilir="hayir"
-            neden="DEPO_JETONU tanimli degil"
-          elif [ "$SADECE_BAK" = "evet" ]; then
-            yazabilir="hayir"
-            neden="sadece_bak isaretli"
-          elif [ "$degisen" -gt "$ESIK" ]; then
-            yazabilir="hayir"
-            neden="patlama yaricapi: $degisen depo degisiyor, esik $ESIK"
-          fi
-
-          if [ "$yazabilir" != "evet" ]; then
-            echo "**$degisen depoda ayrisma var, hicbiri push edilmedi** ($neden)." >> "$GITHUB_STEP_SUMMARY"
-            echo >> "$GITHUB_STEP_SUMMARY"
-            cut -d" " -f1 degisenler.txt | sed 's/^/- `/; s/$/`/' >> "$GITHUB_STEP_SUMMARY"
-            if [ -z "${DEPO_JETONU:-}" ]; then
-              echo >> "$GITHUB_STEP_SUMMARY"
-              echo "Kendi kendine duzeltmesi icin butun depolarda **Contents: Read and write** yetkisi olan fine-grained bir PAT uretip bu deponun Settings -> Secrets and variables -> Actions altina \`DEPO_JETONU\` adiyla ekle. O zamana kadar duzeltme \`/meta\` ile yurur." >> "$GITHUB_STEP_SUMMARY"
-            fi
+          if [ "$degisen" -gt "$ESIK" ]; then
+            echo "**$degisen depoda ayrisma var, hicbiri yazilmayacak** (patlama yaricapi: esik $ESIK)." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
 
-          git config --global url."https://x-access-token:${DEPO_JETONU}@github.com/".insteadOf "https://github.com/"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # --- 3. tur: depo depo, son kapi ve push ---
-          atlanan=0
-          gonderilen=0
-          while read -r ad dal arsiv; do
+          # --- 2. tur: depo basina kapilar; gecenler yamaya ---
+          mkdir -p yama
+          : > yama/liste.txt
+          while read -r ad dal arsiv taban; do
             yol="klonlar/${ad}"
             if [ "$arsiv" = "1" ]; then
-              atlanan=$((atlanan + 1))
-              echo "- \`${ad}\` ayrismis ama **arsivli**, dokunulmadi" >> "$GITHUB_STEP_SUMMARY"
+              echo "- \`${ad}\` ayrismis ama **arsivli**, dokunulmayacak" >> "$GITHUB_STEP_SUMMARY"
               continue
             fi
-            git -C "$yol" show "HEAD:project-meta.json" > eski.json
+            # Ilk kez uretilen dosyanin eskisi yok: kaybedilecek alan da yok.
+            git -C "$yol" show "HEAD:project-meta.json" > eski.json 2>/dev/null || echo '{}' > eski.json
             if ! python3 schema/koruma.py eski.json "${yol}/project-meta.json"; then
-              atlanan=$((atlanan + 1))
-              echo "- \`${ad}\` **push EDILMEDI**: degisiklik dolu bir alani bosaltiyor (yukaridaki KAYIP satirlarina bak)" >> "$GITHUB_STEP_SUMMARY"
+              echo "- \`${ad}\` **yazilmayacak**: degisiklik dolu bir alani bosaltiyor" >> "$GITHUB_STEP_SUMMARY"
               continue
             fi
-            git -C "$yol" add project-meta.json
-            git -C "$yol" commit --quiet \
-              -m "meta: project-meta.json tazelendi [skip ci]" \
-              -m "Depodaki gercekler degisti; dosya schema/uret.py ile yeniden uretildi, schema/dogrula.py ve schema/koruma.py kapilarindan gecti." \
-              -m "Kaynak: ${GITHUB_REPOSITORY} yenile.yml, kosu ${GITHUB_RUN_ID}"
-            git -C "$yol" push origin "HEAD:${dal}"
-            gonderilen=$((gonderilen + 1))
-            echo "- \`${ad}\` **tazelendi ve push edildi**" >> "$GITHUB_STEP_SUMMARY"
+            if ! python3 schema/degisim.py --kok "$yol" --taban HEAD \
+                   --dosya project-meta.json --silinebilir '.*'; then
+              echo "- \`${ad}\` **yazilmayacak**: degisim.py kapisi (project-meta.json disinda bir sey degisti ya da JSON okunmuyor)" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            mkdir -p "yama/${ad}"
+            cp "${yol}/project-meta.json" "yama/${ad}/project-meta.json"
+            echo "$ad $dal $taban" >> yama/liste.txt
+            echo "- \`${ad}\` kapilardan gecti (taban \`${taban:0:12}\`)" >> "$GITHUB_STEP_SUMMARY"
           done < degisenler.txt
 
+          aday=$(wc -l < yama/liste.txt)
           echo >> "$GITHUB_STEP_SUMMARY"
-          echo "${degisen} depoda ayrisma vardi: ${gonderilen} tazelendi, ${atlanan} dokunulmadi." >> "$GITHUB_STEP_SUMMARY"
+          if [ "$aday" = "0" ]; then
+            echo "$degisen depoda ayrisma vardi; hicbiri kapilardan gecmedi." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$SADECE_BAK" = "evet" ]; then
+            echo "**sadece_bak isaretli:** $aday depo yazilabilirdi, yaz isi baslatilmadi." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "**$aday depo yazilmaya hazir.** Yaz isi \`meta-yazma\` ortaminda onay bekliyor: yukaridaki diff'i oku, sonra onayla ya da reddet." >> "$GITHUB_STEP_SUMMARY"
+            echo "yazilacak=evet" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: steps.fark.outputs.yazilacak == 'evet'
+        with:
+          name: yama
+          path: yama/
+          include-hidden-files: true
+          retention-days: 7
+
+  yaz:
+    needs: tazele
+    if: needs.tazele.outputs.yazilacak == 'evet'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Onay burada: ortamdaki "Required reviewers" kurali bu isi bekletir.
+    environment: meta-yazma
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: yama
+          path: yama
+
+      # GitHub, is akisinda adi gecen ama tanimlanmamis bir ortami kuralsiz
+      # olarak kendiliginden yaratir -- yani onay adimi sessizce yok olur.
+      # Kural yoksa push yok.
+      - name: Onay kurali gercekten var mi
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          kural=$(curl -fsS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/environments/meta-yazma" \
+            | python3 -c "import json,sys; print(sum(1 for r in json.load(sys.stdin).get('protection_rules') or [] if r.get('type') == 'required_reviewers'))")
+          if [ "$kural" = "0" ]; then
+            echo "::error title=yenile::meta-yazma ortaminda 'Required reviewers' yok: onaysiz push edilmez."
+            exit 1
+          fi
+
+      - name: Onaylanan tabana yaz, push et, dogrula
+        env:
+          DEPO_YAZMA: ${{ secrets.DEPO_YAZMA }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DEPO_YAZMA:-}" ]; then
+            echo "::error title=yenile::DEPO_YAZMA tanimli degil (meta-yazma ortaminin sirri olmali); hicbir sey push edilmedi."
+            exit 1
+          fi
+          yetki="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$DEPO_YAZMA" | base64 -w0)"
+          echo "::add-mask::$(printf 'x-access-token:%s' "$DEPO_YAZMA" | base64 -w0)"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "### yenile: yaz" >> "$GITHUB_STEP_SUMMARY"
+          ozet() { echo "$1" >> "$GITHUB_STEP_SUMMARY"; }
+          # Bir deponun basarisizligi (koruma, yaris, ag) digerlerini durdurmaz:
+          # her adim acikca denetlenir; 0 yazildi, 1 hata, 2 atlandi.
+          yaz_bir() {
+            local ad=$1 dal=$2 taban=$3 yol="k/$1" simdi yerel uzak
+            git clone --quiet --filter=blob:none --branch "$dal" \
+              "https://github.com/${GITHUB_REPOSITORY_OWNER}/${ad}.git" "$yol" \
+              || { ozet "- \`${ad}\` **push EDILMEDI**: klonlanamadi"; return 1; }
+            simdi=$(git -C "$yol" rev-parse HEAD)
+            if [ "$simdi" != "$taban" ]; then
+              ozet "- \`${ad}\` **atlandi**: onay beklerken ${dal} ilerledi (\`${taban:0:12}\` -> \`${simdi:0:12}\`); bir sonraki tur yeniden uretir"
+              return 2
+            fi
+            cp "yama/${ad}/project-meta.json" "${yol}/project-meta.json" || return 1
+            git -C "$yol" show "HEAD:project-meta.json" > eski.json 2>/dev/null || echo '{}' > eski.json
+            if ! python3 schema/koruma.py eski.json "${yol}/project-meta.json" \
+               || ! python3 schema/degisim.py --kok "$yol" --taban HEAD --dosya project-meta.json --silinebilir '.*'; then
+              ozet "- \`${ad}\` **push EDILMEDI**: kapi onaydan sonra gecmedi"
+              return 1
+            fi
+            if ! { git -C "$yol" add project-meta.json && git -C "$yol" commit --quiet \
+                -m "meta: project-meta.json tazelendi" \
+                -m "Depodaki gercekler degisti; dosya schema/uret.py ile yeniden uretildi, schema/dogrula.py, schema/koruma.py ve schema/degisim.py kapilarindan gecti ve bir insan onayladi." \
+                -m "Kaynak: ${GITHUB_REPOSITORY} yenile.yml, kosu ${GITHUB_RUN_ID}"; }; then
+              ozet "- \`${ad}\` **push EDILMEDI**: commit olusturulamadi"
+              return 1
+            fi
+            git -C "$yol" -c http.extraheader="$yetki" push --quiet origin "HEAD:${dal}" \
+              || { ozet "- \`${ad}\` **push EDILMEDI**: uzak reddetti (dal korumasi ya da yaris)"; return 1; }
+            yerel=$(git -C "$yol" rev-parse HEAD)
+            uzak=$(git -C "$yol" ls-remote origin "refs/heads/${dal}" | cut -f1) || uzak=""
+            if [ "$uzak" != "$yerel" ]; then
+              ozet "- \`${ad}\` push sonrasi uzak dal \`${uzak:0:12}\`, beklenen \`${yerel:0:12}\`"
+              return 1
+            fi
+            ozet "- \`${ad}\` **yazildi** \`${yerel:0:12}\` (uzak dal dogrulandi; CI o depoda kosuyor)"
+          }
+          gonderilen=0; atlanan=0; hata=0
+          while read -r ad dal taban; do
+            kod=0
+            yaz_bir "$ad" "$dal" "$taban" || kod=$?
+            case "$kod" in
+              0) gonderilen=$((gonderilen + 1)) ;;
+              2) atlanan=$((atlanan + 1)) ;;
+              *) hata=$((hata + 1)) ;;
+            esac
+          done < yama/liste.txt
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo "${gonderilen} yazildi, ${atlanan} atlandi, ${hata} hata." >> "$GITHUB_STEP_SUMMARY"
+          [ "$hata" = "0" ]
