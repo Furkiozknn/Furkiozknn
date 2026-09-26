@@ -40,6 +40,7 @@ obeys them first) and in the daily audit over the GitHub API.
 | `tetik` — `pull_request_target` / `workflow_run` | FAIL if it checks out the PR's code, else WARN | secrets + untrusted code in one job is the "pwn request" |
 | `yaml` — a workflow that does not parse | FAIL | a broken file must not read as "no findings" |
 | `dbgecersiz` — `dependabot.yml` without `version: 2`, or unparseable | FAIL | GitHub rejects the whole file: no update is ever opened, and nothing turns red |
+| `sifirtest` — `node --test` or `python -m unittest` (unless every Python in the job is ≥ 3.12) with no count floor (`-ge`/`-gt`) in the same job | WARN | both exit 0 when they find no tests ("tests 0", "Ran 0 tests … OK"); a renamed test folder stays green. pytest, vitest, Playwright and 3.12+ unittest already fail on zero |
 | `sure` — a job without `timeout-minutes` | WARN | a hung test runs for GitHub's default 6 hours |
 | `pin` — third-party action on a tag, not a commit SHA | WARN | a tag can be moved under you; a SHA cannot |
 | `izin` — no `permissions` | WARN | the token then gets whatever the repository default is |
@@ -47,7 +48,7 @@ obeys them first) and in the daily audit over the GitHub API.
 | `kilit` — a lockfile no Dependabot entry covers | WARN | its dependencies never get updated |
 
 Every rule has a known-bad and a known-good case in `schema/fikstur/politika/`
-(30 cases); the test suite compares each case's findings **exactly**, so a
+(36 cases); the test suite compares each case's findings **exactly**, so a
 rule that stops catching and a rule that starts crying wolf both fail CI, and
 a rule without both kinds of case fails CI too. Lock files under `fixtures/`,
 `testdata/` or `fikstur/` are test data, not dependencies.

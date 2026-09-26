@@ -1,0 +1,20 @@
+name: CI
+on: [push]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - env:
+          TEST_TABANI: "108"
+        run: |
+          set -euo pipefail
+          node --test 2>&1 | tee cikti.txt
+          sayi=$(grep -oE 'tests [0-9]+' cikti.txt | tail -1 | grep -oE '[0-9]+')
+          test "${sayi:-0}" -ge "$TEST_TABANI"
+      - run: python -m unittest discover -s tests 2>&1 | tee u.txt
+        shell: bash
+      - run: '[ "$(sed -n "s/^Ran \([0-9]*\).*/\1/p" u.txt)" -gt 0 ]'

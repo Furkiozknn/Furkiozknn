@@ -94,6 +94,15 @@ TEST_KOSUCU = re.compile(
     r"|node\s+--test|playwright\s+test|godot)\b")
 BORU = re.compile(r"(?<!\|)\|(?!\|)")
 
+# Sifir testle YESIL donen kosucular. pytest (5), vitest, playwright ve
+# Python 3.12+ unittest (5) hic test bulamazsa kendiliginden kirmizi olur;
+# bu ikisi olmaz: `node --test` "tests 0" yazip 0 ile, Python 3.9-3.11
+# unittest "Ran 0 tests ... OK" yazip 0 ile cikar. Test dosyalarinin adi ya
+# da yeri degisirse kosu yesil kalir, hicbir sey sinanmamis olur. masal ve
+# repo-vet bunu ayni iste bir sayim tabaniyla (`test N -ge TABAN`) kapatiyor.
+SIFIR_YESIL = re.compile(r"\bnode\s+(?:[^|;&\n]*\s)?--test\b|-m\s+unittest\b")
+SAYIM_KAPISI = re.compile(r"-(?:ge|gt)\b|>=|\bassert\b")
+
 KILIT_EKOSISTEM = {"uv.lock": ("uv", "pip"), "package-lock.json": ("npm",),
                    "Cargo.lock": ("cargo",)}
 # Bu dizinlerdeki kilit dosyasi bir bagimlilik degil, test verisidir: bu
@@ -109,6 +118,7 @@ KURAL_ADI = {
     "tetik": "riskli tetikleyici", "enjeksiyon": "kabukta dis girdi",
     "boru": "pipefail'siz test borusu", "yaml": "okunamayan YAML",
     "dbgecersiz": "gecersiz Dependabot yapilandirmasi",
+    "sifirtest": "sifir testle yesil donebilen kosu",
 }
 
 
@@ -217,6 +227,7 @@ def is_akisi_bulgulari(yol, metin):
                                       "dusen test yesil gorunur: `%s`"
                                       % (ad, jn, adim, satir.strip()[:70])))
                             break
+        _sifir_test(ad, jn, j, b)
     if zamansiz:
         b.append((WARN, "sure", "%s: timeout-minutes yok: %s (varsayilan 6 saat)"
                   % (ad, ", ".join(zamansiz))))
@@ -224,6 +235,42 @@ def is_akisi_bulgulari(yol, metin):
         b.append((WARN, "izin", "%s: permissions tanimsiz: %s (jeton depo ayarindaki "
                   "varsayilanla gelir)" % (ad, ", ".join(izinsiz))))
     return b
+
+
+def _python_hep_312_ve_ustu(j):
+    """Isin kurdugu Python surumlerinin HEPSI biliniyor ve >= 3.12 mi."""
+    surumler = []
+    for s in j.get("steps") or []:
+        if isinstance(s, dict) and str(s.get("uses", "")).startswith("actions/setup-python"):
+            surumler.append(str((s.get("with") or {}).get("python-version", "")))
+    if not surumler:
+        return False  # runner'in kendi pythonu: surumu bu dosyadan bilinmez
+    for v in surumler:
+        m = re.fullmatch(r"\s*3\.(\d+)(?:\.\d+)?\s*", v)
+        if not m or int(m.group(1)) < 12:
+            return False  # matris ifadesi ya da eski surum
+    return True
+
+
+def _sifir_test(ad, jn, j, b):
+    adimlar = [s for s in (j.get("steps") or []) if isinstance(s, dict)]
+    for i, s in enumerate(adimlar):
+        r = s.get("run")
+        if not isinstance(r, str):
+            continue
+        kod = "\n".join(l for l in r.splitlines() if not l.lstrip().startswith("#"))
+        m = SIFIR_YESIL.search(kod)
+        if not m:
+            continue
+        if "unittest" in m.group(0) and _python_hep_312_ve_ustu(j):
+            continue
+        sonrasi = "\n".join(str(x.get("run") or "") for x in adimlar[i:])
+        if SAYIM_KAPISI.search(sonrasi):
+            continue
+        b.append((WARN, "sifirtest",
+                  "%s:%s (%s): `%s` hic test bulamazsa 0 ile cikar ve ayni iste sayim tabani yok"
+                  % (ad, jn, s.get("name") or ("adim %d" % (i + 1)), m.group(0).strip())))
+        return
 
 
 def _dependabot(metin):
