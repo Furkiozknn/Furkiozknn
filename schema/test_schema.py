@@ -658,8 +658,9 @@ class HizSiniriTesti(unittest.TestCase):
         metin = denetim._rapor([], {}, 28)
         self.assertIn("hiz siniri", metin.lower())
         self.assertIn("2 depo hic olculemedi", metin)
-        # "28 depo, bulgu yok" demiyor: bakilan 26.
-        self.assertIn("26 depo", metin)
+        # "28 depo, bulgu yok" demiyor: bakilan 26, ve "temiz" de demiyor.
+        self.assertIn("26/28 depo", metin)
+        self.assertNotIn("Denetim temiz", metin)
 
     def test_okunamayan_yoksa_satir_da_yok(self):
         self.assertEqual(denetim._okunamayan_satiri(), "")
@@ -687,6 +688,90 @@ class HizSiniriTesti(unittest.TestCase):
         self.assertIn("hiz siniri", metin.lower())
         self.assertIn("KIMLIKSIZ", metin)
         self.assertIn("GITHUB_TOKEN", metin)
+
+
+class KapsamKapanisTesti(unittest.TestCase):
+    """Bulgusuz ama eksik kapsamli bir denetim konuyu "temiz" diye kapatmamali.
+
+    26 Eylul 2026 dogrulamasi: 28 deponun 20'si hiz sinirina takildiginda
+    finding_count 0 cikti, rapor "Denetim temiz: 8 depo" dedi ve is akisi
+    konuyu "bulgu kalmadi" diye kapatacakti. Okunamayan depo bulgu degil
+    (dogru) ama "temiz" de degil.
+    """
+
+    def _kos(self, okunamayan, politika_okunamayan=0):
+        import io, contextlib
+        kaynak = json.loads(denetim.KAYNAK.read_text(encoding="utf-8"))
+        adlar = sorted(kaynak)
+        yedek = {k: getattr(denetim, k) for k in ("_depoyu_olc", "_profil_sayilari", "CIKTI")}
+        yedek_d = (denetim.D._repos, denetim.D._get)
+        tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp)
+
+        def olc(r, kaynak):
+            if r["name"] in adlar[:okunamayan]:
+                raise denetim.D.HizSiniri("403 rate limit")
+            if r["name"] in adlar[-politika_okunamayan:] if politika_okunamayan else ():
+                denetim.POLITIKA_BAKILAMADI[r["name"]] = "dosyalar okunamadi"
+            return [], None, None
+
+        def ag(*a, **k):
+            raise AssertionError("ag cagrisi yapilmamali")
+
+        denetim._depoyu_olc, denetim._profil_sayilari = olc, (lambda m, n: [])
+        denetim.CIKTI = type(denetim.CIKTI)(tmp) / "denetim.json"
+        denetim.D._repos = lambda: [{"name": a, "fork": False, "default_branch": "main",
+                                     "archived": False} for a in adlar]
+        denetim.D._get = ag
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(denetim.main(), 0)
+            return json.loads(denetim.CIKTI.read_text(encoding="utf-8"))
+        finally:
+            for k, v in yedek.items():
+                setattr(denetim, k, v)
+            denetim.D._repos, denetim.D._get = yedek_d
+            denetim.OKUNAMADI.clear()
+            denetim.POLITIKA_BAKILAMADI.clear()
+
+    def test_okunamayan_depo_varken_kapsam_eksik(self):
+        j = self._kos(okunamayan=20)
+        self.assertEqual(j["finding_count"], 0)
+        self.assertFalse(j["coverage_complete"])
+
+    def test_hepsi_okununca_kapsam_tam_ve_parmak_degismedi(self):
+        import hashlib
+        j = self._kos(okunamayan=0)
+        self.assertTrue(j["coverage_complete"])
+        # Tam kapsamda parmak izi eski formulle ayni: bos bulgu kumesi.
+        self.assertEqual(j["fingerprint"], hashlib.sha256(b"").hexdigest()[:16])
+
+    def test_politikaya_bakilamayinca_da_kapsam_eksik(self):
+        # Bagimsiz inceleme: POLITIKA_BAKILAMADI eksik-kapsamdan cikarilsa
+        # onceki testlerin hicbiri kirmiziya donmuyordu.
+        j = self._kos(okunamayan=0, politika_okunamayan=2)
+        self.assertEqual(j["finding_count"], 0)
+        self.assertFalse(j["coverage_complete"])
+        self.assertNotEqual(j["fingerprint"], self._kos(okunamayan=0)["fingerprint"])
+
+    def test_eksik_kapsamda_rapor_temiz_demez(self):
+        denetim.OKUNAMADI[:] = ["a", "b"]
+        try:
+            metin = denetim._rapor([], {}, 28)
+        finally:
+            denetim.OKUNAMADI.clear()
+        self.assertTrue(metin.startswith("Denetim eksik: 26/28 depo"))
+        self.assertNotIn("Denetim temiz", metin)
+
+    def test_eksik_kapsam_parmagi_degistirir(self):
+        self.assertNotEqual(self._kos(okunamayan=3)["fingerprint"], self._kos(okunamayan=0)["fingerprint"])
+
+    def test_is_akisi_temiz_kapanisi_kapsama_bagli(self):
+        with open(os.path.join(os.path.dirname(BURASI), ".github", "workflows", "denetim.yml"),
+                  encoding="utf-8") as f:
+            metin = f.read()
+        self.assertIn("coverage_complete", metin)
+        self.assertRegex(metin, r'if \[ "\$sayi" = "0" \] && \[ "\$tam" = "True" \]; then')
 
 
 class BayatlikTesti(unittest.TestCase):

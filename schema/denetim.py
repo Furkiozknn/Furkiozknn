@@ -933,6 +933,11 @@ def _politika_satiri():
 def _rapor(bulgular, iskeletler, depo_sayisi):
     ustbilgi = [x for x in (_okunamayan_satiri(), _kapsam_satiri(), _politika_satiri(),
                             _kuyruk_satiri()) if x]
+    if not bulgular and (OKUNAMADI or POLITIKA_BAKILAMADI):
+        # Bulgu yok ama bakilamayan var: bu "temiz" degil, eksik bir olcum.
+        metin = ("Denetim eksik: %d/%d depo olculebildi, olculenlerde bulgu yok."
+                 % (depo_sayisi - len(OKUNAMADI), depo_sayisi))
+        return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
     if not bulgular:
         metin = "Denetim temiz: %d depo, bulgu yok." % (depo_sayisi - len(OKUNAMADI))
         return metin + ("\n\n" + "\n\n".join(ustbilgi) if ustbilgi else "")
@@ -1015,8 +1020,13 @@ def main():
                          "(silinmis, adi degismis ya da gizli)"))
 
     metin = _rapor(bulgular, iskeletler, len(depolar))
+    # Hic bakilamayan depo bulgu degil, ama "temiz" de degil: is akisi konuyu
+    # yalnizca kapsam tamken "temiz" diye kapatir. Eksik kapsam parmaga da
+    # girer (yalnizca varsa; tam kapsamda parmak eskisiyle ayni kalir).
+    eksik = sorted(OKUNAMADI) + sorted("politika:" + a for a in POLITIKA_BAKILAMADI)
     parmak = hashlib.sha256(
-        "\n".join("|".join(b) for b in sorted(bulgular)).encode("utf-8")
+        ("\n".join("|".join(b) for b in sorted(bulgular))
+         + ("\n#eksik:" + ",".join(eksik) if eksik else "")).encode("utf-8")
     ).hexdigest()[:16]
 
     CIKTI.write_text(json.dumps({
@@ -1027,6 +1037,7 @@ def main():
         "fingerprint": parmak,
         "dependabot_checked": len(UYARI_OKUNAN),
         "test_counts_verified": len(SAYI_OKUNAN),
+        "coverage_complete": not eksik,
         "repos_unreadable": list(OKUNAMADI),
         "test_counts_unverified": dict(sorted(SAYI_BAKILAMADI.items())),
         "policy_unchecked": dict(sorted(POLITIKA_BAKILAMADI.items())),
