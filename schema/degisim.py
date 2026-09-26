@@ -191,6 +191,11 @@ def satir_bulgulari(yol, silinen, eklenen, silinebilir):
         izinli = any(re.search(k, s) for k in silinebilir)
         # Yorum satiri yalnizca bir kalip onu ACIKCA hedefliyorsa silinebilir;
         # olaydaki `uses:` kalibi hicbir yorum satirina uymaz.
+        # Metni aynen baska bir yorumun icinde duran yorum uzatilmistir, silinmemis.
+        govde = s.strip().lstrip("#/").strip()
+        if YORUM_SATIRI.match(s) and not izinli and govde and any(
+                govde in e for e in eklenen_yorumlar):
+            continue
         if YORUM_SATIRI.match(s) and not izinli:
             b.append(("yorum", "%s: yorum satiri silinmis: `%s`" % (yol, kisa)))
             continue

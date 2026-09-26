@@ -43,7 +43,7 @@ name: yenile
 
 on:
   schedule:
-    # Pazartesi 04:30 UTC. Denetimden (05:00) ve haftalik ozetten (06:00)
+    # Pazartesi 04:30 UTC. Denetimden (04:43) ve haftalik ozetten (06:00)
     # once kossun ki ikisi de tazelenmis veriyi gorsun.
     - cron: "30 4 * * 1"
   workflow_dispatch:

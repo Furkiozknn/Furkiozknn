@@ -24,7 +24,8 @@ name: sayilar
 
 on:
   schedule:
-    # Denetimden (05:00) sonra; yenile.yml (Pzt 04:30) metadata'yi tazeledikten sonra.
+    # Denetimden (04:43) sonra. Sira garanti degil (zamanlayici gecikebilir) ve
+    # gerekmiyor: sayilar kosu loglarini kendisi okur, denetime bagli degil.
     - cron: "40 5 * * *"
   workflow_dispatch:
 

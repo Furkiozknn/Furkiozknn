@@ -1736,6 +1736,24 @@ class DegisimTesti(unittest.TestCase):
             "    # olculen en uzun kosu 41 sn\n    timeout-minutes: 10\n\n"))
         self.assertEqual(self._kurallar(kok)[0], [])
 
+    def test_uzatilan_yorum_satiri_kayip_sayilmaz(self):
+        # 26 Eylul: denetim.yml'deki bir yorumun sonuna gerekce eklendi; git
+        # bunu "silindi + eklendi" diye gosterir, metin ise aynen duruyor.
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace(
+            "      # ayrisirsa burada durur.\n", "      # ayrisirsa burada durur. Ek gerekce.\n"))
+        self.assertEqual(self._kurallar(kok)[0], [])
+        # ...ama metni degisen yorum hala kayiptir.
+        kok2 = self._depo(ad="iki")
+        self._yaz(kok2, ".github/workflows/ci.yml", self._oku(kok2).replace(
+            "      # ayrisirsa burada durur.\n", "      # baska bir sey.\n"))
+        self.assertEqual(self._kurallar(kok2)[0], ["yorum"])
+        # Bos bir "#" satiri her yorumun "icinde" degildir.
+        kok3 = self._depo({".github/workflows/ci.yml": self.AKIS.replace(
+            "      # ayrisirsa burada durur.\n", "      # ayrisirsa burada durur.\n      #\n")}, ad="uc")
+        self._yaz(kok3, ".github/workflows/ci.yml", self._oku(kok3).replace("      #\n", ""))
+        self.assertEqual(self._kurallar(kok3)[0], ["yorum"])
+
     def test_yer_degistiren_satir_silme_sayilmaz(self):
         kok = self._depo()
         m = self._oku(kok)

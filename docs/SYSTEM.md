@@ -8,7 +8,7 @@ done by hand, and why. It started as the **System ×4 audit of 25 September
 ## The control loop
 
 ```
-27 repositories ──► denetim.yml (daily 05:00)  ──► "Ekosistem denetimi" issue
+27 repositories ──► denetim.yml (daily 04:43)  ──► "Ekosistem denetimi" issue
                     ├─ red CI on default branches, workflows GitHub disabled
                     ├─ release chain: tag ─► release ─► PyPI
                     ├─ metadata vs live repository, links, install commands

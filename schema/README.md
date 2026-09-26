@@ -158,7 +158,7 @@ It fixes nothing and commits nothing. It exits 0 even when it finds
 something, because one repository's missing licence should not turn another
 repository's badge red.
 
-The *denetim* workflow runs it daily at 05:00 UTC and keeps a single
+The *denetim* workflow runs it daily at 04:43 UTC and keeps a single
 *Ekosistem denetimi* issue: it comments when the **set** of findings changes,
 stays quiet when the same findings are still open, and closes the issue with a
 note when everything clears. A repository that has no entry in

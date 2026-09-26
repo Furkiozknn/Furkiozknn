@@ -19,9 +19,11 @@ name: denetim
 
 on:
   schedule:
-    # Her gun 05:00 UTC. Haftalik ozetten (pazartesi 06:00) once kossun ki
-    # ozet yazilirken ayrisma zaten bilinsin.
-    - cron: "0 5 * * *"
+    # Her gun 04:43 UTC. Haftalik ozetten (pazartesi 06:00) once kossun ki
+    # ozet yazilirken ayrisma zaten bilinsin. Saat basi degil: "0 5" iken
+    # 23-25 Eylul'deki uc kosu 09:41-09:58'de basladi (~4 s 40 dk gecikme);
+    # GitHub'in zamanlayicisi saat baslarinda en yogun.
+    - cron: "43 4 * * *"
   workflow_dispatch:
 
 permissions:
