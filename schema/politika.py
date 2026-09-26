@@ -71,11 +71,14 @@ FAIL, WARN = "FAIL", "WARN"
 BIRINCI_TARAF = ("actions/", "github/")
 
 # Disaridan (PR acan, yorum yazan herkes) gelen metin. Bunlar `run:` icine
-# `${{ }}` ile gomulurse kabukta komut olarak calisir.
+# `${{ }}` ile gomulurse kabukta komut olarak calisir; `actions/github-script`
+# in `script:` alanina gomulurse ayni sey JavaScript olarak olur.
+# workflow_run'da yalnizca metin alanlari: `.id`, `.conclusion` guvenli.
 GUVENSIZ_IFADE = re.compile(
     r"\$\{\{\s*("
     r"github\.event\.(issue|pull_request|comment|review|review_comment|discussion"
     r"|discussion_comment|pages|head_commit|commits)\b[^}]*"
+    r"|github\.event\.workflow_run\.(head_branch|display_title|head_commit)\b[^}]*"
     r"|github\.head_ref\b[^}]*"
     r")\}\}")
 
@@ -91,6 +94,9 @@ BORU = re.compile(r"(?<!\|)\|(?!\|)")
 
 KILIT_EKOSISTEM = {"uv.lock": ("uv", "pip"), "package-lock.json": ("npm",),
                    "Cargo.lock": ("cargo",)}
+# Bu dizinlerdeki kilit dosyasi bir bagimlilik degil, test verisidir: bu
+# deponun kendi schema/fikstur/'u gibi. node_modules zaten baskasinin kilidi.
+KILIT_DISI = {"node_modules", "fixtures", "fixture", "fikstur", "testdata"}
 
 
 # Denetim raporunda kullanilan kisa adlar.
@@ -183,6 +189,13 @@ def is_akisi_bulgulari(yol, metin):
                         b.append((WARN, "pin", "%s:%s: %s digest ile sabitlenmemis" % (ad, jn, u)))
                 elif not ad_.startswith(BIRINCI_TARAF) and not re.fullmatch(r"[0-9a-f]{40}", ref):
                     b.append((WARN, "pin", "%s:%s: %s commit SHA'siyla sabitlenmemis" % (ad, jn, u)))
+            betik = (s.get("with") or {}).get("script") if isinstance(s.get("with"), dict) else None
+            if isinstance(u, str) and u.startswith("actions/github-script") and isinstance(betik, str):
+                m = GUVENSIZ_IFADE.search(betik)
+                if m:
+                    b.append((FAIL, "enjeksiyon",
+                              "%s:%s (%s): disaridan gelen `%s` github-script'te JavaScript olarak"
+                              % (ad, jn, adim, m.group(1).strip()[:48])))
             r = s.get("run")
             if isinstance(r, str):
                 m = GUVENSIZ_IFADE.search(r)
@@ -285,7 +298,7 @@ def depo_bulgulari(dosyalar):
 
     for yol, metin in sorted(dosyalar.items()):
         dosya = yol.rsplit("/", 1)[-1]
-        if dosya not in KILIT_EKOSISTEM or "/node_modules/" in "/" + yol:
+        if dosya not in KILIT_EKOSISTEM or KILIT_DISI & set(yol.split("/")[:-1]):
             continue
         if _kilit_bos_mu(yol, metin):
             continue

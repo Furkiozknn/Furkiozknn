@@ -1324,6 +1324,60 @@ class KuyrukTesti(unittest.TestCase):
         self.assertEqual(denetim._kuyruk_satiri(), "")
 
 
+class PolitikaFiksturTesti(unittest.TestCase):
+    """schema/fikstur/politika: her kuralin bilinen-kotu ve bilinen-iyi ornegi.
+
+    Bir kural eklendiginde ya da degistiginde iki sey birden bozulabilir:
+    yakalamasi gerekeni kacirir (kotu vaka susar) ya da temiz bir seyi
+    yakalar (iyi vaka ses verir). Beklenen bulgu kumesi birebir karsilastirilir,
+    yani fazladan cikan tek bir WARN de testi kirar.
+    """
+
+    KOK = os.path.join(BURASI, "fikstur", "politika")
+
+    def setUp(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        with open(os.path.join(self.KOK, "vakalar.json"), encoding="utf-8") as f:
+            self.vakalar = json.load(f)
+
+    def test_her_vaka_beklenen_bulguyu_birebir_verir(self):
+        for ad, v in sorted(self.vakalar.items()):
+            with self.subTest(vaka=ad):
+                bulgu = politika.depo_bulgulari(politika.klondan_oku(os.path.join(self.KOK, ad)))
+                self.assertEqual(sorted({(s, k) for s, k, _ in bulgu}),
+                                 sorted(tuple(x) for x in v["beklenen"]), v["neden"])
+
+    def test_vaka_dizinleri_ve_kayitlar_ayni(self):
+        dizinler = {d for d in os.listdir(self.KOK) if os.path.isdir(os.path.join(self.KOK, d))}
+        self.assertEqual(dizinler, set(self.vakalar))
+
+    def test_her_kuralin_kotu_ve_iyi_vakasi_var(self):
+        for kural in politika.KURAL_ADI:
+            with self.subTest(kural=kural):
+                self.assertTrue(any(kural in [k for _, k in v["beklenen"]]
+                                    for ad, v in self.vakalar.items() if ad.startswith("kotu-")),
+                                "%s icin yakalanmasi gereken vaka yok" % kural)
+                self.assertTrue(any(kural in v["korur"]
+                                    for ad, v in self.vakalar.items() if ad.startswith("iyi-")),
+                                "%s icin yanlis alarm korumasi yok" % kural)
+
+    def test_iyi_vakalar_bulgusuz(self):
+        for ad, v in self.vakalar.items():
+            if ad.startswith("iyi-"):
+                self.assertEqual(v["beklenen"], [], ad)
+
+    def test_fikstur_dizinindeki_kilit_bagimlilik_sayilmaz(self):
+        kilit = json.dumps({"lockfileVersion": 3, "packages": {"": {}, "node_modules/a": {"version": "1"}}})
+        temel = {".github/workflows/ci.yml": PolitikaTesti.TEMIZ, ".github/dependabot.yml": PolitikaTesti.DEPENDABOT}
+        for yol in ("tests/fixtures/package-lock.json", "schema/fikstur/x/package-lock.json",
+                    "a/testdata/package-lock.json"):
+            self.assertNotIn("kilit", [k for _, k, _ in politika.depo_bulgulari(dict(temel, **{yol: kilit}))], yol)
+        # Yalnizca tam dizin adi: "fixturesx" bir fikstur dizini degil.
+        self.assertIn("kilit", [k for _, k, _ in politika.depo_bulgulari(
+            dict(temel, **{"fixturesx/package-lock.json": kilit}))])
+
+
 class DegisimTesti(unittest.TestCase):
     """schema/degisim.py: toplu donusumun diff'i, donusumun kendisinden bagimsiz.
 
@@ -1420,6 +1474,21 @@ class DegisimTesti(unittest.TestCase):
         metin = self._oku(kok).replace("setup-uv@v7  #", "setup-uv@%s  # v7.6.0;" % self.SHA)
         self._yaz(kok, ".github/workflows/ci.yml", metin)
         self.assertEqual(self._kurallar(kok)[0], [])
+
+    def test_acikca_hedeflenen_yorum_silinebilir(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml",
+                  self._oku(kok).replace("      # ayrisirsa burada durur.\n", ""))
+        self.assertEqual(self._kurallar(kok)[0], ["yorum"])
+        self.assertEqual(self._kurallar(kok, silinebilir=self.USES + [r"^\s*# ayrisirsa"])[0], [])
+
+    def test_bilerek_bozuk_fikstur_atlanir(self):
+        kok = self._depo()
+        self._yaz(kok, "fikstur/bozuk.json", "{\n")
+        s = degisim.depo_denetle(kok, "HEAD", [], [], ["fikstur/*"])
+        self.assertEqual(s["bulgular"], [])
+        s = degisim.depo_denetle(kok, "HEAD", [], [])
+        self.assertEqual([b["kural"] for b in s["bulgular"]], ["sozdizimi"])
 
     def test_izinsiz_satir_silme_fail(self):
         kok = self._depo()

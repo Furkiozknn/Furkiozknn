@@ -36,7 +36,7 @@ obeys them first) and in the daily audit over the GitHub API.
 | Rule | Level | Why |
 |---|---|---|
 | `boru` — test output piped (`pytest \| tee`) without `pipefail` | FAIL | GitHub's default shell is `bash -e` without pipefail: the pipe returns `tee`'s 0 and a failing suite shows green |
-| `enjeksiyon` — `${{ github.event.* }}` / `head_ref` text inside `run:` | FAIL | anyone who opens a PR controls that text; the shell runs it |
+| `enjeksiyon` — `${{ github.event.* }}` / `head_ref` / `workflow_run` branch or title text inside `run:` or an `actions/github-script` `script:` | FAIL | anyone who opens a PR controls that text; the shell (or JavaScript) runs it |
 | `tetik` — `pull_request_target` / `workflow_run` | FAIL if it checks out the PR's code, else WARN | secrets + untrusted code in one job is the "pwn request" |
 | `yaml` — a workflow that does not parse | FAIL | a broken file must not read as "no findings" |
 | `dbgecersiz` — `dependabot.yml` without `version: 2`, or unparseable | FAIL | GitHub rejects the whole file: no update is ever opened, and nothing turns red |
@@ -45,6 +45,12 @@ obeys them first) and in the daily audit over the GitHub API.
 | `izin` — no `permissions` | WARN | the token then gets whatever the repository default is |
 | `dependabot` / `grup` — updates missing or ungrouped | WARN | ungrouped means one PR per package: 36 open on 25 Sep |
 | `kilit` — a lockfile no Dependabot entry covers | WARN | its dependencies never get updated |
+
+Every rule has a known-bad and a known-good case in `schema/fikstur/politika/`
+(30 cases); the test suite compares each case's findings **exactly**, so a
+rule that stops catching and a rule that starts crying wolf both fail CI, and
+a rule without both kinds of case fails CI too. Lock files under `fixtures/`,
+`testdata/` or `fikstur/` are test data, not dependencies.
 
 Deliberately **not** rules: `inputs.*` in `run:` (only people with write
 access can dispatch), `continue-on-error` (used on purpose), and a shared

@@ -23,12 +23,14 @@ KAPILAR (herhangi biri FAIL -> depo FAIL)
   dosya_disi   degisen dosya --dosya kaliplarinin hicbirine uymuyor
   silme        dosya silinmis / adi degismis / tipi ya da kipi degismis
   bos_satir    bos bir satir silinmis
-  yorum        yorum satiri silinmis ya da bir satirin sonundaki yorum kaybolmus
+  yorum        yorum satiri silinmis (bir --silinebilir kalibi onu acikca
+               hedeflemiyorsa) ya da bir satirin sonundaki yorum kaybolmus
   beklenmeyen  silinen satir --silinebilir kaliplarinin hicbirine uymuyor
                (--silinebilir yoksa donusum yalnizca EKLEYEBILIR)
   bosluk       yalnizca bosluk / satir sonu (CRLF) degismis
   son_satir    dosyanin sonundaki satir sonu kaybolmus
   sozdizimi    degisen .yml/.yaml/.json/.toml artik okunmuyor
+               (--bozuk-olabilir: bilerek bozuk fikstur)
   politika     schema/politika.py: yeni bir FAIL cikti ya da WARN sayisi artti
   patlama      --azami-depo'dan fazla depo degisiyor (hicbiri gecmis sayilmaz)
 
@@ -150,13 +152,17 @@ def satir_bulgulari(yol, silinen, eklenen, silinebilir):
         if not s.strip():
             b.append(("bos_satir", "%s: bos satir silinmis" % yol))
             continue
-        if YORUM_SATIRI.match(s):
+        izinli = any(re.search(k, s) for k in silinebilir)
+        # Yorum satiri yalnizca bir kalip onu ACIKCA hedefliyorsa silinebilir;
+        # olaydaki `uses:` kalibi hicbir yorum satirina uymaz.
+        if YORUM_SATIRI.match(s) and not izinli:
             b.append(("yorum", "%s: yorum satiri silinmis: `%s`" % (yol, kisa)))
             continue
-        if not any(re.search(k, s) for k in silinebilir):
+        if not izinli:
             b.append(("beklenmeyen", "%s: beklenmeyen silme: `%s`" % (yol, kisa)))
             continue
-        yorum = satir_sonu_yorumu(s) if yol.endswith((".yml", ".yaml", ".toml")) else None
+        yorum = (satir_sonu_yorumu(s) if yol.endswith((".yml", ".yaml", ".toml"))
+                 and not YORUM_SATIRI.match(s) else None)
         if yorum and yorum not in "\n".join(eklenen):
             b.append(("yorum", "%s: satir sonu yorumu kaybolmus: `# %s`" % (yol, yorum[:60])))
     return b
@@ -203,9 +209,9 @@ def politika_gerilemesi(kok, taban):
     return b
 
 
-def depo_denetle(kok, taban, dosya_kaliplari, silinebilir):
+def depo_denetle(kok, taban, dosya_kaliplari, silinebilir, bozuk_olabilir=()):
     """Bir calisma agaci -> dict(depo, durum, bulgular, dosyalar, eklenen, silinen)."""
-    kok = Path(kok)
+    kok = Path(kok).resolve()
     if not (kok / ".git").exists():
         raise Bakilamadi("%s bir git calisma agaci degil" % kok)
     _git(kok, "rev-parse", "--verify", "--quiet", taban + "^{commit}")
@@ -241,7 +247,7 @@ def depo_denetle(kok, taban, dosya_kaliplari, silinebilir):
 
     for yol in sorted(set(dosya_listesi)):
         p = kok / yol
-        if p.is_file():
+        if p.is_file() and not any(fnmatch.fnmatchcase(yol, k) for k in bozuk_olabilir):
             hata = sozdizimi(yol, p.read_text(encoding="utf-8", errors="replace"))
             if hata:
                 bulgular.append(("sozdizimi", hata))
@@ -255,12 +261,13 @@ def depo_denetle(kok, taban, dosya_kaliplari, silinebilir):
             "bulgular": [{"kural": k, "mesaj": m} for k, m in bulgular]}
 
 
-def denetle(kokler, taban, dosya_kaliplari=(), silinebilir=(), azami_depo=None):
+def denetle(kokler, taban, dosya_kaliplari=(), silinebilir=(), azami_depo=None, bozuk_olabilir=()):
     """-> (sonuclar, bakilamayan, patlama_mesaji)."""
     sonuclar, bakilamayan = [], {}
     for kok in kokler:
         try:
-            sonuclar.append(depo_denetle(kok, taban, list(dosya_kaliplari), list(silinebilir)))
+            sonuclar.append(depo_denetle(kok, taban, list(dosya_kaliplari), list(silinebilir),
+                                         list(bozuk_olabilir)))
         except Bakilamadi as e:
             bakilamayan[Path(kok).name] = str(e)
     degisen = sum(1 for s in sonuclar if s["degisti"])
@@ -282,11 +289,14 @@ def main(argv=None):
                     help="degismesine izin verilen yol kalibi (fnmatch); tekrarlanabilir")
     ap.add_argument("--silinebilir", action="append", default=[],
                     help="silinmesine izin verilen satir regex'i; yoksa yalnizca ekleme kabul")
+    ap.add_argument("--bozuk-olabilir", action="append", default=[],
+                    help="bilerek okunmayan dosya kalibi (ornek: bozuk YAML fiksturu); sozdizimi atlanir")
     ap.add_argument("--azami-depo", type=int, help="bundan fazla depo degisiyorsa hepsi FAIL")
     ap.add_argument("--json", help="sonucu bu dosyaya da yaz")
     a = ap.parse_args(argv)
 
-    sonuclar, bakilamayan, patlama = denetle(a.kok, a.taban, a.dosya, a.silinebilir, a.azami_depo)
+    sonuclar, bakilamayan, patlama = denetle(a.kok, a.taban, a.dosya, a.silinebilir, a.azami_depo,
+                                               a.bozuk_olabilir)
     for s in sonuclar:
         ozet = ("%d dosya, +%d -%d" % (len(s["dosyalar"]), s["eklenen"], s["silinen"])
                 if s["degisti"] else "degisiklik yok")

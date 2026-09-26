@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - shell: bash
+        run: uv run pytest | tee log.txt
+      - run: |
+          set -o pipefail
+          cargo test 2>&1 | tee t.log
+      - run: |
+          # uv run pytest | tee log.txt (eski)
+          echo ok | grep ok
+          test -f a || test -f b
