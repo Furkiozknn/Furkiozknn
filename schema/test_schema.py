@@ -1324,6 +1324,21 @@ class KuyrukTesti(unittest.TestCase):
         self.assertEqual(denetim._kuyruk_satiri(), "")
 
 
+class EnjeksiyonIfadeTesti(unittest.TestCase):
+    """GUVENSIZ_IFADE: baglam `${{` nin hemen ardinda olmak zorunda degil."""
+
+    def test_enjeksiyon_fonksiyon_ve_koseli_parantez_icinde(self):
+        for ifade in ("${{ toJSON(github.event.issue.title) }}",
+                      "${{ github.event['pull_request'].title }}",
+                      "${{ github.event.workflow_run.pull_requests[0].head.ref }}",
+                      "${{ github.event.workflow_run.head_repository.description }}",
+                      "${{ format('{0}', github.head_ref) }}"):
+            self.assertIsNotNone(politika.GUVENSIZ_IFADE.search(ifade), ifade)
+        for ifade in ("${{ github.event.workflow_run.id }}", "${{ inputs.depo }}",
+                      "${{ github.event_name }}", "${{ github.sha }}"):
+            self.assertIsNone(politika.GUVENSIZ_IFADE.search(ifade), ifade)
+
+
 class PolitikaFiksturTesti(unittest.TestCase):
     """schema/fikstur/politika: her kuralin bilinen-kotu ve bilinen-iyi ornegi.
 
@@ -1646,6 +1661,71 @@ class DegisimTesti(unittest.TestCase):
         self._yaz(kok, "x.txt", "x\n")
         self.assertEqual(degisim.main(["--kok", kok, "--taban", "HEAD", "--dosya", "*.yml"]), 1)
         self.assertEqual(degisim.main(["--kok", os.path.join(self.tmp, "yok"), "--taban", "HEAD"]), 2)
+
+    # --- 26 Eylul bagimsiz incelemesinin buldugu delikler (her biri once kirmizi) --------
+
+    def test_gitattributes_binary_satir_kontrolunu_kapatamaz(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS, ".gitattributes": "*.yml -diff\n"})
+        self._yaz(kok, ".github/workflows/ci.yml",
+                  self._oku(kok).replace("      # ayrisirsa burada durur.\n", "").replace("\n\n", "\n"))
+        kurallar, _ = self._kurallar(kok)
+        self.assertIn("yorum", kurallar)
+        self.assertIn("bos_satir", kurallar)
+
+    def test_satir_sonu_yorumu_alt_dize_eslesmesiyle_kurtulmaz(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS.replace(
+            "actions/checkout@v5\n", "actions/setup-python@v5 # python\n")})
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace(
+            "actions/setup-python@v5 # python", "actions/setup-python@%s" % self.SHA))
+        self.assertEqual(self._kurallar(kok)[0], ["yorum"])
+
+    def test_kesme_isaretli_satirin_yorumu_da_sayilir(self):
+        self.assertEqual(degisim.satir_sonu_yorumu("  name: Don't skip # keep"), "keep")
+        self.assertIsNone(degisim.satir_sonu_yorumu("  run: echo 'a # b'"))
+        self.assertEqual(degisim.satir_sonu_yorumu("  run: echo 'a # b'  # c"), "c")
+
+    def test_bosluklu_dosya_adi_yorum_denetiminden_kacmaz(self):
+        yol = ".github/workflows/my file.yml"
+        kok = self._depo({yol: self.AKIS.replace("setup-uv@v7\n", "setup-uv@v7  # zeta nedeni\n")})
+        self._yaz(kok, yol, self._oku(kok, yol).replace("setup-uv@v7  # zeta nedeni", "setup-uv@%s" % self.SHA))
+        self.assertEqual(self._kurallar(kok)[0], ["yorum"])
+
+    def test_izlenmeyen_ignore_kilit_politikayi_kirletmez(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS, ".gitignore": "build/\n",
+                          ".github/dependabot.yml": PolitikaTesti.DEPENDABOT})
+        self._yaz(kok, "build/package-lock.json", json.dumps(
+            {"lockfileVersion": 3, "packages": {"": {}, "node_modules/a": {"version": "1"}}}))
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok) + "# ek\n")
+        self.assertEqual(self._kurallar(kok)[0], [])
+
+    def test_json_yeniden_uretimi_bosluk_sayilmaz(self):
+        kok = self._depo({"project-meta.json": '{\n  "x": {\n    "b": [\n      1\n    ]\n  }\n}\n'})
+        self._yaz(kok, "project-meta.json", '{\n  "b": [\n    1\n  ]\n}\n')
+        self.assertEqual(self._kurallar(kok, dosya=("project-meta.json",), silinebilir=[".*"])[0], [])
+
+    def test_ic_ice_depo_bakilamadi(self):
+        kok = self._depo()
+        alt = os.path.join(kok, "alt")
+        os.makedirs(alt)
+        subprocess.run(["git", "-C", alt, "init", "-q"], check=True)
+        self._yaz(alt, "x.txt", "x\n")
+        _, bakilamayan, _ = degisim.denetle([kok], "HEAD")
+        self.assertIn("depo", bakilamayan)
+
+    def test_kip_degisimi_fail(self):
+        kok = self._depo()
+        os.chmod(os.path.join(kok, ".github/workflows/ci.yml"), 0o755)
+        subprocess.run(["git", "-C", kok, "config", "core.fileMode", "true"], check=True)
+        self.assertIn("silme", self._kurallar(kok)[0])
+
+    def test_yildiz_dizin_sinirini_gecmez(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/alt/kotu.yml", "name: x\n")
+        self.assertEqual(self._kurallar(kok)[0], ["dosya_disi"])
+        self.assertTrue(degisim.kaliba_uyar("a/b/c.yml", "a/**"))
+        self.assertTrue(degisim.kaliba_uyar("project-meta.json", "project-meta.json"))
 
     # --- yanlis alarm korumalari -------------------------------------------------------
 

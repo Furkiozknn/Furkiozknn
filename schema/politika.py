@@ -74,13 +74,15 @@ BIRINCI_TARAF = ("actions/", "github/")
 # `${{ }}` ile gomulurse kabukta komut olarak calisir; `actions/github-script`
 # in `script:` alanina gomulurse ayni sey JavaScript olarak olur.
 # workflow_run'da yalnizca metin alanlari: `.id`, `.conclusion` guvenli.
-GUVENSIZ_IFADE = re.compile(
-    r"\$\{\{\s*("
-    r"github\.event\.(issue|pull_request|comment|review|review_comment|discussion"
-    r"|discussion_comment|pages|head_commit|commits)\b[^}]*"
-    r"|github\.event\.workflow_run\.(head_branch|display_title|head_commit)\b[^}]*"
-    r"|github\.head_ref\b[^}]*"
-    r")\}\}")
+_DIS_BAGLAM = (
+    r"github\.event(?:\.|\[['\"])(?:issue|pull_request|comment|review|review_comment|discussion"
+    r"|discussion_comment|pages|head_commit|commits)\b"
+    r"|github\.event(?:\.|\[['\"])workflow_run(?:['\"]\])?\.(?:head_branch|display_title|head_commit"
+    r"|pull_requests|head_repository)\b"
+    r"|github\.head_ref\b")
+# Baglam `${{` nin hemen ardinda olmak zorunda degil: toJSON(...), format(...)
+# ya da koseli parantezli yazim da ayni metni kabuga tasir.
+GUVENSIZ_IFADE = re.compile(r"\$\{\{((?:(?!\}\}).)*?(?:" + _DIS_BAGLAM + r")(?:(?!\}\}).)*)\}\}")
 
 # Bir test kosucusunun ciktisi boruya giriyorsa (`pytest | tee log`), borunun
 # cikis kodu SONDAKI komutundur. GitHub'in varsayilan kabugu `bash -e {0}`;

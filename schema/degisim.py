@@ -42,7 +42,6 @@ Bakilamayan depo "gecti" sayilmaz.
 """
 
 import argparse
-import fnmatch
 import importlib.util
 import json
 import re
@@ -79,7 +78,9 @@ class Bakilamadi(Exception):
 
 def _git(kok, *arg):
     # Bayt olarak okunur: metin kipi \r\n'yi \n'ye cevirir ve CRLF degisimi gorunmez olur.
-    r = subprocess.run(["git", "-C", str(kok), "-c", "core.quotepath=off", *arg], capture_output=True)
+    # Kullanicinin git ayarlari ciktinin bicimini degistirmesin.
+    r = subprocess.run(["git", "-C", str(kok), "-c", "core.quotepath=off", "-c", "diff.noprefix=false",
+                        "-c", "diff.mnemonicPrefix=false", *arg], capture_output=True)
     if r.returncode != 0:
         raise Bakilamadi("git %s: %s" % (" ".join(arg[:2]),
                                          r.stderr.decode("utf-8", "replace").strip()[:200]))
@@ -87,13 +88,46 @@ def _git(kok, *arg):
 
 
 def satir_sonu_yorumu(satir):
-    """'x: 1  # neden' -> 'neden'. Tirnak icindeki # yorum degildir."""
-    for m in re.finditer(r"(^|\s)#\s?(.*)$", satir):
-        once = satir[:m.start()]
-        if once.count('"') % 2 == 0 and once.count("'") % 2 == 0:
-            yorum = m.group(2).strip()
-            return yorum or None
+    """'x: 1  # neden' -> 'neden'. Tirnakli bir degerin icindeki # yorum degildir.
+
+    Tirnak yalnizca bir degerin BASINDA acilir (satir basi, bosluk, `:[{,`
+    sonrasi): "Don't skip # keep" icindeki kesme isareti bir tirnak degildir.
+    """
+    tirnak, onceki = None, " "
+    for i, c in enumerate(satir):
+        if tirnak:
+            if c == tirnak:
+                tirnak = None
+        elif c in "'\"" and onceki in " \t:[{,-":
+            tirnak = c
+        elif c == "#" and onceki in " \t":
+            return satir[i + 1:].strip() or None
+        onceki = c
     return None
+
+
+def kaliba_uyar(yol, kalip):
+    """Kabuk globu gibi: `*` ve `?` bir dizin sinirini gecmez, `**` gecer."""
+    r, i = "", 0
+    while i < len(kalip):
+        if kalip.startswith("**", i):
+            r, i = r + ".*", i + 2
+        elif kalip[i] == "*":
+            r, i = r + "[^/]*", i + 1
+        elif kalip[i] == "?":
+            r, i = r + "[^/]", i + 1
+        else:
+            r, i = r + re.escape(kalip[i]), i + 1
+    return re.fullmatch(r, yol) is not None
+
+
+def _yol_coz(hedef):
+    """'+++ b/my file.yml\t' ya da C-tirnakli '"b/a\\"b.yml"' -> depo ici yol."""
+    hedef = hedef.rstrip("\t")
+    if hedef.startswith('"') and hedef.endswith('"'):
+        hedef = hedef[1:-1].encode("latin-1", "backslashreplace").decode("unicode_escape") \
+            .encode("latin-1").decode("utf-8", "surrogateescape")
+    return hedef
 
 
 def diff_ayristir(metin):
@@ -108,7 +142,7 @@ def diff_ayristir(metin):
             yol, hunk = None, False
         elif not hunk:
             if satir.startswith("+++ "):
-                hedef = satir[4:]
+                hedef = _yol_coz(satir[4:])
                 # Silinen dosya (+++ /dev/null) --name-status'ta zaten FAIL.
                 yol = None if hedef == "/dev/null" else hedef[2:] if hedef.startswith("b/") else hedef
                 if yol is not None:
@@ -136,6 +170,8 @@ def diff_ayristir(metin):
 def satir_bulgulari(yol, silinen, eklenen, silinebilir):
     """Bir dosyanin -/+ satirlari -> [(kural, mesaj)]."""
     b = []
+    eklenen_yorumlar = [y for y in map(satir_sonu_yorumu, eklenen) if y] + [
+        e.strip().lstrip("#/").strip() for e in eklenen if YORUM_SATIRI.match(e)]
     # Aynen yeniden eklenen satir silinmemis, yer degistirmistir: icerik korunur.
     kalan = Counter(eklenen)
     soyulmus = Counter(e.strip() for e in eklenen)
@@ -145,7 +181,7 @@ def satir_bulgulari(yol, silinen, eklenen, silinebilir):
             kalan[s] -= 1
             soyulmus[s.strip()] -= 1
             continue
-        if s.strip() and soyulmus[s.strip()] > 0:
+        if s.strip() and soyulmus[s.strip()] > 0 and not yol.endswith(".json"):
             soyulmus[s.strip()] -= 1
             b.append(("bosluk", "%s: yalnizca bosluk/satir sonu degismis: `%s`" % (yol, kisa)))
             continue
@@ -163,7 +199,9 @@ def satir_bulgulari(yol, silinen, eklenen, silinebilir):
             continue
         yorum = (satir_sonu_yorumu(s) if yol.endswith((".yml", ".yaml", ".toml"))
                  and not YORUM_SATIRI.match(s) else None)
-        if yorum and yorum not in "\n".join(eklenen):
+        # Yorum baska bir YORUMUN icinde kalabilir ("# v7.6.0; <eski yorum>"), ama
+        # satirin kod kismindaki bir kelime onu kurtarmaz.
+        if yorum and not any(yorum in e for e in eklenen_yorumlar):
             b.append(("yorum", "%s: satir sonu yorumu kaybolmus: `# %s`" % (yol, yorum[:60])))
     return b
 
@@ -191,12 +229,23 @@ def _tabandaki_politika_dosyalari(kok, taban):
     return d
 
 
+def _agactaki_politika_dosyalari(kok):
+    """Calisma agaci; ama taban tarafiyla ayni evren: izlenen ve ignore
+    edilmeyen dosyalar. build/ altindaki bir kilit gerileme sayilmaz."""
+    d = {}
+    for yol in _git(kok, "ls-files", "--cached", "--others", "--exclude-standard").splitlines():
+        p = Path(kok) / yol
+        if POLITIKA_YOLU.search(yol) and "node_modules/" not in yol and p.is_file():
+            d[yol] = p.read_text(encoding="utf-8", errors="replace")
+    return d
+
+
 def politika_gerilemesi(kok, taban):
     """-> [(kural, mesaj)]. Yeni FAIL ya da artan WARN gerilemedir."""
     if P.yaml_yok():
         return [("politika", "PyYAML yok: politika karsilastirilamadi")]
     once = P.depo_bulgulari(_tabandaki_politika_dosyalari(kok, taban))
-    sonra = P.depo_bulgulari(P.klondan_oku(kok))
+    sonra = P.depo_bulgulari(_agactaki_politika_dosyalari(kok))
     b = []
     once_fail = {m for s, _, m in once if s == P.FAIL}
     for s, k, m in sonra:
@@ -229,13 +278,16 @@ def depo_denetle(kok, taban, dosya_kaliplari, silinebilir, bozuk_olabilir=()):
         if satir.strip().startswith("mode change"):
             bulgular.append(("silme", "kip degismis: %s" % satir.strip()))
     yeniler = [y for y in _git(kok, "ls-files", "--others", "--exclude-standard").splitlines() if y]
+    ic_ice = [y for y in yeniler if y.endswith("/") or (kok / y).is_dir()]
+    if ic_ice:
+        raise Bakilamadi("izlenmeyen ic ice git deposu: %s" % ", ".join(ic_ice[:3]))
     dosya_listesi += yeniler
 
     for yol in dosya_listesi:
-        if dosya_kaliplari and not any(fnmatch.fnmatchcase(yol, k) for k in dosya_kaliplari):
+        if dosya_kaliplari and not any(kaliba_uyar(yol, k) for k in dosya_kaliplari):
             bulgular.append(("dosya_disi", "%s: izin verilen dosyalarin disinda" % yol))
 
-    fark = diff_ayristir(_git(kok, "diff", "-U0", "--no-color", "--no-ext-diff", "--no-renames", taban))
+    fark = diff_ayristir(_git(kok, "diff", "-U0", "--text", "--no-color", "--no-ext-diff", "--no-renames", taban))
     eklenen = sum(len(f["eklenen"]) for f in fark.values())
     silinen = sum(len(f["silinen"]) for f in fark.values())
     for yol, f in sorted(fark.items()):
@@ -247,7 +299,7 @@ def depo_denetle(kok, taban, dosya_kaliplari, silinebilir, bozuk_olabilir=()):
 
     for yol in sorted(set(dosya_listesi)):
         p = kok / yol
-        if p.is_file() and not any(fnmatch.fnmatchcase(yol, k) for k in bozuk_olabilir):
+        if p.is_file() and not any(kaliba_uyar(yol, k) for k in bozuk_olabilir):
             hata = sozdizimi(yol, p.read_text(encoding="utf-8", errors="replace"))
             if hata:
                 bulgular.append(("sozdizimi", hata))
@@ -286,7 +338,7 @@ def main(argv=None):
     ap.add_argument("--kok", nargs="+", required=True, help="bir ya da daha cok calisma agaci")
     ap.add_argument("--taban", required=True, help="karsilastirilacak commit (ornek: HEAD, origin/main)")
     ap.add_argument("--dosya", action="append", default=[],
-                    help="degismesine izin verilen yol kalibi (fnmatch); tekrarlanabilir")
+                    help="degismesine izin verilen yol kalibi (* dizin sinirini gecmez, ** gecer); tekrarlanabilir")
     ap.add_argument("--silinebilir", action="append", default=[],
                     help="silinmesine izin verilen satir regex'i; yoksa yalnizca ekleme kabul")
     ap.add_argument("--bozuk-olabilir", action="append", default=[],
