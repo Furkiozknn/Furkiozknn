@@ -4,8 +4,8 @@
 
     python3 schema/testler.py                  # kontrol (agsiz) + olcum (jeton varsa)
     python3 schema/testler.py --kontrol        # yalnizca agsiz tutarlilik kapisi
-    DEPO_JETONU=... python3 schema/testler.py --olc
-    DEPO_JETONU=... python3 schema/testler.py --yaz
+    DEPO_OKUMA=... python3 schema/testler.py --olc
+    DEPO_OKUMA=... python3 schema/testler.py --yaz
 
 NEDEN VAR
 ---------
@@ -538,7 +538,7 @@ def main():
     if a.olc or a.yaz:
         D = _denetim()
         if not D.GENIS:
-            print("DEPO_JETONU yok: kosu loglari okunamaz, olcum atlandi.")
+            print("DEPO_OKUMA yok: kosu loglari okunamaz, olcum atlandi.")
             if a.yaz:
                 return 2
         else:

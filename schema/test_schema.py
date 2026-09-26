@@ -508,7 +508,7 @@ class OlcumTesti(unittest.TestCase):
 class KapsamTesti(unittest.TestCase):
     """"Bakilamadi" ile "temiz" ayni cumleye giremez.
 
-    _test_sayisi, DEPO_JETONU yokken sessizce None donuyordu ve gunluk
+    _test_sayisi, DEPO_OKUMA yokken sessizce None donuyordu ve gunluk
     denetim raporu bunu hic yazmiyordu. Yani "Denetim temiz" cumlesi,
     sistemin kendi hakkinda soyledigi en yuklu sayiya hic bakilmamis
     oldugu gunlerde de ayni sekilde yaziliyordu.
@@ -532,18 +532,18 @@ class KapsamTesti(unittest.TestCase):
 
     def test_bakilamayan_varsa_sayisi_ve_nedeni_yazilir(self):
         denetim.SAYI_OKUNAN.append("a")
-        denetim.SAYI_BAKILAMADI["b"] = "DEPO_JETONU yok: kosu logu okunamaz"
-        denetim.SAYI_BAKILAMADI["c"] = "DEPO_JETONU yok: kosu logu okunamaz"
+        denetim.SAYI_BAKILAMADI["b"] = "DEPO_OKUMA yok: kosu logu okunamaz"
+        denetim.SAYI_BAKILAMADI["c"] = "DEPO_OKUMA yok: kosu logu okunamaz"
         denetim.SAYI_BAKILAMADI["d"] = "birlesik kaynak: tek bir kalibi yok"
         satir = denetim._kapsam_satiri()
         self.assertIn("1 depoda kosuya karsi dogrulandi", satir)
         self.assertIn("3 depoda **bakilamadi**", satir)
-        self.assertIn("2: DEPO_JETONU yok", satir)
+        self.assertIn("2: DEPO_OKUMA yok", satir)
         self.assertIn("1: birlesik kaynak", satir)
         self.assertIn("Bakilamayan bir sayi temiz degildir", satir)
 
     def test_temiz_rapor_da_kapsami_soyler(self):
-        denetim.SAYI_BAKILAMADI["b"] = "DEPO_JETONU yok: kosu logu okunamaz"
+        denetim.SAYI_BAKILAMADI["b"] = "DEPO_OKUMA yok: kosu logu okunamaz"
         metin = denetim._rapor([], {}, 28)
         self.assertIn("Denetim temiz", metin)
         self.assertIn("bakilamadi", metin)
@@ -568,7 +568,7 @@ class KapsamTesti(unittest.TestCase):
                 "x", "main", {"tests": {"count": 12, "source": "`12 passed`"}}, {}))
         finally:
             denetim.GENIS = onceki
-        self.assertIn("DEPO_JETONU", denetim.SAYI_BAKILAMADI["x"])
+        self.assertIn("DEPO_OKUMA", denetim.SAYI_BAKILAMADI["x"])
 
 
 class IkiKaynakTesti(unittest.TestCase):
@@ -668,7 +668,7 @@ class HizSiniriTesti(unittest.TestCase):
     def test_depo_listesi_alinamazsa_yigin_izi_degil_cumle(self):
         # Olumcul, ama yigin izi basarak degil. Ve nedenini soylemeli:
         # _get GITHUB_TOKEN/GH_TOKEN okuyor, kosu loglarini okuyan taraf
-        # DEPO_JETONU; yalniz ikincisi tanimliyken istekler kimliksiz gider.
+        # DEPO_OKUMA; yalniz ikincisi tanimliyken istekler kimliksiz gider.
         import io, os, contextlib
         gercek = denetim.D._repos
         denetim.D._repos = lambda: (_ for _ in ()).throw(denetim.D.HizSiniri("x"))
@@ -1376,6 +1376,51 @@ class PolitikaFiksturTesti(unittest.TestCase):
         # Yalnizca tam dizin adi: "fixturesx" bir fikstur dizini degil.
         self.assertIn("kilit", [k for _, k, _ in politika.depo_bulgulari(
             dict(temel, **{"fixturesx/package-lock.json": kilit}))])
+
+
+class JetonYuzeyiTesti(unittest.TestCase):
+    """Hangi sir hangi iste gorunur -- genislerse CI kirilir.
+
+    26 Eylul 2026'ya kadar tasarim tek bir jetondu: okuma + 26 depoya yazma,
+    onaysiz push. Yazan jeton artik yalnizca `meta-yazma` ortamindaki (insan
+    onayli) `yaz` isinde, okuyan jeton yalnizca okuyan islerde.
+    """
+
+    AKISLAR = os.path.join(os.path.dirname(BURASI), ".github", "workflows")
+
+    def setUp(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        self.kullanim = {}
+        for ad in sorted(os.listdir(self.AKISLAR)):
+            with open(os.path.join(self.AKISLAR, ad), encoding="utf-8") as f:
+                y = politika._yukle(f.read())
+            for jn, j in (y.get("jobs") or {}).items():
+                metin = json.dumps(j)
+                for sir in set(re.findall(r"secrets\.([A-Z_]+)", metin)):
+                    self.kullanim.setdefault(sir, set()).add((ad, jn, j.get("environment")))
+
+    def test_yazan_jeton_yalnizca_onayli_iste(self):
+        self.assertEqual(self.kullanim.get("DEPO_YAZMA"), {("yenile.yml", "yaz", "meta-yazma")})
+
+    def test_okuyan_jeton_yalnizca_okuyan_islerde(self):
+        self.assertEqual({(a, j) for a, j, _ in self.kullanim.get("DEPO_OKUMA", set())},
+                         {("denetim.yml", "denetle"), ("sayilar.yml", "olc")})
+
+    def test_eski_tek_jeton_hicbir_yerde(self):
+        self.assertNotIn("DEPO_JETONU", self.kullanim)
+
+    def test_bilinmeyen_sir_yok(self):
+        self.assertLessEqual(set(self.kullanim), {"DEPO_OKUMA", "DEPO_YAZMA"})
+
+    def test_yaz_isi_onay_kuralini_kendisi_de_denetler(self):
+        with open(os.path.join(self.AKISLAR, "yenile.yml"), encoding="utf-8") as f:
+            y = politika._yukle(f.read())
+        adimlar = y["jobs"]["yaz"]["steps"]
+        kontrol = [i for i, s in enumerate(adimlar) if "required_reviewers" in (s.get("run") or "")]
+        push = [i for i, s in enumerate(adimlar) if " push --quiet origin" in (s.get("run") or "")]
+        self.assertTrue(kontrol and push and kontrol[0] < push[0])
+        self.assertNotIn("[skip ci]", json.dumps(y))
 
 
 class DegisimTesti(unittest.TestCase):

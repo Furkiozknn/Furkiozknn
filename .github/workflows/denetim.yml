@@ -50,7 +50,7 @@ jobs:
         run: python3 -m pip install --quiet pyyaml==6.0.3
 
       # Geri kalan her sey standart kutuphane.
-      # DEPO_JETONU tanimliysa kosu loglari da okunabiliyor, yani
+      # DEPO_OKUMA tanimliysa kosu loglari da okunabiliyor, yani
       # "yayimlanan test sayisi hala kosunun yazdigi sayi mi" sorusu
       # gercekten soruluyor. Tanimli degilse denetim yine kosuyor ama
       # raporun basinda kac deponun sayisina BAKILAMADIGI yaziyor --
@@ -59,7 +59,7 @@ jobs:
       - name: Denetim
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
+          DEPO_OKUMA: ${{ secrets.DEPO_OKUMA }}
         run: |
           set -euo pipefail
           python3 schema/denetim.py | tee denetim.md

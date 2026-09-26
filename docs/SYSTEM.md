@@ -12,12 +12,12 @@ done by hand, and why. It started as the **System ×4 audit of 25 September
                     ├─ red CI on default branches, workflows GitHub disabled
                     ├─ release chain: tag ─► release ─► PyPI
                     ├─ metadata vs live repository, links, install commands
-                    ├─ published test counts vs the run that printed them  [DEPO_JETONU]
+                    ├─ published test counts vs the run that printed them  [DEPO_OKUMA]
                     ├─ workflow + supply-chain policy (schema/politika.py)
                     └─ open PR queue: red heads, PRs whose checks never ran
-                 ──► sayilar.yml (daily 05:40) ──► profile counts, committed  [DEPO_JETONU]
+                 ──► sayilar.yml (daily 05:40) ──► profile counts, committed  [DEPO_OKUMA]
                  ──► vitrin.yml  (daily 05:17) ──► README "Recently", committed
-                 ──► yenile.yml  (weekly)      ──► project-meta.json per repo [DEPO_JETONU]
+                 ──► yenile.yml  (weekly)      ──► diff ─► HUMAN APPROVAL ─► project-meta.json per repo [DEPO_YAZMA]
 human ──► merge · tag · release · settings · secrets   (never automated)
       ▲
       └── surum.yml (on demand): is this version ready to tag, and on which SHA?
@@ -120,7 +120,7 @@ The policy now fails on it; the fix rides each repository's open PR. 11 reposito
 through `tests/kapi.sh`, which fails on `SCRIPT ERROR` and on a lower-than-
 expected count; Playwright fails on zero tests. The published count of 26
 repositories **could not be checked against CI** on 25 Sep: that comparison
-needs `DEPO_JETONU`.
+needs `DEPO_OKUMA`.
 
 **F. Releases.** All 13 PyPI publishers use OIDC Trusted Publishing, no
 token anywhere, and every one of them refuses to build when the tag differs
@@ -131,7 +131,7 @@ registered yet.
 
 **G. Automation.** The audit, the counts, the "Recently" section and the
 metadata refresh are automated. Three of them are degraded without
-`DEPO_JETONU` (see *Single points of failure*).
+`DEPO_OKUMA` / `DEPO_YAZMA` (see *Single points of failure*).
 
 **H. Documentation.** README and LICENSE in all 27; SECURITY.md in 18,
 CHANGELOG in 19, issue templates in 14; 23 repositories share one banner
@@ -166,7 +166,7 @@ The Godot log gate (`tests/kapi.sh`) exists in four games.
 **O. Manual operations** — see the table below.
 
 **P. Single points of failure.**
-1. `DEPO_JETONU` — one missing secret turns off test-count verification,
+1. One token (then `DEPO_JETONU`) — one missing secret turned off test-count verification,
    the automatic count sync and the metadata self-repair.
 2. A single approver for every merge: 46 Claude PRs and 36 Dependabot PRs
    were waiting on one person on 25 Sep. Grouping and stacking cut the
@@ -186,14 +186,14 @@ sync.
 |---|---|---|---|---|
 | 1 | Merge Dependabot PRs | one PR per action per week, merged one by one | `groups` + monthly: one PR per ecosystem | done on every open PR (27/27 CI green); live when they merge |
 | 2 | Keep upload/download-artifact in step | remembered by a person | same group → same PR | done on every open PR (27/27 CI green); live when they merge |
-| 3 | Update profile counts after a merge | hand-edited in 7 places | `sayilar.yml` measures and commits | needs `DEPO_JETONU` |
-| 4 | Check a published count is real | nobody could, for 26 repos | `denetim.py` reads the run log | needs `DEPO_JETONU` |
+| 3 | Update profile counts after a merge | hand-edited in 7 places | `sayilar.yml` measures and commits | needs `DEPO_OKUMA` and PR #20 merged |
+| 4 | Check a published count is real | nobody could, for 26 repos | `denetim.py` reads the run log | needs `DEPO_OKUMA` |
 | 5 | Notice a hung job | 6 h of runner time, then red | measured `timeout-minutes` everywhere | done on every open PR (27/27 CI green); live when they merge |
 | 6 | Notice a workflow GitHub switched off | not noticed | daily audit reports `disabled_inactivity` | done |
 | 7 | Keep new workflows to the rules | code review | policy in the daily audit + this repo's CI | done |
 | 8 | Keep action versions current | never | Dependabot in all 27 repositories | done on every open PR (27/27 CI green); live when they merge |
 | 9 | Know a tag reached PyPI | by hand | daily audit (tag → release → PyPI) | existing |
-| 10 | Apply About texts | `about/uygula.py --uygula` by hand | a workflow with an admin-scoped token | proposed |
+| 10 | Apply About texts | `about/uygula.py --uygula` by hand | a workflow with an admin-scoped token — declined: repository administration is not worth a standing token for nine strings a year | manual |
 | 11 | Register Trusted Publishers | pypi.org UI, 13 times | none possible — values listed below | manual, one-time |
 | 12 | Enable Pages | repository settings, 4 times | none possible without an admin token | manual, one-time |
 | 13 | Tag a release on the right commit | a command typed by hand | `schema/surum.py` / Actions → surum: refuses an unmerged PR's trial-merge SHA, checks branch, version, CHANGELOG, existing tag, CI and PyPI, then prints the exact command | done (tagging stays human) |
@@ -210,19 +210,51 @@ mini-creative-toolkit, model-comparison-harness, nvidia-nim-mcp,
 repo-vet, voice-io-mcp — each under its repository name — and
 prompt-template-manager under the PyPI name **`ptm-cli`**.
 
-### `DEPO_JETONU`
+### Tokens: one reader, one approved writer
 
-A fine-grained personal access token, stored as a secret in this repository
-only. Repository access: all repositories. Permissions: **Actions: Read**
-(run logs), **Contents: Read and write** (the weekly metadata refresh),
-**Dependabot alerts: Read**. Rotation: when it expires, the daily audit says
-"bakilamadi" instead of pretending to be clean.
+Until 26 Sep the design was one fine-grained token, `DEPO_JETONU`, with
+Actions: Read, Dependabot alerts: Read **and Contents: Read and write** on
+every repository, used by the daily audit, the count sync and the weekly
+metadata push — which pushed to 26 default branches with no approval and
+`[skip ci]`. Anything that could read that secret could write anywhere. It
+was never created; it is now split before it ever exists:
+
+| Secret | Where it lives | Permissions (all repositories) | Used by | Approval |
+|---|---|---|---|---|
+| `DEPO_OKUMA` | repository secret | Actions: Read, Dependabot alerts: Read (Metadata: Read is implied) | `denetim.yml`, `sayilar.yml` | none — it cannot change anything |
+| `DEPO_YAZMA` | secret of the **`meta-yazma` environment** only | Contents: Read and write | `yenile.yml` job `yaz` | the environment's *Required reviewers*: the job waits until a person approves the diff in the run summary |
+
+`sayilar.yml` commits to this repository with its own `GITHUB_TOKEN`
+(`contents: write` on this repository only); `DEPO_OKUMA` only reads logs.
+
+`yenile.yml` is now two jobs. `tazele` holds no secret: it regenerates,
+runs `koruma.py` and `degisim.py` per repository, writes the full diff to the
+run summary and records the **base commit** of every repository it would
+write. `yaz` runs in `meta-yazma`; after approval it re-clones, skips any
+repository whose branch moved while waiting (the diff a person read no longer
+applies), re-runs both gates, pushes without `[skip ci]` so each
+repository's CI checks the commit, and compares the remote branch tip with
+the commit it pushed. If the environment has no *Required reviewers* rule
+(GitHub silently creates a missing environment without one) or `DEPO_YAZMA`
+is missing, `yaz` pushes nothing and goes red.
+
+One-time setup (by hand; no API call here creates secrets):
+1. *Settings → Environments → New environment* `meta-yazma` → *Required
+   reviewers*: yourself.
+2. Fine-grained token A (all repositories; Actions: Read, Dependabot alerts:
+   Read) → *Settings → Secrets → Actions* → `DEPO_OKUMA`.
+3. Fine-grained token B (all repositories; Contents: Read and write) →
+   *Environments → meta-yazma → Environment secrets* → `DEPO_YAZMA`.
+
+Rotation: an expired `DEPO_OKUMA` makes the audit say "bakilamadi", never
+"clean"; an expired `DEPO_YAZMA` makes the approved `yaz` job red.
 
 ## Rollback
 
 | Change | Undo |
 |---|---|
 | Policy check in the audit | revert the commit; the audit runs as before |
+| Split tokens / approved `yaz` job | revert `yenile.yml`; delete the `meta-yazma` environment and both secrets (nothing else depends on them) |
 | `sayilar.yml` commit | `git revert` the bot commit; `testler.py --kontrol` still gates |
 | Dependabot grouping | revert the file; Dependabot returns to one PR per package |
 | Timeouts | raise the number, or delete the line |

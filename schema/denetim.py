@@ -14,8 +14,8 @@ Depo basina olculenler:
   - hic is akisi var mi
   - varsayilan dalda en son tamamlanan kosular kirmizi mi
   - yayindaki adres (homepage) hala aciliyor mu
-  - (DEPO_JETONU varsa) acik Dependabot uyarisi var mi
-  - (DEPO_JETONU varsa) yayimlanan test sayisi en yeni CI kosusunun
+  - (DEPO_OKUMA varsa) acik Dependabot uyarisi var mi
+  - (DEPO_OKUMA varsa) yayimlanan test sayisi en yeni CI kosusunun
     yazdigi sayiyla ayni mi
   - en yeni etiketin release'i var mi, PyPI'a gitmis mi
   - 'active' diyen bir depo aylardir sessiz mi
@@ -29,7 +29,7 @@ kirmizi yakmaz; sinyal, acilan/guncellenen konudur.
 
 Yalnizca standart kutuphane. Dependabot uyarilari GITHUB_TOKEN ile baska
 bir depoda okunamaz; o yuzden varsayilan olarak kapsam disi -- goremedigi
-bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_JETONU tanimliysa
+bir seyi "temiz" diye yazmaktansa hic yazmiyor. DEPO_OKUMA tanimliysa
 (Dependabot alerts: Read) kapsama giriyor ve denetim.json bunu
 `dependabot_checked` alaninda soyluyor.
 
@@ -144,7 +144,10 @@ def _kapanmis_akislar(ad):
                   if w.get("state") == "disabled_inactivity")
 
 
-GENIS = os.environ.get("DEPO_JETONU") or ""
+# Salt okunur, butun depolarda: Actions: Read (kosu loglari) ve Dependabot
+# alerts: Read. Yazma yetkisi YOK; yazan tek is yenile.yml'in onayli adimi ve
+# onun jetonu (DEPO_YAZMA) ayri. Eski tek-jeton adi yerelde hala okunur.
+GENIS = os.environ.get("DEPO_OKUMA") or os.environ.get("DEPO_JETONU") or ""
 UYARI_OKUNAN = []          # uyarilari gercekten okunabilen depolar
 SAYI_OKUNAN = []           # yayimlanan test sayisi kosuya karsi GERCEKTEN karsilastirilan depolar
 SAYI_BAKILAMADI = {}       # depo -> neden karsilastirilamadi
@@ -158,7 +161,7 @@ def _uyarilar(ad):
     """Acik Dependabot uyarilari.
 
     GITHUB_TOKEN bunu baska bir depoda goremez; goremedigi bir seyi
-    "temiz" diye yazmaktansa hic yazmamak dogru. DEPO_JETONU tanimliysa
+    "temiz" diye yazmaktansa hic yazmamak dogru. DEPO_OKUMA tanimliysa
     (Dependabot alerts: Read yetkisiyle) kapak aciliyor ve uyarilar da
     gunluk denetime giriyor. Jeton yoksa None doner -- "uyari yok" degil,
     "bakilamadi".
@@ -326,7 +329,7 @@ def _test_sayisi(ad, dal, meta, akislar):
     if not testler or not testler.get("count"):
         return None                       # yayimlanan sayi yok: karsilastiracak bir sey de yok
     if not GENIS:
-        SAYI_BAKILAMADI[ad] = "DEPO_JETONU yok: kosu logu okunamaz"
+        SAYI_BAKILAMADI[ad] = "DEPO_OKUMA yok: kosu logu okunamaz"
         return None
     desen = kalip(testler.get("source"))
     if not desen:
@@ -898,7 +901,7 @@ def _kapsam_satiri():
     "Bakilamadi" ile "temiz" ayni cumleye giremez. Bu kontrol, sistemin
     kendi hakkinda soyledigi en yuklu cumleyi -- profil sayfasindaki toplam
     test sayisini -- kosunun bugun yazdigi satira geri baglayan kontrol; ve
-    DEPO_JETONU olmadan sessizce atlaniyordu, yani gunluk denetim aylarca
+    DEPO_OKUMA olmadan sessizce atlaniyordu, yani gunluk denetim aylarca
     "temiz" yazarken o cumleye hic bakmamis olabilirdi. Simdi sayiyor.
     """
     okunan, bakilamayan = len(SAYI_OKUNAN), len(SAYI_BAKILAMADI)
@@ -964,7 +967,7 @@ def main():
     # Depo listesi olmadan denetim diye bir sey yok, yani bu olumcul -- ama
     # olumcul olmasi yigin izi basmasi anlamina gelmiyor. Ayrica nedeni
     # soylemek gerekiyor: `_get` GITHUB_TOKEN/GH_TOKEN okuyor, kosu loglarini
-    # okuyan taraf DEPO_JETONU; yalnizca ikincisi tanimliyken istekler
+    # okuyan taraf DEPO_OKUMA; yalnizca ikincisi tanimliyken istekler
     # KIMLIKSIZ gidiyor ve saatte 60'ta duruyor. CI'da GITHUB_TOKEN hazir
     # oldugu icin orada hic gorulmez, yerelde hemen gorulur.
     try:
@@ -975,7 +978,7 @@ def main():
         print("Istekler %s gidiyor%s." % (
             "kimlikli" if kimlikli else "KIMLIKSIZ",
             "" if kimlikli else " -- GITHUB_TOKEN ya da GH_TOKEN tanimlayin "
-                               "(DEPO_JETONU yalniz kosu loglari icin kullaniliyor)"))
+                               "(DEPO_OKUMA yalniz kosu loglari icin kullaniliyor)"))
         return 2
 
     bulgular, iskeletler, metalar = [], {}, {}
@@ -1030,7 +1033,7 @@ def main():
         "open_prs": dict(KUYRUK),
         "note": "Bulgular olculmustur; hicbiri otomatik duzeltilmez."
                 + ("" if UYARI_OKUNAN else " Dependabot uyarilari kapsam disi: "
-                   "DEPO_JETONU tanimli degil ya da yetkisiz; GITHUB_TOKEN "
+                   "DEPO_OKUMA tanimli degil ya da yetkisiz; GITHUB_TOKEN "
                    "onlari baska bir depoda goremiyor."),
         "findings": [{"repo": a, "kind": b, "message": c} for a, b, c in bulgular],
         "onboarding_skeletons": iskeletler,

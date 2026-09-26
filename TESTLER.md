@@ -187,8 +187,8 @@ what is published here:
 
 ```bash
 python3 schema/testler.py --kontrol                 # offline: does every surface agree?
-DEPO_JETONU=... python3 schema/testler.py --olc     # re-read the run behind each number
-DEPO_JETONU=... python3 schema/testler.py --yaz     # ...and write what it measured
+DEPO_OKUMA=... python3 schema/testler.py --olc     # re-read the run behind each number
+DEPO_OKUMA=... python3 schema/testler.py --yaz     # ...and write what it measured
 ```
 
 `--kontrol` needs no token and runs in CI. `--olc` downloads one run log per

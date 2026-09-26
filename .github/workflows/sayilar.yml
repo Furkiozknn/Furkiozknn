@@ -11,7 +11,7 @@ name: sayilar
 #
 # Bu is akisi eklenene kadar birlestirme sonrasi sayilar yalnizca bir
 # oturumun not defterinde bekliyordu -- o not kaybolursa profil eski sayida
-# kalirdi ve bunu yalnizca gunluk denetim, o da DEPO_JETONU varsa, gorurdu.
+# kalirdi ve bunu yalnizca gunluk denetim, o da DEPO_OKUMA varsa, gorurdu.
 #
 # Guvenlik kemerleri (vitrin.yml ile ayni cizgi):
 #   - yalnizca asagidaki bes dosya commit edilebilir; baska bir dosya
@@ -19,7 +19,7 @@ name: sayilar
 #   - testler.py --kontrol gecmezse push yok
 #   - patlama yaricapi: 6'dan fazla depo ayni anda degisiyorsa push yok;
 #     bu neredeyse her zaman okuyucudaki bir hatadir, gercek bir degisim degil
-#   - DEPO_JETONU yoksa olcum yapilamaz; bu kosu yesil GORUNMEZ, bir uyari
+#   - DEPO_OKUMA yoksa olcum yapilamaz; bu kosu yesil GORUNMEZ, bir uyari
 #     ve ozet sayfasinda neden yazar
 
 on:
@@ -50,15 +50,15 @@ jobs:
         id: olc
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          DEPO_JETONU: ${{ secrets.DEPO_JETONU }}
+          DEPO_OKUMA: ${{ secrets.DEPO_OKUMA }}
         run: |
           set -uo pipefail
-          if [ -z "${DEPO_JETONU:-}" ]; then
-            echo "::warning title=sayilar::DEPO_JETONU tanimli degil: kosu loglari okunamaz, hicbir sayi olculmedi."
+          if [ -z "${DEPO_OKUMA:-}" ]; then
+            echo "::warning title=sayilar::DEPO_OKUMA tanimli degil: kosu loglari okunamaz, hicbir sayi olculmedi."
             {
               echo "### sayilar"
               echo
-              echo "**Olcum yapilmadi:** DEPO_JETONU tanimli degil. Kosu loglarini okumak icin"
+              echo "**Olcum yapilmadi:** DEPO_OKUMA tanimli degil. Kosu loglarini okumak icin"
               echo "butun depolarda *Actions: Read* yetkili fine-grained bir jeton gerekir."
             } >> "$GITHUB_STEP_SUMMARY"
             echo "yazildi=hayir" >> "$GITHUB_OUTPUT"
