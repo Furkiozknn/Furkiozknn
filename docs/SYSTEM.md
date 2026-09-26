@@ -52,6 +52,29 @@ reusable publish workflow — PyPI Trusted Publishing does not work from a
 reusable workflow, so centralising the twelve `yayinla.yml` copies would
 break every release. Drift between the copies is the thing to watch instead.
 
+## Bulk changes (`schema/degisim.py`)
+
+A change applied to many repositories at once is judged by its **diff**, not
+by the transform's own tests. On 25 Sep the SHA-pinning regex (`\s*` where
+`[ \t]*` was meant) crossed a line end and deleted 8 comment lines and 8
+blank lines in 6 repositories; tests, policy and CI were all green. Replaying
+that exact regex against the same 17 checkouts, the gate fails exactly those
+6 (8 `yorum`, 8 `bos_satir`) and passes all 17 with the corrected regex.
+
+```
+snapshot (commit/branch) ─► transform ─► degisim.py ─► policy ─► tests ─► commit ─► push ─► CI
+                                         │
+      FAIL on: a file outside --dosya · a deleted/renamed/mode-changed file ·
+      a deleted comment or blank line · a lost end-of-line comment · a deleted
+      line no --silinebilir pattern allows · whitespace/CRLF-only edits ·
+      a lost final newline · a file that no longer parses · a new policy FAIL
+      or more WARNs · more repositories changed than --azami-depo
+```
+
+Order: **one pilot repository** through the whole line (including its CI),
+then the rest with `--azami-depo` set to the number expected. A repository
+the gate could not check is reported as such, never as passed.
+
 ## System ×4 audit — 25 September 2026
 
 Scope: the 27 active public repositories, audited as they will be **after**

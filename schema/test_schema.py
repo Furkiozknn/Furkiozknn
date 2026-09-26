@@ -48,6 +48,7 @@ vitrin = _yukle("vitrin")
 derle = _yukle("derle")
 politika = _yukle("politika")
 surum = _yukle("surum")
+degisim = _yukle("degisim")
 
 
 class GeciciDepo:
@@ -1321,6 +1322,252 @@ class KuyrukTesti(unittest.TestCase):
         denetim._belki = lambda url, v=None: []
         self.assertEqual(denetim._pr_kuyrugu("depo"), [])
         self.assertEqual(denetim._kuyruk_satiri(), "")
+
+
+class DegisimTesti(unittest.TestCase):
+    """schema/degisim.py: toplu donusumun diff'i, donusumun kendisinden bagimsiz.
+
+    25 Eylul 2026: action'lari SHA'ya sabitleyen regex, "istege bagli satir
+    sonu yorumu" kalibindaki bosluk sinifiyla satir sonunu gecip alttaki yorum satirini da "satir sonu yorumu" sandi;
+    alti depoda sekiz yorum satiri silindi. Testler, politika ve CI yesildi.
+    """
+
+    AKIS = (
+        "name: CI\n"
+        "on: [push]\n"
+        "permissions:\n  contents: read\n"
+        "jobs:\n"
+        "  test:\n"
+        "    runs-on: ubuntu-24.04\n"
+        "    timeout-minutes: 10\n"
+        "    steps:\n"
+        "      - uses: actions/checkout@v5\n"
+        "      - uses: astral-sh/setup-uv@v7\n"
+        "\n"
+        "      # Kilit dosyasi degismeden kurulum: uv.lock ile pyproject\n"
+        "      # ayrisirsa burada durur.\n"
+        "      - run: uv sync --locked\n")
+    SHA = "37802adc94f370d6bfd71619e3f0bf239e1f3b78"
+    USES = [r"^\s*(-\s*)?uses:"]
+
+    def setUp(self):
+        if shutil.which("git") is None:
+            self.skipTest("git yok")
+        self.tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.tmp)
+
+    def _depo(self, dosyalar=None, ad="depo"):
+        kok = os.path.join(self.tmp, ad)
+        os.makedirs(kok)
+        for yol, metin in (dosyalar or {".github/workflows/ci.yml": self.AKIS}).items():
+            tam = os.path.join(kok, yol)
+            os.makedirs(os.path.dirname(tam), exist_ok=True)
+            with open(tam, "w", encoding="utf-8", newline="") as f:
+                f.write(metin)
+        for k in (["init", "-q"], ["add", "-A"],
+                  ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "taban"]):
+            subprocess.run(["git", "-C", kok, *k], check=True, capture_output=True)
+        return kok
+
+    def _yaz(self, kok, yol, metin):
+        tam = os.path.join(kok, yol)
+        os.makedirs(os.path.dirname(tam) or kok, exist_ok=True)
+        with open(tam, "w", encoding="utf-8", newline="") as f:
+            f.write(metin)
+
+    def _oku(self, kok, yol=".github/workflows/ci.yml"):
+        with open(os.path.join(kok, yol), encoding="utf-8", newline="") as f:
+            return f.read()
+
+    def _kurallar(self, kok, dosya=(".github/workflows/*.yml",), silinebilir=None):
+        s = degisim.depo_denetle(kok, "HEAD", list(dosya),
+                                 self.USES if silinebilir is None else silinebilir)
+        return sorted({b["kural"] for b in s["bulgular"]}), s
+
+    # --- regresyon: olayin kendisi -------------------------------------------------
+
+    def test_olaydaki_regex_yorum_satirini_yutar_ve_fail(self):
+        kok = self._depo()
+        hatali = re.sub(r"(uses:\s*astral-sh/setup-uv@)v7(\s*#[^\n]*)?",
+                        r"\g<1>%s # v7.6.0" % self.SHA, self._oku(kok))
+        self._yaz(kok, ".github/workflows/ci.yml", hatali)
+        kurallar, _ = self._kurallar(kok)
+        self.assertIn("yorum", kurallar)
+        self.assertIn("bos_satir", kurallar)
+
+    def test_duzeltilmis_regex_pass(self):
+        kok = self._depo()
+        dogru = re.sub(r"(uses:[ \t]*astral-sh/setup-uv@)v7([ \t]*#[^\n]*)?",
+                       r"\g<1>%s # v7.6.0" % self.SHA, self._oku(kok))
+        self._yaz(kok, ".github/workflows/ci.yml", dogru)
+        kurallar, s = self._kurallar(kok)
+        self.assertEqual(kurallar, [])
+        self.assertEqual((s["eklenen"], s["silinen"]), (1, 1))
+
+    # --- negatifler ------------------------------------------------------------------
+
+    def test_satir_sonu_yorumu_kaybolursa_fail(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS.replace(
+            "setup-uv@v7\n", "setup-uv@v7  # 0.9 ile kilit bicimi degisti\n")})
+        metin = self._oku(kok).replace("setup-uv@v7  # 0.9 ile kilit bicimi degisti",
+                                       "setup-uv@%s # v7.6.0" % self.SHA)
+        self._yaz(kok, ".github/workflows/ci.yml", metin)
+        self.assertEqual(self._kurallar(kok)[0], ["yorum"])
+
+    def test_yorum_korunursa_pass(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS.replace(
+            "setup-uv@v7\n", "setup-uv@v7  # 0.9 ile kilit bicimi degisti\n")})
+        metin = self._oku(kok).replace("setup-uv@v7  #", "setup-uv@%s  # v7.6.0;" % self.SHA)
+        self._yaz(kok, ".github/workflows/ci.yml", metin)
+        self.assertEqual(self._kurallar(kok)[0], [])
+
+    def test_izinsiz_satir_silme_fail(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace("      - run: uv sync --locked\n", ""))
+        self.assertEqual(self._kurallar(kok)[0], ["beklenmeyen"])
+
+    def test_silinebilir_yoksa_yalnizca_ekleme(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml",
+                  self._oku(kok).replace("setup-uv@v7", "setup-uv@%s # v7" % self.SHA))
+        self.assertEqual(self._kurallar(kok, silinebilir=[])[0], ["beklenmeyen"])
+
+    def test_yalnizca_bosluk_degisimi_fail(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace("run: uv sync", "run:  uv sync"))
+        # "run:  uv sync" ile "run: uv sync" strip'te farkli; ic bosluk "beklenmeyen" sayilir.
+        self.assertEqual(self._kurallar(kok)[0], ["beklenmeyen"])
+        kok2 = self._depo(ad="iki")
+        self._yaz(kok2, ".github/workflows/ci.yml", self._oku(kok2).replace(
+            "      - run: uv sync --locked\n", "      - run: uv sync --locked   \n"))
+        self.assertEqual(self._kurallar(kok2)[0], ["bosluk"])
+
+    def test_crlf_donusumu_fail(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace("\n", "\r\n"))
+        self.assertIn("bosluk", self._kurallar(kok)[0])
+
+    def test_son_satir_sonu_kaybolursa_fail(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).rstrip("\n"))
+        self.assertIn("son_satir", self._kurallar(kok)[0])
+
+    def test_zaten_eksik_son_satir_gerileme_degil(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS.rstrip("\n")})
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok) + "  # son")
+        self.assertNotIn("son_satir", self._kurallar(kok)[0])
+
+    def test_kapsam_disi_dosya_fail(self):
+        kok = self._depo()
+        self._yaz(kok, "README.md", "yeni\n")
+        self.assertEqual(self._kurallar(kok)[0], ["dosya_disi"])
+
+    def test_dosya_silme_ve_ad_degistirme_fail(self):
+        kok = self._depo({".github/workflows/ci.yml": self.AKIS, ".github/workflows/b.yml": self.AKIS})
+        os.remove(os.path.join(kok, ".github/workflows/b.yml"))
+        self.assertIn("silme", self._kurallar(kok)[0])
+        kok2 = self._depo(ad="iki")
+        subprocess.run(["git", "-C", kok2, "mv", ".github/workflows/ci.yml", ".github/workflows/test.yml"],
+                       check=True)
+        self.assertIn("silme", self._kurallar(kok2)[0])
+
+    def test_bozuk_yaml_fail(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok) + "      - run: [\n")
+        self.assertIn("sozdizimi", self._kurallar(kok)[0])
+
+    def test_bozuk_json_fail(self):
+        kok = self._depo({"project-meta.json": '{"a": 1}\n'})
+        self._yaz(kok, "project-meta.json", '{"a": 1,}\n')
+        self.assertIn("sozdizimi", self._kurallar(kok, dosya=("*.json",), silinebilir=[".*"])[0])
+
+    def test_politika_gerilemesi_fail(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok) + "      - run: uv run pytest | tee log\n")
+        kurallar, s = self._kurallar(kok)
+        self.assertEqual(kurallar, ["politika"])
+        self.assertIn("boru", s["bulgular"][0]["mesaj"])
+
+    def test_warn_artisi_fail(self):
+        if politika.yaml_yok():
+            self.skipTest("PyYAML yok")
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml",
+                  self._oku(kok).replace("    timeout-minutes: 10\n", ""))
+        kurallar, _ = self._kurallar(kok, silinebilir=[r"timeout-minutes"])
+        self.assertEqual(kurallar, ["politika"])
+
+    def test_patlama_yaricapi(self):
+        kokler = []
+        for ad in ("a", "b", "c"):
+            k = self._depo(ad=ad)
+            self._yaz(k, ".github/workflows/ci.yml", self._oku(k) + "# ek\n")
+            kokler.append(k)
+        kokler.append(self._depo(ad="d"))
+        sonuc, bakilamayan, patlama = degisim.denetle(kokler, "HEAD", [".github/workflows/*.yml"],
+                                                      self.USES, azami_depo=2)
+        self.assertIsNotNone(patlama)
+        self.assertEqual([s["durum"] for s in sonuc], ["FAIL", "FAIL", "FAIL", "PASS"])
+        self.assertEqual(bakilamayan, {})
+        sonuc, _, patlama = degisim.denetle(kokler, "HEAD", [".github/workflows/*.yml"],
+                                            self.USES, azami_depo=3)
+        self.assertIsNone(patlama)
+
+    def test_git_olmayan_dizin_ve_yok_taban_bakilamadi(self):
+        bos = os.path.join(self.tmp, "bos")
+        os.makedirs(bos)
+        _, bakilamayan, _ = degisim.denetle([bos], "HEAD")
+        self.assertIn("bos", bakilamayan)
+        kok = self._depo()
+        _, bakilamayan, _ = degisim.denetle([kok], "yok-boyle-bir-dal")
+        self.assertIn("depo", bakilamayan)
+
+    def test_cli_cikis_kodlari(self):
+        kok = self._depo()
+        self.assertEqual(degisim.main(["--kok", kok, "--taban", "HEAD"]), 0)
+        self._yaz(kok, "x.txt", "x\n")
+        self.assertEqual(degisim.main(["--kok", kok, "--taban", "HEAD", "--dosya", "*.yml"]), 1)
+        self.assertEqual(degisim.main(["--kok", os.path.join(self.tmp, "yok"), "--taban", "HEAD"]), 2)
+
+    # --- yanlis alarm korumalari -------------------------------------------------------
+
+    def test_yalnizca_ekleme_pass(self):
+        kok = self._depo()
+        self._yaz(kok, ".github/workflows/ci.yml", self._oku(kok).replace(
+            "    timeout-minutes: 10\n",
+            "    # olculen en uzun kosu 41 sn\n    timeout-minutes: 10\n\n"))
+        self.assertEqual(self._kurallar(kok)[0], [])
+
+    def test_yer_degistiren_satir_silme_sayilmaz(self):
+        kok = self._depo()
+        m = self._oku(kok)
+        blok = ("      # Kilit dosyasi degismeden kurulum: uv.lock ile pyproject\n"
+                "      # ayrisirsa burada durur.\n")
+        m = m.replace(blok, "").replace("      - uses: actions/checkout@v5\n",
+                                        blok + "      - uses: actions/checkout@v5\n")
+        self._yaz(kok, ".github/workflows/ci.yml", m)
+        self.assertEqual(self._kurallar(kok)[0], [])
+
+    def test_tirnak_icindeki_diyez_yorum_degil(self):
+        self.assertIsNone(degisim.satir_sonu_yorumu('      run: echo "a # b"'))
+        self.assertEqual(degisim.satir_sonu_yorumu("      uses: x/y@v1  # neden"), "neden")
+        self.assertIsNone(degisim.satir_sonu_yorumu("      uses: x/y@v1#frag"))
+
+    def test_eksi_eksi_ile_baslayan_icerik_baslik_sanilmaz(self):
+        fark = ("diff --git a/x.yml b/x.yml\n--- a/x.yml\n+++ b/x.yml\n@@ -1 +1 @@\n"
+                "--- belge\n+yeni\n")
+        d = degisim.diff_ayristir(fark)
+        self.assertEqual(d["x.yml"]["silinen"], ["-- belge"])
+        self.assertEqual(d["x.yml"]["eklenen"], ["yeni"])
+
+    def test_degismeyen_depo_pass_ve_raporlanir(self):
+        kok = self._depo()
+        s = degisim.depo_denetle(kok, "HEAD", [], [])
+        self.assertEqual((s["durum"], s["degisti"]), ("PASS", False))
 
 
 if __name__ == "__main__":
