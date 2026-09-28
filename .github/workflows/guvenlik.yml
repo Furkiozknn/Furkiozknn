@@ -58,8 +58,12 @@ jobs:
       - name: Oz sinama (kapi kirmiziya donebiliyor mu)
         run: bash .github/guvenlik/oz_sinama.sh zizmor
 
+      # Girdi `.github`: gercek is akislari ve dependabot.yml. Depo koku (`.`)
+      # verilirse zizmor her alt dizindeki is akislarini da toplar; PR #20'nin
+      # politika motoru schema/fikstur/ altinda BILEREK hatali is akislari
+      # tasiyor ve kapi onlari bulgu sanip kirmiziya donerdi (olculdu).
       - name: zizmor
-        run: zizmor --offline --persona=regular --min-severity low --config .github/guvenlik/zizmor.yml --format github .
+        run: zizmor --offline --persona=regular --min-severity low --config .github/guvenlik/zizmor.yml --format github .github
 
   betterleaks:
     name: betterleaks (sizmis anahtar, butun gecmis)

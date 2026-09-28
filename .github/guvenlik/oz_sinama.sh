@@ -33,7 +33,7 @@ isle() { git -C "$T/d" add -A && git -C "$T/d" commit -qm x; }
 case "${1:-}" in
 zizmor)
   z() { zizmor --offline --persona=regular --min-severity low \
-          --config "$CFG/zizmor.yml" --format plain "$T/d" >/dev/null 2>&1; echo $?; }
+          --config "$CFG/zizmor.yml" --format plain "$T/d/.github" >/dev/null 2>&1; echo $?; }
   yeni_depo; mkdir -p "$T/d/.github/workflows"
   # 1) temiz: actions/* etiketle (politika izin veriyor), izin yok, kimlik kalmiyor
   cat > "$T/d/.github/workflows/a.yml" <<'EOF'
@@ -50,6 +50,13 @@ jobs:
       - run: echo merhaba
 EOF
   bekle "temiz is akisi" 0 "$(z)"
+  # 1b) .github disindaki bilerek hatali bir fikstur (politika motorunun
+  # test korpusu gibi) kapiyi kirmiziya dusurmemeli
+  mkdir -p "$T/d/schema/fikstur/kotu/.github/workflows"
+  # shellcheck disable=SC2016  # ${{ }} bilerek genisletilmez: fikstur metni
+  printf 'on: [pull_request_target]\njobs:\n  j:\n    runs-on: ubuntu-24.04\n    steps:\n      - run: echo "${{ github.event.pull_request.title }}"\n' \
+    > "$T/d/schema/fikstur/kotu/.github/workflows/ci.yml"
+  bekle "kapsam disi kotu fikstur yok sayilir" 0 "$(z)"
   # 2) ucuncu taraf eylem etiketle -> hash-pin politikasi
   sed -i 's|      - run: echo merhaba|      - uses: someone/tool@v1\n      - run: echo merhaba|' "$T/d/.github/workflows/a.yml"
   r=$(z); [ "$r" != 0 ] && r=kirmizi; bekle "pinsiz ucuncu taraf eylem" kirmizi "$r"
