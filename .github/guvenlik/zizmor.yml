@@ -1,0 +1,9 @@
+# zizmor politikasi (CLAUDE.md "Actions" kurali ile ayni):
+# actions/* ve github/* etiketle, digerleri tam commit SHA'siyla pinlenir.
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "actions/*": ref-pin
+        "github/*": ref-pin
+        "*": hash-pin

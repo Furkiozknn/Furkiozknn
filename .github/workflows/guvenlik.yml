@@ -1,0 +1,117 @@
+name: Guvenlik
+
+# Iki tarayici, ikisi de ucretsiz ve acik kaynak, ikisi de kapi (kirmizi
+# = merge edilmez):
+#   zizmor      -> is akislarinin kendisi (pinsiz eylem, sablon enjeksiyonu,
+#                  artifact'a sizan kimlik bilgisi, asiri izin ...)
+#   betterleaks -> butun git gecmisinde sizmis anahtar
+#
+# Neden bunlar, neden baskasi degil: arastirma raporu (2026-09-28) --
+# 12 bilincli hatali fikstur uzerinde olculdu. osv-scanner bu depoda
+# yok cunku burada bagimlilik dosyasi yok ("No package sources found",
+# cikis 128); kilit dosyasi olan depolar icin onerilir.
+#
+# Her tarayici gercek depodan ONCE oz_sinama.sh ile bilinen kotu
+# girdilerde kirmiziya dondugunu kanitlar. SARIF bilerek kullanilmiyor:
+# `zizmor --format sarif` bulgu olsa da 0 doner (olculdu).
+#
+# Surumler ve ozetler elle pinli; yukseltme = yeni surumu laboratuvarda
+# fiksturlerle yeniden olc, sonra ozeti degistir.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: guvenlik-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  zizmor:
+    name: zizmor (is akisi guvenligi)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Yalnizca bu tekerlek kabul edilir (PyPI'deki manylinux_2_28_x86_64
+      # ozeti); baska bir dosya gelirse pip durur.
+      - name: zizmor kur (1.30.1, ozet pinli)
+        run: |
+          set -euo pipefail
+          echo 'zizmor==1.30.1 --hash=sha256:eee12266b793cb87ad4a7e3af2e72404f8a63e3de5eb099b80bf7b1cfd232a8e' > "$RUNNER_TEMP/zizmor.txt"
+          python3 -m pip install --quiet --no-deps --only-binary=:all: --require-hashes -r "$RUNNER_TEMP/zizmor.txt"
+          zizmor --version
+
+      - name: Oz sinama (kapi kirmiziya donebiliyor mu)
+        run: bash .github/guvenlik/oz_sinama.sh zizmor
+
+      # Girdi `.github`: gercek is akislari ve dependabot.yml. Depo koku (`.`)
+      # verilirse zizmor her alt dizindeki is akislarini da toplar; PR #20'nin
+      # politika motoru schema/fikstur/ altinda BILEREK hatali is akislari
+      # tasiyor ve kapi onlari bulgu sanip kirmiziya donerdi (olculdu).
+      - name: zizmor
+        run: zizmor --offline --persona=regular --min-severity low --config .github/guvenlik/zizmor.yml --format github .github
+
+  betterleaks:
+    name: betterleaks (sizmis anahtar, butun gecmis)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.12"
+          cache: false
+
+      # go install sum.golang.org uzerinden dogrular; ek olarak ikilinin
+      # icindeki modul ozeti laboratuvarda olculenle karsilastirilir.
+      - name: betterleaks kur (v1.8.1, ozet pinli)
+        env:
+          GOTOOLCHAIN: local
+          GOFLAGS: -trimpath
+          CGO_ENABLED: "0"
+        run: |
+          set -euo pipefail
+          go install github.com/betterleaks/betterleaks@v1.8.1
+          bin="$(go env GOPATH)/bin/betterleaks"
+          ozet=$(go version -m "$bin" | awk '$1=="mod" && $2=="github.com/betterleaks/betterleaks" {print $4}')
+          if [ "$ozet" != "h1:tTSQAdQe+S4MF69o6VtpRDlml1b73F1xNUUA3PcrHiI=" ]; then
+            echo "::error::betterleaks modul ozeti beklenen degil: '$ozet'"
+            exit 1
+          fi
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Oz sinama (kapi kirmiziya donebiliyor mu)
+        run: |
+          git config --global user.email oz@sinama.invalid
+          git config --global user.name oz-sinama
+          bash .github/guvenlik/oz_sinama.sh betterleaks
+
+      # Sig bir klon yalnizca son commit'i tarar ve "temiz" der.
+      - name: Gecmis tam mi
+        run: test "$(git rev-parse --is-shallow-repository)" = false
+
+      # --validation YOK: o bayrak bulunan anahtari dogrulamak icin canli
+      # API'lere gonderir (olculdu). --ignore-gitleaks-allow: satir ici
+      # yorum kapiyi susturamaz. Istisnalar yalnizca betterleaks.toml'da.
+      - name: betterleaks
+        run: betterleaks git --no-banner --redact --exit-code 1 --ignore-gitleaks-allow -i .github/guvenlik --config .github/guvenlik/betterleaks.toml .
