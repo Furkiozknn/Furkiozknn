@@ -13,6 +13,14 @@ Son dogrulama: 2026-09-28. Hepsi ucretsiz ve acik kaynak.
 | zizmor | William Woodruff / zizmorcore (B: PyPI Trusted Publishing, Trail of Bits kokenli, Astral destekli) | PyPI `zizmor==1.30.1`, `manylinux_2_28_x86_64` tekerlegi `sha256:eee12266…232a8e`, `--require-hashes --no-deps` | MIT | is akisi guvenligi (pinsiz eylem, sablon enjeksiyonu, artipacked, asiri izin) | evet |
 | betterleaks | betterleaks (C: gitleaks'in ozgun yazari Zach Rice'in catali) | `go install …@v1.8.1`, modul ozeti `h1:tTSQAdQe+S4MF69o6VtpRDlml1b73F1xNUUA3PcrHiI=`, Go 1.25.12 (`go.mod` toolchain), `GOTOOLCHAIN=local` | MIT | git gecmisinde sizmis anahtar | evet |
 
+| lychee | lycheeverse, yayinci mre / Matthias Endler (B: 2020'den beri, crates.io'da 222 bin indirme, Apache-2.0 OR MIT) | GitHub release `lychee-v0.24.2`, `lychee-x86_64-unknown-linux-gnu.tar.gz` `sha256:1f4e0ef7…1c9a` (ozet dosyasi ayni kaynaktan: butunluk kaniti, yayinci kaniti degil; crates.io kaynak ozeti `d4aa20c1…7b48`) | Apache-2.0 OR MIT | Markdown yerel link + baslik capasi, **cevrimdisi** | evet (`baglanti.yml`) |
+
+lychee olcumleri (izole, 2026-09-28):
+
+- Ekosistemin 27 deposunda 631 yerel link/capa: 1 gercek kirik (ajans-os `[1.0.1](...)`), 1 sahte kirmizi (buradane: emoji+U+FE0F basligi; GitHub capayi tutuyor, lychee bulamiyor). Turkce basliklar (ş, ğ, ı) dogru cozuldu.
+- Sahte yesil: hic dosya eslesmeyince `0 Total`, cikis 0; capalar varsayilan olarak denetlenmez; `--offline` kipte uzak linkler sessizce "excluded". Hepsi `.github/baglanti/kontrol.py` ile kapali, `test_kontrol.py` 8 test; sarmalayicinin 4 korumasi tek tek kaldirildiginda takim kirmizi (5. koruma erisilemezdi, silindi).
+- Ag yokken uzak link denetimi kirmizi doner (sahte yesil degil); CI bu yuzden cevrimdisi kipte.
+
 Kurulmayanlar ve nedeni (ayni laboratuvar olcumu, 12 bilincli hatali fikstur):
 
 - **osv-scanner v2.6.0**: bu depoda bagimlilik dosyasi yok; `No package sources found`, cikis 128. Kilit dosyasi olan depolar icin onerilir (`--no-resolve`, cevrimdisi veritabani).
