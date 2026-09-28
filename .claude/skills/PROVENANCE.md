@@ -32,7 +32,8 @@ Diger butun dosyalar upstream ile bayt bayt aynidir (2026-09-28'de `cmp` ile olc
   - `allowed-tools`: `Bash(playwright-cli:*) Bash(npx:*) Bash(npm:*)` → `Bash(playwright-cli:*)` (npx/npm on-onayi kaldirildi).
   - Kurulum satiri `@latest` → `@0.1.21`.
   - WebMCP: "sayfanin araclarini tercih et" paragrafi → kullanici istemedikce sayfa araclarini cagirma.
-  - Basliga "FURKIOZKNN project overrides" blogu (networkidle/waitForTimeout yok, skip yok, PR'a ek yok, auth durumu commit'lenmez, pin).
+  - Basliga "FURKIOZKNN project overrides" blogu (networkidle/waitForTimeout yok, skip yok, PR'a ek yok, auth durumu commit'lenmez, pin, `NO_UPDATE_NOTIFIER=1`, `install --skills` yasak).
+  - Lab'da olculdu (0.1.21, izole): `NO_UPDATE_NOTIFIER`/`CI` yoksa gunde bir kez `registry.npmjs.org/@playwright/cli/latest` sorgular; calisma dizinindeki `.claude/skills/playwright-cli/SKILL.md`'yi paketteki kopyayla karsilastirip `install --skills` onerir -- o komut bu pinli ve degistirilmis kopyanin ustune yazar. 0.1.21, playwright-core `1.64.0-alpha-1789764292000`'e pinli (kararli 1.63 degil).
   - Not: `references/running-code.md` ve `video-recording.md` icinde `networkidle`/`waitForTimeout` ornekleri upstream'deki gibi duruyor; override blogu onlardan onceliklidir.
 - `frontend-design/SKILL.md`, `animate/SKILL.md`, `accessibility/SKILL.md`, `core-web-vitals/SKILL.md`, `performance/SKILL.md`: frontmatter'a `disable-model-invocation: true` (SPECIALIST'ler yalnizca acik cagriyla yuklenir; baglam kirlenmesi yok).
 - `accessibility/SKILL.md`: kurulu olmayan `../web-quality-audit/SKILL.md` baglantisi pinli upstream URL'sine cevrildi.

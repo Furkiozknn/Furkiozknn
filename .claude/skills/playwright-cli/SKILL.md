@@ -13,6 +13,7 @@ allowed-tools: Bash(playwright-cli:*)
 > - Do not attach screenshots/videos to PRs or issues (`gh ... --attach`) unless the user asks.
 > - Never commit storage-state/auth files; never use `--extension` / `attach --cdp` to a personal browser.
 > - Install only the pinned version (`@playwright/cli@0.1.21`); no `@latest`.
+> - Run with `NO_UPDATE_NOTIFIER=1` (otherwise it queries registry.npmjs.org once a day). Never run `playwright-cli install --skills`: it overwrites this vendored, pinned copy and its overrides.
 
 ## Quick start
 

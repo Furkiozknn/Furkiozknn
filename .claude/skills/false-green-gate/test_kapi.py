@@ -21,14 +21,22 @@ KAPI = os.path.join(BURASI, "scripts", "kapi.py")
 FIK = os.path.join(BURASI, "fikstur")
 
 
+def _cikisli(argv):
+    # --kosucu-cikis test kosucu kiplerinde zorunlu; testler cikis kodunu
+    # sinamiyorsa temiz kosu (0) varsayilir.
+    if argv and argv[0] in ("junit", "playwright", "godot") and "--kosucu-cikis" not in argv:
+        return [*argv, "--kosucu-cikis", "0"]
+    return list(argv)
+
+
 def kos(*argv, cwd=None):
-    p = subprocess.run([sys.executable, KAPI, *argv], capture_output=True, text=True, cwd=cwd)
+    p = subprocess.run([sys.executable, KAPI, *_cikisli(argv)], capture_output=True, text=True, cwd=cwd)
     son = p.stdout.strip().splitlines()[-1] if p.stdout.strip() else "{}"
     return p.returncode, json.loads(son), p.stderr
 
 
 def kos_env(env, *argv, cwd=None):
-    p = subprocess.run([sys.executable, KAPI, *argv], capture_output=True, text=True, cwd=cwd,
+    p = subprocess.run([sys.executable, KAPI, *_cikisli(argv)], capture_output=True, text=True, cwd=cwd,
                        env={**os.environ, **env})
     return p.returncode, json.loads(p.stdout.strip().splitlines()[-1]), p.stderr
 
@@ -111,9 +119,17 @@ class JunitTesti(unittest.TestCase):
             shutil.rmtree(d)
 
     def test_sifir_taban_reddedilir(self):
-        p = subprocess.run([sys.executable, KAPI, "junit", f("junit", "sifir.xml"), "--taban", "0"],
-                           capture_output=True, text=True)
+        p = subprocess.run([sys.executable, KAPI, "junit", f("junit", "sifir.xml"), "--taban", "0",
+                            "--kosucu-cikis", "0"], capture_output=True, text=True)
         self.assertEqual(p.returncode, 2)
+
+    def test_kosucu_cikis_zorunlu(self):
+        # Cikis kodu olmadan eski rapor yeni kosu gibi okunurdu (lab: config
+        # SyntaxError, Playwright eski JSON'u biraktti, kapi PASS dedi).
+        for kip, rapor in (("junit", f("junit", "temiz.xml")), ("playwright", f("playwright", "temiz.json")),
+                           ("godot", f("godot", "temiz.log"))):
+            p = subprocess.run([sys.executable, KAPI, kip, rapor, "--taban", "1"], capture_output=True, text=True)
+            self.assertEqual(p.returncode, 2, kip)
 
 
 class PlaywrightTesti(unittest.TestCase):
@@ -154,6 +170,32 @@ class PlaywrightTesti(unittest.TestCase):
         rc, k, _ = kos("playwright", f("junit", "temiz.xml"), "--taban", "1")
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
 
+    def test_tekrar_ve_projeler_tabani_doldurmaz(self):
+        # Lab: tek test --repeat-each=5 ya da 3 proje -> stats.expected 5/3; taban
+        # kosum degil ayri test sayar.
+        for ad in ("tekrar5.json", "uc-proje.json"):
+            rc, k, _ = kos("playwright", f("playwright", ad), "--taban", "3")
+            self.assertEqual(rc, 1, ad); self.assertIn("FG-02", kodlar(k))
+            self.assertEqual(k["olcum"]["kosan"], 1, ad)
+
+    def test_rapordaki_zaman_eski(self):
+        # Dosya cp/touch ile tazelenir; karar rapordaki startTime'a gore verilir.
+        d = tempfile.mkdtemp()
+        try:
+            yol = os.path.join(d, "r.json"); shutil.copy(f("playwright", "temiz.json"), yol)
+            rc, k, _ = kos("playwright", yol, "--taban", "2", "--en-fazla-yas", "600")
+            self.assertEqual(rc, 1); self.assertIn("FG-24", kodlar(k))
+            # startTime yoksa tazelik kanitlanamaz: gecmis sayilmaz.
+            with open(yol, encoding="utf-8") as fh:
+                r = json.load(fh)
+            del r["stats"]["startTime"]
+            with open(yol, "w", encoding="utf-8") as fh:
+                json.dump(r, fh)
+            rc, k, _ = kos("playwright", yol, "--taban", "2", "--en-fazla-yas", "600")
+            self.assertEqual(rc, 1); self.assertIn("FG-24", kodlar(k))
+        finally:
+            shutil.rmtree(d)
+
 
 class GodotTesti(unittest.TestCase):
     def test_temiz(self):
@@ -185,6 +227,25 @@ class GodotTesti(unittest.TestCase):
     def test_gunluk_yok(self):
         rc, k, _ = kos("godot", f("godot", "yok.log"), "--taban", "1")
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
+
+    def test_diger_oyun_bicimleri(self):
+        # Lab: kapi.py yalnizca kanca bicimini taniyordu, tek-tus-kosu'nun temiz
+        # kosusuna FG-08 (yanlis kirmizi) veriyordu.
+        for bicim, gunluk, taban in (("tek", "tek-temiz.log", 961), ("yercekimi", "yercekimi-temiz.log", 40),
+                                     ("derin", "derin-temiz.log", 30)):
+            rc, k, _ = kos("godot", f("godot", gunluk), "--taban", str(taban), "--bicim", bicim)
+            self.assertEqual(rc, 0, (bicim, k))
+        rc, k, _ = kos("godot", f("godot", "tek-hatali.log"), "--taban", "1", "--bicim", "tek")
+        self.assertEqual(rc, 1); self.assertIn("FG-09", kodlar(k))
+        rc, k, _ = kos("godot", f("godot", "yercekimi-bitissiz.log"), "--taban", "1", "--bicim", "yercekimi")
+        self.assertEqual(rc, 1); self.assertIn("FG-08", kodlar(k))
+        rc, k, _ = kos("godot", f("godot", "tek-hatasiz-kalan.log"), "--taban", "1", "--bicim", "tek")
+        self.assertEqual(rc, 1); self.assertIn("FG-03", kodlar(k))
+
+    def test_ozetten_sonra_asili_kalma(self):
+        # Lab f': ozet basildi, motor asildi, timeout 124 ile oldurdu.
+        rc, k, _ = kos("godot", f("godot", "temiz.log"), "--taban", "114", "--kosucu-cikis", "124")
+        self.assertEqual(rc, 1); self.assertIn("FG-23", kodlar(k))
 
 
 class KomutTesti(unittest.TestCase):
@@ -408,6 +469,18 @@ class MedyaTesti(unittest.TestCase):
         rc, k, _ = kos_env({"KAPI_ZAMAN_ASIMI": "0.001"}, "medya", self.iyi, "--tam-cozum")
         self.assertEqual(rc, 1); self.assertIn("FG-12", kodlar(k))
 
+    def test_zaman_damgasi_boslugu(self):
+        # Lab: yt-dlp eksik HLS parcasini atlayip 0 doner; kare sayisi/sure
+        # tutarli, tam cozme temiz -- tek iz zaman damgasindaki sicrama.
+        yol = os.path.join(self.d, "bosluk.mp4")
+        subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "lavfi", "-i",
+                        "testsrc=size=160x120:rate=25:duration=6", "-vf", "select='not(between(t,2,4))'",
+                        "-fps_mode", "passthrough", "-c:v", "libx264", "-pix_fmt", "yuv420p", yol], check=True)
+        rc, k, _ = kos("medya", yol, "--video", "--tam-cozum")
+        self.assertEqual(rc, 1); self.assertIn("FG-13", kodlar(k))
+        rc, k, _ = kos("medya", yol, "--video", "--tam-cozum", "--degisken-kare")
+        self.assertEqual(rc, 0, k)
+
     def test_ffprobe_yok(self):
         rc, k, _ = kos_env({"PATH": "/nonexistent"}, "medya", self.iyi)
         self.assertEqual(rc, 1); self.assertIn("FG-10", kodlar(k))
@@ -457,8 +530,8 @@ class MutasyonTesti(unittest.TestCase):
             yol = os.path.join(d, "kapi.py")
             with open(yol, "w", encoding="utf-8") as fh:
                 fh.write(bozuk)
-            p = subprocess.run([sys.executable, yol, "junit", f("junit", "sifir.xml"), "--taban", "1"],
-                               capture_output=True, text=True)
+            p = subprocess.run([sys.executable, yol, "junit", f("junit", "sifir.xml"), "--taban", "1",
+                                "--kosucu-cikis", "0"], capture_output=True, text=True)
             self.assertEqual(p.returncode, 0, "mutant PASS vermeli ki gercek kapidaki fark anlamli olsun")
         finally:
             shutil.rmtree(d)

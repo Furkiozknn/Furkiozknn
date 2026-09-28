@@ -138,9 +138,26 @@ def playwright(args):
         s.fail("FG-18", f"{args.rapor}: Playwright JSON raporu okunamadi ({e.__class__.__name__})")
         return s.bitir()
     toplam = beklenen + beklenmeyen + flaky + atlanan
-    kosan = beklenen + beklenmeyen + flaky
+    # Taban ayri testlere karsi olculur, kosumlara degil: --repeat-each ya da
+    # birden cok proje tek bir gercek testi N kez saydirir.
+    ayri = set()
+    for suite in rapor.get("suites", []):
+        for spec, t in _pw_testleri(suite):
+            if t.get("status") != "skipped":
+                ayri.add((spec.get("file"), spec.get("line"), spec.get("column"), spec.get("title")))
+    kosan = len(ayri)
     _sayilar_ortak(s, toplam, kosan, beklenmeyen, atlanan, args.taban, args.izinli_skip)
-    s.olcum["flaky"] = flaky
+    s.olcum.update({"flaky": flaky, "kosum": beklenen + beklenmeyen + flaky})
+    # Tazelik rapordaki zamanla: dosya tarihi cp/touch ile yenilenir.
+    if args.en_fazla_yas is not None:
+        try:
+            from datetime import datetime
+            bas = datetime.fromisoformat(str(st.get("startTime", "")).replace("Z", "+00:00")).timestamp()
+            bitis = bas + float(st.get("duration", 0)) / 1000
+            if time.time() - bitis > args.en_fazla_yas:
+                s.fail("FG-24", f"rapordaki kosu {time.time() - bitis:.0f}s once bitmis (en fazla {args.en_fazla_yas:.0f}s)")
+        except (ValueError, TypeError):
+            s.fail("FG-24", "raporda gecerli stats.startTime yok; tazelik kanitlanamiyor")
     if flaky:
         s.fail("FG-05", f"{flaky} test ancak retry ile gecti (flaky)")
     if rapor.get("errors"):
@@ -158,7 +175,14 @@ def playwright(args):
 
 # --- godot ---------------------------------------------------------------
 
-GODOT_SONUC = re.compile(r"^=== ([0-9]+)/([0-9]+) gecti ===\s*$", re.M)
+# Ekosistemdeki dort oyunun gercek sonuc satirlari (her reponun tests/kapi.sh'i).
+# (desen, gruplar -> (gecen, toplam), zorunlu ek satir)
+GODOT_BICIM = {
+    "kanca": (r"^=== (\d+)/(\d+) gecti ===\s*$", lambda a, b: (a, b), None),
+    "yercekimi": (r"^(\d+) dogrulama, (\d+) hata\s*$", lambda n, h: (n - h, n), r"^TESTLER GECTI\s*$"),
+    "derin": (r"^== (\d+) sınama, (\d+) hata ==\s*$", lambda n, h: (n - h, n), None),
+    "tek": (r"=== SONUÇ: (\d+) geçti, (\d+) hata ===", lambda g, h: (g, g + h), None),
+}
 GODOT_HATA = re.compile(r"SCRIPT ERROR|Parse Error")
 
 
@@ -174,12 +198,16 @@ def godot(args):
     hatalar = [satir for satir in metin.splitlines() if GODOT_HATA.search(satir)]
     if hatalar:
         s.fail("FG-09", f"gunlukte {len(hatalar)} betik hatasi var; bir test bolumu sessizce yarida kalmis olabilir: {hatalar[0][:120]}")
-    sonuclar = GODOT_SONUC.findall(metin)
+    desen, cevir, zorunlu = GODOT_BICIM[args.bicim]
+    s.olcum["bicim"] = args.bicim
+    sonuclar = re.findall(desen, metin, re.M)
     if not sonuclar:
-        s.fail("FG-08", "'=== G/T gecti ===' satiri yok; takim sonuna kadar kosmadi")
+        s.fail("FG-08", f"{args.bicim} bicimli sonuc satiri yok; takim sonuna kadar kosmadi")
         _kosu_kaniti(s, args, [])
         return s.bitir()
-    gecen, toplam = (int(x) for x in sonuclar[-1])
+    if zorunlu and not re.search(zorunlu, metin, re.M):
+        s.fail("FG-08", f"zorunlu bitis satiri yok ({zorunlu})")
+    gecen, toplam = cevir(*(int(x) for x in sonuclar[-1]))
     _sayilar_ortak(s, toplam, gecen, toplam - gecen, 0, args.taban, 0)
     _kosu_kaniti(s, args, [])
     return s.bitir()
@@ -320,6 +348,26 @@ def _medya(s, args):
                 s.fail("FG-13", f"baslik {baslik} kare diyor, cozulen {okunan}; dosya kesik")
             if okunan == 1 and sure > 1:
                 s.fail("FG-13", "cikti tek kareden ibaret")
+            # Eksik HLS parcasi: kare sayisi ve sure tutarli gorunur, tam cozme
+            # temizdir; tek iz zaman damgasindaki sicramadir (yt-dlp "Skipping
+            # fragment" deyip 0 doner). Degisken kare hizli kaynaklarda (ekran
+            # kaydi) uzun duraklama olagan olabilir: --degisken-kare ile WARN.
+            q = _calistir(["ffprobe", "-v", "error", "-protocol_whitelist", "file",
+                           "-select_streams", vi, "-show_entries", "packet=pts_time",
+                           "-of", "csv=p=0", girdi])
+            zamanlar = sorted(_sayi(x) for x in q.stdout.split() if x.strip() not in ("", "N/A"))
+            try:
+                pay, payda = (int(x) for x in str(video[0].get("r_frame_rate", "0/1")).split("/"))
+                kare_suresi = payda / pay if pay else 0.04
+            except ValueError:
+                kare_suresi = 0.04
+            esik = max(1.0, 10 * kare_suresi)
+            bosluklar = [(a, b) for a, b in zip(zamanlar, zamanlar[1:]) if b - a > esik]
+            s.olcum["zaman_boslugu"] = [[round(a, 3), round(b, 3)] for a, b in bosluklar[:5]]
+            if bosluklar:
+                a, b = bosluklar[0]
+                (s.warn if args.degisken_kare else s.fail)(
+                    "FG-13", f"zaman damgasinda {len(bosluklar)} bosluk ({a:.2f}s -> {b:.2f}s); eksik parca/segment")
     if args.siyah and vi is not None and sure > 0:
         p = _calistir(["ffmpeg", "-nostdin", "-v", "info", "-protocol_whitelist", "file",
                        "-i", girdi, "-map", "0:" + vi, "-vf", "blackdetect=d=0.1:pix_th=0.10",
@@ -480,7 +528,9 @@ def ana(argv=None):
     alt = ap.add_subparsers(dest="kip", required=True)
 
     def kosu(p):
-        p.add_argument("--kosucu-cikis", type=int, help="test kosucusunun cikis kodu ($?)")
+        # Zorunlu: config yuklenemeyince Playwright eski JSON'u yerinde birakir;
+        # cikis kodu olmadan eski bir rapor yeni kosu gibi okunur.
+        p.add_argument("--kosucu-cikis", type=int, required=True, help="test kosucusunun cikis kodu ($?)")
 
     j = alt.add_parser("junit"); j.add_argument("raporlar", nargs="+")
     j.add_argument("--taban", type=int, required=True); j.add_argument("--izinli-skip", type=int, default=0)
@@ -490,10 +540,12 @@ def ana(argv=None):
     w.add_argument("--izinli-beklenen-hata", type=int, default=0)
     w.add_argument("--en-fazla-yas", type=float); kosu(w)
     g = alt.add_parser("godot"); g.add_argument("gunluk"); g.add_argument("--taban", type=int, required=True)
+    g.add_argument("--bicim", choices=sorted(GODOT_BICIM), default="kanca",
+                   help="sonuc satiri bicimi (kanca: '=== G/T gecti ===')")
     kosu(g)
     m = alt.add_parser("medya"); m.add_argument("dosya")
     m.add_argument("--min-sure", type=float, default=0.1)
-    for b in ("--video", "--ses", "--tam-cozum", "--siyah", "--sessiz"):
+    for b in ("--video", "--ses", "--tam-cozum", "--siyah", "--sessiz", "--degisken-kare"):
         m.add_argument(b, action="store_true")
     k = alt.add_parser("komut"); k.add_argument("dosyalar", nargs="+")
     f = alt.add_parser("fark"); f.add_argument("--taban-ref", default="origin/main")
