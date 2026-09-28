@@ -169,6 +169,10 @@ def tr_sorunlari(metin, beklenen, toplam, suit):
         if ad in beklenen and yazan != beklenen[ad]:
             sorunlar.append("README.tr.md tablosunda %s icin %d yaziyor, metadata %d"
                             % (ad, yazan, beklenen[ad]))
+    eksik = sorted(set(beklenen) - set(_tablo_satirlari(metin)))
+    if eksik:
+        sorunlar.append("README.tr.md tablosunda satiri olmayan depo(lar): "
+                        + ", ".join(eksik))
     for satir in metin.splitlines():
         if satir.lstrip().startswith(">") and "<sub>" in satir:
             d, n = SATIR.search(satir), TR_TANITIM.search(satir)
@@ -274,6 +278,13 @@ def kontrol(kaynak):
         if ad in beklenen and yazan != beklenen[ad]:
             sorunlar.append("README tablosunda %s icin %d yaziyor, metadata %d"
                             % (ad, yazan, beklenen[ad]))
+    # Toplama giren her depo tabloda da gorunmeli. godot-2d-sablon ve
+    # Furkiozknn.github.io 22 Eylul'den beri toplamdaydi ama README
+    # tablolarinda yoktu; biri icin README hala "No suite, so it is not in
+    # the count" diyordu. Tablo satirlari toplamla toplanamiyordu.
+    eksik = sorted(set(beklenen) - set(_tablo_satirlari(readme)))
+    if eksik:
+        sorunlar.append("README tablosunda satiri olmayan depo(lar): " + ", ".join(eksik))
 
     # Tablo disi tanitim satirlari. Tablo dogru kalirken hemen ustundeki
     # cumlenin eskimesi, okurun once gordugu sayinin yanlis olmasi demek.

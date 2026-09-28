@@ -848,6 +848,7 @@ class HireVeTurkceTesti(unittest.TestCase):
 
     TR = ("[![t](https://img.shields.io/badge/tests-4%2C700_passing-c9a961)](TESTLER.md)\n"
           "> 🛡️ **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — okur. <sub>`289 test`</sub>\n"
+          "| 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | okur | `319` |\n"
           "| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | 30 projede | `99` |\n"
           "| | | **Toplam, suiti olan 23 depoda** | **`4.700`** |\n"
           "<a href=\"TESTLER.md\">4.700 testin kaynağı</a>\n")
@@ -865,6 +866,13 @@ class HireVeTurkceTesti(unittest.TestCase):
         self.assertIn("5.247 testin kaynağı", yeni)
         self.assertIn("tests-5%2C247_passing", yeni)
         self.assertEqual(testler.tr_sorunlari(yeni, self.BEKLENEN, 5247, 26), [])
+
+    def test_turkce_tabloda_eksik_depo_yakalanir(self):
+        # Toplama giren ama tabloda satiri olmayan depo, tablo satirlarinin
+        # toplamla toplanamamasi demek (README'de iki depo boyle kalmisti).
+        yeni = testler.tr_guncelle(self.TR, self.BEKLENEN, 5247, 26)
+        s = testler.tr_sorunlari(yeni, dict(self.BEKLENEN, **{"yeni-depo": 7}), 5247, 26)
+        self.assertTrue(any("yeni-depo" in x for x in s), s)
 
     def test_ingilizce_tablo_hala_virgullu_yazilir(self):
         # HUCRE artik noktayi da taniyor; Ingilizce dosyalar yine virgulle yazilmali.
