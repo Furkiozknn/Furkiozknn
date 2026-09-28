@@ -1,0 +1,5 @@
+jobs:
+  t:
+    steps:
+      - run: npx playwright test --reporter=json > rapor.json
+      - run: python3 -m pytest --junitxml=r.xml

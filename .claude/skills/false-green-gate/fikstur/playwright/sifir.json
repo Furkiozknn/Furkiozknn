@@ -1,0 +1,20 @@
+{
+ "config": {},
+ "suites": [
+  {
+   "title": "a.spec.ts",
+   "file": "a.spec.ts",
+   "specs": [],
+   "suites": []
+  }
+ ],
+ "errors": [],
+ "stats": {
+  "startTime": "2026-09-28T00:00:00Z",
+  "duration": 1,
+  "expected": 0,
+  "unexpected": 0,
+  "flaky": 0,
+  "skipped": 0
+ }
+}
