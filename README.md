@@ -1,5 +1,8 @@
 <img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits." width="100%">
 
+<p align="center"><img src="docs/reel/reel.gif" alt="Furkiozknn - 15-second motion reel" width="720"></p>
+<p align="center"><sub><a href="docs/reel/reel.mp4">MP4 version with sound</a></sub></p>
+
 <p align="center">
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C247_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,247 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
