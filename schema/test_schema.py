@@ -578,6 +578,34 @@ class IkiKaynakTesti(unittest.TestCase):
         self.assertEqual(denetim._sayi_ayni_mi("x", {"tests": {"count": None}}, self.KAYNAK), [])
 
 
+class SemaBulgusuTesti(unittest.TestCase):
+    """Gunluk denetim dosyanin semaya uyup uymadigina da bakiyor.
+
+    Yasanan hata: 22 Eylul'de yedi depo `tests`'i semada olmayan bir
+    sekilde (framework/command/evidence) yazdi. derle.py bunu goruyordu,
+    gunluk denetim bakmiyordu; alti gun boyunca konuya hic girmedi ve
+    ihlali ilk soyleyen, 28 Eylul'de kirmizi yanan haftalik ozet oldu.
+    """
+
+    GECERLI = {
+        "schema_version": "1.0.0", "id": "x", "owner": "Furkiozknn",
+        "repository": "https://github.com/Furkiozknn/x",
+        "status": "active", "category": "developer-tool", "summary": "bir sey",
+        "tests": {"count": 37, "source": "CI log: `37 passed`", "measured": "2026-09-28"},
+        "provenance": {"generated_at": "2026-09-22", "generator": "t", "rule": "t"},
+    }
+
+    def test_gecerli_dosya_sessiz(self):
+        self.assertEqual(denetim._sema_ihlalleri(self.GECERLI), [])
+
+    def test_semada_olmayan_tests_bicimi_bildirilir(self):
+        v = dict(self.GECERLI, tests={"count": 37, "framework": "pytest",
+                                      "command": "python3 -m pytest", "evidence": "37 passed"})
+        (m,) = denetim._sema_ihlalleri(v)
+        self.assertIn("5 sema ihlali", m)
+        self.assertIn("tests", m)
+
+
 class HizSiniriTesti(unittest.TestCase):
     """Hiz siniri "bakilamadi" demek; ne "temiz" ne de "denetimi dusur"."""
 

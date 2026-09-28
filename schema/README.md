@@ -106,12 +106,12 @@ GITHUB_TOKEN=... python3 schema/denetim.py
 ```
 
 For every non-fork repository it checks whether `project-meta.json` is on the
-default branch, whether the repository has an entry in `meta-source.json`,
-whether the mechanical half of the metadata still matches the live repository
-(description, topics, licence, homepage, archived state, workflow filenames),
-whether LICENSE and README are where the file says they are, whether the
-description and topics are empty, and whether the newest finished run of each
-of the repository's **own** workflows is red.
+default branch and still conforms to the schema, whether the repository has an
+entry in `meta-source.json`, whether the mechanical half of the metadata still
+matches the live repository (description, topics, licence, homepage, archived
+state, workflow filenames), whether LICENSE and README are where the file says
+they are, whether the description and topics are empty, and whether the newest
+finished run of each of the repository's **own** workflows is red.
 
 It also checks this profile's own headline numbers, which are the numbers
 most likely to rot quietly. `TESTLER.md` names one canonical figure in its

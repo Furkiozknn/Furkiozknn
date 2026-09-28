@@ -6,7 +6,7 @@ Bu betik hicbir seyi duzeltmez. Yalnizca olcer ve ayrismayi yazar;
 duzeltme karari insana ya da bir sonraki oturuma aittir.
 
 Depo basina olculenler:
-  - project-meta.json varsayilan dalda duruyor mu
+  - project-meta.json varsayilan dalda duruyor mu, semaya uyuyor mu
   - schema/meta-source.json icinde kaydi var mi (yoksa iskelet uretilir)
   - metadata'nin mekanik yarisi canli gercekle ayristi mi
     (description, topics, license, homepage, status, ci.workflows)
@@ -261,6 +261,27 @@ def sayilari_bul(metin, desen):
     desen, metin = sadelestir(desen), sadelestir(metin)
     kalip_re = re.sub(r"\d+", r"(\\d+)", re.escape(desen))
     return [int(m.group(1)) for m in re.finditer(kalip_re, metin or "") if m.groups()]
+
+
+SEMA_DENETLE, SEMA = D._sema_denetleyici()
+
+
+def _sema_ihlalleri(meta):
+    """Dosya semaya uyuyor mu -- derle.py'nin kullandigi denetleyiciyle.
+
+    Bu kontrol yokken 22 Eylul'de yedi depo `tests`'i semada olmayan bir
+    sekilde (framework/command/evidence) yazdi. derle.py bunu goruyordu,
+    gunluk denetim bakmiyordu: alti gun boyunca konuya hic girmedi ve
+    ihlali ilk soyleyen, 28 Eylul'de kirmizi yanan haftalik ozet oldu.
+    """
+    if SEMA_DENETLE is None:
+        return []
+    hatalar = []
+    SEMA_DENETLE(meta, SEMA, "", hatalar)
+    if not hatalar:
+        return []
+    return ["%d sema ihlali: %s%s" % (len(hatalar), "; ".join(hatalar[:3]),
+                                      " ..." if len(hatalar) > 3 else "")]
 
 
 def _sayi_ayni_mi(ad, meta, kaynak):
@@ -596,6 +617,8 @@ def _depoyu_olc(r, kaynak):
     if meta is None:
         bulgular.append(("metadata", "project-meta.json varsayilan dalda yok"))
     else:
+        for m in _sema_ihlalleri(meta):
+            bulgular.append(("metadata", m))
         for m in _ayrismalar(meta, r, akislar, kok):
             bulgular.append(("ayrisma", m))
         for m in _sayi_ayni_mi(ad, meta, kaynak):
@@ -722,7 +745,7 @@ def _profil_sayilari(metalar, depo_sayisi):
 
 BASLIK = {
     "kayit": "Metadata katmanina girmemis depo",
-    "metadata": "project-meta.json eksik",
+    "metadata": "project-meta.json eksik ya da semaya uymuyor",
     "ayrisma": "Metadata canli gercekle ayrismis",
     "belge": "Temel belge eksik",
     "vitrin": "Vitrin alani bos",
