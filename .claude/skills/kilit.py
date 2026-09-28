@@ -17,29 +17,49 @@ import sys
 
 KOK = os.path.dirname(os.path.abspath(__file__))
 KILIT = os.path.join(KOK, "kilit.json")
-HARIC = {"kilit.json", "__pycache__"}
 
 
 def dosyalar():
-    out = {}
+    """(ozetler, sorunlar). Symlink ve olagan disi dosya hata sayilir: os.walk
+    symlink dizine girmez, oysa Claude Code oradaki SKILL.md'yi yukler."""
+    out, sorun = {}, []
     for d, alt, adlar in os.walk(KOK):
-        alt[:] = sorted(a for a in alt if a not in HARIC)
+        for a in list(alt):
+            tam = os.path.join(d, a)
+            if os.path.islink(tam):
+                sorun.append(f"symlink dizin: {os.path.relpath(tam, KOK)}")
+                alt.remove(a)
+            elif a == "__pycache__":
+                # Yalnizca .pyc barindiriyorsa yok say; baska her sey kilide tabi.
+                icerik = os.listdir(tam)
+                if all(x.endswith(".pyc") and os.path.isfile(os.path.join(tam, x))
+                       and not os.path.islink(os.path.join(tam, x)) for x in icerik):
+                    alt.remove(a)
+        alt.sort()
         for ad in sorted(adlar):
-            if ad in HARIC or ad.endswith(".pyc"):
-                continue
             yol = os.path.join(d, ad)
             rel = os.path.relpath(yol, KOK).replace(os.sep, "/")
+            if rel == "kilit.json":
+                continue
+            if os.path.islink(yol) or not os.path.isfile(yol):
+                sorun.append(f"symlink ya da olagan disi dosya: {rel}")
+                continue
             with open(yol, "rb") as f:
                 out[rel] = hashlib.sha256(f.read()).hexdigest()
-    return out
+    return out, sorun
 
 
 def main(argv):
+    ozet, sorun = dosyalar()
     if argv == ["--uret"]:
+        if sorun:
+            for s in sorun:
+                print(f"KILIT: {s}", file=sys.stderr)
+            return 1
         with open(KILIT, "w", encoding="utf-8") as f:
-            json.dump(dosyalar(), f, indent=1, sort_keys=True)
+            json.dump(ozet, f, indent=1, sort_keys=True)
             f.write("\n")
-        print(f"kilit yazildi: {len(dosyalar())} dosya")
+        print(f"kilit yazildi: {len(ozet)} dosya")
         return 0
     if argv != ["--kontrol"]:
         print(__doc__, file=sys.stderr)
@@ -50,8 +70,7 @@ def main(argv):
     except (OSError, ValueError) as e:
         print(f"KILIT: kilit.json okunamadi: {e}", file=sys.stderr)
         return 1
-    simdi = dosyalar()
-    sorun = []
+    simdi = ozet
     for rel in sorted(set(beklenen) | set(simdi)):
         if rel not in simdi:
             sorun.append(f"eksik: {rel}")

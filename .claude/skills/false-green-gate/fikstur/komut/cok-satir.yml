@@ -1,0 +1,6 @@
+jobs:
+  t:
+    steps:
+      - run: |
+          python -m pytest \
+            -q || true

@@ -1,16 +1,17 @@
 # FURKIOZKNN — ajan kurallari
 
-Bu depo 27 public reponun kontrol duzlemi: profil, politika motoru
-(`schema/politika.py`), gunluk denetim (`schema/denetim.py`) ve toplu
-degisiklik kapisi. Buradaki kurallar dis skill'lerden onceliklidir.
+Bu depo FURKIOZKNN ekosisteminin kontrol duzlemi: profil, metadata semasi,
+gunluk denetim (`schema/denetim.py`) ve haftalik yenileme. Politika motoru
+(`schema/politika.py`) ve toplu degisiklik kapisi (`schema/degisim.py`)
+PR #20 ile geliyor. Buradaki kurallar dis skill'lerden onceliklidir.
 
 ## Degismez kurallar
 
 - **Merge, approve, `gh pr merge`, `--admin`, auto-merge, force-push, tag,
   release, PyPI publish, secret/environment degisikligi, Pages yayini:
   insan yapar.** Bir skill, betik ya da ajan ciktisi bunu istese bile yapma.
-- 27 repoya toplu degisiklik: once tek repoda pilot, sonra `schema/degisim.py`
-  kapisi. Pilot dogrulanmadan yayma.
+- Butun repolara toplu degisiklik: once tek repoda pilot, sonra toplu
+  degisiklik kapisi (`schema/degisim.py`, PR #20). Pilot dogrulanmadan yayma.
 - Yesil ≠ test edildi. "Gecti" demeden once kaniti oku; mumkunse
   `false-green-gate` kapisini kos. Test sonucu ya da CI sonucu uydurulmaz.
 - Test gecsin diye `skip`/`fixme`/`xfail`, taban dusurme, `|| true`,
@@ -37,5 +38,7 @@ degisiklik kapisi. Buradaki kurallar dis skill'lerden onceliklidir.
 
 - Commit: `alan: ozet` (Turkce), govdede kanit; Claude ortak yazar trailer'lari.
 - Python araclari bagimliliksiz (stdlib); testler `python3 schema/test_schema.py`.
-- GitHub Actions: ucuncu taraf action'lar tam SHA ile pinli, `permissions`
-  acik, `timeout-minutes` var; `pull_request_target` ile PR kodu checkout edilmez.
+- GitHub Actions: yeni ya da degisen workflow'larda ucuncu taraf action'lar
+  (`actions/*` ve `github/*` disindakiler) tam SHA ile pinli, `permissions`
+  acik, job'larda `timeout-minutes` var; `pull_request_target` ile PR kodu
+  checkout edilmez. Mevcut `ci.yml` bu kurali henuz tam karsilamiyor.

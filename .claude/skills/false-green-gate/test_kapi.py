@@ -83,6 +83,33 @@ class JunitTesti(unittest.TestCase):
         rc, k, _ = kos("junit", f("junit", "html.xml"), "--taban", "1")
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
 
+    def test_atlanip_teardownda_patlayan(self):
+        # pytest: "1 passed, 1 skipped, 1 error" -> <skipped/> VE <error/> ayni vakada
+        rc, k, _ = kos("junit", f("junit", "skip-ve-hata.xml"), "--taban", "1", "--izinli-skip", "1")
+        self.assertEqual(rc, 1); self.assertIn("FG-03", kodlar(k))
+
+    def test_kosucu_cikis_kodu(self):
+        # pytest conftest'te coker (cikis 4) ve eski rapor yerinde kalir
+        rc, k, _ = kos("junit", f("junit", "temiz.xml"), "--taban", "3", "--kosucu-cikis", "4")
+        self.assertEqual(rc, 1); self.assertIn("FG-23", kodlar(k))
+
+    def test_ayni_rapor_iki_kez(self):
+        rc, k, _ = kos("junit", f("junit", "temiz.xml"), f("junit", "temiz.xml"), "--taban", "6")
+        self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
+
+    def test_eski_rapor(self):
+        d = tempfile.mkdtemp()
+        try:
+            yol = os.path.join(d, "r.xml"); shutil.copy(f("junit", "temiz.xml"), yol)
+            os.utime(yol, (0, 0))
+            rc, k, _ = kos("junit", yol, "--taban", "3", "--en-fazla-yas", "600")
+            self.assertEqual(rc, 1); self.assertIn("FG-24", kodlar(k))
+            os.utime(yol, None)
+            rc, k, _ = kos("junit", yol, "--taban", "3", "--en-fazla-yas", "600", "--kosucu-cikis", "0")
+            self.assertEqual(rc, 0, k)
+        finally:
+            shutil.rmtree(d)
+
     def test_sifir_taban_reddedilir(self):
         p = subprocess.run([sys.executable, KAPI, "junit", f("junit", "sifir.xml"), "--taban", "0"],
                            capture_output=True, text=True)
@@ -151,6 +178,10 @@ class GodotTesti(unittest.TestCase):
         rc, k, _ = kos("godot", f("godot", "kalan.log"), "--taban", "1")
         self.assertEqual(rc, 1); self.assertIn("FG-03", kodlar(k))
 
+    def test_renkli_ve_crlf_sonuc_satiri(self):
+        rc, k, _ = kos("godot", f("godot", "renkli.log"), "--taban", "114")
+        self.assertEqual(rc, 0, k)
+
     def test_gunluk_yok(self):
         rc, k, _ = kos("godot", f("godot", "yok.log"), "--taban", "1")
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
@@ -182,8 +213,33 @@ class KomutTesti(unittest.TestCase):
         rc, k, _ = kos("komut", f("komut", "yok.yml"))
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
 
+    def test_yanlis_pozitif_yok(self):
+        # pip install pytest-cov || true, yorum satiri, --update-snapshots=none
+        rc, k, _ = kos("komut", f("komut", "yanlis-pozitif.yml"))
+        self.assertEqual(rc, 0, k)
 
-@unittest.skipUnless(shutil.which("git"), "git yok")
+    def test_cok_satirli_yutma(self):
+        rc, k, _ = kos("komut", f("komut", "cok-satir.yml"))
+        self.assertEqual(rc, 1); self.assertIn("FG-16", kodlar(k))
+
+    def test_pipefailsiz_tee(self):
+        rc, k, _ = kos("komut", f("komut", "tee.yml"))
+        self.assertEqual(rc, 1); self.assertIn("FG-16", kodlar(k))
+
+    def test_pipefailli_tee(self):
+        rc, k, _ = kos("komut", f("komut", "tee-pipefail.yml"))
+        self.assertEqual(rc, 0, k)
+
+    def test_echo_ile_yutma(self):
+        rc, k, _ = kos("komut", f("komut", "echo.yml"))
+        self.assertEqual(rc, 1); self.assertIn("FG-16", kodlar(k))
+
+    def test_set_arti_e_uyari(self):
+        rc, k, _ = kos("komut", f("komut", "set-e.yml"))
+        self.assertIn("FG-25", [b["kod"] for b in k["bulgular"]])
+
+
+@unittest.skipUnless(shutil.which("git"), "git yok")  # kapi: izinli -- git yoksa kosamaz; __main__ atlamayi hata sayar
 class FarkTesti(unittest.TestCase):
     def setUp(self):
         self.d = tempfile.mkdtemp()
@@ -205,14 +261,14 @@ class FarkTesti(unittest.TestCase):
 
     def test_yeni_skip(self):
         with open(os.path.join(self.d, "a.spec.ts"), "a") as fh:
-            fh.write("test.skip('y', async () => {})\n")
+            fh.write("test.skip('y', async () => {})\n")  # kapi: izinli
         rc, k, _ = kos("fark", "--taban-ref", "HEAD", cwd=self.d)
         self.assertEqual(rc, 1); self.assertIn("FG-21", kodlar(k))
 
     def test_yeni_pytest_skip(self):
-        with open(os.path.join(self.d, "t.py"), "w") as fh:
-            fh.write("import pytest\n@pytest.mark.skip(reason='sonra')\ndef test_a():\n    pass\n")
-        self.g("add", "-N", "t.py")
+        with open(os.path.join(self.d, "test_t.py"), "w") as fh:
+            fh.write("import pytest\n@pytest.mark.skip(reason='sonra')\ndef test_a():\n    pass\n")  # kapi: izinli
+        self.g("add", "-N", "test_t.py")
         rc, k, _ = kos("fark", "--taban-ref", "HEAD", cwd=self.d)
         self.assertEqual(rc, 1); self.assertIn("FG-21", kodlar(k))
 
@@ -224,11 +280,57 @@ class FarkTesti(unittest.TestCase):
         rc, k, _ = kos_env({"PATH": "/nonexistent"}, "fark", "--taban-ref", "HEAD", cwd=self.d)
         self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
 
+    def test_ref_enjeksiyonu(self):
+        hedef = os.path.join(self.d, "pwned.txt")
+        rc, k, _ = kos("fark", "--taban-ref=--output=" + hedef, cwd=self.d)
+        self.assertEqual(rc, 1); self.assertIn("FG-18", kodlar(k))
+        self.assertFalse(os.path.exists(hedef))
+
+    def test_izlenmeyen_dosya(self):
+        with open(os.path.join(self.d, "yeni.spec.ts"), "w") as fh:
+            fh.write("it.only('z', () => {})\n")  # kapi: izinli
+        rc, k, _ = kos("fark", "--taban-ref", "HEAD", cwd=self.d)
+        self.assertEqual(rc, 1); self.assertIn("FG-21", kodlar(k))
+
+    def test_kacan_bicimler(self):
+        bicimler = ["it.only.each([1])('a', () => {})", "test.skipIf(x)('a', () => {})",  # kapi: izinli
+                    "describe.concurrent.skip('a', () => {})", "it.todo('a')"]  # kapi: izinli
+        with open(os.path.join(self.d, "a.spec.ts"), "a") as fh:
+            fh.write("\n".join(bicimler) + "\n")
+        with open(os.path.join(self.d, "test_b.py"), "w") as fh:
+            fh.write("import unittest\n@unittest.skipIf(True, 'x')\nclass A(unittest.TestCase):\n"  # kapi: izinli
+                     "    def test_a(self):\n        raise unittest.SkipTest('x')\n"  # kapi: izinli
+                     "pytest.importorskip('numpy')\n")  # kapi: izinli
+        rc, k, _ = kos("fark", "--taban-ref", "HEAD", cwd=self.d)
+        self.assertEqual(rc, 1)
+        self.assertEqual(k["olcum"]["yeni_atlama"], 7, k)
+
+    def test_belge_ve_yorum_sayilmaz(self):
+        with open(os.path.join(self.d, "NOT.md"), "w") as fh:
+            fh.write("Kullanma: test.skip()\n")  # kapi: izinli
+        with open(os.path.join(self.d, "a.spec.ts"), "a") as fh:
+            fh.write("// test.skip ornegi degil\n")  # kapi: izinli
+        rc, k, _ = kos("fark", "--taban-ref", "HEAD", cwd=self.d)
+        self.assertEqual(rc, 0, k)
+
+    def test_merge_base_yanlis_kirmizi_yok(self):
+        # Taban dalinda sonradan silinen bir skip, dokunmayan dali kirmiziya cevirmemeli.
+        with open(os.path.join(self.d, "s.spec.ts"), "w") as fh:
+            fh.write("test.skip('eski', () => {})\n")  # kapi: izinli
+        self.g("add", "."); self.g("commit", "-qm", "eski skip")
+        self.g("branch", "ozellik")
+        with open(os.path.join(self.d, "s.spec.ts"), "w") as fh:
+            fh.write("test('eski', () => {})\n")
+        self.g("commit", "-qam", "skip kaldirildi")
+        self.g("checkout", "-q", "ozellik")
+        rc, k, _ = kos("fark", "--taban-ref", "ana", cwd=self.d)
+        self.assertEqual(rc, 0, k)
+
 
 FFMPEG = shutil.which("ffmpeg") and shutil.which("ffprobe")
 
 
-@unittest.skipUnless(FFMPEG, "ffmpeg/ffprobe yok")
+@unittest.skipUnless(FFMPEG, "ffmpeg/ffprobe yok")  # kapi: izinli -- ffmpeg yoksa kosamaz; __main__ atlamayi hata sayar
 class MedyaTesti(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -302,9 +404,31 @@ class MedyaTesti(unittest.TestCase):
         rc, k, _ = kos("medya", self.tek_kare, "--video", "--tam-cozum")
         self.assertEqual(rc, 1); self.assertIn("FG-13", kodlar(k))
 
+    def test_zaman_asimi(self):
+        rc, k, _ = kos_env({"KAPI_ZAMAN_ASIMI": "0.001"}, "medya", self.iyi, "--tam-cozum")
+        self.assertEqual(rc, 1); self.assertIn("FG-12", kodlar(k))
+
     def test_ffprobe_yok(self):
         rc, k, _ = kos_env({"PATH": "/nonexistent"}, "medya", self.iyi)
         self.assertEqual(rc, 1); self.assertIn("FG-10", kodlar(k))
+
+    def test_sure_basligi_olmayan_webm(self):
+        yol = os.path.join(self.d, "canli.webm")
+        subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "lavfi", "-i",
+                        "testsrc=size=160x120:rate=25:duration=4", "-c:v", "libvpx", "-f", "webm",
+                        "-live", "1", yol], check=True)
+        rc, k, _ = kos("medya", yol, "--video", "--min-sure", "3")
+        self.assertEqual(rc, 0, k); self.assertEqual(k["olcum"]["sure_kaynagi"], "cozme")
+
+    def test_kapak_resmi_ilk_akis(self):
+        png = os.path.join(self.d, "kapak.png")
+        subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-f", "lavfi", "-i",
+                        "color=white:size=64x64", "-frames:v", "1", png], check=True)
+        yol = os.path.join(self.d, "kapakli.mkv")
+        subprocess.run(["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", png, "-i", self.iyi,
+                        "-map", "0", "-map", "1", "-c", "copy", "-disposition:v:0", "attached_pic", yol], check=True)
+        rc, k, _ = kos("medya", yol, "--video", "--ses", "--tam-cozum", "--siyah")
+        self.assertEqual(rc, 0, k)
 
     def test_siyah(self):
         rc, k, _ = kos("medya", self.siyah, "--video", "--siyah")
@@ -350,6 +474,9 @@ if __name__ == "__main__":
     if kosan == 0:
         print("KAPI: hic test kosmadi", file=sys.stderr); sys.exit(1)
     if sonuc.skipped:
-        print(f"UYARI: {len(sonuc.skipped)} test atlandi: " +
+        print(f"KAPI: {len(sonuc.skipped)} test atlandi: " +
               "; ".join(sorted({r for _, r in sonuc.skipped})), file=sys.stderr)
+        # Atlanan test gecmis sayilmaz; bilincli istisna ortamda acikca verilir.
+        if os.environ.get("KAPI_ATLAMA_IZNI") != "1":
+            sys.exit(1)
     sys.exit(0 if sonuc.wasSuccessful() else 1)

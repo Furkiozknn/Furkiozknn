@@ -6,9 +6,9 @@ degil. Bu betik kosunun BIRAKTIGI kaniti okur (JUnit XML, Playwright JSON
 raporu, Godot gunlugu, medya dosyasi, workflow/betik metni, git farki) ve
 yesilin gercek olup olmadigina karar verir.
 
-    kapi.py junit      RAPOR.xml... --taban N [--izinli-skip K]
-    kapi.py playwright RAPOR.json   --taban N [--izinli-skip K] [--izinli-beklenen-hata K]
-    kapi.py godot      GUNLUK       --taban N
+    kapi.py junit      RAPOR.xml... --taban N [--izinli-skip K] [--kosucu-cikis RC] [--en-fazla-yas SN]
+    kapi.py playwright RAPOR.json   --taban N [--izinli-skip K] [--izinli-beklenen-hata K] [--kosucu-cikis RC] [--en-fazla-yas SN]
+    kapi.py godot      GUNLUK       --taban N [--kosucu-cikis RC]
     kapi.py medya      DOSYA [--min-sure S] [--video] [--ses] [--tam-cozum] [--siyah] [--sessiz]
     kapi.py komut      DOSYA...
     kapi.py fark       [--taban-ref REF]
@@ -24,6 +24,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 import xml.etree.ElementTree as ET
 
 
@@ -62,6 +63,26 @@ def _sayilar_ortak(s, toplam, kosan, basarisiz, atlanan, taban, izinli_skip):
         s.fail("FG-04", f"{atlanan} test atlandi, izin verilen {izinli_skip}")
 
 
+def _kosu_kaniti(s, args, raporlar):
+    """Kosucunun cikis kodu ve raporun tazeligi: eski bir rapor yeni bir kosuyu kanitlamaz."""
+    rc = getattr(args, "kosucu_cikis", None)
+    if rc is not None:
+        s.olcum["kosucu_cikis"] = rc
+        if rc != 0:
+            s.fail("FG-23", f"kosucu {rc} ile cikti; rapor ne derse desin kosu basarili degil")
+    yas = getattr(args, "en_fazla_yas", None)
+    gorulen = set()
+    for yol in raporlar:
+        gercek = os.path.realpath(yol)
+        if gercek in gorulen:
+            s.fail("FG-18", f"{yol}: ayni rapor iki kez verildi; sayilar katlanir")
+        gorulen.add(gercek)
+        if yas is not None and os.path.exists(yol):
+            gecen = time.time() - os.path.getmtime(yol)
+            if gecen > yas:
+                s.fail("FG-24", f"{yol}: rapor {gecen:.0f}s once yazilmis (en fazla {yas}s); eski bir kosuya ait olabilir")
+
+
 # --- junit ---------------------------------------------------------------
 
 def junit(args):
@@ -73,16 +94,16 @@ def junit(args):
         except (OSError, ET.ParseError) as e:
             s.fail("FG-18", f"{yol}: JUnit raporu okunamadi ({e.__class__.__name__}); okunamayan rapor kanit degildir")
             continue
-        vakalar = list(kok.iter("testcase"))
         if kok.tag not in ("testsuites", "testsuite"):
             s.fail("FG-18", f"{yol}: kok eleman '{kok.tag}', JUnit degil")
             continue
-        for v in vakalar:
+        for v in kok.iter("testcase"):
             toplam += 1
-            if v.find("skipped") is not None:
-                atlanan += 1
-            elif v.find("failure") is not None or v.find("error") is not None:
+            # Once hata: atlanip teardown'da patlayan test <skipped/> VE <error/> tasir.
+            if v.find("failure") is not None or v.find("error") is not None:
                 basarisiz += 1
+            elif v.find("skipped") is not None:
+                atlanan += 1
             # pytest-rerunfailures <rerun*>, surefire <flaky*>: sonunda gecse de kararsiz
             if any(c.tag.startswith(("rerun", "flaky")) for c in v):
                 yeniden += 1
@@ -91,6 +112,7 @@ def junit(args):
     s.olcum["yeniden_kosulan"] = yeniden
     if yeniden:
         s.fail("FG-05", f"{yeniden} test ancak yeniden kosunca gecti (flaky); retry yesili yesil degildir")
+    _kosu_kaniti(s, args, args.raporlar)
     return s.bitir()
 
 
@@ -130,12 +152,13 @@ def playwright(args):
     s.olcum["beklenen_hata"] = len(ters)
     if len(ters) > args.izinli_beklenen_hata:
         s.fail("FG-06", f"{len(ters)} test basarisiz olmasi BEKLENEREK isaretli (test.fail): {', '.join(ters[:5])}")
+    _kosu_kaniti(s, args, [args.rapor])
     return s.bitir()
 
 
 # --- godot ---------------------------------------------------------------
 
-GODOT_SONUC = re.compile(r"^=== ([0-9]+)/([0-9]+) gecti ===$", re.M)
+GODOT_SONUC = re.compile(r"^=== ([0-9]+)/([0-9]+) gecti ===\s*$", re.M)
 GODOT_HATA = re.compile(r"SCRIPT ERROR|Parse Error")
 
 
@@ -147,15 +170,18 @@ def godot(args):
     except OSError as e:
         s.fail("FG-18", f"gunluk okunamadi: {e}")
         return s.bitir()
+    metin = re.sub(r"\x1b\[[0-9;]*m", "", metin)  # renk kodlari sonuc satirini gizlemesin
     hatalar = [satir for satir in metin.splitlines() if GODOT_HATA.search(satir)]
     if hatalar:
         s.fail("FG-09", f"gunlukte {len(hatalar)} betik hatasi var; bir test bolumu sessizce yarida kalmis olabilir: {hatalar[0][:120]}")
     sonuclar = GODOT_SONUC.findall(metin)
     if not sonuclar:
         s.fail("FG-08", "'=== G/T gecti ===' satiri yok; takim sonuna kadar kosmadi")
+        _kosu_kaniti(s, args, [])
         return s.bitir()
     gecen, toplam = (int(x) for x in sonuclar[-1])
     _sayilar_ortak(s, toplam, gecen, toplam - gecen, 0, args.taban, 0)
+    _kosu_kaniti(s, args, [])
     return s.bitir()
 
 
@@ -165,28 +191,67 @@ DECODE_HATA = re.compile(r"File ended prematurely|Invalid data found|error while
                          r"partial file|moov atom not found|Truncat|corrupt", re.I)
 
 
-def _calistir(argv, zaman=600):
-    return subprocess.run(argv, capture_output=True, text=True, timeout=zaman,
-                          stdin=subprocess.DEVNULL)
+GORUNTU_KODEK = {"png", "mjpeg", "bmp", "webp", "tiff", "gif"}
 
 
-def _guvenli_yol(yol):
+def _sayi(x):
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+class ZamanAsimi(Exception):
+    pass
+
+
+def _calistir(argv, zaman=None):
+    if zaman is None:
+        zaman = float(os.environ.get("KAPI_ZAMAN_ASIMI", "600"))
+    try:
+        return subprocess.run(argv, capture_output=True, text=True, timeout=zaman,
+                              stdin=subprocess.DEVNULL)
+    except subprocess.TimeoutExpired:
+        raise ZamanAsimi(f"{argv[0]} {zaman}s icinde bitmedi")
+
+
+def _ffmpeg_yolu(yol):
     # Mutlak yol + 'file:' oneki: '-' ile baslayan ad secenek, 'concat:' /
     # 'http:' gibi bir onek protokol sanilmaz; -protocol_whitelist file da
     # dosyanin icinden (HLS/concat listesi) baska kaynak acilmasini engeller.
-    return os.path.abspath(yol)
+    return "file:" + os.path.abspath(yol)
+
+
+def _sure(bilgi, akislar):
+    """format.duration yoksa (canli/MediaRecorder webm) akis surelerine dus."""
+    adaylar = [bilgi.get("format", {}).get("duration")] + [a.get("duration") for a in akislar]
+    for aday in adaylar:
+        try:
+            if aday not in (None, "N/A") and float(aday) > 0:
+                return float(aday), "baslik"
+        except ValueError:
+            continue
+    return 0.0, None
 
 
 def medya(args):
     s = Sonuc("medya")
-    yol = _guvenli_yol(args.dosya)
-    if not os.path.isfile(yol) or os.path.getsize(yol) == 0:
+    try:
+        return _medya(s, args)
+    except ZamanAsimi as e:
+        s.fail("FG-12", f"zaman asimi: {e}")
+        return s.bitir()
+
+
+def _medya(s, args):
+    if not os.path.isfile(args.dosya) or os.path.getsize(args.dosya) == 0:
         s.fail("FG-10", f"dosya yok ya da bos: {args.dosya}")
         return s.bitir()
-    s.olcum["boyut"] = os.path.getsize(yol)
+    girdi = _ffmpeg_yolu(args.dosya)
+    s.olcum["boyut"] = os.path.getsize(args.dosya)
     try:
         p = _calistir(["ffprobe", "-v", "error", "-protocol_whitelist", "file",
-                       "-show_format", "-show_streams", "-of", "json", "file:" + yol], 120)
+                       "-show_format", "-show_streams", "-of", "json", girdi])
     except FileNotFoundError:
         s.fail("FG-10", "ffprobe bulunamadi; dogrulanamayan medya PASS sayilmaz")
         return s.bitir()
@@ -200,13 +265,21 @@ def medya(args):
         return s.bitir()
     video = [a for a in akislar if a.get("codec_type") == "video"
              and not a.get("disposition", {}).get("attached_pic")]
+    # Kapak resmi her kapta attached_pic olarak isaretlenmez (MKV'de ayri bir
+    # video izi olur); olculecek iz: goruntu kodegi olmayan, en uzun olan.
+    video.sort(key=lambda a: (a.get("codec_name") in GORUNTU_KODEK, -_sayi(a.get("duration"))))
     ses = [a for a in akislar if a.get("codec_type") == "audio"]
-    try:
-        sure = float(bilgi.get("format", {}).get("duration", 0) or 0)
-    except ValueError:
-        sure = 0.0
-    s.olcum.update({"sure": sure, "video_akis": len(video), "ses_akis": len(ses),
-                    "bicim": bilgi.get("format", {}).get("format_name")})
+    sure, kaynak = _sure(bilgi, akislar)
+    if not kaynak:
+        # Baslikta sure yok: son zaman damgasini cozerek olc.
+        q = _calistir(["ffmpeg", "-nostdin", "-v", "error", "-stats", "-protocol_whitelist", "file",
+                       "-i", girdi, "-f", "null", "-"])
+        zamanlar = re.findall(r"time=(\d+):(\d+):(\d+(?:\.\d+)?)", q.stderr)
+        if zamanlar:
+            h, m, sn = zamanlar[-1]
+            sure, kaynak = int(h) * 3600 + int(m) * 60 + float(sn), "cozme"
+    s.olcum.update({"sure": sure, "sure_kaynagi": kaynak, "video_akis": len(video),
+                    "ses_akis": len(ses), "bicim": bilgi.get("format", {}).get("format_name")})
     if video:
         v = video[0]
         s.olcum.update({"genislik": v.get("width"), "yukseklik": v.get("height"),
@@ -219,21 +292,24 @@ def medya(args):
         s.fail("FG-11", "ses akisi yok")
     if sure < args.min_sure:
         s.fail("FG-11", f"sure {sure:.3f}s, en az {args.min_sure}s bekleniyordu")
+    # Olcumler raporlanan akis uzerinde yapilir (kapak resmi v:0 olabilir).
+    vi = str(video[0]["index"]) if video else None
+    si = str(ses[0]["index"]) if ses else None
     if args.tam_cozum:
         # Baslik yalan soyleyebilir (yarisi kesik faststart MP4 hala tam sureyi
         # bildirir); yalnizca tam cozme ve stderr gercegi gosterir. -xerror yetmez:
         # kesik MKV onunla bile 0 doner.
         p = _calistir(["ffmpeg", "-nostdin", "-v", "error", "-protocol_whitelist", "file",
-                       "-i", "file:" + yol, "-f", "null", "-"])
+                       "-i", girdi, "-f", "null", "-"])
         hatalar = [x for x in p.stderr.splitlines() if x.strip()]
         s.olcum["cozme_hata_satiri"] = len(hatalar)
         if p.returncode != 0 or any(DECODE_HATA.search(x) for x in hatalar):
             s.fail("FG-12", f"tam cozmede hata (cikis {p.returncode}): {(hatalar or ['?'])[0][:160]}")
-        if video:
+        if vi is not None:
             q = _calistir(["ffprobe", "-v", "error", "-protocol_whitelist", "file",
-                           "-select_streams", "v:0", "-count_frames",
+                           "-select_streams", vi, "-count_frames",
                            "-show_entries", "stream=nb_frames,nb_read_frames",
-                           "-of", "json", "file:" + yol])
+                           "-of", "json", girdi])
             try:
                 st = json.loads(q.stdout)["streams"][0]
                 baslik, okunan = int(st.get("nb_frames") or 0), int(st.get("nb_read_frames") or 0)
@@ -244,17 +320,17 @@ def medya(args):
                 s.fail("FG-13", f"baslik {baslik} kare diyor, cozulen {okunan}; dosya kesik")
             if okunan == 1 and sure > 1:
                 s.fail("FG-13", "cikti tek kareden ibaret")
-    if args.siyah and video and sure > 0:
+    if args.siyah and vi is not None and sure > 0:
         p = _calistir(["ffmpeg", "-nostdin", "-v", "info", "-protocol_whitelist", "file",
-                       "-i", "file:" + yol, "-map", "0:v:0", "-vf", "blackdetect=d=0.1:pix_th=0.10",
+                       "-i", girdi, "-map", "0:" + vi, "-vf", "blackdetect=d=0.1:pix_th=0.10",
                        "-an", "-f", "null", "-"])
         siyah = sum(float(x) for x in re.findall(r"black_duration:([0-9.]+)", p.stderr))
         s.olcum["siyah_sure"] = round(siyah, 3)
         if siyah >= 0.95 * sure:
             s.fail("FG-14", f"video neredeyse tamamen siyah ({siyah:.2f}/{sure:.2f}s)")
-    if args.sessiz and ses and sure > 0:
+    if args.sessiz and si is not None and sure > 0:
         p = _calistir(["ffmpeg", "-nostdin", "-v", "info", "-protocol_whitelist", "file",
-                       "-i", "file:" + yol, "-map", "0:a:0", "-af", "volumedetect",
+                       "-i", girdi, "-map", "0:" + si, "-af", "volumedetect",
                        "-vn", "-f", "null", "-"])
         m = re.search(r"max_volume: (-?[0-9.]+|-inf) dB", p.stderr)
         tepe = float("-inf") if not m or m.group(1) == "-inf" else float(m.group(1))
@@ -266,17 +342,37 @@ def medya(args):
 
 # --- komut (workflow / betik metni) --------------------------------------
 
-KOSUCU = r"(?:playwright\s+test|vitest|jest|pytest|npm\s+(?:run\s+)?test|npx\s+playwright\s+test|godot\b[^\n]*--headless|python3?\s+-m\s+(?:pytest|unittest))"
+# Kosucu adi baska bir kelimenin parcasi olmamali (pytest-cov, jest-junit).
+KOSUCU = (r"(?<![\w-])(?:playwright\s+test|vitest|jest|pytest|npm\s+(?:run\s+)?test|"
+          r"godot\b.*--headless|python3?\s+-m\s+(?:pytest|unittest))(?![\w-])")
+KURULUM = re.compile(r"\b(?:pip3?|uv\s+pip|npm|pnpm|yarn|apt(?:-get)?)\s+(?:install|add|i)\b")
+YUTMA = re.compile(r"\|\|\s*(?:true|:|exit\s+0|echo\b)|;\s*true\s*$")
 KOMUT_KURALLARI = [
     ("FG-15", "FAIL", re.compile(r"--pass-with-no-tests|--passWithNoTests"),
      "sifir testle yesil donmeye izin veren bayrak"),
-    ("FG-16", "FAIL", re.compile(KOSUCU + r"[^\n]*(?:\|\|\s*(?:true|:|exit\s+0)\b|;\s*true\s*$)", re.M),
-     "test komutunun hatasi yutuluyor (|| true)"),
-    ("FG-17", "FAIL", re.compile(r"(?:playwright\s+test|vitest|jest)[^\n]*(?:--update-snapshots|\s-u\b)"),
+    ("FG-17", "FAIL", re.compile(r"(?:playwright\s+test|vitest|jest)\b.*(?:--update-snapshots(?!=none)|\s-u\b)"),
      "CI'da snapshot guncelleme: karsilastirma yerine yeni taban yaziliyor"),
     ("FG-19", "WARN", re.compile(r"--last-failed|--only-changed|--lf\b"),
      "yalnizca bir alt kume kosuluyor; PR hizlandirmasi olabilir ama tam kosunun yerine gecmez"),
 ]
+
+
+def _mantiksal_satirlar(metin):
+    """Yorumlari at, '\\' ile devam eden satirlari birlestir; (satir_no, metin)."""
+    out, biriken, bas = [], "", None
+    for no, satir in enumerate(metin.splitlines(), 1):
+        if re.match(r"\s*#", satir) and not biriken:
+            continue
+        if bas is None:
+            bas = no
+        if satir.rstrip().endswith("\\"):
+            biriken += satir.rstrip()[:-1] + " "
+            continue
+        out.append((bas, biriken + satir))
+        biriken, bas = "", None
+    if biriken:
+        out.append((bas, biriken))
+    return out
 
 
 def komut(args):
@@ -288,55 +384,113 @@ def komut(args):
         except OSError as e:
             s.fail("FG-18", f"{yol}: okunamadi ({e})")
             continue
-        for kod, seviye, desen, aciklama in KOMUT_KURALLARI:
-            for m in desen.finditer(metin):
-                satir = metin.count("\n", 0, m.start()) + 1
-                (s.fail if seviye == "FAIL" else s.warn)(kod, f"{yol}:{satir}: {aciklama}")
-        if re.search(r"continue-on-error:\s*true", metin) and re.search(KOSUCU, metin):
+        pipefail = re.search(r"pipefail|shell:\s*bash\b", metin)
+        kosucu_var = False
+        for no, satir in _mantiksal_satirlar(metin):
+            kosucu = re.search(KOSUCU, satir) and not KURULUM.search(satir)
+            kosucu_var = kosucu_var or bool(kosucu)
+            if kosucu and YUTMA.search(satir[re.search(KOSUCU, satir).start():]):
+                s.fail("FG-16", f"{yol}:{no}: test komutunun hatasi yutuluyor (|| true / || echo)")
+            if kosucu and not pipefail and re.search(KOSUCU + r".*(?<!\|)\|(?!\|)", satir):
+                s.fail("FG-16", f"{yol}:{no}: test ciktisi pipe'a gidiyor ve pipefail yok; kosucunun hatasi kaybolur")
+            for kod, seviye, desen, aciklama in KOMUT_KURALLARI:
+                if desen.search(satir):
+                    (s.fail if seviye == "FAIL" else s.warn)(kod, f"{yol}:{no}: {aciklama}")
+        if kosucu_var and re.search(r"continue-on-error:\s*true", metin):
             s.warn("FG-20", f"{yol}: continue-on-error var; test adiminda ise kirmizi gizlenir")
+        if kosucu_var and re.search(r"(?m)^\s*(?:-\s*run:\s*)?set\s+\+e\b", metin):
+            s.warn("FG-25", f"{yol}: set +e var; kosucunun cikis kodu sonra kontrol edilmiyorsa kirmizi gizlenir")
     return s.bitir()
 
 
 # --- fark (git) ----------------------------------------------------------
 
-ATLAMA = re.compile(r"\b(?:test|it|describe)\.(?:skip|fixme|fail|only)\s*\(|\b(?:xit|xdescribe|fit|fdescribe)\s*\("
-                    r"|@pytest\.mark\.(?:skip|skipif|xfail)\b|\bpytest\.(?:skip|xfail)\s*\(|@unittest\.(?:skip|expectedFailure)\b"
-                    r"|\bself\.skipTest\s*\(")
+ATLAMA = re.compile(
+    r"\b(?:test|it|describe|suite|context|bench)(?:\.\w+)*\.(?:skip|skipIf|fixme|fail|only|todo)\b"
+    r"|\b(?:xit|xdescribe|xtest|fit|fdescribe)\s*\("
+    r"|@pytest\.mark\.(?:skip|skipif|xfail)\b|\bpytest\.(?:skip|xfail|importorskip)\s*\("
+    r"|@unittest\.(?:skip\w*|expectedFailure)\b|\bunittest\.SkipTest\b|\bself\.skipTest\s*\(")
+TEST_DOSYASI = re.compile(r"(?:^|/)(?:tests?|__tests__|e2e|spec)/|(?:^|/)test_[^/]*\.py$|_test\.py$"
+                          r"|\.(?:spec|test)\.[cm]?[jt]sx?$|\.gd$")
+IZINLI = "kapi: izinli"
+
+
+def _git(*argv):
+    return _calistir(["git", "-c", "core.quotepath=off", *argv])
 
 
 def fark(args):
     s = Sonuc("fark")
+    if args.taban_ref.startswith("-"):
+        s.fail("FG-18", f"gecersiz taban ref: {args.taban_ref!r}")
+        return s.bitir()
     try:
-        p = _calistir(["git", "diff", "--unified=0", "--no-color", args.taban_ref, "--"], 120)
+        # '-' ile baslayan ref yukarida reddedildi; git'e secenek olarak gidemez.
+        mb = _git("merge-base", args.taban_ref, "HEAD")
     except FileNotFoundError:
         s.fail("FG-18", "git bulunamadi")
         return s.bitir()
+    if mb.returncode != 0:
+        s.fail("FG-18", f"merge-base bulunamadi ({args.taban_ref}): {mb.stderr.strip()[:160]}")
+        return s.bitir()
+    taban = mb.stdout.strip()
+    s.olcum["merge_base"] = taban
+    # Taban ile calisma agaci arasi; harici diff araci ve onek ayarlari etkisiz.
+    p = _git("diff", "--no-ext-diff", "--no-color", "--unified=0",
+             "--src-prefix=a/", "--dst-prefix=b/", taban, "--")
     if p.returncode != 0:
         s.fail("FG-18", f"git diff basarisiz: {p.stderr.strip()[:160]}")
         return s.bitir()
-    dosya, eklenen = "?", 0
+    eklenen = []  # (dosya, satir)
+    dosya = None
     for satir in p.stdout.splitlines():
         if satir.startswith("+++ "):
-            dosya = satir[6:] if satir.startswith("+++ b/") else satir[4:]
-        elif satir.startswith("+") and not satir.startswith("+++"):
-            if ATLAMA.search(satir):
-                eklenen += 1
-                s.fail("FG-21", f"{dosya}: yeni atlama/odak isareti eklendi: {satir[1:].strip()[:120]}")
-        if re.match(r"^\+\+\+ b/.*(?:-snapshots/|__snapshots__/)", satir):
-            s.warn("FG-22", f"{dosya}: snapshot tabani degisti; gorsel fark insan tarafindan incelenmeli")
-    s.olcum["yeni_atlama"] = eklenen
+            dosya = satir[6:] if satir.startswith("+++ b/") else None
+            if dosya and re.search(r"(?:-snapshots|__snapshots__)/", dosya):
+                s.warn("FG-22", f"{dosya}: snapshot tabani degisti; gorsel fark insan tarafindan incelenmeli")
+        elif satir.startswith("+") and dosya:
+            eklenen.append((dosya, satir[1:]))
+    # Izlenmeyen yeni dosyalar da farkin parcasi.
+    u = _git("ls-files", "--others", "--exclude-standard", "-z")
+    for ad in filter(None, u.stdout.split("\0")):
+        try:
+            with open(ad, encoding="utf-8", errors="replace") as fh:
+                eklenen.extend((ad, x) for x in fh.read().splitlines())
+        except OSError:
+            continue
+    sayi = izinli = 0
+    for ad, satir in eklenen:
+        if not TEST_DOSYASI.search(ad) or not ATLAMA.search(satir):
+            continue
+        if re.match(r"\s*(?:#|//)", satir):
+            continue
+        if IZINLI in satir:
+            izinli += 1
+            continue
+        sayi += 1
+        s.fail("FG-21", f"{ad}: yeni atlama/odak isareti eklendi: {satir.strip()[:120]}")
+    s.olcum.update({"yeni_atlama": sayi, "izinli_isaret": izinli})
+    if izinli:
+        s.warn("FG-21", f"{izinli} satir '{IZINLI}' ile muaf tutuldu; incelemede gerekcesine bakilmali")
     return s.bitir()
 
 
 def ana(argv=None):
     ap = argparse.ArgumentParser(prog="kapi.py", description=__doc__.split("\n\n")[0])
     alt = ap.add_subparsers(dest="kip", required=True)
+
+    def kosu(p):
+        p.add_argument("--kosucu-cikis", type=int, help="test kosucusunun cikis kodu ($?)")
+
     j = alt.add_parser("junit"); j.add_argument("raporlar", nargs="+")
     j.add_argument("--taban", type=int, required=True); j.add_argument("--izinli-skip", type=int, default=0)
+    j.add_argument("--en-fazla-yas", type=float, help="rapor bu kadar saniyeden eskiyse FAIL"); kosu(j)
     w = alt.add_parser("playwright"); w.add_argument("rapor")
     w.add_argument("--taban", type=int, required=True); w.add_argument("--izinli-skip", type=int, default=0)
     w.add_argument("--izinli-beklenen-hata", type=int, default=0)
+    w.add_argument("--en-fazla-yas", type=float); kosu(w)
     g = alt.add_parser("godot"); g.add_argument("gunluk"); g.add_argument("--taban", type=int, required=True)
+    kosu(g)
     m = alt.add_parser("medya"); m.add_argument("dosya")
     m.add_argument("--min-sure", type=float, default=0.1)
     for b in ("--video", "--ses", "--tam-cozum", "--siyah", "--sessiz"):
