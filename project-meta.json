@@ -45,6 +45,7 @@
   "tests": null,
   "ci": {
     "workflows": [
+      "baglanti.yml",
       "ci.yml",
       "denetim.yml",
       "guvenlik.yml",

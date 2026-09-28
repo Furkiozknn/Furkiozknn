@@ -1,0 +1,54 @@
+name: Baglanti
+
+# Markdown dosyalarindaki yerel linkler ve baslik capalari (#bolum) kirik
+# mi? lychee cevrimdisi kipte: ag yok, dis site yuzunden kirmizi yok,
+# her kosuda ayni sonuc. Uzak linkler burada denetlenmez (sayisi ozette
+# yaziyor).
+#
+# lychee tek basina iki durumda sahte yesil verir (olculdu): hic dosya
+# eslesmeyince "0 Total" ile 0 doner; baslik capalarini varsayilan
+# olarak denetlemez. .github/baglanti/kontrol.py ikisini de kapatir ve
+# test_kontrol.py her FAIL yolunun gercekten kirmiziya dondugunu sinar.
+#
+# Surum ve ozet elle pinli; kurulum kaydi .github/guvenlik/README.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: baglanti-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: lychee (yerel link ve capa)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: lychee kur (0.24.2, ozet pinli)
+        run: |
+          set -euo pipefail
+          url="https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2/lychee-x86_64-unknown-linux-gnu.tar.gz"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/lychee.tgz" "$url"
+          echo "1f4e0ef7f6554a6ed33dd7ac144fb2e1bbed98598e7af973042fc5cd43951c9a  $RUNNER_TEMP/lychee.tgz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/lychee.tgz" -C "$RUNNER_TEMP"
+          bin="$RUNNER_TEMP/lychee-x86_64-unknown-linux-gnu/lychee"
+          test "$("$bin" --version)" = "lychee 0.24.2"
+          echo "LYCHEE=$bin" >> "$GITHUB_ENV"
+
+      - name: Oz sinama (her FAIL yolu kirmiziya donuyor mu)
+        run: python3 .github/baglanti/test_kontrol.py -v
+
+      - name: Depodaki Markdown
+        run: python3 .github/baglanti/kontrol.py --lychee "$LYCHEE" --en-az 10
