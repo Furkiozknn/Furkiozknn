@@ -143,14 +143,14 @@ aranabilir. `/` arama kutusuna atlar, `Enter` ilk sonucu açar. Birini almak,
 
 ### Oyunlar — Godot 4, her biri CI'da başsız test ediliyor
 
-<sub>Bu sayılar büyük, çünkü suitler oyunu oynuyor: `yercekimi-cevir`'in 841 kontrolü 20 odanın hepsini bitirmeyi ve her birinde bir madalya doğrulamayı da içeriyor. Her depoda Windows ve web (HTML5) dışa aktarma ön ayarları var; henüz barındırılan bir sürüm yok.</sub>
+<sub>Bu sayılar büyük, çünkü suitler oyunu oynuyor: `yercekimi-cevir`'in 841 kontrolü 20 odanın hepsini bitirmeyi ve her birinde bir madalya doğrulamayı da içeriyor. Her oyun kendi CI'ı tarafından tarayıcı için derlenip GitHub Pages'e yayınlanıyor; ▶ bağlantıları oyunu açar.</sub>
 
 | | Proje | Üstüne kurulduğu tek fikir | Test |
 |:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | Tek tuş, ve her engel müziğin vuruş ızgarasına diziliyor. Tur sonundaki histogram her basışın ne kadar erken ya da geç geldiğini gösteriyor. | `961` |
-| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | Zıplama tuşu yok — tek tuş yerçekimini çeviriyor ve tavana düşüyorsun. Elle kurulmuş 20 hassas oda. | `841` |
-| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Kaz, sat, geliştir, daha derine in — asıl zamanlayıcı yakıt göstergesi. 250 m'deki çekirdeğe kadar beş katman. | `477` |
-| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Tavana kanca at, sallan, doğru anda bırak ve momentumu taşı. Madalya süreleri tahmin değil, bir botla ölçüldü. | `115` |
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)**<br><sub>[▶ Tarayıcıda oyna](https://furkiozknn.github.io/tek-tus-kosu/)</sub> | Tek tuş, ve her engel müziğin vuruş ızgarasına diziliyor. Tur sonundaki histogram her basışın ne kadar erken ya da geç geldiğini gösteriyor. | `961` |
+| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)**<br><sub>[▶ Tarayıcıda oyna](https://furkiozknn.github.io/yercekimi-cevir/)</sub> | Zıplama tuşu yok — tek tuş yerçekimini çeviriyor ve tavana düşüyorsun. Elle kurulmuş 20 hassas oda. | `841` |
+| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)**<br><sub>[▶ Tarayıcıda oyna](https://furkiozknn.github.io/derin-kazi/)</sub> | Kaz, sat, geliştir, daha derine in — asıl zamanlayıcı yakıt göstergesi. 250 m'deki çekirdeğe kadar beş katman. | `477` |
+| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)**<br><sub>[▶ Tarayıcıda oyna](https://furkiozknn.github.io/kanca/)</sub> | Tavana kanca at, sallan, doğru anda bırak ve momentumu taşı. Madalya süreleri tahmin değil, bir botla ölçüldü. | `115` |
 | 🧱 | **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** | Zıplama hissi tahmin edilmek yerine *ölçülmüş* iki Godot 4.7 başlangıç projesi: kojot süresi, zıplama tamponu, değişken zıplama yüksekliği. | `21` |
 | | | **Toplam, suiti olan 26 depoda** | **`5.247`** |
 

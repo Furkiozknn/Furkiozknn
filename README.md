@@ -139,14 +139,14 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 ### Games — Godot 4, each one tested headlessly in CI
 
-<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Windows and web (HTML5) export presets ship in every repository; there is no hosted build yet.</sub>
+<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Every game is built for the browser by its own CI and published to GitHub Pages; the ▶ links open it.</sub>
 
 | | Project | The one idea it is built on | Tests |
 |:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
-| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
-| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
-| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/tek-tus-kosu/)</sub> | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
+| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/yercekimi-cevir/)</sub> | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
+| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/derin-kazi/)</sub> | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
+| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/kanca/)</sub> | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
 | 🧱 | **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** | Two Godot 4.7 starter projects whose jump feel was *measured*, not guessed: coyote time, jump buffering, variable jump height. | `21` |
 | | | **Total, across 26 repositories with suites** | **`5,247`** |
 
