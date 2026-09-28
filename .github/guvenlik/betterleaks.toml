@@ -1,0 +1,17 @@
+# betterleaks yapilandirmasi. Varsayilan kurallar aynen gecerli; tek
+# istisna asagida ve DAR: kilit.json'daki sha256 ozetleri ("...kapi.py":
+# "<64 hex>") generic-api-key kuralina takiliyor. Istisna yalnizca
+# (dosya == kilit.json) VE (bulunan deger tam 64 kucuk hex) ise gecerli;
+# ayni dosyaya konan gercek bir anahtar yine yakalanir (negatif test:
+# .github/guvenlik/test_guvenlik.sh).
+#
+# Bu dosya ve zizmor.yml degisikligi = guvenlik incelemesi (insan).
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "kilit.json sha256 ozetleri"
+condition = "AND"
+paths = ['''^\.claude/skills/kilit\.json$''']
+regexes = ['''^[0-9a-f]{64}$''']

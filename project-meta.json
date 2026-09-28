@@ -47,6 +47,7 @@
     "workflows": [
       "ci.yml",
       "denetim.yml",
+      "guvenlik.yml",
       "haftalik.yml",
       "projeler.yml",
       "yenile.yml"
