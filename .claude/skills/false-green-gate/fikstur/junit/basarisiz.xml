@@ -1,0 +1,1 @@
+<testsuites><testsuite name="pytest" tests="2" failures="1"><testcase classname="t" name="a"/><testcase classname="t" name="b"><failure message="assert 1 == 2"/></testcase></testsuite></testsuites>

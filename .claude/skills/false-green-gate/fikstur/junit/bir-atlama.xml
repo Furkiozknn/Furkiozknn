@@ -1,0 +1,1 @@
+<testsuite name="vitest" tests="3" skipped="1"><testcase classname="t" name="a"/><testcase classname="t" name="b"/><testcase classname="t" name="c"><skipped/></testcase></testsuite>

@@ -1,5 +1,9 @@
 <img src="assets/hero.svg" alt="Furki Özkan — agent systems, MCP and developer tooling. 28 public repositories, 5,247 tests, 1,096 commits." width="100%">
 
+<p align="center"><img src="docs/reel/reel.gif" alt="Furkiozknn - 15-second motion reel" width="720"></p>
+<p align="center"><sub><a href="docs/reel/reel.mp4">MP4 version with sound</a></sub></p>
+<p align="center"><sub><b>English</b> · <a href="README.tr.md">Türkçe</a></sub></p>
+
 <p align="center">
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/tests-5%2C247_passing-c9a961?style=for-the-badge&labelColor=0b0b0f" alt="5,247 tests passing"></a>
   <a href="TESTLER.md"><img src="https://img.shields.io/badge/every_number-traced_to_its_run-e7dcc0?style=for-the-badge&labelColor=0b0b0f" alt="Every number traced to the run that printed it"></a>
@@ -131,20 +135,20 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, needing no key at all. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
 | 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
 | 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
+| 🗂️ | **[Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io)** | The project directory, rebuilt every Monday from each repository's own `project-meta.json`. Nothing on it is hand-written. | `37` |
 
 ### Games — Godot 4, each one tested headlessly in CI
 
-<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Windows and web (HTML5) export presets ship in every repository; there is no hosted build yet.</sub>
+<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Every game is built for the browser by its own CI and published to GitHub Pages; the ▶ links open it.</sub>
 
 | | Project | The one idea it is built on | Tests |
 |:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
-| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
-| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
-| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
+| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/tek-tus-kosu/)</sub> | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
+| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/yercekimi-cevir/)</sub> | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
+| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/derin-kazi/)</sub> | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
+| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/kanca/)</sub> | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
+| 🧱 | **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** | Two Godot 4.7 starter projects whose jump feel was *measured*, not guessed: coyote time, jump buffering, variable jump height. | `21` |
 | | | **Total, across 26 repositories with suites** | **`5,247`** |
-
-<sub>Also here: **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** — two Godot 4.7 starter projects whose jump feel was *measured*, not guessed (coyote time, jump buffering, variable jump height). No suite, so it is not in the count.</sub>
 
 ---
 
@@ -160,6 +164,32 @@ unknown value is `null` rather than a plausible-looking string, and a test
 count with no source line does not go in the file at all.
 
 **[The schema and the rule it follows →](schema/README.md)**
+
+---
+
+## ▸ What runs while nobody is watching
+
+<sub>Drawn from the five workflow files in <a href=".github/workflows">.github/workflows</a> and the site's own. Times are UTC.</sub>
+
+```mermaid
+flowchart LR
+  push(["every push"]) --> ci["ci.yml<br/>schema tests · own metadata ·<br/>every published number agrees ·<br/>workflow YAML parses"]
+
+  daily(["daily 05:00"]) --> den["denetim.yml<br/>reads every repo's CI log<br/>and project-meta.json"]
+  den -->|"findings changed"| issue1[["one 'Ekosistem denetimi' issue<br/>comment, or close when clean"]]
+
+  mon1(["Mon 04:30"]) --> yen["yenile.yml<br/>clone all · uret.py"]
+  yen --> gate{"dogrula.py<br/>koruma.py<br/>≤ 8 repos changed"}
+  gate -->|"pass + token"| meta["push project-meta.json<br/>to each repo"]
+  gate -->|"otherwise"| sum["diff in the run summary,<br/>nothing written"]
+
+  mon2(["Mon 05:20"]) --> site["furkiozknn.github.io<br/>rebuilt from every<br/>project-meta.json"]
+
+  mon3(["Mon 06:00"]) --> hft["haftalik.yml<br/>derle.py · haftalik.py"]
+  hft -->|"activity this week"| issue2[["one 'Haftalık özet' issue<br/>post drafts as a comment"]]
+```
+
+<sub>The weekly summary and the project index are never committed: a committed index goes stale on the next push, and a weekly bot commit would inflate the contribution graph with work nobody did. They live in issues and run artifacts instead.</sub>
 
 ---
 

@@ -1,0 +1,1 @@
+<testsuites><testsuite name="pytest" tests="2" skipped="2"><testcase classname="t" name="a"><skipped message="x"/></testcase><testcase classname="t" name="b"><skipped message="x"/></testcase></testsuite></testsuites>

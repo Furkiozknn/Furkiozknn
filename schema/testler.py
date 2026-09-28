@@ -58,6 +58,8 @@ KAYNAK = KOK / "schema" / "meta-source.json"
 TESTLER = KOK / "TESTLER.md"
 README = KOK / "README.md"
 HERO = KOK / "assets" / "hero.svg"
+HIRE = KOK / "HIRE.md"
+README_TR = KOK / "README.tr.md"
 
 AY = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -94,6 +96,134 @@ def bicim(n):
     return f"{n:,}"
 
 
+def bicim_tr(n):
+    """Turkce metin binlik ayirici olarak nokta kullanir: 5.247."""
+    return f"{n:,}".replace(",", ".")
+
+
+def _tamsayi(s):
+    """'5,247' ya da '5.247' -> 5247. Iki dilin iki ayiricisi tek okuyucu."""
+    return int(re.sub(r"[.,]", "", s))
+
+
+# --------------------------------------------------------------------------
+# HIRE.md ve README.tr.md
+# --------------------------------------------------------------------------
+# Ikisi de bu kapidan once hic denetlenmiyordu. HIRE.md 28 Eylul'de hala
+# "4,700 tests across 23 repositories" ve "mcp-vet -- 289 tests" diyordu;
+# README ayni gun 5,247 / 26 / 319 yayimliyordu. Ise alim sayfasi, sayilarin
+# en cok sorgulanacagi sayfa -- ve tam o sayfa eskimisti, cunku kapi yalnizca
+# README, TESTLER.md ve hero.svg'yi taniyordu.
+
+HIRE_TOPLAM = re.compile(r"\[([\d,]+) tests across (\d+) repositories\]\(TESTLER\.md\)")
+#: "[mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 319\ntests": cumle
+#: satir sonunda bolunebilir, bu yuzden bosluk \s+ ve korunarak geri yazilir.
+HIRE_DEPO = re.compile(
+    r"\[([A-Za-z0-9._-]+)\]\(https://github\.com/Furkiozknn/\1\)(\s+—\s+)([\d,]+)(\s+)tests")
+
+
+def hire_sorunlari(metin, beklenen, toplam, suit):
+    sorunlar = []
+    m = HIRE_TOPLAM.search(metin)
+    if not m:
+        sorunlar.append("HIRE.md'de '[N tests across M repositories](TESTLER.md)' "
+                        "cumlesi bulunamadi")
+    else:
+        if _tamsayi(m.group(1)) != toplam:
+            sorunlar.append("HIRE.md toplam %s diyor, metadata toplami %s"
+                            % (m.group(1), bicim(toplam)))
+        if int(m.group(2)) != suit:
+            sorunlar.append("HIRE.md %s depo diyor, suiti olan depo %d"
+                            % (m.group(2), suit))
+    for d in HIRE_DEPO.finditer(metin):
+        ad = d.group(1)
+        if ad in beklenen and _tamsayi(d.group(3)) != beklenen[ad]:
+            sorunlar.append("HIRE.md'de %s icin %s yaziyor, metadata %d"
+                            % (ad, d.group(3), beklenen[ad]))
+    return sorunlar
+
+
+def hire_guncelle(metin, beklenen, toplam, suit):
+    metin = HIRE_TOPLAM.sub("[%s tests across %d repositories](TESTLER.md)"
+                            % (bicim(toplam), suit), metin)
+
+    def depo(m):
+        ad = m.group(1)
+        if ad not in beklenen:
+            return m.group(0)
+        return "[%s](https://github.com/Furkiozknn/%s)%s%s%stests" % (
+            ad, ad, m.group(2), bicim(beklenen[ad]), m.group(4))
+    return HIRE_DEPO.sub(depo, metin)
+
+
+#: README.tr.md'nin tanitim satiri: "<sub>`319 test`</sub>"
+TR_TANITIM = re.compile(r"<sub>`([\d.,]+) test`</sub>")
+TR_SUIT = re.compile(r"suiti olan (\d+) depoda")
+TR_KAYNAK = re.compile(r"([\d.,]+)( testin kaynağı)")
+
+
+def tr_sorunlari(metin, beklenen, toplam, suit):
+    """README.tr.md: ayni sayilar, Turkce bicimde (5.247)."""
+    sorunlar = []
+    for ad, (_, yazan) in _tablo_satirlari(metin).items():
+        if ad in beklenen and yazan != beklenen[ad]:
+            sorunlar.append("README.tr.md tablosunda %s icin %d yaziyor, metadata %d"
+                            % (ad, yazan, beklenen[ad]))
+    eksik = sorted(set(beklenen) - set(_tablo_satirlari(metin)))
+    if eksik:
+        sorunlar.append("README.tr.md tablosunda satiri olmayan depo(lar): "
+                        + ", ".join(eksik))
+    for satir in metin.splitlines():
+        if satir.lstrip().startswith(">") and "<sub>" in satir:
+            d, n = SATIR.search(satir), TR_TANITIM.search(satir)
+            if d and n and d.group(1) in beklenen and _tamsayi(n.group(1)) != beklenen[d.group(1)]:
+                sorunlar.append("README.tr.md tanitim satirinda %s icin %s yaziyor, metadata %d"
+                                % (d.group(1), n.group(1), beklenen[d.group(1)]))
+        if satir.startswith("|") and "Toplam" in satir:
+            buyuk = [_tamsayi(x) for x in re.findall(r"\d[\d.,]*", satir)
+                     if _tamsayi(x) > 100]
+            if buyuk and buyuk[-1] != toplam:
+                sorunlar.append("README.tr.md Toplam satiri %s diyor, toplam %s"
+                                % (bicim_tr(buyuk[-1]), bicim_tr(toplam)))
+    m = TR_SUIT.search(metin)
+    if not m or int(m.group(1)) != suit:
+        sorunlar.append("README.tr.md 'suiti olan %d depoda' demiyor" % suit)
+    k = TR_KAYNAK.search(metin)
+    if not k or _tamsayi(k.group(1)) != toplam:
+        sorunlar.append("README.tr.md '%s testin kaynağı' demiyor" % bicim_tr(toplam))
+    if not re.search(r"tests-%s_passing" % bicim(toplam).replace(",", "%2C"), metin):
+        sorunlar.append("README.tr.md test rozeti %s demiyor" % bicim(toplam))
+    return sorunlar
+
+
+def tr_guncelle(metin, beklenen, toplam, suit, depo_sayisi=None):
+    cikti = []
+    for s in metin.splitlines():
+        if s.lstrip().startswith(">") and "<sub>" in s:
+            d = SATIR.search(s)
+            if d and d.group(1) in beklenen:
+                s = TR_TANITIM.sub("<sub>`%s test`</sub>" % bicim_tr(beklenen[d.group(1)]), s)
+        d = SATIR.search(s) if s.startswith("|") else None
+        if d and d.group(1) in beklenen:
+            s = _satiri_guncelle(s, beklenen[d.group(1)], bicim_tr)
+        elif s.startswith("|") and "Toplam" in s:
+            s = _satiri_guncelle(s, toplam, bicim_tr)
+            s = TR_SUIT.sub("suiti olan %d depoda" % suit, s)
+        cikti.append(s)
+    son = "\n" if metin.endswith("\n") else ""
+    metin = "\n".join(cikti) + son
+    metin = TR_KAYNAK.sub(lambda m: bicim_tr(toplam) + m.group(2), metin)
+    # Rozetler Ingilizce kaldi (shields.io metni), iki dil ayni rozeti tasir.
+    metin = re.sub(r"tests-[\d,%C]+_passing", "tests-%s_passing"
+                   % bicim(toplam).replace(",", "%2C"), metin)
+    metin = re.sub(r"[\d,]+ tests passing", "%s tests passing" % bicim(toplam), metin)
+    if depo_sayisi:
+        metin = re.sub(r"public_repos-[\d,%C]+-", "public_repos-%d-" % depo_sayisi, metin)
+        metin = re.sub(r"(alt=\")[\d,]+( public repositories\")",
+                       r"\g<1>%d\g<2>" % depo_sayisi, metin)
+    return metin
+
+
 # --------------------------------------------------------------------------
 # agsiz kontrol
 # --------------------------------------------------------------------------
@@ -111,9 +241,9 @@ def _tablo_satirlari(metin):
         if not d:
             continue
         # TESTLER.md sayiyi duz yaziyor, README backtick icinde.
-        ham = re.findall(r"`([\d,]+)`", s) or re.findall(r"\|\s*([\d,]+)\s*\|", s)
+        ham = re.findall(r"`([\d.,]+)`", s) or re.findall(r"\|\s*([\d.,]+)\s*\|", s)
         if ham:
-            bulunan[d.group(1)] = (s, int(ham[-1].replace(",", "")))
+            bulunan[d.group(1)] = (s, _tamsayi(ham[-1]))
     return bulunan
 
 
@@ -148,6 +278,13 @@ def kontrol(kaynak):
         if ad in beklenen and yazan != beklenen[ad]:
             sorunlar.append("README tablosunda %s icin %d yaziyor, metadata %d"
                             % (ad, yazan, beklenen[ad]))
+    # Toplama giren her depo tabloda da gorunmeli. godot-2d-sablon ve
+    # Furkiozknn.github.io 22 Eylul'den beri toplamdaydi ama README
+    # tablolarinda yoktu; biri icin README hala "No suite, so it is not in
+    # the count" diyordu. Tablo satirlari toplamla toplanamiyordu.
+    eksik = sorted(set(beklenen) - set(_tablo_satirlari(readme)))
+    if eksik:
+        sorunlar.append("README tablosunda satiri olmayan depo(lar): " + ", ".join(eksik))
 
     # Tablo disi tanitim satirlari. Tablo dogru kalirken hemen ustundeki
     # cumlenin eskimesi, okurun once gordugu sayinin yanlis olmasi demek.
@@ -200,6 +337,11 @@ def kontrol(kaynak):
         sorunlar.append("README Toplam satirindaki suit sayisi %d degil" % suit)
     if not re.search(r"%d with suites" % suit, hero):
         sorunlar.append("hero.svg '%d with suites' demiyor" % suit)
+
+    if HIRE.exists():
+        sorunlar += hire_sorunlari(HIRE.read_text(encoding="utf-8"), beklenen, toplam, suit)
+    if README_TR.exists():
+        sorunlar += tr_sorunlari(README_TR.read_text(encoding="utf-8"), beklenen, toplam, suit)
 
     return sorunlar
 
@@ -354,7 +496,7 @@ def olc(kaynak, D, yalniz=None, bekleme=1.0):
 #: ikisi birden (`**\`4,700\`**`). Toplam satirlari kalin yazildigi icin
 #: yalnizca duz ve backtick'li bicimleri taniyan bir desen onlari atliyordu
 #: -- ve atladigi yer tam olarak en cok goze carpan sayiydi.
-HUCRE = re.compile(r"(\|\s*(?:\*\*)?`?)([\d,]+)(`?(?:\*\*)?\s*\|)")
+HUCRE = re.compile(r"(\|\s*(?:\*\*)?`?)([\d.,]+)(`?(?:\*\*)?\s*\|)")
 
 
 AY_KISA = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun",
@@ -387,13 +529,13 @@ def testler_tablosu(kaynak):
     return satirlar
 
 
-def _satiri_guncelle(satir, yeni):
+def _satiri_guncelle(satir, yeni, bicimle=bicim):
     """Tablo satirindaki SON sayiyi degistirir, bicimi bozmadan."""
     eslesmeler = list(HUCRE.finditer(satir))
     if not eslesmeler:
         return satir
     m = eslesmeler[-1]
-    return satir[:m.start()] + m.group(1) + bicim(yeni) + m.group(3) + satir[m.end():]
+    return satir[:m.start()] + m.group(1) + bicimle(yeni) + m.group(3) + satir[m.end():]
 
 
 def yaz(kaynak, olculen, bugun, depo_sayisi=None, commit_sayisi=None):
@@ -500,6 +642,15 @@ def yaz(kaynak, olculen, bugun, depo_sayisi=None, commit_sayisi=None):
         hero = re.sub(r'(id="sayi-repos"[^>]*>)[\d,]+',
                       r"\g<1>%d" % depo_sayisi, hero)
     HERO.write_text(hero, encoding="utf-8", newline="\n")
+
+    if HIRE.exists():
+        HIRE.write_text(hire_guncelle(HIRE.read_text(encoding="utf-8"),
+                                      beklenen, toplam, suit),
+                        encoding="utf-8", newline="\n")
+    if README_TR.exists():
+        README_TR.write_text(tr_guncelle(README_TR.read_text(encoding="utf-8"),
+                                         beklenen, toplam, suit, depo_sayisi),
+                             encoding="utf-8", newline="\n")
     return degisen, toplam
 
 

@@ -1,0 +1,4 @@
+jobs:
+  t:
+    steps:
+      - run: npx playwright test --pass-with-no-tests

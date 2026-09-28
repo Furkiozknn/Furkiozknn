@@ -1,0 +1,5 @@
+jobs:
+  t:
+    steps:
+      - run: npx vitest run
+        continue-on-error: true

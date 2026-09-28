@@ -1,0 +1,1 @@
+<testsuites><testsuite name="pytest" tests="2" errors="1" skipped="1"><testcase classname="t" name="a"/><testcase classname="t" name="b"><skipped type="pytest.skip" message="sonra"/><error message="failed on teardown with RuntimeError"/></testcase></testsuite></testsuites>

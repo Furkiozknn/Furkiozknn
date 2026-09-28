@@ -27,7 +27,7 @@ first is an attack that a normal code review walks straight past.
 machine, what is worth acting on and what is noise, each finding quoted with
 file and line. Plus the scan tooling, so you can re-run it yourself.
 
-**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 289
+**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 319
 tests — and ran it against 17 widely-used MCP servers. Roughly half of all
 findings landed outside the code a server actually ships: test fixtures, issue
 templates, developer scripts. That is the number that matters, because it is
@@ -61,7 +61,7 @@ first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
 
 ## The evidence
 
-- **[4,700 tests across 23 repositories](TESTLER.md)** — every count traced to
+- **[5,247 tests across 26 repositories](TESTLER.md)** — every count traced to
   the suite run that printed it, not grepped from the source. An earlier version
   of this profile said 1,426 and was wrong; that file exists so the claim is
   checkable rather than believable.

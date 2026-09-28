@@ -1,0 +1,45 @@
+{
+ "config": {},
+ "suites": [
+  {
+   "title": "a.spec.ts",
+   "file": "a.spec.ts",
+   "specs": [
+    {
+     "title": "a",
+     "ok": true,
+     "tests": [
+      {
+       "expectedStatus": "passed",
+       "status": "expected",
+       "annotations": [],
+       "results": []
+      }
+     ]
+    },
+    {
+     "title": "b",
+     "ok": true,
+     "tests": [
+      {
+       "expectedStatus": "passed",
+       "status": "unexpected",
+       "annotations": [],
+       "results": []
+      }
+     ]
+    }
+   ],
+   "suites": []
+  }
+ ],
+ "errors": [],
+ "stats": {
+  "startTime": "2026-09-28T00:00:00Z",
+  "duration": 1,
+  "expected": 1,
+  "unexpected": 1,
+  "flaky": 0,
+  "skipped": 0
+ }
+}

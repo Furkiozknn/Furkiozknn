@@ -810,5 +810,75 @@ class TestlerAraciTesti(unittest.TestCase):
         self.assertEqual(testler.tum_sayilar(log, "319 passed", denetim), [319])
 
 
+class HireVeTurkceTesti(unittest.TestCase):
+    """HIRE.md ve README.tr.md de ayni sayilari soylemeli.
+
+    28 Eylul 2026'da HIRE.md hala "4,700 tests across 23 repositories" ve
+    "mcp-vet -- 289 tests" diyordu; README ayni gun 5,247 / 26 / 319
+    yayimliyordu. Kapi o iki dosyayi hic tanimiyordu.
+    """
+
+    BEKLENEN = {"mcp-vet": 319, "kanca": 115}
+    HIRE = ("- **[4,700 tests across 23 repositories](TESTLER.md)** -- every count\n"
+            "**Why me:** I wrote [mcp-vet](https://github.com/Furkiozknn/mcp-vet) — 289\n"
+            "tests — and ran it.\n")
+
+    def test_eski_hire_uc_sapmayi_da_bulur(self):
+        s = testler.hire_sorunlari(self.HIRE, self.BEKLENEN, 5247, 26)
+        self.assertEqual(len(s), 3, s)
+        self.assertTrue(any("4,700" in x for x in s))
+        self.assertTrue(any("289" in x for x in s))
+
+    def test_hire_guncelle_satir_bolumunu_korur(self):
+        yeni = testler.hire_guncelle(self.HIRE, self.BEKLENEN, 5247, 26)
+        self.assertIn("[5,247 tests across 26 repositories](TESTLER.md)", yeni)
+        # Cumle satir sonunda bolunuyordu; yazici bolumu korumali.
+        self.assertIn("(https://github.com/Furkiozknn/mcp-vet) — 319\ntests —", yeni)
+        self.assertEqual(testler.hire_sorunlari(yeni, self.BEKLENEN, 5247, 26), [])
+
+    def test_hire_cumlesi_kaybolursa_sessiz_kalmaz(self):
+        # Cumle yeniden yazilip kalip kaybolursa kapi "tutarli" dememeli.
+        s = testler.hire_sorunlari("Evidence: lots of tests.", self.BEKLENEN, 5247, 26)
+        self.assertEqual(len(s), 1)
+
+    def test_turkce_bicim_nokta_ayirici(self):
+        self.assertEqual(testler.bicim_tr(5247), "5.247")
+        self.assertEqual(testler._tamsayi("5.247"), 5247)
+        self.assertEqual(testler._tamsayi("5,247"), 5247)
+
+    TR = ("[![t](https://img.shields.io/badge/tests-4%2C700_passing-c9a961)](TESTLER.md)\n"
+          "> 🛡️ **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — okur. <sub>`289 test`</sub>\n"
+          "| 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | okur | `319` |\n"
+          "| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)** | 30 projede | `99` |\n"
+          "| | | **Toplam, suiti olan 23 depoda** | **`4.700`** |\n"
+          "<a href=\"TESTLER.md\">4.700 testin kaynağı</a>\n")
+
+    def test_turkce_readme_eskiyse_yakalanir(self):
+        s = testler.tr_sorunlari(self.TR, self.BEKLENEN, 5247, 26)
+        for parca in ("mcp-vet", "kanca", "Toplam", "suiti olan 26", "testin kaynağı", "rozeti"):
+            self.assertTrue(any(parca in x for x in s), (parca, s))
+
+    def test_turkce_readme_guncellenince_tutarli(self):
+        yeni = testler.tr_guncelle(self.TR, self.BEKLENEN, 5247, 26)
+        self.assertIn("<sub>`319 test`</sub>", yeni)
+        self.assertIn("| 30 projede | `115` |", yeni)   # aciklamadaki 30 korunur
+        self.assertIn("**Toplam, suiti olan 26 depoda** | **`5.247`** |", yeni)
+        self.assertIn("5.247 testin kaynağı", yeni)
+        self.assertIn("tests-5%2C247_passing", yeni)
+        self.assertEqual(testler.tr_sorunlari(yeni, self.BEKLENEN, 5247, 26), [])
+
+    def test_turkce_tabloda_eksik_depo_yakalanir(self):
+        # Toplama giren ama tabloda satiri olmayan depo, tablo satirlarinin
+        # toplamla toplanamamasi demek (README'de iki depo boyle kalmisti).
+        yeni = testler.tr_guncelle(self.TR, self.BEKLENEN, 5247, 26)
+        s = testler.tr_sorunlari(yeni, dict(self.BEKLENEN, **{"yeni-depo": 7}), 5247, 26)
+        self.assertTrue(any("yeni-depo" in x for x in s), s)
+
+    def test_ingilizce_tablo_hala_virgullu_yazilir(self):
+        # HUCRE artik noktayi da taniyor; Ingilizce dosyalar yine virgulle yazilmali.
+        satir = "| **Total** | **4,700** | | |"
+        self.assertEqual(testler._satiri_guncelle(satir, 5247), "| **Total** | **5,247** | | |")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
