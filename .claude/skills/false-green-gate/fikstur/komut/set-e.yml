@@ -1,0 +1,6 @@
+jobs:
+  t:
+    steps:
+      - run: |
+          set +e
+          npm test

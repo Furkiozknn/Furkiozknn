@@ -1,0 +1,7 @@
+jobs:
+  t:
+    steps:
+      - run: pip install pytest-cov jest-junit || true
+      # asla yazma: pytest || true
+      - run: npx playwright test --update-snapshots=none
+      - run: python3 -m pytest -q

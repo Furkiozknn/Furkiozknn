@@ -1,0 +1,4 @@
+jobs:
+  t:
+    steps:
+      - run: npm test || echo "tests failed"

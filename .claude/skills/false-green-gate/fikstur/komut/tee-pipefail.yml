@@ -1,0 +1,6 @@
+jobs:
+  t:
+    steps:
+      - run: |
+          set -o pipefail
+          pytest -q | tee out.log
