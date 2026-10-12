@@ -91,7 +91,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 >
 > 🧩 **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — Godot names a broken reference only when that scene loads, and a dead signal connection never. This finds both without opening the editor, and **repairs the ones with a single provable answer**. Checked against **237 real Godot projects** and against a headless engine. <sub>`133 tests`</sub>
 >
-> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise: it tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on **30 public repositories** so it stays quiet on the ones that work. <sub>`103 tests`</sub>
+> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise: it tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on **29 public repositories** so it stays quiet on the ones that work. <sub>`103 tests`</sub>
 >
 > 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* **167,829 real OpenStreetMap places** across all 81 provinces of Türkiye, on FastAPI + PostGIS with a Next.js/MapLibre front end. <sub>`347 tests`</sub>
 >
@@ -169,11 +169,12 @@ count with no source line does not go in the file at all.
 
 ## ▸ What runs while nobody is watching
 
-<sub>Drawn from the five workflow files in <a href=".github/workflows">.github/workflows</a> and the site's own. Times are UTC.</sub>
+<sub>Drawn from the seven workflow files in <a href=".github/workflows">.github/workflows</a> and the site's own; <code>projeler.yml</code> runs only on demand and is left out. Times are UTC.</sub>
 
 ```mermaid
 flowchart LR
   push(["every push"]) --> ci["ci.yml<br/>schema tests · own metadata ·<br/>every published number agrees ·<br/>workflow YAML parses"]
+  push --> gates["guvenlik.yml · baglanti.yml<br/>zizmor · betterleaks ·<br/>local links and anchors"]
 
   daily(["daily 05:00"]) --> den["denetim.yml<br/>reads every repo's CI log<br/>and project-meta.json"]
   den -->|"findings changed"| issue1[["one 'Ekosistem denetimi' issue<br/>comment, or close when clean"]]
