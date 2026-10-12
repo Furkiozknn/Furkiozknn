@@ -35,6 +35,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          # assets/sosyal/ ~1.5 GB MP4; hicbir adim okumuyor. Onsuz checkout
+          # 86 sn yerine saniyeler suruyor (kosu 38198136635, fetch 86.4 sn).
+          sparse-checkout: |
+            /*
+            !/assets/sosyal/
+          sparse-checkout-cone-mode: false
 
       - name: lychee kur (0.24.2, ozet pinli)
         run: |

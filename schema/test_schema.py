@@ -549,6 +549,23 @@ class KapsamTesti(unittest.TestCase):
         self.assertIn("DEPO_JETONU", denetim.SAYI_BAKILAMADI["x"])
 
 
+class KayitsizDepoTesti(unittest.TestCase):
+    """yenile.yml 2026-10-05'te 1 ile dustu: uret.py uc awesome-* fork'unu
+    "meta-source.json'da kaydi olmayan depo" saydi. Fork'lar katmanin
+    disinda; denetim.py ve yenile.yml onlari zaten atliyor."""
+
+    def test_fork_kayitsiz_sayilmaz(self):
+        depolar = {"awesome-godot": {"fork": True}, "masal": {"fork": False}}
+        self.assertEqual(uret.kayitsiz_depolar(depolar, {"masal": {}}), [])
+
+    def test_kayitsiz_gercek_depo_hala_yakalanir(self):
+        depolar = {"yeni-proje": {"fork": False}, "awesome-godot": {"fork": True}}
+        self.assertEqual(uret.kayitsiz_depolar(depolar, {}), ["yeni-proje"])
+
+    def test_kor_istisnasi_korunur(self):
+        self.assertEqual(uret.kayitsiz_depolar({"kor": {}}, {}), [])
+
+
 class IkiKaynakTesti(unittest.TestCase):
     """Iki yayimlanan sayi birbirine bakmiyorsa ikisi de dogru sanilir.
 

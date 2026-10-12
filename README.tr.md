@@ -95,7 +95,7 @@ aranabilir. `/` arama kutusuna atlar, `Enter` ilk sonucu açar. Birini almak,
 >
 > 🧩 **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — Godot kırık bir referansı ancak o sahne yüklendiğinde söyler, ölü bir sinyal bağlantısını ise hiç söylemez. Bu araç ikisini de editörü açmadan bulur ve **tek ve kanıtlanabilir bir cevabı olanları onarır**. **237 gerçek Godot projesine** ve başsız (headless) bir motora karşı denendi. <sub>`133 test`</sub>
 >
-> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — README'n bir sözdür: kurulum komutunu, rozetleri, bağlantıları ve sürüm zincirini GitHub API'si üzerinden, klonlamadan dener. Çalışan projelerde sessiz kalsın diye **30 herkese açık depoda** kalibre edildi. <sub>`103 test`</sub>
+> 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)** — README'n bir sözdür: kurulum komutunu, rozetleri, bağlantıları ve sürüm zincirini GitHub API'si üzerinden, klonlamadan dener. Çalışan projelerde sessiz kalsın diye **29 herkese açık depoda** kalibre edildi. <sub>`103 test`</sub>
 >
 > 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — *"neye ihtiyacım var ve en yakını nerede?"* Türkiye'nin 81 ilinin hepsinde **167.829 gerçek OpenStreetMap yeri**; FastAPI + PostGIS üstünde, Next.js/MapLibre ön yüzüyle. <sub>`347 test`</sub>
 >
@@ -173,11 +173,12 @@ dosyaya hiç girmiyor.
 
 ## ▸ Kimse bakmıyorken çalışanlar
 
-<sub><a href=".github/workflows">.github/workflows</a> içindeki beş iş akışından ve sitenin kendi iş akışından çizildi. Saatler UTC.</sub>
+<sub><a href=".github/workflows">.github/workflows</a> içindeki yedi iş akışından ve sitenin kendi iş akışından çizildi; yalnızca elle tetiklenen <code>projeler.yml</code> dışarıda bırakıldı. Saatler UTC.</sub>
 
 ```mermaid
 flowchart LR
   push(["her push"]) --> ci["ci.yml<br/>şema testleri · kendi metadata'sı ·<br/>yayımlanan her sayı tutarlı ·<br/>iş akışı YAML'leri ayrıştırılıyor"]
+  push --> gates["guvenlik.yml · baglanti.yml<br/>zizmor · betterleaks ·<br/>yerel bağlantılar ve çapalar"]
 
   daily(["her gün 05:00"]) --> den["denetim.yml<br/>her deponun CI logunu<br/>ve project-meta.json'unu okur"]
   den -->|"bulgular değişti"| issue1[["tek 'Ekosistem denetimi' konusu<br/>yorum, temizse kapanış"]]

@@ -199,6 +199,19 @@ def uret(ad, s, d, r, bugun):
     }
 
 
+def kayitsiz_depolar(depolar, kaynak):
+    """API'de olup meta-source.json'da kaydi olmayan depolar.
+
+    Fork'lar metadata katmaninin disinda: denetim.py ve yenile.yml onlari
+    zaten atliyor. Burada atlanmadiklarinda uc awesome-* fork'u her hafta
+    "kaydi olmayan depo" diye sayildi ve yenile.yml 1 ile dustu
+    (kosu 37304519139, 2026-10-05) -- haftalik onarim hicbir depoya
+    dokunamadan bitti.
+    """
+    return sorted(ad for ad, r in depolar.items()
+                  if ad not in kaynak and ad != "kor" and not r.get("fork"))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kok", required=True, help="klonlarin durdugu klasor")
@@ -221,7 +234,7 @@ def main():
             f.write("\n")
         yazildi.append(ad)
 
-    kayitsiz = sorted(set(depolar) - set(kaynak) - {"kor"})
+    kayitsiz = kayitsiz_depolar(depolar, kaynak)
     print(f"{len(yazildi)} dosya yazildi.")
     if klonsuz:
         print("klon bulunamadi: " + ", ".join(sorted(klonsuz)))
