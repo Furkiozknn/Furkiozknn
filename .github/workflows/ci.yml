@@ -20,8 +20,10 @@ on:
   pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+# Varsayilan sifir; job yalnizca ihtiyacini aciyor (guvenlik.yml ve
+# baglanti.yml ile ayni desen). Bu job depoyu okumaktan baska bir sey
+# yapmiyor: yazma yok, token kullanan adim yok.
+permissions: {}
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -29,8 +31,12 @@ concurrency:
 
 jobs:
   kapilar:
-    runs-on: ubuntu-latest
+    # ubuntu-latest'in hangi imaja isaret ettigi GitHub'in elinde; pinli
+    # imaj, kosunun neden degistigini gormeyi kolaylastiriyor.
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,9 +53,16 @@ jobs:
           python-version: "3.12"
 
       # schema/ betiklerinin kendisi bagimliliksiz; pyyaml yalnizca
-      # burada, YAML'i ayristirabilmek icin var.
-      - name: pyyaml
-        run: python3 -m pip install --quiet pyyaml
+      # burada, YAML'i ayristirabilmek icin var. Yalnizca bu tekerlek
+      # kabul edilir (PyPI'deki cp312 manylinux_2_28_x86_64 ozeti, Python
+      # 3.12 ile eslesiyor); baska bir dosya gelirse pip durur. Surum
+      # PR #20'deki pyyaml==6.0.3 ile ayni.
+      - name: pyyaml kur (6.0.3, ozet pinli)
+        run: |
+          set -euo pipefail
+          echo 'pyyaml==6.0.3 --hash=sha256:ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc' > "$RUNNER_TEMP/pyyaml.txt"
+          python3 -m pip install --quiet --no-deps --only-binary=:all: --require-hashes -r "$RUNNER_TEMP/pyyaml.txt"
+          python3 -c 'import yaml; assert yaml.__version__ == "6.0.3", yaml.__version__'
 
       - name: schema testleri
         run: python3 schema/test_schema.py
