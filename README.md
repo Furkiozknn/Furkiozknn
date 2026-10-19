@@ -74,6 +74,22 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 
 ---
 
+## ▸ Games & apps
+
+<sub>Every ▶ link opens a GitHub Pages build in the browser: no install, no account. Each was checked to return 200 when this list was written. · Her ▶ bağlantısı tarayıcıda GitHub Pages sürümünü açar: kurulum yok, hesap yok.</sub>
+
+- 🌊 **[canli-dunyalar](https://github.com/Furkiozknn/canli-dunyalar)** — single-file living 3D worlds in Three.js, tuned for laptop iGPUs · laptop ekran kartına uygun, tek dosyalık canlı 3D dünyalar.<br>
+  ▶ [Vapur](https://furkiozknn.github.io/canli-dunyalar/worlds/vapur/) · ▶ [Balon](https://furkiozknn.github.io/canli-dunyalar/worlds/balon/)
+- 🚀 **[isik-tuneli](https://github.com/Furkiozknn/isik-tuneli)** — endless space-runner with real bloom and live-synthesized audio · ışımalı, sesi anlık sentezlenen sonsuz uzay koşusu. ▶ [Play](https://furkiozknn.github.io/isik-tuneli/)
+- 🎵 **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** — one-button rooftop runner with obstacles on the music's beat grid · engelleri müziğin vuruşuna dizilen tek tuşlu çatı koşusu. ▶ [Play](https://furkiozknn.github.io/tek-tus-kosu/)
+- 🔄 **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** — no jump button: one key flips gravity across 20 precision rooms · zıplama yok, tek tuş yerçekimini çevirir. ▶ [Play](https://furkiozknn.github.io/yercekimi-cevir/)
+- ⛏️ **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** — dig, sell, upgrade and reach the core at 250 m · kaz, sat, geliştir, 250 m'deki çekirdeğe in. ▶ [Play](https://furkiozknn.github.io/derin-kazi/)
+- 🪝 **[kanca](https://github.com/Furkiozknn/kanca)** — grappling-hook platformer about carrying momentum · tavana tutun, salın, hızını taşı. ▶ [Play](https://furkiozknn.github.io/kanca/)
+- 📖 **[masal](https://github.com/Furkiozknn/masal)** — personalised Turkish bedtime stories with colouring pages · çocuğa özel uyku masalları ve boyama sayfaları. ▶ [Open](https://furkiozknn.github.io/masal/)
+- 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — nearest toilet, park or drinking water across Türkiye from OpenStreetMap · Türkiye'de en yakın tuvalet, park, içme suyu. <sub>(no hosted demo yet · henüz canlı demo yok)</sub>
+
+---
+
 ## ▸ This is one system, not twenty-seven side projects
 
 ![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
