@@ -919,6 +919,18 @@ class HireVeTurkceTesti(unittest.TestCase):
         s = testler.tr_sorunlari(yeni, dict(self.BEKLENEN, **{"yeni-depo": 7}), 5247, 26)
         self.assertTrue(any("yeni-depo" in x for x in s), s)
 
+    def test_iki_tema_ayni_sayiyi_tasir(self):
+        # README hero'yu <picture> ile iki temada gosteriyor. Biri
+        # guncellenip digeri unutulursa acik temadaki okur eski sayiyi gorur.
+        import re
+        def sayilar(yol):
+            return re.findall(r'id="(sayi-[a-z]+)"[^>]*>([\d,]+)',
+                              yol.read_text(encoding="utf-8"))
+        koyu, acik = testler.HEROLAR
+        self.assertTrue(koyu.is_file() and acik.is_file())
+        self.assertEqual([k for k, _ in sayilar(koyu)], ["sayi-repos", "sayi-tests"])
+        self.assertEqual(sayilar(koyu), sayilar(acik))
+
     def test_ingilizce_tablo_hala_virgullu_yazilir(self):
         # HUCRE artik noktayi da taniyor; Ingilizce dosyalar yine virgulle yazilmali.
         satir = "| **Total** | **4,700** | | |"
