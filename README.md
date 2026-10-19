@@ -38,7 +38,7 @@
 <tr>
 <td width="34%" valign="top">
 
-### 🚀 [isik-tuneli →](https://furkiozknn.github.io/isik-tuneli/)
+### 🚀 [Işık Tüneli →](https://furkiozknn.github.io/isik-tuneli/)
 
 An endless browser space-runner with **real bloom post-processing**, fully
 synthesized audio and a seeded daily run everyone plays the same.
