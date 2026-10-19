@@ -38,7 +38,7 @@
 <tr>
 <td width="34%" valign="top">
 
-### 🚀 [nova-drift →](https://furkiozknn.github.io/nova-drift/)
+### 🚀 [Işık Tüneli →](https://furkiozknn.github.io/isik-tuneli/)
 
 An endless browser space-runner with **real bloom post-processing**, fully
 synthesized audio and a seeded daily run everyone plays the same.
@@ -134,7 +134,7 @@ All **70** Claude Code sub-agents, searchable in the browser before you install 
 | 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `55` |
 | 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, needing no key at all. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
 | 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
-| 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
+| 🚀 | **[isik-tuneli](https://github.com/Furkiozknn/isik-tuneli)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
 | 🗂️ | **[Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io)** | The project directory, rebuilt every Monday from each repository's own `project-meta.json`. Nothing on it is hand-written. | `37` |
 
 ### Games — Godot 4, each one tested headlessly in CI
