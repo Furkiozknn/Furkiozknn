@@ -58,6 +58,10 @@ KAYNAK = KOK / "schema" / "meta-source.json"
 TESTLER = KOK / "TESTLER.md"
 README = KOK / "README.md"
 HERO = KOK / "assets" / "hero.svg"
+# README shows the hero through <picture> in two themes. Both files carry the
+# same numbers (ids sayi-repos and sayi-tests, the "N with suites" label);
+# --kontrol checks both and --yaz updates both.
+HEROLAR = (HERO, KOK / "assets" / "hero-light.svg")
 HIRE = KOK / "HIRE.md"
 README_TR = KOK / "README.tr.md"
 
@@ -255,7 +259,7 @@ def kontrol(kaynak):
 
     testler = TESTLER.read_text(encoding="utf-8")
     readme = README.read_text(encoding="utf-8")
-    hero = HERO.read_text(encoding="utf-8")
+    herolar = [("assets/" + h.name, h.read_text(encoding="utf-8")) for h in HEROLAR if h.is_file()]
 
     m = re.search(r"#\s*Where the ([\d,]+) comes from", testler)
     if not m:
@@ -309,7 +313,7 @@ def kontrol(kaynak):
                 sorunlar.append("%s Toplam satiri %s diyor, toplam %s"
                                 % (yer, bicim(buyuk[-1]), bicim(toplam)))
 
-    for yer, metin in (("README.md", readme), ("assets/hero.svg", hero)):
+    for yer, metin in [("README.md", readme)] + herolar:
         if bicim(toplam) not in metin and str(toplam) not in metin:
             sorunlar.append("%s icinde %s sayisi hic gecmiyor" % (yer, bicim(toplam)))
 
@@ -335,8 +339,9 @@ def kontrol(kaynak):
     suit = len(beklenen)
     if not re.search(r"across %d repositories with suites" % suit, readme):
         sorunlar.append("README Toplam satirindaki suit sayisi %d degil" % suit)
-    if not re.search(r"%d with suites" % suit, hero):
-        sorunlar.append("hero.svg '%d with suites' demiyor" % suit)
+    for yer, hero in herolar:
+        if not re.search(r"%d with suites" % suit, hero):
+            sorunlar.append("%s '%d with suites' demiyor" % (yer, suit))
 
     if HIRE.exists():
         sorunlar += hire_sorunlari(HIRE.read_text(encoding="utf-8"), beklenen, toplam, suit)
@@ -627,21 +632,24 @@ def yaz(kaynak, olculen, bugun, depo_sayisi=None, commit_sayisi=None):
     # `sayi-commits`) ve cumle aria-label'da bir kez daha geciyor. Id'ler
     # tam da bunun icin eklendi: konuma ya da komsu etikete bakan bir regex,
     # grafik yeniden duzenlendigi gun sessizce yanlis hucreyi yazardi.
-    hero = HERO.read_text(encoding="utf-8")
-    hero = re.sub(r'(id="sayi-tests"[^>]*>)[\d,]+',
-                  r"\g<1>%s" % bicim(toplam), hero)
-    hero = re.sub(r"\b[\d,]+ tests\b", "%s tests" % bicim(toplam), hero)
-    hero = re.sub(r">\d+ with suites<", ">%d with suites<" % suit, hero)
-    if commit_sayisi:
-        hero = re.sub(r"\b[\d,]+( commits\.)", r"%d\g<1>" % commit_sayisi, hero)
-        hero = re.sub(r'(id="sayi-commits"[^>]*>)[\d,]+',
-                      r"\g<1>%s" % bicim(commit_sayisi), hero)
-    if depo_sayisi:
-        hero = re.sub(r"\b[\d,]+( public repositories,)",
-                      r"%d\g<1>" % depo_sayisi, hero)
-        hero = re.sub(r'(id="sayi-repos"[^>]*>)[\d,]+',
-                      r"\g<1>%d" % depo_sayisi, hero)
-    HERO.write_text(hero, encoding="utf-8", newline="\n")
+    for hero_yolu in HEROLAR:
+        if not hero_yolu.is_file():
+            continue
+        hero = hero_yolu.read_text(encoding="utf-8")
+        hero = re.sub(r'(id="sayi-tests"[^>]*>)[\d,]+',
+                      r"\g<1>%s" % bicim(toplam), hero)
+        hero = re.sub(r"\b[\d,]+ tests\b", "%s tests" % bicim(toplam), hero)
+        hero = re.sub(r">\d+ with suites<", ">%d with suites<" % suit, hero)
+        if commit_sayisi:
+            hero = re.sub(r"\b[\d,]+( commits\.)", r"%d\g<1>" % commit_sayisi, hero)
+            hero = re.sub(r'(id="sayi-commits"[^>]*>)[\d,]+',
+                          r"\g<1>%s" % bicim(commit_sayisi), hero)
+        if depo_sayisi:
+            hero = re.sub(r"\b[\d,]+( public repositories,)",
+                          r"%d\g<1>" % depo_sayisi, hero)
+            hero = re.sub(r'(id="sayi-repos"[^>]*>)[\d,]+',
+                          r"\g<1>%d" % depo_sayisi, hero)
+        hero_yolu.write_text(hero, encoding="utf-8", newline="\n")
 
     if HIRE.exists():
         HIRE.write_text(hire_guncelle(HIRE.read_text(encoding="utf-8"),
