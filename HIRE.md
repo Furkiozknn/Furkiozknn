@@ -73,7 +73,7 @@ first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
 ## Getting in touch
 
 - Open an issue on any of [my repositories](https://github.com/Furkiozknn?tab=repositories)
-- [@furkiozkan on X](https://x.com/furkiozkan)
+- [@Furkiozkann on X](https://x.com/Furkiozkann)
 
 Happy to do a short paid trial task before any larger engagement. If what you
 need is not on this page, ask anyway — the worst case is I tell you who is
