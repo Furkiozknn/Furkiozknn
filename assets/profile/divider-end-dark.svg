@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="44" viewBox="0 0 1200 44" role="img" aria-labelledby="t d"><title id="t">GG</title><desc id="d">Section divider</desc><style>
+.sw{animation:sw 6s linear infinite}
+@keyframes sw{from{transform:translateX(-260px)}to{transform:translateX(1260px)}}
+.px{transform-box:fill-box;transform-origin:center;animation:px 3s ease-in-out infinite}
+@keyframes px{50%{transform:rotate(45deg) scale(.8)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3fd4dc" stop-opacity="0"/><stop offset=".5" stop-color="#3fd4dc"/><stop offset="1" stop-color="#3fd4dc" stop-opacity="0"/></linearGradient>
+<clipPath id="c"><rect x="0" y="0" width="570" height="44"/><rect x="630" y="0" width="1200" height="44"/></clipPath></defs>
+<g clip-path="url(#c)"><rect y="21.5" width="1200" height="1" fill="#332e24"/><rect class="sw" y="20.5" width="200" height="3" rx="1.5" fill="url(#g)"/></g>
+<rect class="px" x="579.6" y="17" width="10" height="10" fill="#ffc21a"/>
+<path fill="#ffc21a"  d="M603.6 26.7Q602.7 26.7 602.1 26.4Q601.4 26.1 601.1 25.5Q600.7 24.8 600.7 24V19.7Q600.7 18.9 601.1 18.2Q601.4 17.6 602.1 17.3Q602.7 17 603.6 17Q604.4 17 605 17.3Q605.7 17.6 606 18.3Q606.3 18.9 606.3 19.7H605.2Q605.2 18.9 604.7 18.5Q604.3 18 603.6 18Q602.8 18 602.3 18.5Q601.9 18.9 601.9 19.7V24Q601.9 24.8 602.3 25.2Q602.8 25.7 603.6 25.7Q604.3 25.7 604.7 25.2Q605.2 24.8 605.2 24V22.8H603.2V21.8H606.3V24Q606.3 24.8 606 25.4Q605.7 26.1 605 26.4Q604.4 26.7 603.6 26.7Z M612.6 26.7Q611.7 26.7 611.1 26.4Q610.4 26.1 610.1 25.5Q609.7 24.8 609.7 24V19.7Q609.7 18.9 610.1 18.2Q610.4 17.6 611.1 17.3Q611.7 17 612.6 17Q613.4 17 614 17.3Q614.7 17.6 615 18.3Q615.3 18.9 615.3 19.7H614.2Q614.2 18.9 613.7 18.5Q613.3 18 612.6 18Q611.8 18 611.3 18.5Q610.9 18.9 610.9 19.7V24Q610.9 24.8 611.3 25.2Q611.8 25.7 612.6 25.7Q613.3 25.7 613.7 25.2Q614.2 24.8 614.2 24V22.8H612.2V21.8H615.3V24Q615.3 24.8 615 25.4Q614.7 26.1 614 26.4Q613.4 26.7 612.6 26.7Z"/>
+</svg>

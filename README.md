@@ -1,66 +1,138 @@
+<a href="https://furkiozknn.itch.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 13 browser builds, 5 on itch.io."></a>
+
+<p align="center">
+<b>Small games you can play free in a browser tab, built with Claude Code and tested like software.</b><br>
+Claude Code ile yapılan, yazılım gibi test edilen, tarayıcı sekmesinde ücretsiz oynanan küçük oyunlar.
+</p>
+
+<p align="center">
+<a href="https://furkiozknn.itch.io/"><img src="https://img.shields.io/badge/itch.io-furkiozknn-F0386B?style=for-the-badge&logo=itchdotio&logoColor=white" alt="itch.io: furkiozknn"></a>
+<a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/YouTube-EN-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube channel Furki Ozkan, in English"></a>
+<a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram-TR-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram @furkiozkan, in Turkish"></a>
+<a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-%40Furkiozkann-000000?style=for-the-badge&logo=x&logoColor=white" alt="X @Furkiozkann"></a>
+<a href="https://furkiozknn.github.io/"><img src="https://img.shields.io/badge/All_projects-directory-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Project directory on GitHub Pages"></a>
+</p>
+
+<p align="center"><sub><b>English</b> · <a href="README.tr.md">Türkçe</a> · 15-second reel: <a href="docs/reel/reel.gif">GIF</a> · <a href="docs/reel/reel.mp4">MP4 with sound</a> · <a href="HIRE.md">hire me</a></sub></p>
+
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img src="assets/hero.svg" alt="Furki Özkan — agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests." width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-games-dark.svg">
+  <img src="assets/profile/divider-games-light.svg" width="100%" alt="">
 </picture>
 
-I build the parts AI agents run on — MCP servers, a job contract, a pipeline engine — and then the tools that check whether any of it works. Each checker was tried on real outside projects before release. Independent, in Türkiye (UTC+3); some evenings, Godot.
+## Play in your browser
 
-<samp>[directory](https://furkiozknn.github.io/) · [games & apps](#games--apps) · [all projects](#every-project) · [where the numbers come from](TESTLER.md) · [<b>hire me</b>](HIRE.md) · [x.com/Furkiozkann](https://x.com/Furkiozkann)</samp>
+<sub>No install, no account: every card opens a GitHub Pages build, and each link returned 200 on 2026-10-21. · Kurulum yok, hesap yok: her kart GitHub Pages sürümünü açar; bağlantıların hepsi 2026-10-21'de 200 döndü.</sub>
 
-<sub><b>English</b> · <a href="README.tr.md">Türkçe</a> · 15-second reel: <a href="docs/reel/reel.gif">GIF</a> · <a href="docs/reel/reel.mp4">MP4 with sound</a></sub>
+<a href="https://furkiozknn.github.io/kanca/"><img src="assets/profile/card-kanca.svg" width="100%" alt="Kanca, a grappling-hook platformer in Godot 4: hook the ceiling, swing and carry the momentum through 14 levels. Click to play in the browser. Kancalı platform oyunu, tarayıcıda oyna."></a>
 
-## Featured
+<p align="center">
+<a href="https://furkiozknn.github.io/kanca/"><img src="https://img.shields.io/badge/Play_in_browser-3FD4DC?style=for-the-badge&logo=godotengine&logoColor=0E0D0B" alt="Play Kanca in the browser"></a>
+<a href="https://furkiozknn.itch.io/kanca"><img src="https://img.shields.io/badge/itch.io-Kanca-F0386B?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Kanca on itch.io"></a>
+<a href="https://github.com/Furkiozknn/kanca"><img src="https://img.shields.io/badge/Source-kanca-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kanca source code"></a>
+</p>
 
-<table>
-<tr>
-<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/derin-kazi/"><img src="assets/profile/card-derin-kazi.svg" width="100%" alt="Derin Kazı, a dig-sell-upgrade game in Godot 4: reach the core at 250 m before the fuel runs out. Click to play in the browser. Kaz, sat, geliştir; tarayıcıda oyna."></a>
 
-**🛡️ [mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Reads the source, not the star count; every finding carries a `file:line`; it never executes what it audits. Zero dependencies.
+<p align="center">
+<a href="https://furkiozknn.github.io/derin-kazi/"><img src="https://img.shields.io/badge/Play_in_browser-FFC21A?style=for-the-badge&logo=godotengine&logoColor=0E0D0B" alt="Play Derin Kazı in the browser"></a>
+<a href="https://furkiozknn.itch.io/derin-kazi"><img src="https://img.shields.io/badge/itch.io-Derin_Kaz%C4%B1-F0386B?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Derin Kazı on itch.io"></a>
+<a href="https://github.com/Furkiozknn/derin-kazi"><img src="https://img.shields.io/badge/Source-derin--kazi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Derin Kazı source code"></a>
+</p>
 
-<a href="https://github.com/Furkiozknn/mcp-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/mcp-vet/master/docs/demo/demo.gif" alt="mcp-vet auditing an MCP server and listing findings with file and line" width="100%"></a>
+<a href="https://furkiozknn.github.io/yercekimi-cevir/"><img src="assets/profile/card-yercekimi-cevir.svg" width="100%" alt="Yerçekimi Çevir, a one-key precision game in Godot 4: no jump button, one key flips gravity across 20 rooms. Click to play in the browser. Tek tuşla yerçekimini çevir; tarayıcıda oyna."></a>
 
-</td>
-<td width="50%" valign="top">
+<p align="center">
+<a href="https://furkiozknn.github.io/yercekimi-cevir/"><img src="https://img.shields.io/badge/Play_in_browser-F0386B?style=for-the-badge&logo=godotengine&logoColor=white" alt="Play Yerçekimi Çevir in the browser"></a>
+<a href="https://furkiozknn.itch.io/yercekimi-cevir"><img src="https://img.shields.io/badge/itch.io-Yer%C3%A7ekimi_%C3%87evir-F0386B?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Yerçekimi Çevir on itch.io"></a>
+<a href="https://github.com/Furkiozknn/yercekimi-cevir"><img src="https://img.shields.io/badge/Source-yercekimi--cevir-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Yerçekimi Çevir source code"></a>
+</p>
 
-**🧩 [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — finds the broken references and dead signal connections Godot only reports when a scene loads, or never. Repairs the ones with a single provable answer. Checked against 237 real projects.
+<a href="https://furkiozknn.github.io/tek-tus-kosu/"><img src="assets/profile/card-tek-tus-kosu.svg" width="100%" alt="Tek Tuş Koşu, a one-button rhythm runner in Godot 4: every obstacle sits on the music's beat grid. Click to play in the browser. Tek tuşlu ritim koşusu; tarayıcıda oyna."></a>
 
-<a href="https://github.com/Furkiozknn/godot-refcheck"><img src="https://raw.githubusercontent.com/Furkiozknn/godot-refcheck/main/docs/demo/demo.gif" alt="godot-refcheck finding three broken references, repairing them with --fix, then passing clean" width="100%"></a>
+<p align="center">
+<a href="https://furkiozknn.github.io/tek-tus-kosu/"><img src="https://img.shields.io/badge/Play_in_browser-3FD4DC?style=for-the-badge&logo=godotengine&logoColor=0E0D0B" alt="Play Tek Tuş Koşu in the browser"></a>
+<a href="https://furkiozknn.itch.io/tek-tus-kosu"><img src="https://img.shields.io/badge/itch.io-Tek_Tu%C5%9F_Ko%C5%9Fu-F0386B?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Tek Tuş Koşu on itch.io"></a>
+<a href="https://github.com/Furkiozknn/tek-tus-kosu"><img src="https://img.shields.io/badge/Source-tek--tus--kosu-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Tek Tuş Koşu source code"></a>
+</p>
 
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-more-dark.svg">
+  <img src="assets/profile/divider-more-light.svg" width="100%" alt="">
+</picture>
 
-**🗺️ [buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* 167,829 OpenStreetMap places across all 81 provinces of Türkiye. FastAPI + PostGIS, Next.js + MapLibre.
+## More games
 
-<a href="https://github.com/Furkiozknn/buradane"><img src="https://raw.githubusercontent.com/Furkiozknn/buradane/main/assets/demo.gif" alt="buradane: typing 'ücretsiz tuvalet' narrows 167,829 places on a map of Istanbul to the 19 nearest free toilets" width="100%"></a>
+<sub>Claude Game Arena: each game was made by a different Claude model from one prompt, first in HTML + Three.js, then again in Godot 4. · Her oyunu farklı bir Claude modeli tek promptla yaptı: önce HTML + Three.js, sonra Godot 4.</sub>
 
-</td>
-<td width="50%" valign="top">
+<p align="center">
+<a href="https://furkiozknn.github.io/isik-tuneli/"><img src="assets/profile/tile-isik-tuneli.svg" width="32%" alt="Işık Tüneli: Three.js space runner. Play in the browser."></a>
+<a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="assets/profile/tile-hisar.svg" width="32%" alt="Hisar: tower defence, 15 waves. Play in the browser."></a>
+<a href="https://furkiozknn.github.io/cay-ocagi/"><img src="assets/profile/tile-cay-ocagi.svg" width="32%" alt="Çay Ocağı: tea-house time management, 7 days. Play in the browser."></a>
+<a href="https://furkiozknn.github.io/cini-ustasi/"><img src="assets/profile/tile-cini-ustasi.svg" width="32%" alt="Çini Ustası: İznik tile puzzle. Play in the browser."></a>
+<a href="https://furkiozknn.github.io/marti/"><img src="assets/profile/tile-marti.svg" width="32%" alt="Martı: endless seagull flight over the Bosphorus. Play in the browser."></a>
+<a href="https://furkiozknn.github.io/claude-game-arena/"><img src="assets/profile/tile-arena.svg" width="32%" alt="Claude Game Arena: four Claude models, HTML versus Godot. Open the arena page."></a>
+</p>
 
-**🔎 [repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise. It tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on 29 public repositories so it stays quiet on the ones that work.
+| Game | HTML + Three.js | Godot 4 | Made by |
+|---|---|---|---|
+| 🏰 Hisar · tower defence | [▶ Play](https://furkiozknn.github.io/kale-savunmasi/) | [▶ Play](https://furkiozknn.github.io/hisar-godot/) | Opus 5.5 |
+| ☕ Çay Ocağı · time management | [▶ Play](https://furkiozknn.github.io/cay-ocagi/) | [▶ Play](https://furkiozknn.github.io/cay-ocagi-godot/) | Sonnet 5.5 |
+| 🧩 Çini Ustası · tile puzzle | [▶ Play](https://furkiozknn.github.io/cini-ustasi/) | [▶ Play](https://furkiozknn.github.io/cini-ustasi-godot/) | Fable 5.1 |
+| 🕊️ Martı · endless flight | [▶ Play](https://furkiozknn.github.io/marti/) | [▶ Play](https://furkiozknn.github.io/marti-godot/) | Haiku 5.5 |
 
-<a href="https://github.com/Furkiozknn/repo-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/repo-vet/main/docs/demo/demo.gif" alt="repo-vet checking a repository's README claims over the GitHub API" width="100%"></a>
+Also: 🚀 [Işık Tüneli](https://furkiozknn.github.io/isik-tuneli/) on [itch.io](https://furkiozknn.itch.io/isik-tuneli) · 🌊 [Canlı Dünyalar](https://github.com/Furkiozknn/canli-dunyalar), living 3D worlds for laptop GPUs: ▶ [Vapur](https://furkiozknn.github.io/canli-dunyalar/worlds/vapur/) · ▶ [Balon](https://furkiozknn.github.io/canli-dunyalar/worlds/balon/) · 📖 [Masal](https://furkiozknn.github.io/masal/), Turkish bedtime stories with colouring pages.
 
-</td>
-</tr>
-</table>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-videos-dark.svg">
+  <img src="assets/profile/divider-videos-light.svg" width="100%" alt="">
+</picture>
 
-## Games & apps
+## Built with Claude Code
 
-<sub>Every ▶ link opens a GitHub Pages build in the browser: no install, no account. Each was checked to return 200 when this list was written. · Her ▶ bağlantısı tarayıcıda GitHub Pages sürümünü açar: kurulum yok, hesap yok.</sub>
+<a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="assets/profile/videos.svg" width="100%" alt="Built with Claude Code, a short video series: four phone frames from published episodes 6, 10, 13 and 15. Claude Code ile kısa video serisi."></a>
 
-- 🌊 **[canli-dunyalar](https://github.com/Furkiozknn/canli-dunyalar)** — single-file living 3D worlds in Three.js, tuned for laptop iGPUs · laptop ekran kartına uygun, tek dosyalık canlı 3D dünyalar.<br>
-  ▶ [Vapur](https://furkiozknn.github.io/canli-dunyalar/worlds/vapur/) · ▶ [Balon](https://furkiozknn.github.io/canli-dunyalar/worlds/balon/)
-- 🚀 **[isik-tuneli](https://github.com/Furkiozknn/isik-tuneli)** — endless space-runner with real bloom and live-synthesized audio · ışımalı, sesi anlık sentezlenen sonsuz uzay koşusu. ▶ [Play](https://furkiozknn.github.io/isik-tuneli/)
-- 🎵 **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** — one-button rooftop runner with obstacles on the music's beat grid · engelleri müziğin vuruşuna dizilen tek tuşlu çatı koşusu. ▶ [Play](https://furkiozknn.github.io/tek-tus-kosu/)
-- 🔄 **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** — no jump button: one key flips gravity across 20 precision rooms · zıplama yok, tek tuş yerçekimini çevirir. ▶ [Play](https://furkiozknn.github.io/yercekimi-cevir/)
-- ⛏️ **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** — dig, sell, upgrade and reach the core at 250 m · kaz, sat, geliştir, 250 m'deki çekirdeğe in. ▶ [Play](https://furkiozknn.github.io/derin-kazi/)
-- 🪝 **[kanca](https://github.com/Furkiozknn/kanca)** — grappling-hook platformer about carrying momentum · tavana tutun, salın, hızını taşı. ▶ [Play](https://furkiozknn.github.io/kanca/)
-- 📖 **[masal](https://github.com/Furkiozknn/masal)** — personalised Turkish bedtime stories with colouring pages · çocuğa özel uyku masalları ve boyama sayfaları. ▶ [Open](https://furkiozknn.github.io/masal/)
-- 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — nearest toilet, park or drinking water across Türkiye from OpenStreetMap · Türkiye'de en yakın tuvalet, park, içme suyu. <sub>(no hosted demo yet · henüz canlı demo yok)</sub>
+<p align="center">
+<a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/Watch_on_YouTube-English-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch on YouTube, in English"></a>
+<a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram_Reels-T%C3%BCrk%C3%A7e-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Reels, in Turkish"></a>
+<a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-English-000000?style=for-the-badge&logo=x&logoColor=white" alt="X, in English"></a>
+</p>
 
-## More
+<sub>Each short shows the real game on screen and says so when the voice is AI-generated (Google Gemini). · Her videoda gerçek oyun görüntüsü var; yapay zekâ sesi her seferinde belirtilir.</sub>
+
+### Now · Şu an
+
+<sub>Updated 2026-10-21 · Güncelleme 2026-10-21</sub>
+
+- 📅 **A daily short-video run until 27 October**: YouTube and X in English, Instagram in Turkish. · 27 Ekim'e kadar her gün kısa video.
+- 🎮 **8 games after 27 October**: the four Arena games, remastered, plus four new ones in the works. · 27 Ekim sonrası 8 oyun: yenilenen dört Arena oyunu ve yapımı süren dört yeni oyun.
+- 🧪 The Godot games are tested headlessly in CI, from 115 to 961 checks each ([ledger](TESTLER.md)). · Godot oyunları CI'da başsız (headless) test ediliyor.
+
+### Stack
+
+<p>
+<img src="https://img.shields.io/badge/Godot_4-478CBF?style=for-the-badge&logo=godotengine&logoColor=white" alt="Godot 4">
+<img src="https://img.shields.io/badge/GDScript-355570?style=for-the-badge&logo=godotengine&logoColor=white" alt="GDScript">
+<img src="https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white" alt="Three.js">
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+<img src="https://img.shields.io/badge/Remotion-0B84F3?style=for-the-badge" alt="Remotion">
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Claude Code">
+</p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-tools-dark.svg">
+  <img src="assets/profile/divider-tools-light.svg" width="100%" alt="">
+</picture>
+
+## Tools
+
+<sub>The other half of the work: the tools that check whether AI-built code actually works. Each checker was tried on real outside projects before release. · İşin öbür yarısı: yapay zekâyla yazılan kodun gerçekten çalışıp çalışmadığını denetleyen araçlar.</sub>
+
+- 🛡️ **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)**: audits an MCP server *before* you install it. Every finding carries a `file:line`; it never executes what it audits. [Demo GIF](https://github.com/Furkiozknn/mcp-vet#readme)
+- 🧩 **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)**: finds the broken references and dead signal connections Godot only reports when a scene loads, or never. Checked against 237 real projects.
+- 🔎 **[repo-vet](https://github.com/Furkiozknn/repo-vet)**: your README is a promise. It tries the install command, the badges and the links over the GitHub API, without cloning.
+- 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)**: *"what do I need, and where is the nearest one?"* 167,829 OpenStreetMap places across all 81 provinces of Türkiye.
 
 **Check other work** — [repo-vet](https://github.com/Furkiozknn/repo-vet): tries a README's install command, badges and links over the API · [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence): where your Claude Code tokens went, and when the quota resets · [mcp-census](https://github.com/Furkiozknn/mcp-census): why the MCP Registry has three sizes · [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet): picks the repository to open next
 
@@ -70,7 +142,7 @@ I build the parts AI agents run on — MCP servers, a job contract, a pipeline e
 
 **Apps and agents** — [ajans-os](https://github.com/Furkiozknn/ajans-os): an agency OS that survives being killed mid-task · [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) ▸: Claude Code sub-agents that think in Turkish, searchable in the browser · [godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon): a Godot starter whose jump was measured
 
-<sub>▸ opens in the browser, nothing to install. The games and the other browser apps are listed under [Games & apps](#games--apps).</sub>
+<sub>▸ opens in the browser, nothing to install. The games and the other browser apps are listed under [Play in your browser](#play-in-your-browser) and [More games](#more-games).</sub>
 
 ![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
 
@@ -219,7 +291,10 @@ Every badge on this page carries a **hand-checked** value, traced to the run tha
 
 </details>
 
----
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-end-dark.svg">
+  <img src="assets/profile/divider-end-light.svg" width="100%" alt="">
+</picture>
 
 > A number on this page is checkable, or it is not on the page. Every test count is re-derived from the run that printed it — [the ledger](TESTLER.md).
 
@@ -233,3 +308,5 @@ Every badge on this page carries a **hand-checked** value, traced to the run tha
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
   <a href="https://x.com/Furkiozkann">@Furkiozkann</a>
 </sub>
+
+<a href="https://x.com/Furkiozkann"><img src="assets/profile/footer.svg" width="100%" alt="Thanks for playing. Oynadığın için teşekkürler. Follow on X: @Furkiozkann"></a>
