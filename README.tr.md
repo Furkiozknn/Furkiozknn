@@ -260,7 +260,7 @@ Uzaktan · Türkiye · Avrupa saatleri
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">İşe al</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">Bütün depolar</a> ·
-  <a href="https://x.com/furkiozkan">@furkiozkan</a>
+  <a href="https://x.com/Furkiozkann">@Furkiozkann</a>
 </sub>
 
 </div>
