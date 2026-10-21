@@ -5,7 +5,7 @@
 
 I build the parts AI agents run on — MCP servers, a job contract, a pipeline engine — and then the tools that check whether any of it works. Each checker was tried on real outside projects before release. Independent, in Türkiye (UTC+3); some evenings, Godot.
 
-<samp>[directory](https://furkiozknn.github.io/) · [games & apps](#games--apps) · [all projects](#every-project) · [where the numbers come from](TESTLER.md) · [<b>hire me</b>](HIRE.md) · [x.com/furkiozkan](https://x.com/furkiozkan)</samp>
+<samp>[directory](https://furkiozknn.github.io/) · [games & apps](#games--apps) · [all projects](#every-project) · [where the numbers come from](TESTLER.md) · [<b>hire me</b>](HIRE.md) · [x.com/Furkiozkann](https://x.com/Furkiozkann)</samp>
 
 <sub><b>English</b> · <a href="README.tr.md">Türkçe</a> · 15-second reel: <a href="docs/reel/reel.gif">GIF</a> · <a href="docs/reel/reel.mp4">MP4 with sound</a></sub>
 
@@ -231,5 +231,5 @@ Every badge on this page carries a **hand-checked** value, traced to the run tha
   <a href="schema/README.md">project-meta.json</a> ·
   <a href="HIRE.md">Hire me</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
-  <a href="https://x.com/furkiozkan">@furkiozkan</a>
+  <a href="https://x.com/Furkiozkann">@Furkiozkann</a>
 </sub>
