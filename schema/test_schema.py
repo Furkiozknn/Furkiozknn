@@ -573,6 +573,16 @@ class KayitsizDepoTesti(unittest.TestCase):
     def test_kor_istisnasi_korunur(self):
         self.assertEqual(uret.kayitsiz_depolar({"kor": {}}, {}), [])
 
+    def test_elle_yazilmis_meta_kayitsiz_sayilmaz(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as kok:
+            for ad, gen in (("oyun", "hand-written"), ("arac", "schema/uret.py")):
+                os.makedirs(os.path.join(kok, ad))
+                with open(os.path.join(kok, ad, "project-meta.json"), "w", encoding="utf-8") as f:
+                    json.dump({"provenance": {"generator": gen}}, f)
+            depolar = {"oyun": {}, "arac": {}, "klonsuz": {}}
+            self.assertEqual(uret.kayitsiz_depolar(depolar, {}, kok), ["arac", "klonsuz"])
+
 
 class IkiKaynakTesti(unittest.TestCase):
     """Iki yayimlanan sayi birbirine bakmiyorsa ikisi de dogru sanilir.

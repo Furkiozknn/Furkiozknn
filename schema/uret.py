@@ -199,7 +199,22 @@ def uret(ad, s, d, r, bugun):
     }
 
 
-def kayitsiz_depolar(depolar, kaynak):
+def elle_yazilmis(d):
+    """Deponun kendi project-meta.json'u elle yazildiysa True.
+
+    Oyun depolarinin dosyasini oyun oturumu yazar ("generator":
+    "hand-written"); bu betik onlari uretmez ve kayit beklemez. Bu ayrim
+    yokken her yeni oyun "kaydi olmayan depo" sayildi ve yenile.yml 1 ile
+    dustu (kosu 2026-10-26, 14 depo).
+    """
+    try:
+        with open(os.path.join(d, "project-meta.json"), encoding="utf-8") as f:
+            return json.load(f)["provenance"]["generator"] == "hand-written"
+    except Exception:
+        return False
+
+
+def kayitsiz_depolar(depolar, kaynak, kok=None):
     """API'de olup meta-source.json'da kaydi olmayan depolar.
 
     Fork'lar metadata katmaninin disinda: denetim.py ve yenile.yml onlari
@@ -209,7 +224,8 @@ def kayitsiz_depolar(depolar, kaynak):
     dokunamadan bitti.
     """
     return sorted(ad for ad, r in depolar.items()
-                  if ad not in kaynak and ad != "kor" and not r.get("fork"))
+                  if ad not in kaynak and ad != "kor" and not r.get("fork")
+                  and not (kok and elle_yazilmis(os.path.join(kok, ad))))
 
 
 def main():
@@ -234,7 +250,7 @@ def main():
             f.write("\n")
         yazildi.append(ad)
 
-    kayitsiz = kayitsiz_depolar(depolar, kaynak)
+    kayitsiz = kayitsiz_depolar(depolar, kaynak, args.kok)
     print(f"{len(yazildi)} dosya yazildi.")
     if klonsuz:
         print("klon bulunamadi: " + ", ".join(sorted(klonsuz)))
