@@ -1,235 +1,257 @@
+<a href="https://furkiozknn.github.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 12 browser games, 4 Claude models, Three.js r170."></a>
+
+<p align="center">
+<b>12 free browser games, each one made by a single Claude model: Opus 5.5, Sonnet 5.5, Fable 5.1 or Haiku 5.5.</b><br>
+Each game's code is one <code>index.html</code> on Three.js r170: no install, no account, it opens in a browser tab.<br>
+<sub>Her oyunu tek bir Claude modeli yaptı. Her oyunun kodu Three.js r170 ile tek bir <code>index.html</code>: kurulum yok, hesap yok, tarayıcı sekmesinde açılır.</sub>
+</p>
+
+<p align="center">
+<a href="#01--play--oyna"><img src="https://img.shields.io/badge/Play_the_games-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Jump to the 12 games"></a>
+<a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/YouTube-EN-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube channel, in English"></a>
+<a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram-TR-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram @furkiozkan, in Turkish"></a>
+<a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-%40Furkiozkann-000000?style=for-the-badge&logo=x&logoColor=white" alt="X @Furkiozkann, in English"></a>
+<a href="https://furkiozknn.github.io/"><img src="https://img.shields.io/badge/All_projects-directory-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Project directory on GitHub Pages"></a>
+</p>
+
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img src="assets/hero.svg" alt="Furki Özkan — agent infrastructure, MCP and developer tooling. 28 public repositories, 5,247 tests." width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-games-dark.svg">
+  <img src="assets/profile/divider-games-light.svg" width="100%" alt="01 · PLAY">
 </picture>
 
-I build the parts AI agents run on — MCP servers, a job contract, a pipeline engine — and then the tools that check whether any of it works. Each checker was tried on real outside projects before release. Independent, in Türkiye (UTC+3); some evenings, Godot.
+## 01 · Play · Oyna
 
-<samp>[directory](https://furkiozknn.github.io/) · [games & apps](#games--apps) · [all projects](#every-project) · [where the numbers come from](TESTLER.md) · [<b>hire me</b>](HIRE.md) · [x.com/Furkiozkann](https://x.com/Furkiozkann)</samp>
+<sub>Claude Game Arena: one Claude model per game, and the model is named in each repository's <code>project-meta.json</code>. Click a banner to play. · Her oyunu tek bir model yaptı; model her deponun <code>project-meta.json</code> dosyasında yazıyor. Oynamak için afişe tıkla.</sub>
 
-<sub><b>English</b> · <a href="README.tr.md">Türkçe</a> · 15-second reel: <a href="docs/reel/reel.gif">GIF</a> · <a href="docs/reel/reel.mp4">MP4 with sound</a></sub>
-
-## Featured
+### Round 4 · Tur 4
 
 <table>
 <tr>
 <td width="50%" valign="top">
-
-**🛡️ [mcp-vet](https://github.com/Furkiozknn/mcp-vet)** — audits an MCP server *before* you install it. Reads the source, not the star count; every finding carries a `file:line`; it never executes what it audits. Zero dependencies.
-
-<a href="https://github.com/Furkiozknn/mcp-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/mcp-vet/master/docs/demo/demo.gif" alt="mcp-vet auditing an MCP server and listing findings with file and line" width="100%"></a>
-
+<a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/banner.svg" width="100%" alt="Boğaz Vapuru: 3D ferry-captain game on a low-poly Bosphorus, made by Claude Fable 5.1. Click to play in the browser."></a>
+<br>
+<b>Captain an Istanbul ferry on the Bosphorus: keep the timetable and dock against the current.</b><br>
+<sub>Boğaz'da vapur kaptanı ol: tarifeye uy, akıntıya karşı iskeleye yanaş.</sub>
+<p>
+<a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://img.shields.io/badge/Play-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Boğaz Vapuru in the browser"></a>
+<a href="https://github.com/Furkiozknn/bogaz-vapuru"><img src="https://img.shields.io/badge/Source-bogaz--vapuru-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Boğaz Vapuru source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/bogaz-vapuru/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/gameplay.gif">gameplay GIF</a> (5.4 MB)</sub>
 </td>
 <td width="50%" valign="top">
-
-**🧩 [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** — finds the broken references and dead signal connections Godot only reports when a scene loads, or never. Repairs the ones with a single provable answer. Checked against 237 real projects.
-
-<a href="https://github.com/Furkiozknn/godot-refcheck"><img src="https://raw.githubusercontent.com/Furkiozknn/godot-refcheck/main/docs/demo/demo.gif" alt="godot-refcheck finding three broken references, repairing them with --fix, then passing clean" width="100%"></a>
-
+<a href="https://furkiozknn.github.io/simit-firini/"><img src="https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/banner.svg" width="100%" alt="Simit Fırını: 3D simit bakery tycoon on an old Istanbul street, made by Claude Sonnet 5.5. Click to play in the browser."></a>
+<br>
+<b>Run a simit bakery in Istanbul: bake, staff the oven and send simit sellers across town.</b><br>
+<sub>İstanbul'da simit fırını işlet: fırınla, ustaları yerleştir, simitçileri sokağa gönder.</sub>
+<p>
+<a href="https://furkiozknn.github.io/simit-firini/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Simit Fırını in the browser"></a>
+<a href="https://github.com/Furkiozknn/simit-firini"><img src="https://img.shields.io/badge/Source-simit--firini-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Simit Fırını source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/simit-firini/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/gameplay.gif">gameplay GIF</a> (3.7 MB)</sub>
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-
-**🗺️ [buradane](https://github.com/Furkiozknn/buradane)** — *"what do I need, and where is the nearest one?"* 167,829 OpenStreetMap places across all 81 provinces of Türkiye. FastAPI + PostGIS, Next.js + MapLibre.
-
-<a href="https://github.com/Furkiozknn/buradane"><img src="https://raw.githubusercontent.com/Furkiozknn/buradane/main/assets/demo.gif" alt="buradane: typing 'ücretsiz tuvalet' narrows 167,829 places on a map of Istanbul to the 19 nearest free toilets" width="100%"></a>
-
+<a href="https://furkiozknn.github.io/karagoz/"><img src="https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/banner.svg" width="100%" alt="Karagöz: 3D shadow-theatre light puzzle with Karagöz and Hacivat, made by Claude Opus 5.5. Click to play in the browser."></a>
+<br>
+<b>Light the shadow theatre: move puppets and lamps until Karagöz and Hacivat match the picture.</b><br>
+<sub>Gölge oyununu aydınlat: tasvirleri ve kandilleri oynat, Karagöz ile Hacivat sahneye çıksın.</sub>
+<p>
+<a href="https://furkiozknn.github.io/karagoz/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Karagöz in the browser"></a>
+<a href="https://github.com/Furkiozknn/karagoz"><img src="https://img.shields.io/badge/Source-karagoz-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Karagöz source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/karagoz/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/gameplay.gif">gameplay GIF</a> (5.1 MB)</sub>
 </td>
 <td width="50%" valign="top">
-
-**🔎 [repo-vet](https://github.com/Furkiozknn/repo-vet)** — your README is a promise. It tries the install command, the badges, the links and the release chain over the GitHub API, without cloning. Calibrated on 29 public repositories so it stays quiet on the ones that work.
-
-<a href="https://github.com/Furkiozknn/repo-vet"><img src="https://raw.githubusercontent.com/Furkiozknn/repo-vet/main/docs/demo/demo.gif" alt="repo-vet checking a repository's README claims over the GitHub API" width="100%"></a>
-
+<a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/banner.svg" width="100%" alt="Lale Bahçesi: Cosy 3D tulip garden builder in the Ottoman Tulip Era, made by Claude Haiku 5.5. Click to play in the browser."></a>
+<br>
+<b>Grow a tulip garden in the Ottoman Tulip Era: breed new varieties and win the Sultan's festival.</b><br>
+<sub>Lale Devri'nde bahçe kur: yeni çeşitler melezle, Sultan'ın şenliğini kazan.</sub>
+<p>
+<a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Lale Bahçesi in the browser"></a>
+<a href="https://github.com/Furkiozknn/lale-bahcesi"><img src="https://img.shields.io/badge/Source-lale--bahcesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Lale Bahçesi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/lale-bahcesi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/gameplay.gif">gameplay GIF</a> (3.0 MB)</sub>
 </td>
 </tr>
 </table>
 
-## Games & apps
-
-<sub>Every ▶ link opens a GitHub Pages build in the browser: no install, no account. Each was checked to return 200 when this list was written. · Her ▶ bağlantısı tarayıcıda GitHub Pages sürümünü açar: kurulum yok, hesap yok.</sub>
-
-- 🌊 **[canli-dunyalar](https://github.com/Furkiozknn/canli-dunyalar)** — single-file living 3D worlds in Three.js, tuned for laptop iGPUs · laptop ekran kartına uygun, tek dosyalık canlı 3D dünyalar.<br>
-  ▶ [Vapur](https://furkiozknn.github.io/canli-dunyalar/worlds/vapur/) · ▶ [Balon](https://furkiozknn.github.io/canli-dunyalar/worlds/balon/)
-- 🚀 **[isik-tuneli](https://github.com/Furkiozknn/isik-tuneli)** — endless space-runner with real bloom and live-synthesized audio · ışımalı, sesi anlık sentezlenen sonsuz uzay koşusu. ▶ [Play](https://furkiozknn.github.io/isik-tuneli/)
-- 🎵 **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)** — one-button rooftop runner with obstacles on the music's beat grid · engelleri müziğin vuruşuna dizilen tek tuşlu çatı koşusu. ▶ [Play](https://furkiozknn.github.io/tek-tus-kosu/)
-- 🔄 **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)** — no jump button: one key flips gravity across 20 precision rooms · zıplama yok, tek tuş yerçekimini çevirir. ▶ [Play](https://furkiozknn.github.io/yercekimi-cevir/)
-- ⛏️ **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)** — dig, sell, upgrade and reach the core at 250 m · kaz, sat, geliştir, 250 m'deki çekirdeğe in. ▶ [Play](https://furkiozknn.github.io/derin-kazi/)
-- 🪝 **[kanca](https://github.com/Furkiozknn/kanca)** — grappling-hook platformer about carrying momentum · tavana tutun, salın, hızını taşı. ▶ [Play](https://furkiozknn.github.io/kanca/)
-- 📖 **[masal](https://github.com/Furkiozknn/masal)** — personalised Turkish bedtime stories with colouring pages · çocuğa özel uyku masalları ve boyama sayfaları. ▶ [Open](https://furkiozknn.github.io/masal/)
-- 🗺️ **[buradane](https://github.com/Furkiozknn/buradane)** — nearest toilet, park or drinking water across Türkiye from OpenStreetMap · Türkiye'de en yakın tuvalet, park, içme suyu. <sub>(no hosted demo yet · henüz canlı demo yok)</sub>
-
-## More
-
-**Check other work** — [repo-vet](https://github.com/Furkiozknn/repo-vet): tries a README's install command, badges and links over the API · [claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence): where your Claude Code tokens went, and when the quota resets · [mcp-census](https://github.com/Furkiozknn/mcp-census): why the MCP Registry has three sizes · [repo-ratchet](https://github.com/Furkiozknn/repo-ratchet): picks the repository to open next
-
-**Agent infrastructure** — [ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway): submit, poll, signed webhook, one contract · [ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine): YAML DAGs validated before they run · [model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness): one prompt, N providers, a judge · [prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager): prompts as diffs · [asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit): which model made this file, written into the file
-
-**MCP servers for Claude Code** — [mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit): 23 CPU-first media tools · [local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp): ask your own notes · [voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp): speech in and out, no key · [nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp): NVIDIA's free tier, with fallbacks
-
-**Apps and agents** — [ajans-os](https://github.com/Furkiozknn/ajans-os): an agency OS that survives being killed mid-task · [turkce-ajanlar](https://furkiozknn.github.io/turkce-ajanlar/) ▸: Claude Code sub-agents that think in Turkish, searchable in the browser · [godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon): a Godot starter whose jump was measured
-
-<sub>▸ opens in the browser, nothing to install. The games and the other browser apps are listed under [Games & apps](#games--apps).</sub>
-
-![How the repositories hold each other up: a layer of tools that check other work, a generation pipeline of four repositories around one HTTP job contract, the MCP servers, the games and web apps, and project-meta.json in every repository with a daily audit underneath](assets/ecosystem.svg)
-
-<sub>Four repositories share one job contract and no Python dependency. Four more exist to check work — a repository's README, an MCP server's source, a Godot project's references, a Claude Code session's token spend — and each was calibrated against real outside projects before it was published. **[Every repository, searchable, in one page →](https://furkiozknn.github.io/)**</sub>
-
-## Every project
-
-<details>
-<summary><b>Every public repository, with its test count</b> — 5,247 tests, each traced to the run that printed it</summary>
-
-<br>
-
-**Agent infrastructure, MCP and developer tooling**
-
-| | Project | What it does | Tests |
-|:--:|---|---|---:|
-| 🧩 | **[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck)** | Godot names a broken reference only when that scene loads, and a dead signal connection never. Finds both, and repairs what has one provable answer. | `133` |
-| 🔎 | **[repo-vet](https://github.com/Furkiozknn/repo-vet)** | Your README is a promise: it tries the install command, the badges, the links and the tags, over the API, without cloning. | `103` |
-| 🛡️ | **[mcp-vet](https://github.com/Furkiozknn/mcp-vet)** | Reads an MCP server's source before you install it. 31 rules, `file:line` on every finding, never runs what it audits. | `319` |
-| 🗺️ | **[buradane](https://github.com/Furkiozknn/buradane)** | The nearest toilet, park, fountain or library. 167,829 OSM places; all 973 district centres covered within 15 km. | `347` |
-| 📊 | **[claude-code-intelligence](https://github.com/Furkiozknn/claude-code-intelligence)** | Where the tokens went and when the limit resets. No prompt or file content exists in any type — a privacy review is a `grep`. | `273` |
-| 🎨 | **[mini-creative-toolkit](https://github.com/Furkiozknn/mini-creative-toolkit)** | 23 CPU-first media tools in one MCP server. 22 report `"network": "none"` in their own payload, not in a README. | `327` |
-| 🏛️ | **[ajans-os](https://github.com/Furkiozknn/ajans-os)** | An agency OS built research-first. Its acceptance run is killed mid-task, reloaded from disk and resumed. | `142` |
-| 📚 | **[masal](https://github.com/Furkiozknn/masal)** | A bedtime story around one child's name. Six themes, a branch on page three — twelve readings. | `92` |
-| 🇹🇷 | **[turkce-ajanlar](https://github.com/Furkiozknn/turkce-ajanlar)** | **70** Claude Code sub-agents that *think* in Turkish, not translate into it. Exported to Cursor, OpenCode, Copilot, Codex. | `160` |
-| 🔁 | **[repo-ratchet](https://github.com/Furkiozknn/repo-ratchet)** | Decides which repository to open next from twelve measured signals — and will not record an improvement that left no commit and no passing check. | `131` |
-| 🔖 | **[asset-provenance-toolkit](https://github.com/Furkiozknn/asset-provenance-toolkit)** | Which model made this file, written **into** the file. JPEG gets a marker spliced in with no re-encoding. | `125` |
-| ⚡ | **[nvidia-nim-mcp](https://github.com/Furkiozknn/nvidia-nim-mcp)** | NVIDIA NIM's free tier in Claude Code. Two of its seven tools need no API key at all. | `80` |
-| ⚖️ | **[model-comparison-harness](https://github.com/Furkiozknn/model-comparison-harness)** | One prompt, N providers, one report — plus a judge model scoring each answer against your own rubric. | `74` |
-| 🔗 | **[ai-workflow-engine](https://github.com/Furkiozknn/ai-workflow-engine)** | Pipelines as YAML DAGs, validated *before* they run. An undeclared dependency is rejected at load time, typo and all. | `80` |
-| ✍️ | **[prompt-template-manager](https://github.com/Furkiozknn/prompt-template-manager)** | Prompts versioned in git, so a change is a diff instead of an argument. `StrictUndefined` throughout. | `61` |
-| 🔍 | **[local-notes-search-mcp](https://github.com/Furkiozknn/local-notes-search-mcp)** | Ask your own files a question, in any language the multilingual model covers. No server, no API key, no network. | `64` |
-| 🔢 | **[mcp-census](https://github.com/Furkiozknn/mcp-census)** | "How many MCP servers are there?" asked three ways, giving three different numbers — and a measurement of why. | `55` |
-| 🎙️ | **[voice-io-mcp](https://github.com/Furkiozknn/voice-io-mcp)** | Speech in and out, needing no key at all. Refuses `transcribe the audio at .env` before it opens the file. | `35` |
-| 🛰️ | **[ai-job-gateway](https://github.com/Furkiozknn/ai-job-gateway)** | The contract fal.ai, BFL and RunPod each reached independently. Idempotency across restarts, SSRF-guarded webhooks. | `156` |
-| 🚀 | **[nova-drift](https://github.com/Furkiozknn/nova-drift)** | Endless browser space-runner. Real bloom, live-synthesized audio — not one sound file in the repo. | `38` |
-| 🗂️ | **[Furkiozknn.github.io](https://github.com/Furkiozknn/Furkiozknn.github.io)** | The project directory, rebuilt every Monday from each repository's own `project-meta.json`. Nothing on it is hand-written. | `37` |
-
-**Games — Godot 4, each one tested headlessly in CI**
-
-<sub>These counts are large because the suites play the game: `yercekimi-cevir`'s 841 checks include finishing all 20 rooms and confirming a medal in each. Every game is built for the browser by its own CI and published to GitHub Pages; the ▶ links open it.</sub>
-
-| | Project | The one idea it is built on | Tests |
-|:--:|---|---|---:|
-| 🎵 | **[tek-tus-kosu](https://github.com/Furkiozknn/tek-tus-kosu)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/tek-tus-kosu/)</sub> | One button, and every obstacle laid on the music's beat grid. A post-run histogram shows how early or late each press landed. | `961` |
-| 🔄 | **[yercekimi-cevir](https://github.com/Furkiozknn/yercekimi-cevir)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/yercekimi-cevir/)</sub> | There is no jump button — one key flips gravity and you fall onto the ceiling. 20 hand-built precision rooms. | `841` |
-| ⛏️ | **[derin-kazi](https://github.com/Furkiozknn/derin-kazi)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/derin-kazi/)</sub> | Dig, sell, upgrade, go deeper — with the fuel gauge as the real timer. Five layers down to the core at 250 m. | `477` |
-| 🪝 | **[kanca](https://github.com/Furkiozknn/kanca)**<br><sub>[▶ Play in browser](https://furkiozknn.github.io/kanca/)</sub> | Hook the ceiling, swing, release at the right moment and carry the momentum. Medal times measured by a bot, not guessed. | `115` |
-| 🧱 | **[godot-2d-sablon](https://github.com/Furkiozknn/godot-2d-sablon)** | Two Godot 4.7 starter projects whose jump feel was *measured*, not guessed: coyote time, jump buffering, variable jump height. | `21` |
-| | | **Total, across 26 repositories with suites** | **`5,247`** |
-
-<sub>Every test count is traced to the suite run that printed it. **[The full ledger →](TESTLER.md)**</sub>
-
-</details>
-
-## How this page stays true
-
-<details>
-<summary><b>Metadata in every repository, and what runs while nobody is watching</b></summary>
-
-<br>
-
-Each one has a `project-meta.json` at its root: identity, version, status,
-platform, the images its README actually shows, and the test count together
-with the runner line it came from and the date of that run.
-
-Mechanical fields are read from the repository; editorial fields are written
-by hand and checked against the code. **Nothing is filled in with a guess** — an
-unknown value is `null` rather than a plausible-looking string, and a test
-count with no source line does not go in the file at all.
-
-**[The schema and the rule it follows →](schema/README.md)**
-
-**[The schema and the rule it follows →](schema/README.md)**
-
-<sub>Drawn from the seven workflow files in <a href=".github/workflows">.github/workflows</a> and the site's own; <code>projeler.yml</code> runs only on demand and is left out. Times are UTC.</sub>
-
-```mermaid
-flowchart LR
-  push(["every push"]) --> ci["ci.yml<br/>schema tests · own metadata ·<br/>every published number agrees ·<br/>workflow YAML parses"]
-  push --> gates["guvenlik.yml · baglanti.yml<br/>zizmor · betterleaks ·<br/>local links and anchors"]
-
-  daily(["daily 05:00"]) --> den["denetim.yml<br/>reads every repo's CI log<br/>and project-meta.json"]
-  den -->|"findings changed"| issue1[["one 'Ekosistem denetimi' issue<br/>comment, or close when clean"]]
-
-  mon1(["Mon 04:30"]) --> yen["yenile.yml<br/>clone all · uret.py"]
-  yen --> gate{"dogrula.py<br/>koruma.py<br/>≤ 8 repos changed"}
-  gate -->|"pass + token"| meta["push project-meta.json<br/>to each repo"]
-  gate -->|"otherwise"| sum["diff in the run summary,<br/>nothing written"]
-
-  mon2(["Mon 05:20"]) --> site["furkiozknn.github.io<br/>rebuilt from every<br/>project-meta.json"]
-
-  mon3(["Mon 06:00"]) --> hft["haftalik.yml<br/>derle.py · haftalik.py"]
-  hft -->|"activity this week"| issue2[["one 'Haftalık özet' issue<br/>post drafts as a comment"]]
-```
-
-<sub>The weekly summary and the project index are never committed: a committed index goes stale on the next push, and a weekly bot commit would inflate the contribution graph with work nobody did. They live in issues and run artifacts instead.</sub>
-
-</details>
-
-<details>
-<summary><b>How I work</b> — tests before claims, hermetic CI, honest READMEs</summary>
-
-<br>
+### Round 3 · Tur 3
 
 <table>
-<tr><td width="33%" valign="top">
-
-**🧪 Tests before claims**
-
-Every count here is re-derived, not remembered. **This page has lost three numbers that way:** a “1,426 tests” figure that turned out to be a grep rather than a suite, a 1.4 MB load that measured 0.7 MB, and a commit count taken from clones that had not been fetched, undercounting by 53.
-
-</td><td width="33%" valign="top">
-
-**🔒 Hermetic CI**
-
-Suites run offline, so a CDN outage cannot redden a build. **The gate is tested too** — `ajans-os` plants a deliberate violation in its own tree and fails if its own validator misses it.
-
-</td><td width="33%" valign="top">
-
-**📄 Honest READMEs**
-
-Known limits are listed, not hidden: a measured seven-minute upscale stall on integrated graphics, a gateway column headed *deliberately absent*, voice cloning left out on purpose.
-
-</td></tr>
-<tr><td valign="top">
-
-**⚖️ Licences checked down the tree**
-
-`rembg`'s default model is **CC-BY-NC** — caught by reading the dependency tree, and refused unless you opt in knowingly. `buradane` splits ODbL data from MIT code in a `NOTICE` file.
-
-</td><td valign="top">
-
-**🔧 Windows and Turkish locales**
-
-Where things break that nobody documents: `cp1254` killing a tool before it prints its first line, PowerShell 5.1 without `&&`, a heredoc quietly eating a backslash.
-
-</td><td valign="top">
-
-**🔢 No generated stat cards**
-
-Every badge on this page carries a **hand-checked** value, traced to the run that printed it. A number is checkable, or it is not on the page. **[Check them →](TESTLER.md)**
-
-</td></tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/kervan/"><img src="https://raw.githubusercontent.com/Furkiozknn/kervan/main/docs/banner.svg" width="100%" alt="Kervan: 3D Silk Road trade strategy on a low-poly map of Anatolia, made by Claude Opus 5.5. Click to play in the browser."></a>
+<br>
+<b>Lead camel caravans across Anatolia: buy low, sell high, build caravanserais.</b><br>
+<sub>Deve kervanlarıyla Anadolu'da ucuza al, pahalıya sat, kervansaray kur.</sub>
+<p>
+<a href="https://furkiozknn.github.io/kervan/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Kervan in the browser"></a>
+<a href="https://github.com/Furkiozknn/kervan"><img src="https://img.shields.io/badge/Source-kervan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kervan source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kervan/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/kervan/main/docs/gameplay.gif">gameplay GIF</a> (6.6 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-tr.mp4">TR</a></sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/dolmus/"><img src="https://raw.githubusercontent.com/Furkiozknn/dolmus/main/docs/banner.svg" width="100%" alt="Dolmuş: 3D arcade driving game with a yellow shared minibus in a low-poly Istanbul neighbourhood, made by Claude Sonnet 5.5. Click to play in the browser."></a>
+<br>
+<b>Drive a yellow dolmuş through Istanbul: pick up passengers, learn their stops, earn fares and tips.</b><br>
+<sub>Sarı dolmuşla İstanbul'da yolcu al, durağını öğren, ücret ve bahşiş topla.</sub>
+<p>
+<a href="https://furkiozknn.github.io/dolmus/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Dolmuş in the browser"></a>
+<a href="https://github.com/Furkiozknn/dolmus"><img src="https://img.shields.io/badge/Source-dolmus-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Dolmuş source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/dolmus/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/dolmus/main/docs/gameplay.gif">gameplay GIF</a> (5.2 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-tr.mp4">TR</a></sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/peri-golf/"><img src="https://raw.githubusercontent.com/Furkiozknn/peri-golf/main/docs/banner.svg" width="100%" alt="Peri Golf: 3D physics mini-golf among the fairy chimneys of Cappadocia, made by Claude Fable 5.1. Click to play in the browser."></a>
+<br>
+<b>Mini-golf among the fairy chimneys of Cappadocia: 12 holes, real physics, a pottery wheel and a donkey.</b><br>
+<sub>Kapadokya peribacaları arasında mini golf: 12 delik, gerçek fizik, çömlek tezgâhı ve eşek.</sub>
+<p>
+<a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Peri Golf in the browser"></a>
+<a href="https://github.com/Furkiozknn/peri-golf"><img src="https://img.shields.io/badge/Source-peri--golf-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Peri Golf source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/peri-golf/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/peri-golf/main/docs/gameplay.gif">gameplay GIF</a> (8.0 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-tr.mp4">TR</a></sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/mehter/"><img src="https://raw.githubusercontent.com/Furkiozknn/mehter/main/docs/banner.svg" width="100%" alt="Mehter: 3D rhythm march with an Ottoman mehter band on a parade avenue, made by Claude Haiku 5.5. Click to play in the browser."></a>
+<br>
+<b>March with the Ottoman mehter band: hit the davul, kös, zurna and zil on the beat.</b><br>
+<sub>Mehter takımıyla yürü: davul, kös, zurna ve zili tam vuruşta çal.</sub>
+<p>
+<a href="https://furkiozknn.github.io/mehter/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Mehter in the browser"></a>
+<a href="https://github.com/Furkiozknn/mehter"><img src="https://img.shields.io/badge/Source-mehter-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mehter source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/mehter/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/mehter/main/docs/gameplay.gif">gameplay GIF</a> (4.3 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-tr.mp4">TR</a></sub>
+</td>
+</tr>
 </table>
 
-</details>
+### Round 1 · Tur 1
 
----
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/banner.svg" width="100%" alt="Hisar: Low-poly 3D tower defense at a seaside fortress, made by Claude Opus 5.5. Click to play in the browser."></a>
+<br>
+<b>Hold a seaside fortress for 15 waves with archers, cannons and boiling tar.</b><br>
+<sub>Okçu, top ve katranla sahil kalesini 15 dalga boyunca savun.</sub>
+<p>
+<a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://img.shields.io/badge/Play-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Hisar in the browser"></a>
+<a href="https://github.com/Furkiozknn/kale-savunmasi"><img src="https://img.shields.io/badge/Source-kale--savunmasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hisar source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kale-savunmasi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
+</p>
+<sub>15 waves · 60 fps on Intel UHD with 37-42 draw calls · <a href="https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/gameplay.gif">gameplay GIF</a> (2.1 MB)</sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/banner.svg" width="100%" alt="Çay Ocağı: 3D tea house time-management game on an Istanbul quay, made by Claude Sonnet 5.5. Click to play in the browser."></a>
+<br>
+<b>Run a tiny Istanbul tea house: brew tea, warm simit, serve every table in time.</b><br>
+<sub>Küçük bir çay ocağı işlet: çay demle, simit ısıt, her masaya yetiş.</sub>
+<p>
+<a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Çay Ocağı in the browser"></a>
+<a href="https://github.com/Furkiozknn/cay-ocagi"><img src="https://img.shields.io/badge/Source-cay--ocagi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çay Ocağı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/cay-ocagi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
+</p>
+<sub>The ?auto bot won 84 of 90 seeded games · <a href="https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/gameplay.gif">gameplay GIF</a> (1.2 MB)</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/banner.svg" width="100%" alt="Çini Ustası: Calm 3D Iznik tile edge-matching puzzle, made by Claude Fable 5.1. Click to play in the browser."></a>
+<br>
+<b>Rotate, swap and flip Iznik tiles until every motif connects, then fire the panel.</b><br>
+<sub>İznik çinilerini çevir, desenleri birleştir, panoyu fırında pişir.</sub>
+<p>
+<a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://img.shields.io/badge/Play-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Çini Ustası in the browser"></a>
+<a href="https://github.com/Furkiozknn/cini-ustasi"><img src="https://img.shields.io/badge/Source-cini--ustasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çini Ustası source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/cini-ustasi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
+</p>
+<sub>30 levels · 345/345 core tests pass · bot run 90 of 90 stars · <a href="https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/gameplay.gif">gameplay GIF</a> (6.9 MB)</sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/marti/"><img src="https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/banner.svg" width="100%" alt="Martı: Endless 3D seagull run over the Istanbul strait, made by Claude Haiku 5.5. Click to play in the browser."></a>
+<br>
+<b>Fly a seagull over the Bosphorus: snatch simit from ferries, dodge the bridge.</b><br>
+<sub>Boğaz üstünde uç, vapurdan simit kap, köprüden kaç.</sub>
+<p>
+<a href="https://furkiozknn.github.io/marti/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Martı in the browser"></a>
+<a href="https://github.com/Furkiozknn/marti"><img src="https://img.shields.io/badge/Source-marti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Martı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/marti/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
+</p>
+<sub>A bot run in a real browser flew 796 s · <a href="https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/gameplay.gif">gameplay GIF</a> (5.0 MB)</sub>
+</td>
+</tr>
+</table>
+<sub>The gameplay GIFs are linked, not embedded: together they weigh 57 MB, so this page loads only the banners. · GIF'ler sayfaya gömülü değil, bağlantı olarak duruyor: toplam 57 MB.</sub>
 
-> A number on this page is checkable, or it is not on the page. Every test count is re-derived from the run that printed it — [the ledger](TESTLER.md).
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-watch-dark.svg">
+  <img src="assets/profile/divider-watch-light.svg" width="100%" alt="02 · WATCH">
+</picture>
 
-**Work with me** — MCP and agent infrastructure, and turning code that works into code that ships. Remote · Türkiye · European hours. [What I can be hired for, and what it costs →](HIRE.md)
+## 02 · Watch · İzle
+
+Short videos about how the games are made: English on YouTube and X, Turkish on Instagram. Each post says when the voice is AI-generated.<br>
+<sub>Oyunların nasıl yapıldığını anlatan kısa videolar: YouTube ve X'te İngilizce, Instagram'da Türkçe. Yapay zekâ sesi her gönderide belirtilir.</sub>
+
+<p>
+<a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/Watch_on_YouTube-English-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch on YouTube, in English"></a>
+<a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram_Reels-T%C3%BCrk%C3%A7e-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Reels, in Turkish"></a>
+<a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-English-000000?style=for-the-badge&logo=x&logoColor=white" alt="X, in English"></a>
+</p>
+
+**Promo videos · Tanıtım videoları** (MP4 on GitHub Releases; the link opens the file · bağlantı dosyayı açar)
+
+| Game | English | Türkçe | Date |
+|---|---|---|---|
+| Kervan | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-tr.mp4) | 2026-10-27 |
+| Peri Golf | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-tr.mp4) | 2026-10-27 |
+| Mehter | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-tr.mp4) | 2026-10-28 |
+| Dolmuş | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-tr.mp4) | 2026-10-28 |
+
+<sub>Rounds 4 and 1 have no promo video yet; their gameplay GIFs: [Boğaz Vapuru](https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/gameplay.gif) · [Simit Fırını](https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/gameplay.gif) · [Karagöz](https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/gameplay.gif) · [Lale Bahçesi](https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/gameplay.gif) · [Hisar](https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/gameplay.gif) · [Çay Ocağı](https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/gameplay.gif) · [Çini Ustası](https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/gameplay.gif) · [Martı](https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/gameplay.gif). · 4. ve 1. turun tanıtım videosu henüz yok; oynanış GIF'leri yukarıda.</sub>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-now-dark.svg">
+  <img src="assets/profile/divider-now-light.svg" width="100%" alt="03 · NOW · ŞU AN">
+</picture>
+
+## 03 · Now · Şu an
+
+<sub>Updated 2026-10-27 · Güncelleme 2026-10-27</sub>
+
+- 🎮 **12 games are live on GitHub Pages**, four per round, and every model made three of them. · 12 oyun GitHub Pages'te yayında; her model üçer oyun yaptı.
+- 🎬 **Next: promo videos for the Round 4 and Round 1 games.** Until they exist, the GIFs above stand in. · Sıradaki iş: 4. ve 1. tur oyunlarının tanıtım videoları.
+- 🗂️ **Every repository on one page:** the [project directory](https://furkiozknn.github.io/) is built from each repository's own `project-meta.json`. · Bütün depolar tek sayfada.
+
+<p>
+<img src="https://img.shields.io/badge/Three.js-r170-000000?style=for-the-badge&logo=threedotjs&logoColor=white" alt="Three.js r170">
+<img src="https://img.shields.io/badge/JavaScript-one_index.html-F7DF1E?style=for-the-badge&logo=javascript&logoColor=0E0D0B" alt="JavaScript, one index.html per game">
+<img src="https://img.shields.io/badge/Web_Audio-API-1A1712?style=for-the-badge&logo=googlechrome&logoColor=F1ECE2" alt="Web Audio API">
+<img src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Claude Code">
+</p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-end-dark.svg">
+  <img src="assets/profile/divider-end-light.svg" width="100%" alt="GG">
+</picture>
 
 <sub>
   <a href="https://furkiozknn.github.io/">Project directory</a> ·
-  <a href="TESTLER.md">Where the 5,247 comes from</a> ·
-  <a href="schema/README.md">project-meta.json</a> ·
-  <a href="HIRE.md">Hire me</a> ·
+  <a href="https://github.com/Furkiozknn/social-videos">social-videos</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
   <a href="https://x.com/Furkiozkann">@Furkiozkann</a>
 </sub>
+
+<a href="https://x.com/Furkiozkann"><img src="assets/profile/footer.svg" width="100%" alt="Thanks for playing. Oynadığın için teşekkürler. Follow on X: @Furkiozkann"></a>
