@@ -12,7 +12,7 @@
     "owner": {"type": "string"},
     "repository": {"type": "string", "format": "uri"},
     "homepage": {"type": ["string", "null"], "description": "Live deployment, if one exists. Null means there is none - not that it is unknown."},
-    "releases": {"type": "string", "format": "uri"},
+    "releases": {"type": ["string", "null"], "format": "uri", "description": "Releases page. Null means the repository publishes no releases."},
     "status": {"enum": ["active", "archived", "prototype"]},
     "category": {"type": "string", "description": "One of: game, web-app, mcp-server, developer-tool, security-tool, agent-infrastructure, backend-service, observability, research, template, profile."},
     "platform": {"type": "array", "items": {"type": "string"}, "description": "Where it actually runs, as shipped."},

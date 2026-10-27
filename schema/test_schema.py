@@ -167,6 +167,10 @@ class SemaTesti(unittest.TestCase):
         v = dict(self.gecerli, indirme_sayisi=12000)
         self.assertTrue(self._hatalar(v))
 
+    def test_releases_null_olabilir(self):
+        # Oyun depolarinin release'i yok; null "yok" demek, bilinmiyor degil.
+        self.assertFalse(self._hatalar(dict(self.gecerli, releases=None)))
+
     def test_tests_sayi_ister(self):
         v = dict(self.gecerli, tests={"count": "cok", "source": "x", "measured": "2026-09-22"})
         self.assertTrue(self._hatalar(v))
@@ -186,6 +190,16 @@ class GerceklikTesti(unittest.TestCase):
                     "media": {"hero": "assets/yok.png", "screenshots": [],
                               "gifs": [], "videos": []}}
             self.assertTrue(any("hero" in h for h in self._olc(d.yol, meta)))
+
+    def test_dis_video_url_depoda_aranmaz(self):
+        with GeciciDepo() as d:
+            meta = {"id": os.path.basename(d.yol),
+                    "media": {"hero": None, "screenshots": [], "gifs": [],
+                              "videos": ["https://github.com/Furkiozknn/social-videos/releases/download/x/a.mp4",
+                                         "docs/yok.mp4"]}}
+            hatalar = self._olc(d.yol, meta)
+            self.assertEqual(len(hatalar), 1)
+            self.assertIn("docs/yok.mp4", hatalar[0])
 
     def test_is_akisi_listesi_diskle_ayrisirsa_yakalanir(self):
         # Yasanan hata: dort depoya yeni bir is akisi eklendi ve
