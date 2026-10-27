@@ -278,7 +278,14 @@ def kontrol(kaynak):
         sorunlar.append("TESTLER.md tablosunda satiri olmayan depo(lar): "
                         + ", ".join(eksik))
 
-    for ad, (_, yazan) in _tablo_satirlari(readme).items():
+    # Since 2026-10-27 the profile README shows the 8 games and publishes no
+    # test counts (the repositories those counts came from were deleted).
+    # The README checks below run only while the README still carries a
+    # test table, so the gate re-arms by itself if a count table comes back.
+    # TESTLER.md, HIRE.md, README.tr.md and assets/hero*.svg are still checked.
+    readme_sayiyor = bool(_tablo_satirlari(readme))
+
+    for ad, (_, yazan) in (_tablo_satirlari(readme).items() if readme_sayiyor else ()):
         if ad in beklenen and yazan != beklenen[ad]:
             sorunlar.append("README tablosunda %s icin %d yaziyor, metadata %d"
                             % (ad, yazan, beklenen[ad]))
@@ -286,7 +293,7 @@ def kontrol(kaynak):
     # Furkiozknn.github.io 22 Eylul'den beri toplamdaydi ama README
     # tablolarinda yoktu; biri icin README hala "No suite, so it is not in
     # the count" diyordu. Tablo satirlari toplamla toplanamiyordu.
-    eksik = sorted(set(beklenen) - set(_tablo_satirlari(readme)))
+    eksik = sorted(set(beklenen) - set(_tablo_satirlari(readme))) if readme_sayiyor else []
     if eksik:
         sorunlar.append("README tablosunda satiri olmayan depo(lar): " + ", ".join(eksik))
 
@@ -303,7 +310,7 @@ def kontrol(kaynak):
                 sorunlar.append("README tanitim satirinda %s icin %d yaziyor, metadata %d"
                                 % (d.group(1), yazan, beklenen[d.group(1)]))
 
-    for yer, metin in (("TESTLER.md", testler), ("README.md", readme)):
+    for yer, metin in (("TESTLER.md", testler),) + ((("README.md", readme),) if readme_sayiyor else ()):
         for satir in metin.splitlines():
             if not (satir.startswith("|") and "Total" in satir):
                 continue
@@ -313,7 +320,7 @@ def kontrol(kaynak):
                 sorunlar.append("%s Toplam satiri %s diyor, toplam %s"
                                 % (yer, bicim(buyuk[-1]), bicim(toplam)))
 
-    for yer, metin in [("README.md", readme)] + herolar:
+    for yer, metin in ([("README.md", readme)] if readme_sayiyor else []) + herolar:
         if bicim(toplam) not in metin and str(toplam) not in metin:
             sorunlar.append("%s icinde %s sayisi hic gecmiyor" % (yer, bicim(toplam)))
 
@@ -337,7 +344,7 @@ def kontrol(kaynak):
                 % (ad, ic[0], t["count"]))
 
     suit = len(beklenen)
-    if not re.search(r"across %d repositories with suites" % suit, readme):
+    if readme_sayiyor and not re.search(r"across %d repositories with suites" % suit, readme):
         sorunlar.append("README Toplam satirindaki suit sayisi %d degil" % suit)
     for yer, hero in herolar:
         if not re.search(r"%d with suites" % suit, hero):

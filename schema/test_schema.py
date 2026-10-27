@@ -304,6 +304,14 @@ class ProfilSayilariTesti(unittest.TestCase):
                       depo_sayisi=3)
         self.assertTrue(any("public repo" in x[2] for x in b))
 
+    def test_sayisiz_readme_tabloyu_aramaz_ama_testler_md_denetlenir(self):
+        # Since 2026-10-27 the README shows games and no test table. No row
+        # means nothing to compare on the README; TESTLER.md is still checked.
+        temiz = self._olc("207", [], self._metalar(), depo_sayisi=11)
+        self.assertEqual(temiz, [])
+        kaymis = self._olc("207", [], self._metalar(kanca=122), depo_sayisi=11)
+        self.assertTrue(any("metadata toplami" in x[2] for x in kaymis), kaymis)
+
 
 class TaslakTesti(unittest.TestCase):
     """Gonderi taslaklari: her cumlenin arkasinda bir veri olmali."""
@@ -930,6 +938,32 @@ class HireVeTurkceTesti(unittest.TestCase):
         self.assertTrue(koyu.is_file() and acik.is_file())
         self.assertEqual([k for k, _ in sayilar(koyu)], ["sayi-repos", "sayi-tests"])
         self.assertEqual(sayilar(koyu), sayilar(acik))
+
+    def test_readme_tablosuzsa_readme_kontrolu_susar_tablo_donerse_uyanir(self):
+        # The live README has no test table since 2026-10-27; the gate must
+        # not demand one, but must re-arm as soon as a count row comes back.
+        import pathlib, tempfile as tf
+        kaynak = {"kanca": {"tests": {"count": 115, "source": "CI"}}}
+        with tf.TemporaryDirectory() as d:
+            d = pathlib.Path(d)
+            (d / "TESTLER.md").write_text(
+                "# Where the 115 comes from\n"
+                "| [kanca](https://github.com/Furkiozknn/kanca) | 115 |\n"
+                "| **Total** | **115** |\n", encoding="utf-8")
+            (d / "README.md").write_text("Eight games, no test table.\n", encoding="utf-8")
+            eski = (testler.TESTLER, testler.README, testler.HEROLAR, testler.HIRE, testler.README_TR)
+            try:
+                testler.TESTLER, testler.README = d / "TESTLER.md", d / "README.md"
+                testler.HEROLAR, testler.HIRE, testler.README_TR = (), d / "yok.md", d / "yok.tr.md"
+                self.assertEqual(testler.kontrol(kaynak), [])
+                (d / "README.md").write_text(
+                    "| | **[kanca](https://github.com/Furkiozknn/kanca)** | x | `99` |\n",
+                    encoding="utf-8")
+                s = testler.kontrol(kaynak)
+                self.assertTrue(any("README tablosunda kanca" in x for x in s), s)
+            finally:
+                (testler.TESTLER, testler.README, testler.HEROLAR,
+                 testler.HIRE, testler.README_TR) = eski
 
     def test_ingilizce_tablo_hala_virgullu_yazilir(self):
         # HUCRE artik noktayi da taniyor; Ingilizce dosyalar yine virgulle yazilmali.

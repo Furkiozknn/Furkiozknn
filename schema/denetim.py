@@ -707,6 +707,13 @@ def _profil_sayilari(metalar, depo_sayisi):
 
     metin = readme.read_text(encoding="utf-8")
 
+    # Since 2026-10-27 the profile README shows the 8 games and publishes no
+    # test counts. Without a single test-table row there is nothing on the
+    # README to compare; the TESTLER.md check above still runs.
+    if not any(s.startswith("|") and re.search(r"\]\(https://github\.com/%s/" % OWNER, s)
+               and re.search(r"`[\d,]+`", s) for s in metin.splitlines()):
+        return f
+
     # Tablodaki her satirin kendi sayisi da tutmali. Toplam dogru ama
     # satirlar yanlis olabilir -- iki depo birbirini gotururse toplam
     # farki yutar, satira bakan okuyucu yanlis sayiyi gorur.
