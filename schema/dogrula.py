@@ -94,6 +94,10 @@ def _gercek_dogrula(depo, meta, hatalar, uyarilar):
         hatalar.append(f"media.hero: '{hero}' depoda yok")
     for alan in ("screenshots", "gifs", "videos"):
         for y in medya.get(alan) or []:
+            # Promo videolari social-videos release'lerinde duruyor; tam URL
+            # depoda aranmaz (kosu 40533412000: 8 sahte "depoda yok").
+            if y.startswith("https://"):
+                continue
             if not var_mi(y):
                 hatalar.append(f"media.{alan}: '{y}' depoda yok")
 
