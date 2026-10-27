@@ -1,13 +1,13 @@
-<a href="https://furkiozknn.github.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 16 browser games, 4 Claude models, Three.js r170."></a>
+<a href="https://furkiozknn.github.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 20 browser games, 4 Claude models, Three.js r170."></a>
 
 <p align="center">
-<b>16 free browser games, each one made by a single Claude model: Opus 5.5, Sonnet 5.5, Fable 5.1 or Haiku 5.5.</b><br>
+<b>20 free browser games, each one made by a single Claude model: Opus 5.5, Sonnet 5.5, Fable 5.1 or Haiku 5.5.</b><br>
 Each game's code is one <code>index.html</code> on Three.js r170: no install, no account, it opens in a browser tab.<br>
 <sub>Her oyunu tek bir Claude modeli yaptı. Her oyunun kodu Three.js r170 ile tek bir <code>index.html</code>: kurulum yok, hesap yok, tarayıcı sekmesinde açılır.</sub>
 </p>
 
 <p align="center">
-<a href="#01--play--oyna"><img src="https://img.shields.io/badge/Play_the_games-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Jump to the 16 games"></a>
+<a href="#01--play--oyna"><img src="https://img.shields.io/badge/Play_the_games-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Jump to the 20 games"></a>
 <a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/YouTube-EN-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube channel, in English"></a>
 <a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram-TR-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram @furkiozkan, in Turkish"></a>
 <a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-%40Furkiozkann-000000?style=for-the-badge&logo=x&logoColor=white" alt="X @Furkiozkann, in English"></a>
@@ -22,6 +22,63 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 ## 01 · Play · Oyna
 
 <sub>Claude Game Arena: one Claude model per game, and the model is named in each repository's <code>project-meta.json</code>. Click a banner to play. · Her oyunu tek bir model yaptı; model her deponun <code>project-meta.json</code> dosyasında yazıyor. Oynamak için afişe tıkla.</sub>
+
+### Round 6 · Tur 6
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://raw.githubusercontent.com/Furkiozknn/topkapi-gecesi/main/docs/banner.svg" width="100%" alt="Topkapı Gecesi: 3D night stealth game in an Ottoman palace, made by Claude Opus 5.5. Click to play in the browser."></a>
+<br>
+<b>Sneak through the palace by night and put the real Spoon-maker's Diamond back before dawn, unseen.</b><br>
+<sub>Gece sarayda gizlice dolaş, gerçek Kaşıkçı Elması'nı şafaktan önce görünmeden yerine koy.</sub>
+<p>
+<a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://img.shields.io/badge/Play-F0386B?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Topkapı Gecesi in the browser"></a>
+<a href="https://github.com/Furkiozknn/topkapi-gecesi"><img src="https://img.shields.io/badge/Source-topkapi--gecesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Topkapı Gecesi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/topkapi-gecesi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/topkapi-gecesi/main/docs/gameplay.gif">gameplay GIF</a> (5.6 MB)</sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://raw.githubusercontent.com/Furkiozknn/mimar-sinan/main/docs/banner.svg" width="100%" alt="Mimar Sinan: 3D construction-physics puzzle about building Ottoman mosques, made by Claude Fable 5.1. Click to play in the browser."></a>
+<br>
+<b>Place piers, arches and half-domes, pull the scaffolding, and let the thrust lines decide if the dome stands.</b><br>
+<sub>Ayak, kemer ve yarım kubbe yerleştir, iskeleyi sök; kubbenin ayakta kalıp kalmayacağına itki çizgileri karar versin.</sub>
+<p>
+<a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Mimar Sinan in the browser"></a>
+<a href="https://github.com/Furkiozknn/mimar-sinan"><img src="https://img.shields.io/badge/Source-mimar--sinan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mimar Sinan source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/mimar-sinan/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/mimar-sinan/main/docs/gameplay.gif">gameplay GIF</a> (3.4 MB)</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/hamsi/"><img src="https://raw.githubusercontent.com/Furkiozknn/hamsi/main/docs/banner.svg" width="100%" alt="Hamsi: 3D Black Sea fishing and boat-management game, made by Claude Sonnet 5.5. Click to play in the browser."></a>
+<br>
+<b>Find the anchovy on the sonar, circle the net, beat the storm home and become reis of the harbour in 30 days.</b><br>
+<sub>Hamsiyi sonarda bul, ağı çevir, fırtınadan önce limana dön; 30 günde limanın reisi ol.</sub>
+<p>
+<a href="https://furkiozknn.github.io/hamsi/"><img src="https://img.shields.io/badge/Play-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Hamsi in the browser"></a>
+<a href="https://github.com/Furkiozknn/hamsi"><img src="https://img.shields.io/badge/Source-hamsi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hamsi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/hamsi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/hamsi/main/docs/gameplay.gif">gameplay GIF</a> (5.4 MB)</sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/pamukkale/"><img src="https://raw.githubusercontent.com/Furkiozknn/pamukkale/main/docs/banner.svg" width="100%" alt="Pamukkale: calm 3D water-flow puzzle on the travertine terraces of Pamukkale, made by Claude Haiku 5.5. Click to play in the browser."></a>
+<br>
+<b>Guide warm spring water down the white terraces with stones, dams and splitters; still water grows new rims.</b><br>
+<sub>Ilık kaynak suyunu taş, set ve ayırıcıyla beyaz teraslardan havuzlara indir; duran su yeni kenarlar örer.</sub>
+<p>
+<a href="https://furkiozknn.github.io/pamukkale/"><img src="https://img.shields.io/badge/Play-FFC21A?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Pamukkale in the browser"></a>
+<a href="https://github.com/Furkiozknn/pamukkale"><img src="https://img.shields.io/badge/Source-pamukkale-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Pamukkale source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/pamukkale/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
+</p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/pamukkale/main/docs/gameplay.gif">gameplay GIF</a> (2.2 MB)</sub>
+</td>
+</tr>
+</table>
 
 ### Round 5 · Tur 5
 
@@ -250,7 +307,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 </td>
 </tr>
 </table>
-<sub>The gameplay GIFs are linked, not embedded: together they weigh 78 MB, so this page loads only the banners. · GIF'ler sayfaya gömülü değil, bağlantı olarak duruyor: toplam 78 MB.</sub>
+<sub>The gameplay GIFs are linked, not embedded: together they weigh 95 MB, so this page loads only the banners. · GIF'ler sayfaya gömülü değil, bağlantı olarak duruyor: toplam 95 MB.</sub>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-watch-dark.svg">
@@ -277,7 +334,7 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
 | Mehter | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-tr.mp4) | 2026-10-28 |
 | Dolmuş | [▶ EN](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-en.mp4) | [▶ TR](https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-tr.mp4) | 2026-10-28 |
 
-<sub>Rounds 5, 4 and 1 have no promo video out yet; their gameplay GIFs: [Kapadokya Balonu](https://raw.githubusercontent.com/Furkiozknn/kapadokya-balonu/main/docs/gameplay.gif) · [Ebru](https://raw.githubusercontent.com/Furkiozknn/ebru/main/docs/gameplay.gif) · [Kırkpınar](https://raw.githubusercontent.com/Furkiozknn/kirkpinar/main/docs/gameplay.gif) · [Çarşı Kaçışı](https://raw.githubusercontent.com/Furkiozknn/carsi-kacisi/main/docs/gameplay.gif) · [Boğaz Vapuru](https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/gameplay.gif) · [Simit Fırını](https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/gameplay.gif) · [Karagöz](https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/gameplay.gif) · [Lale Bahçesi](https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/gameplay.gif) · [Hisar](https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/gameplay.gif) · [Çay Ocağı](https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/gameplay.gif) · [Çini Ustası](https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/gameplay.gif) · [Martı](https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/gameplay.gif). · 5., 4. ve 1. turun tanıtım videosu henüz çıkmadı; oynanış GIF'leri yukarıda.</sub>
+<sub>Rounds 6, 5, 4 and 1 have no promo video out yet; their gameplay GIFs: [Topkapı Gecesi](https://raw.githubusercontent.com/Furkiozknn/topkapi-gecesi/main/docs/gameplay.gif) · [Mimar Sinan](https://raw.githubusercontent.com/Furkiozknn/mimar-sinan/main/docs/gameplay.gif) · [Hamsi](https://raw.githubusercontent.com/Furkiozknn/hamsi/main/docs/gameplay.gif) · [Pamukkale](https://raw.githubusercontent.com/Furkiozknn/pamukkale/main/docs/gameplay.gif) · [Kapadokya Balonu](https://raw.githubusercontent.com/Furkiozknn/kapadokya-balonu/main/docs/gameplay.gif) · [Ebru](https://raw.githubusercontent.com/Furkiozknn/ebru/main/docs/gameplay.gif) · [Kırkpınar](https://raw.githubusercontent.com/Furkiozknn/kirkpinar/main/docs/gameplay.gif) · [Çarşı Kaçışı](https://raw.githubusercontent.com/Furkiozknn/carsi-kacisi/main/docs/gameplay.gif) · [Boğaz Vapuru](https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/gameplay.gif) · [Simit Fırını](https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/gameplay.gif) · [Karagöz](https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/gameplay.gif) · [Lale Bahçesi](https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/gameplay.gif) · [Hisar](https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/gameplay.gif) · [Çay Ocağı](https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/gameplay.gif) · [Çini Ustası](https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/gameplay.gif) · [Martı](https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/gameplay.gif). · 6., 5., 4. ve 1. turun tanıtım videosu henüz çıkmadı; oynanış GIF'leri yukarıda.</sub>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-now-dark.svg">
@@ -286,11 +343,11 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
 
 ## 03 · Now · Şu an
 
-<sub>Updated 2026-10-27 · Güncelleme 2026-10-27</sub>
+<sub>Updated 2026-10-28 · Güncelleme 2026-10-28</sub>
 
-- 🎮 **16 games are live on GitHub Pages**, four per round, and every model made four of them. · 16 oyun GitHub Pages'te yayında; her model dörder oyun yaptı.
-- 🆕 **Round 5 is out:** Kapadokya Balonu, Ebru, Kırkpınar and Çarşı Kaçışı. · 5. tur yayında.
-- 🎬 **Next: promo videos for the Round 4, 5 and 1 games.** Round 4 videos go out on 29-30 October; until the rest exist, the GIFs above stand in. · Sıradaki iş: 4., 5. ve 1. tur oyunlarının tanıtım videoları; 4. turunkiler 29-30 Ekim'de çıkıyor.
+- 🎮 **20 games are live on GitHub Pages**, four per round, and every model made five of them. · 20 oyun GitHub Pages'te yayında; her model beşer oyun yaptı.
+- 🆕 **Round 6 is out:** Topkapı Gecesi, Mimar Sinan, Hamsi and Pamukkale. · 6. tur yayında.
+- 🎬 **Next: promo videos for the Round 4, 5, 6 and 1 games.** Round 4 videos go out on 29-30 October, Round 5 from 31 October; until the rest exist, the GIFs above stand in. · Sıradaki iş: 4., 5., 6. ve 1. tur oyunlarının tanıtım videoları; 4. turunkiler 29-30 Ekim'de, 5. turunkiler 31 Ekim'den itibaren çıkıyor.
 - 🗂️ **Every repository on one page:** the [project directory](https://furkiozknn.github.io/) is built from each repository's own `project-meta.json`. · Bütün depolar tek sayfada.
 
 <p>
