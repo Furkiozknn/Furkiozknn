@@ -11,6 +11,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/YouTube-EN-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube channel, in English"></a>
 <a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram-TR-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram @furkiozkan, in Turkish"></a>
 <a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-%40Furkiozkann-000000?style=for-the-badge&logo=x&logoColor=white" alt="X @Furkiozkann, in English"></a>
+<a href="https://buymeacoffee.com/furkiozkann"><img src="https://img.shields.io/badge/Support-Buy_me_a_coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=0E0D0B" alt="Support the games on Buy Me a Coffee"></a>
 <a href="https://furkiozknn.github.io/"><img src="https://img.shields.io/badge/All_projects-directory-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Project directory on GitHub Pages"></a>
 </p>
 
@@ -348,6 +349,7 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
 - 🎮 **20 games are live on GitHub Pages**, four per round, and every model made five of them. · 20 oyun GitHub Pages'te yayında; her model beşer oyun yaptı.
 - 🆕 **Round 6 is out:** Topkapı Gecesi, Mimar Sinan, Hamsi and Pamukkale. · 6. tur yayında.
 - 🎬 **Next: promo videos for the Round 4, 5, 6 and 1 games.** Round 4 videos go out on 29-30 October, Round 5 from 31 October; until the rest exist, the GIFs above stand in. · Sıradaki iş: 4., 5., 6. ve 1. tur oyunlarının tanıtım videoları; 4. turunkiler 29-30 Ekim'de, 5. turunkiler 31 Ekim'den itibaren çıkıyor.
+- ☕ **Like the games? Support them:** every game stays free; if you want to help the next round, you can [buy me a coffee](https://buymeacoffee.com/furkiozkann). · Oyunları beğendiysen [bir kahve ısmarlayarak](https://buymeacoffee.com/furkiozkann) yeni oyunlara destek olabilirsin; oyunlar her zaman ücretsiz.
 - 🗂️ **Every repository on one page:** the [project directory](https://furkiozknn.github.io/) is built from each repository's own `project-meta.json`. · Bütün depolar tek sayfada.
 
 <p>
@@ -366,7 +368,8 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
   <a href="https://furkiozknn.github.io/">Project directory</a> ·
   <a href="https://github.com/Furkiozknn/social-videos">social-videos</a> ·
   <a href="https://github.com/Furkiozknn?tab=repositories">All repositories</a> ·
-  <a href="https://x.com/Furkiozkann">@Furkiozkann</a>
+  <a href="https://x.com/Furkiozkann">@Furkiozkann</a> ·
+  <a href="https://buymeacoffee.com/furkiozkann">Buy me a coffee</a>
 </sub>
 
 <a href="https://x.com/Furkiozkann"><img src="assets/profile/footer.svg" width="100%" alt="Thanks for playing. Oynadığın için teşekkürler. Follow on X: @Furkiozkann"></a>
