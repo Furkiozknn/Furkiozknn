@@ -75,7 +75,8 @@
       "properties": {
         "generated_at": {"type": "string"},
         "generator": {"type": "string"},
-        "rule": {"type": "string"}
+        "rule": {"type": "string"},
+        "note": {"type": "string", "description": "Optional free-text history note, e.g. what the last hand-written update changed."}
       }
     }
   }
