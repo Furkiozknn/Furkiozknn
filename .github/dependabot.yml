@@ -10,6 +10,11 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    # Yeni yayimlanan bir surum 7 gun bekler: ele gecirilmis bir action
+    # surumu cogu zaman bu sure icinde fark edilip geri cekilir (zizmor
+    # dependabot-cooldown bulgusu, PR #37).
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "ci"
     groups:
