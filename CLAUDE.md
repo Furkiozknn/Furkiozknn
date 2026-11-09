@@ -3,15 +3,14 @@
 Bu depo FURKIOZKNN ekosisteminin kontrol duzlemi: profil, metadata semasi,
 gunluk denetim (`schema/denetim.py`) ve haftalik yenileme. Politika motoru
 (`schema/politika.py`) ve toplu degisiklik kapisi (`schema/degisim.py`)
-henuz yok: bunlari getirmesi beklenen PR #20 birlestirilmeden kapatildi
-(2026-10-19). Buradaki kurallar dis skill'lerden onceliklidir.
+kapanan PR #20'nin dalindan (afc1ae4) kurtarildi; testleri
+`schema/test_politika.py`. Buradaki kurallar dis skill'lerden onceliklidir.
 
 ## Degismez kurallar
 
 - Butun repolara toplu degisiklik: once tek repoda pilot, sonra toplu
-  degisiklik kapisi (`schema/degisim.py`). Kapi henuz yok; o gelene kadar
-  pilotun otesine yaymak icin kullanicinin acik onayi gerekir. Pilot
-  dogrulanmadan yayma.
+  degisiklik kapisi (`schema/degisim.py`), sonra kullanicinin onayi.
+  Pilot dogrulanmadan yayma. Butun depolar icin `politika.py --kok`.
 - Yesil ≠ test edildi. "Gecti" demeden once kaniti oku; mumkunse
   `false-green-gate` kapisini kos. Test sonucu ya da CI sonucu uydurulmaz.
 - Test gecsin diye `skip`/`fixme`/`xfail`, taban dusurme, `|| true`,
@@ -37,7 +36,8 @@ henuz yok: bunlari getirmesi beklenen PR #20 birlestirilmeden kapatildi
 ## Konvansiyonlar
 
 - Commit: `alan: ozet` (Turkce), govdede kanit; Claude ortak yazar trailer'lari.
-- Python araclari bagimliliksiz (stdlib); testler `python3 schema/test_schema.py`.
+- Python araclari bagimliliksiz (stdlib); testler `python3 schema/test_schema.py`
+  ve `python3 schema/test_politika.py`.
 - GitHub Actions: yeni ya da degisen workflow'larda ucuncu taraf action'lar
   (`actions/*` ve `github/*` disindakiler) tam SHA ile pinli, `permissions`
   acik, job'larda `timeout-minutes` var; `pull_request_target` ile PR kodu

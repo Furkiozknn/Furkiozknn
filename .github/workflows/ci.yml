@@ -67,6 +67,10 @@ jobs:
       - name: schema testleri
         run: python3 schema/test_schema.py
 
+      # Politika motoru + toplu degisiklik kapisi (PR #20 dalindan kurtarildi).
+      - name: politika ve degisim testleri
+        run: python3 schema/test_politika.py
+
       - name: Kendi metadata'si
         run: python3 schema/dogrula.py "$GITHUB_WORKSPACE"
 

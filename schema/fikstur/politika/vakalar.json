@@ -1,0 +1,347 @@
+{
+ "iyi-boru-guvenli": {
+  "beklenen": [],
+  "korur": [
+   "boru"
+  ],
+  "neden": "acik shell: bash pipefail ekler; set -o pipefail; yorum satiri; test kosucusu olmayan boru; ||"
+ },
+ "iyi-dbgecersiz-tirnakli-surum": {
+  "beklenen": [],
+  "korur": [
+   "dbgecersiz"
+  ],
+  "neden": "tirnakli surum GitHub icin gecerli"
+ },
+ "iyi-enjeksiyon-env-uzerinden": {
+  "beklenen": [],
+  "korur": [
+   "enjeksiyon"
+  ],
+  "neden": "env uzerinden gecen metin veri olarak kalir; inputs yazma yetkisi ister; .id sayidir"
+ },
+ "iyi-izin-is-duzeyinde": {
+  "beklenen": [],
+  "korur": [
+   "izin"
+  ],
+  "neden": "permissions ust duzeyde degil, iste"
+ },
+ "iyi-kilit-bagimliliksiz": {
+  "beklenen": [],
+  "korur": [
+   "kilit"
+  ],
+  "neden": "bagimliligi olmayan kilidin guncellenecek bir seyi yok"
+ },
+ "iyi-kilit-kapsanan": {
+  "beklenen": [],
+  "korur": [
+   "kilit",
+   "grup"
+  ],
+  "neden": "alt dizindeki kilit kendi girdisiyle kapsanmis"
+ },
+ "iyi-pin-birinci-taraf-yerel-digest": {
+  "beklenen": [],
+  "korur": [
+   "pin"
+  ],
+  "neden": "actions/ ve yerel action ve digest'li imaj sabit"
+ },
+ "iyi-sifirtest-kendiliginden-kirmizi": {
+  "beklenen": [],
+  "korur": [
+   "sifirtest"
+  ],
+  "neden": "vitest, playwright ve pytest sifir testte kendileri kirmiziya doner"
+ },
+ "iyi-sifirtest-tabanli": {
+  "beklenen": [],
+  "korur": [
+   "sifirtest"
+  ],
+  "neden": "masal ve repo-vet: sayim tabani ayni iste (ayni adimda ya da sonraki adimda)"
+ },
+ "iyi-sifirtest-unittest-312": {
+  "beklenen": [],
+  "korur": [
+   "sifirtest"
+  ],
+  "neden": "3.12+ hic test yoksa 5 ile cikar; kendiliginden kirmizi"
+ },
+ "iyi-sure-yeniden-kullanilir": {
+  "beklenen": [],
+  "korur": [
+   "sure",
+   "izin"
+  ],
+  "neden": "yeniden kullanilabilir is akisi cagrisi timeout alamaz"
+ },
+ "iyi-temiz": {
+  "beklenen": [],
+  "korur": [
+   "sure",
+   "pin",
+   "izin",
+   "dependabot",
+   "grup",
+   "yaml",
+   "dbgecersiz"
+  ],
+  "neden": "kurallarin hepsine uyan depo"
+ },
+ "iyi-tetik-pull-request": {
+  "beklenen": [],
+  "korur": [
+   "tetik"
+  ],
+  "neden": "pull_request sirsiz ve okuma jetonuyla kosar"
+ },
+ "kotu-boru-node-test": {
+  "beklenen": [
+   [
+    "FAIL",
+    "boru"
+   ],
+   [
+    "WARN",
+    "sifirtest"
+   ]
+  ],
+  "korur": [],
+  "neden": "node --test de ayni tuzak"
+ },
+ "kotu-boru-varsayilan-kabuk": {
+  "beklenen": [
+   [
+    "FAIL",
+    "boru"
+   ]
+  ],
+  "korur": [],
+  "neden": "bash -e pipefail'siz: tee'nin 0'i dusen testi yesil gosterir"
+ },
+ "kotu-dbgecersiz-yaml": {
+  "beklenen": [
+   [
+    "FAIL",
+    "dbgecersiz"
+   ],
+   [
+    "WARN",
+    "dependabot"
+   ]
+  ],
+  "korur": [],
+  "neden": "okunmayan dependabot.yml"
+ },
+ "kotu-dbgecersiz-yoruma-yapisik": {
+  "beklenen": [
+   [
+    "FAIL",
+    "dbgecersiz"
+   ],
+   [
+    "WARN",
+    "dependabot"
+   ]
+  ],
+  "korur": [],
+  "neden": "14 Eylul olayi: version yorumun sonunda, GitHub dosyanin tamamini reddeder"
+ },
+ "kotu-dependabot-actions-yok": {
+  "beklenen": [
+   [
+    "WARN",
+    "dependabot"
+   ]
+  ],
+  "korur": [],
+  "neden": "Dependabot var ama github-actions'i kapsamiyor"
+ },
+ "kotu-dependabot-yok": {
+  "beklenen": [
+   [
+    "WARN",
+    "dependabot"
+   ]
+  ],
+  "korur": [],
+  "neden": "action kullaniliyor, Dependabot yok"
+ },
+ "kotu-enjeksiyon-github-script": {
+  "beklenen": [
+   [
+    "FAIL",
+    "enjeksiyon"
+   ]
+  ],
+  "korur": [],
+  "neden": "yorum metni JavaScript'e gomulu"
+ },
+ "kotu-enjeksiyon-head-ref": {
+  "beklenen": [
+   [
+    "FAIL",
+    "enjeksiyon"
+   ]
+  ],
+  "korur": [],
+  "neden": "dal adi PR acanin elinde"
+ },
+ "kotu-enjeksiyon-run": {
+  "beklenen": [
+   [
+    "FAIL",
+    "enjeksiyon"
+   ]
+  ],
+  "korur": [],
+  "neden": "issue basligi kabukta"
+ },
+ "kotu-enjeksiyon-workflow-run": {
+  "beklenen": [
+   [
+    "FAIL",
+    "enjeksiyon"
+   ],
+   [
+    "WARN",
+    "tetik"
+   ]
+  ],
+  "korur": [],
+  "neden": "tetikleyen kosunun dal adi disaridan"
+ },
+ "kotu-grup-yok": {
+  "beklenen": [
+   [
+    "WARN",
+    "grup"
+   ]
+  ],
+  "korur": [],
+  "neden": "her paket ayri PR: 25 Eylul'de 36 acik PR"
+ },
+ "kotu-izin-yok": {
+  "beklenen": [
+   [
+    "WARN",
+    "izin"
+   ]
+  ],
+  "korur": [],
+  "neden": "permissions yok: jeton depo varsayilaniyla gelir"
+ },
+ "kotu-kilit-kapsamsiz": {
+  "beklenen": [
+   [
+    "WARN",
+    "kilit"
+   ]
+  ],
+  "korur": [],
+  "neden": "buradane: frontend kilidi hicbir girdide yoktu"
+ },
+ "kotu-pin-docker": {
+  "beklenen": [
+   [
+    "WARN",
+    "pin"
+   ]
+  ],
+  "korur": [],
+  "neden": "docker imaji digest'siz"
+ },
+ "kotu-pin-etiket": {
+  "beklenen": [
+   [
+    "WARN",
+    "pin"
+   ]
+  ],
+  "korur": [],
+  "neden": "ucuncu taraf action tasinabilir etikette"
+ },
+ "kotu-sifirtest-node": {
+  "beklenen": [
+   [
+    "WARN",
+    "sifirtest"
+   ]
+  ],
+  "korur": [],
+  "neden": "node --test hic test bulamazsa 'tests 0' yazip 0 ile cikar"
+ },
+ "kotu-sifirtest-unittest-matris": {
+  "beklenen": [
+   [
+    "WARN",
+    "sifirtest"
+   ]
+  ],
+  "korur": [],
+  "neden": "3.9-3.11'de 'Ran 0 tests OK' ve cikis 0"
+ },
+ "kotu-sifirtest-unittest-surumsuz": {
+  "beklenen": [
+   [
+    "WARN",
+    "sifirtest"
+   ]
+  ],
+  "korur": [],
+  "neden": "python surumu belirsiz: runner'in pythonu 3.12'den eski olabilir"
+ },
+ "kotu-sure-yok": {
+  "beklenen": [
+   [
+    "WARN",
+    "sure"
+   ]
+  ],
+  "korur": [],
+  "neden": "is zaman asimsiz: GitHub varsayilani 6 saat"
+ },
+ "kotu-tetik-prt-checkout": {
+  "beklenen": [
+   [
+    "FAIL",
+    "tetik"
+   ]
+  ],
+  "korur": [],
+  "neden": "sirlar + PR'in kodu ayni iste: pwn request"
+ },
+ "kotu-tetik-prt-liste": {
+  "beklenen": [
+   [
+    "WARN",
+    "tetik"
+   ]
+  ],
+  "korur": [],
+  "neden": "checkout yok ama gerekcesi yazilmali; liste bicimi"
+ },
+ "kotu-yaml-bozuk": {
+  "beklenen": [
+   [
+    "FAIL",
+    "yaml"
+   ]
+  ],
+  "korur": [],
+  "neden": "okunmayan dosya 'bulgu yok' sayilmamali"
+ },
+ "kotu-yaml-liste": {
+  "beklenen": [
+   [
+    "FAIL",
+    "yaml"
+   ]
+  ],
+  "korur": [],
+  "neden": "is akisi degil"
+ }
+}
