@@ -71,6 +71,22 @@ jobs:
       - name: politika ve degisim testleri
         run: python3 schema/test_politika.py
 
+      # arena-kit: oyunlara satir ici basilan ortak katman (node runner imajinda hazir).
+      # Taban: bir test sessizce kaybolursa sayi duser ve adim kirmiziya doner.
+      - name: arena-kit testleri
+        env:
+          NODE_TABANI: "9"
+          INJECT_TABANI: "6"
+        run: |
+          set -euo pipefail
+          node --version
+          node --test arena-kit/test_kit.mjs 2>&1 | tee "$RUNNER_TEMP/kit.txt"
+          sayi=$(grep -oE 'tests [0-9]+' "$RUNNER_TEMP/kit.txt" | tail -1 | grep -oE '[0-9]+')
+          test "${sayi:-0}" -ge "$NODE_TABANI"
+          python3 arena-kit/test_inject.py 2>&1 | tee "$RUNNER_TEMP/inject.txt"
+          sayi=$(sed -n 's/^Ran \([0-9]*\).*/\1/p' "$RUNNER_TEMP/inject.txt")
+          test "${sayi:-0}" -ge "$INJECT_TABANI"
+
       - name: Kendi metadata'si
         run: python3 schema/dogrula.py "$GITHUB_WORKSPACE"
 
