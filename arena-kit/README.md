@@ -10,10 +10,12 @@ if the game mounts it, an accessibility button.
 | `Arena.perf.attach(renderer)` | Dynamic pixel ratio for weak GPUs: drops to as low as 0.6× when frames average over 22 ms, climbs back when under 14 ms. |
 | `Arena.hint(id, text)` | One-time hint toast (also announced to screen readers). |
 | `Arena.endCard({title, reason, lines, onAgain, share})` | End-of-session card: reason, score lines, **again**, optional share, "try another game". |
-| `Arena.daily(game)` | UTC-day seed (`?d=YYYYMMDD` to replay a day), `rng()`, `complete(score)` → streak. |
+| `Arena.daily(game, {dayKey})` | UTC-day seed (`?d=YYYYMMDD` to replay a day), `rng()`, `complete(score)` → streak. A game whose own daily turns at local midnight passes `{dayKey: Arena._core.localDayKey()}` so the streak follows the same day (v1.0.1). |
 | `Arena.share({...})` / `Arena.shareCard({...})` | Web Share or clipboard text; 1080×1350 PNG card. |
 | `Arena.profile()`, `Arena.award(id)` | Cross-game passport: plays per game, badges (games share one origin). |
 | `Arena.settings`, `Arena.openSettings()`, `Arena.mountSettingsButton()`, `Arena.on('pause'|'resume'|'settings', fn)` | Accessibility: text size, high contrast, reduced motion, vibration on/off, pause when the tab is hidden. |
+
+On `?auto`, `?nosave` or `?demo` (`Arena.quiet === true`, v1.0.1) the kit writes nothing to localStorage: bot and demo runs never touch the player's profile, streaks or settings.
 
 Storage keys all start with `arena.` and carry a version (`profile.v1`, `daily.v1`, …); every access
 is wrapped in try/catch and falls back to memory.

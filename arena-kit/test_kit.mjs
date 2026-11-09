@@ -67,7 +67,7 @@ test('shareText joins title, lines and url', () => {
 });
 
 test('without DOM or storage the API still works (memory fallback)', () => {
-  assert.equal(A.version, '1.0.0');
+  assert.equal(A.version, '1.0.1');
   assert.equal(A.award('b1'), true);
   assert.equal(A.award('b1'), false);
   assert.ok(A.profile().badges.b1);
@@ -84,4 +84,30 @@ test('a second injection keeps the first instance', () => {
   vm.runInContext(src, ctx); const first = ctx.Arena;
   vm.runInContext(src, ctx);
   assert.equal(ctx.Arena, first);
+});
+
+test('v1.0.1: localDayKey uses local time; isQuiet matches bot/demo/no-save flags only', () => {
+  const d = new Date(2026, 10, 9, 1, 30); // local 01:30
+  assert.equal(C.localDayKey(d), 20261109);
+  for (const q of ['?auto', '?auto=1', '?x=1&nosave', '?demo=b', '?auto&mode=quick']) assert.equal(C.isQuiet(q), true, q);
+  for (const q of ['', '?d=20261109', '?autopilot=1', '?lang=tr', '?x=auto']) assert.equal(C.isQuiet(q), false, q);
+});
+
+test('v1.0.1: daily accepts the game\'s own day key; without DOM it is not quiet', () => {
+  const B = load();
+  const a = B.daily('fay-hatti', { dayKey: 20261109 }), b = B.daily('fay-hatti', { dayKey: 20261110 });
+  assert.equal(a.day, 20261109); assert.equal(b.day, 20261110); assert.notEqual(a.seed, b.seed);
+  assert.equal(B.daily('fay-hatti', { dayKey: 'bad' }).day, C.dayKey());
+  assert.equal(B.quiet, false);
+});
+
+test('v1.0.1: quiet page (?auto) never touches localStorage', () => {
+  const writes = [];
+  const ls = { getItem: () => null, setItem: (k, v) => writes.push(k), removeItem: () => {} };
+  const doc = { readyState: 'complete', addEventListener() {}, documentElement: { lang: 'tr', style: { setProperty() {} }, toggleAttribute() {} },
+    querySelector: () => null, head: { appendChild() {} }, body: { appendChild() {} }, createElement: () => ({ setAttribute() {}, appendChild() {}, addEventListener() {}, classList: { add() {}, remove() {} } }) };
+  const Q = load({ document: doc, localStorage: ls, location: { search: '?auto', pathname: '/hamsi/' }, navigator: {}, matchMedia: () => ({ matches: false }), requestAnimationFrame() {} });
+  assert.equal(Q.quiet, true);
+  Q.award('x'); Q.daily('hamsi').complete(5);
+  assert.deepEqual(writes, []);
 });
