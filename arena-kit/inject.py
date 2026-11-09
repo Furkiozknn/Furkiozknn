@@ -5,7 +5,8 @@
     python3 arena-kit/inject.py --kontrol ../hamsi ../dolmus  # exit 1 if a block is missing or stale
 
 The block sits right before <script type="importmap"> (a classic script, so window.Arena exists
-before the game's module runs) and is delimited so a later run replaces it in place:
+before the game's module runs); a game without an import map (e.g. fay-hatti, no CDN modules) gets it
+right before </head>. It is delimited so a later run replaces it in place:
 
     <script>/*ARENA-KIT:BEGIN v1.0.0 sha256:<12 hex>*/
     ...kit.js...
@@ -23,6 +24,7 @@ import sys
 KIT = pathlib.Path(__file__).with_name("kit.js")
 BLOCK = re.compile(r"<script>/\*ARENA-KIT:BEGIN [^*]*\*/\n.*?\n/\*ARENA-KIT:END\*/</script>\n", re.S)
 ANCHOR = '<script type="importmap">'
+FALLBACK = "</head>"  # games with no import map
 
 
 def kit_block():
@@ -47,7 +49,9 @@ def apply(html, block):
         return BLOCK.sub(lambda _m: block, html, count=1), "updated"
     i = html.find(ANCHOR)
     if i < 0:
-        raise ValueError("no <script type=\"importmap\"> anchor")
+        i = html.find(FALLBACK)
+    if i < 0:
+        raise ValueError("no <script type=\"importmap\"> or </head> anchor")
     line_start = html.rfind("\n", 0, i) + 1
     if html[line_start:i].strip():  # anchor shares a line with other markup -> insert right before it
         return html[:i] + block + html[i:], "inserted"
