@@ -3,12 +3,15 @@
 Bu depo FURKIOZKNN ekosisteminin kontrol duzlemi: profil, metadata semasi,
 gunluk denetim (`schema/denetim.py`) ve haftalik yenileme. Politika motoru
 (`schema/politika.py`) ve toplu degisiklik kapisi (`schema/degisim.py`)
-PR #20 ile geliyor. Buradaki kurallar dis skill'lerden onceliklidir.
+henuz yok: bunlari getirmesi beklenen PR #20 birlestirilmeden kapatildi
+(2026-10-19). Buradaki kurallar dis skill'lerden onceliklidir.
 
 ## Degismez kurallar
 
 - Butun repolara toplu degisiklik: once tek repoda pilot, sonra toplu
-  degisiklik kapisi (`schema/degisim.py`, PR #20). Pilot dogrulanmadan yayma.
+  degisiklik kapisi (`schema/degisim.py`). Kapi henuz yok; o gelene kadar
+  pilotun otesine yaymak icin kullanicinin acik onayi gerekir. Pilot
+  dogrulanmadan yayma.
 - Yesil ≠ test edildi. "Gecti" demeden once kaniti oku; mumkunse
   `false-green-gate` kapisini kos. Test sonucu ya da CI sonucu uydurulmaz.
 - Test gecsin diye `skip`/`fixme`/`xfail`, taban dusurme, `|| true`,
@@ -38,4 +41,5 @@ PR #20 ile geliyor. Buradaki kurallar dis skill'lerden onceliklidir.
 - GitHub Actions: yeni ya da degisen workflow'larda ucuncu taraf action'lar
   (`actions/*` ve `github/*` disindakiler) tam SHA ile pinli, `permissions`
   acik, job'larda `timeout-minutes` var; `pull_request_target` ile PR kodu
-  checkout edilmez. Mevcut `ci.yml` bu kurali henuz tam karsilamiyor.
+  checkout edilmez. Mevcut workflow'lar yalniz `actions/*` kullaniyor ve
+  hepsinde `permissions` ile `timeout-minutes` var (2026-11-09 kontrolu).
