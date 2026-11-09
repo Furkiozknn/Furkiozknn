@@ -1,0 +1,13 @@
+name: CI
+on: [push]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - run: npx vitest run
+      - run: npx playwright test
+      - run: uv run pytest
