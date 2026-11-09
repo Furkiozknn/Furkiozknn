@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           # assets/sosyal/ ~1.5 GB MP4; hicbir adim okumuyor. Onsuz checkout
@@ -50,7 +50,7 @@ jobs:
             !/assets/sosyal/
           sparse-checkout-cone-mode: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -68,7 +68,7 @@ jobs:
           set -euo pipefail
           python3 schema/haftalik.py --gun "$GUN" | tee ozet.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: haftalik
           path: |
