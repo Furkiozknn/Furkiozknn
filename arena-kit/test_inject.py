@@ -50,6 +50,14 @@ class InjectTest(unittest.TestCase):
         self.assertEqual(action, "inserted")
         self.assertIn(self.block + '<script type="importmap">', new)
 
+    def test_no_importmap_falls_back_to_head_end(self):
+        html = '<!doctype html>\n<html><head>\n<meta charset="utf-8">\n</head><body><script>var x=1;</script></body></html>\n'
+        new, action = inject.apply(html, self.block)
+        self.assertEqual(action, "inserted")
+        self.assertLess(new.index("ARENA-KIT:BEGIN"), new.index("</head>"))
+        self.assertEqual(new.replace(self.block, ""), html)  # pure addition
+        self.assertEqual(inject.apply(new, self.block)[1], "current")
+
     def test_missing_anchor_and_duplicate_blocks_are_errors(self):
         with self.assertRaises(ValueError):
             inject.apply("<html></html>", self.block)
