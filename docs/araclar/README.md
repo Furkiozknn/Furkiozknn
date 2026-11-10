@@ -16,6 +16,7 @@ Araştırma bitti. Bu klasör beş alan raporunu özetler; yeni araştırma içe
 | 6 | [INSTALLATION_AND_TEST_REPORT.md](INSTALLATION_AND_TEST_REPORT.md) | Bu oturumda ne denendi, ne çıktı, ne bilerek yapılmadı |
 | 7 | [RECOMMENDED_TOOLSTACK.md](RECOMMENDED_TOOLSTACK.md) | Alan başına en küçük yığın, "kullanma" listesi, maliyet |
 | 8 | [NEXT_STEPS.md](NEXT_STEPS.md) | Sıralı adımlar: şimdi yapılabilir ya da onay gerekir |
+| 9 | [KURULUM_5_DEPO.md](KURULUM_5_DEPO.md) | Beş GitHub deposunun incelemesi: ne kuruldu, ne kurulmadı, nasıl doğrulandı |
 
 ## Kaynaklar
 

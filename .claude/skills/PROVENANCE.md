@@ -24,8 +24,8 @@ SkillSpector taramasi). Kanit notlari arastirma raporunda ve `docs/araclar/` alt
 | accessibility | Addy Osmani (C, verified expert; README "(unofficial)") | addyosmani/web-quality-skills@afa8da942115f2961fdbfa80807ea0b232ff6c00 | MIT | SPECIALIST, a11y | yalnizca acik cagri |
 | core-web-vitals | Addy Osmani (C) | ayni | MIT | SPECIALIST, perf | yalnizca acik cagri |
 | performance | Addy Osmani (C) | ayni | MIT | core-web-vitals bagimliligi | yalnizca acik cagri |
-| dialogue-systems | gamedev-skills (D, dogrulanmamis topluluk; NOTICE: Abhishek Barali ve katkicilar; 223 commit'in 126'si bot benzeri hesap) | gamedev-skills/awesome-gamedev-agent-skills@4cce500ce1a779b12fdd824be581c7d2ab4e7ba2 (`skills/disciplines/dialogue-systems`) | Apache-2.0 | SPECIALIST, Ink/Yarn diyalog grafigi | model (upstream frontmatter, degistirilmedi) |
-| visual-novel | gamedev-skills (D) | ayni (`skills/genres/visual-novel`) | Apache-2.0 | SPECIALIST, interaktif hikaye yapisi; dialogue-systems'i kullanir | model (upstream frontmatter, degistirilmedi) |
+| dialogue-systems | gamedev-skills (D, dogrulanmamis topluluk; NOTICE: Abhishek Barali ve katkicilar; 223 commit'in 126'si bot benzeri hesap) | gamedev-skills/awesome-gamedev-agent-skills@4cce500ce1a779b12fdd824be581c7d2ab4e7ba2 (`skills/disciplines/dialogue-systems`) | Apache-2.0 | SPECIALIST, Ink/Yarn diyalog grafigi | yalnizca acik cagri |
+| visual-novel | gamedev-skills (D) | ayni (`skills/genres/visual-novel`) | Apache-2.0 | SPECIALIST, interaktif hikaye yapisi; dialogue-systems'i kullanir | yalnizca acik cagri |
 
 ## Proje degisiklikleri (Apache-2.0 §4b / MIT: degisen dosyalar)
 
@@ -41,13 +41,12 @@ Diger butun dosyalar upstream ile bayt bayt aynidir (2026-09-28'de `cmp` ile olc
 - `frontend-design/SKILL.md`, `animate/SKILL.md`, `accessibility/SKILL.md`, `core-web-vitals/SKILL.md`, `performance/SKILL.md`: frontmatter'a `disable-model-invocation: true` (SPECIALIST'ler yalnizca acik cagriyla yuklenir; baglam kirlenmesi yok).
 - `accessibility/SKILL.md`: kurulu olmayan `../web-quality-audit/SKILL.md` baglantisi pinli upstream URL'sine cevrildi.
 
-- `dialogue-systems/`, `visual-novel/`: degisiklik YOK. `SKILL.md` ve `references/*.md` pinli commit ile
-  bayt bayt ayni (2026-11-10'da `cmp` ile olculdu). Eklenen tek sey Apache-2.0 §4 geregi upstream
-  deposunun kokundeki `LICENSE` ve `NOTICE` dosyalarinin her iki dizine kopyasi (onlar da ayni).
-  Not: ikisi de model tarafindan cagrilabilir kaldi; diger SPECIALIST'lerdeki
-  `disable-model-invocation: true` bilerek eklenmedi (dosyalar degistirilmedi). Istenirse bu,
-  buraya yazilarak tek satirla yapilir. Skill metinlerinin atif yaptigi `save-systems`,
-  `godot-ui-control`, `rpg` vb. komsu skill'ler kurulu degildir; o atiflar bos kalir.
+- `dialogue-systems/SKILL.md`, `visual-novel/SKILL.md`: frontmatter'a tek satir `disable-model-invocation: true`
+  (diger SPECIALIST'ler gibi yalnizca acik cagriyla yuklenir; yayinci tier D oldugu icin ozellikle). Baska degisiklik
+  yok: govde ve `references/*.md` pinli commit ile bayt bayt ayni (2026-11-10'da `cmp` ile olculdu). Apache-2.0 §4
+  geregi upstream deposunun kokundeki `LICENSE` ve `NOTICE` her iki dizine kopyalandi (onlar da ayni).
+  Skill metinlerinin atif yaptigi `save-systems`, `godot-ui-control`, `rpg` vb. komsu skill'ler kurulu degildir;
+  o atiflar bos kalir.
 
 ## Kabul taramasi (SkillSpector)
 
@@ -73,8 +72,10 @@ bu commit'e ve `.github/skill-tarama/gereksinimler.txt`'teki ozetlere pinli kura
 
 22 HIGH bulgunun hepsi satiri okunarak incelendi; gercek zafiyet cikmadi. Her biri gerekcesiyle
 `.github/skill-tarama/baseline.yaml`'da (tam parmak izi; glob kural yok). MEDIUM/LOW bulgular
-bastirilmadi, her kosuda listelenir. AE1 tarayicinin siniridir (bir ifadeyi cozemedi): o dosyalar
-elle okundu, ama tarayici onlari tam incelemis sayilmaz.
+bastirilmadi, her kosuda listelenir. AE1 tarayicinin siniridir (bir ifadeyi cozemedi): o dort dosyanin
+(`A11Y-PATTERNS.md`, `pr-attachments.md`, `test-generation.md`, `STANDARDS.md`) kod bloklari ve komut/ag/kimlik
+kaliplari ayrica incelendi (yalniz HTML/CSS/JS ornekleri ve `playwright-cli`/`gh` ornek komutlari), ama tarayici
+onlari tam incelemis sayilmaz.
 
 ## Kurulmayanlar (ozet)
 

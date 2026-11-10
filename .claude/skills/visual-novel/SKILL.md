@@ -3,6 +3,7 @@ name: visual-novel
 description: >
   Build a visual novel: a branching script, character and background display, a text box with choices,
   save/load, backlog, and skip/auto. Use for a VN, dating sim, or branching story game.
+disable-model-invocation: true
 ---
 
 # Visual Novel

@@ -24,39 +24,39 @@ fingerprints:
 - hash: sha256:df5ca0c3ba1732220908dbd16f08479edb6dcb58ee87e86261b8a2461167b7b1
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:91a311b95ba790b805b331fab41545f9934a1d1c22a13c908aabdcbfda31ffcf
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:c40979b09271dfa2aa0fa2d3d855c1f9d5a9383b3a0fe846f977c439bd0f7fb4
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:82a05f137254a5e68cc4081e592c36d8e43356e93c73868ec58034adf1480305
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:b07c45cc3243e263be34cc938d7fbc68adc0ba8a0055176d3cf52c051b04d1c3
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:40b9a36bdd87e1ea7a449b4bd336706c2bcdf279c73b71fbf178df943a9fe7ee
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:3697a111f923d4017880ce967f284307964dc7dd0ba462195737c709f617786c
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:d2490dbf5dc24842adff1d59263184a9dd713538ad2e1ef82bf36441558852eb
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:4636cba8f2f8c7a1d5c0b4f68365d0230b5a71719d6b919b43fd35e1403d44c9
   rule_id: AE1
   file: accessibility/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: tarayicinin statik ayristiricisi references/A11Y-PATTERNS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): HTML/ARIA ornekleri; komut, ag cagrisi ya da gizli talimat yok."
 - hash: sha256:67d1c1f0f05f4aeda5ed83294c38ca1352de9039d66cb97570ec4844929164e4
   rule_id: LP1
   file: false-green-gate/scripts/kapi.py
@@ -84,24 +84,24 @@ fingerprints:
 - hash: sha256:1a4ce350f4c86f0408bd3b790bd2d240b003ea63d4ebef45eb8de1af3049ddd7
   rule_id: AE1
   file: playwright-cli/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalar elle okundu (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalarin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
 - hash: sha256:b8be54da6d51b1a2bacc9ac79004dcfd628db7e54bfc5dbd3bf79af675f73832
   rule_id: AE1
   file: playwright-cli/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalar elle okundu (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalarin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
 - hash: sha256:40f5839ba7e6c4a976292c1037333931e4ab38e8ba82fa6ffe7e17ed1d30d00d
   rule_id: AE1
   file: playwright-cli/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalar elle okundu (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici references/pr-attachments.md ve references/test-generation.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyalarin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): playwright-cli komut ornekleri ve bir GitHub Actions ornegi; zararli komut yok."
 - hash: sha256:e447907955ddbb37174321e3aa4d66e7bfada2be931467e14285cf5c1b76ead2
   rule_id: AE1
   file: review-animations/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."
 - hash: sha256:cf66a32dacf231ea2aef74c702ccd2d6b960ea4d5b8a28f85a7a3ea1ccb57727
   rule_id: AE1
   file: review-animations/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."
 - hash: sha256:532f5ad112000a73d3bc5c853ce2f2eab953355b7d2147d2cbd3781861b44b19
   rule_id: AE1
   file: review-animations/SKILL.md
-  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosya elle okundu (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."
+  reason: "Kapsam uyarisi, icerik bulgusu degil: statik ayristirici STANDARDS.md icinde bir ifadeyi cozemedi (static_parse_limit). Dosyanin kod bloklari ve komut/ag/kimlik kaliplari incelendi (2026-11-10): CSS/JS animasyon ornekleri; komut ya da ag cagrisi yok."

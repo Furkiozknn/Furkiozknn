@@ -6,6 +6,7 @@ description: >
   Yarn Spinner or a custom data-driven runner. Engine-neutral. Use when the user
   mentions dialogue system, branching dialogue, conversation tree, choices,
   Ink (.ink), Yarn Spinner (.yarn), or NPC dialogue.
+disable-model-invocation: true
 ---
 
 # Dialogue systems

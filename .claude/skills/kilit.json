@@ -1,5 +1,5 @@
 {
- "PROVENANCE.md": "27100e7876bb3a6d8a9b6166f7ae842a8efa0e98332bf4bbfb639695973eacfd",
+ "PROVENANCE.md": "e934527e52f5104e3f12fb6bd29f5df8fd8c7b0cf07e32023bb59f05680b0017",
  "accessibility/LICENSE": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3",
  "accessibility/SKILL.md": "9b07187cf8be19002d0716bcc63cea23a9c6ce875c1db5a5650a3f04ab96b54f",
  "accessibility/references/A11Y-PATTERNS.md": "f10e238dd4dd3c4f51134c2056bc02d3dd4f8fb6ccc9145c2c1ba7aab4d58140",
@@ -14,7 +14,7 @@
  "core-web-vitals/references/LCP.md": "522054d44b7a55409cbde511e8d365f7fa52399dd1e72b8d6b44a92ecddca81f",
  "dialogue-systems/LICENSE": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
  "dialogue-systems/NOTICE": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8",
- "dialogue-systems/SKILL.md": "b5c5d569861199b36977e7d59ac951eef7e6f0c225b61b3fb46a9acd17325533",
+ "dialogue-systems/SKILL.md": "7a51ad87b43b62b6d3d4f394ca8b1d1661cf0a6c952c4f9159abf415608c719c",
  "dialogue-systems/references/ink-and-yarn.md": "c43275e04428ad8edb374f83477046a12d525b1535cc286d3f4c8e8e159c991e",
  "dialogue-systems/references/runner.md": "9d70ca1cb7a518170300c06bfb88984230e71ee23ff0b7b225f3355a22cb4fe4",
  "false-green-gate/SKILL.md": "9583ab4e18ac052c851709f6fb99d6ba53f4ae7bf63598a9ea90989b4024a57d",
@@ -85,6 +85,6 @@
  "test_kilit.py": "b35487f62fcbf3dea15e188dc211f4f69ab3993cd57a66155a45e446d41a4cf9",
  "visual-novel/LICENSE": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
  "visual-novel/NOTICE": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8",
- "visual-novel/SKILL.md": "57f703ceaa5f9b3d2741415c1854d1fb00db2d0a92fc1757a279a3b089888086",
+ "visual-novel/SKILL.md": "723482f4e777daad74eb4625d8ce21774f862ae621f22d8e0c081d412dc74e50",
  "visual-novel/references/script-and-flow.md": "96460289165b387ddd13ab532dde58d8d47709b0afdcb9fc9183fb58cffdac76"
 }
