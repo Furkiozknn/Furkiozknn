@@ -34,7 +34,7 @@ Bu adımları yapan ajan sonucu tek başına "doğrulandı" ilan etmez. Çıktı
 | B5 | Ana çizimi ve `params.json`'u onayla | Sahibin yaratıcı kararı | Turnaround, ifade sayfası, parça seti |
 | B6 | fountain-js ve screenplain'i bir proje deposuna al | Depoya araç kabulü: tam sürüm, lockfile, bütünlük hash'i; `reportlab` pini | Senaryo biçimi ve otomatik sahne/kadro listesi |
 | B7 | inkjs'i **tek** oyunda pilot olarak dene | Depoya araç kabulü; pilot kuralı | Sonra `schema/degisim.py` kapısı, sonra diğer oyunlar için ayrı onay |
-| B8 | gamedev `dialogue-systems` + `visual-novel` skill'lerini kabul et | Skill kabul kapısı: pin, PROVENANCE, kilit | Ink'e özel rehber skill'ler |
+| B8 | ~~gamedev `dialogue-systems` + `visual-novel` skill'lerini kabul et~~ **Yapıldı (10 Kas)**: pinli, PROVENANCE + kilit, SkillSpector kapısıyla. Bkz. [KURULUM_5_DEPO.md](KURULUM_5_DEPO.md) | — | Ink'e özel rehber skill'ler |
 | B9 | `story-skills` için izole çalışma ve yeniden üretim testi yap | Dış kodu çalıştırma izni (bu oturumda reddedildi); yayıncı doğrulaması | Koşullu kabul kararı; sonra skill kabul kapısı |
 | B10 | PC'ye Rhubarb kur | PC'ye kurulum; release arşivi + sha256 | Dudak senkronu |
 | B11 | A oturumuna iş devret: Gemini TTS ile seslendirme, Remotion render | PC'de iş başlatır; Gemini günlük kotasını harcar | Ses ve video aşamaları |

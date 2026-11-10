@@ -1,5 +1,5 @@
 {
- "PROVENANCE.md": "1962f0b0274243a5737c20b89a7eb634f3c1fa8dcd2e30134b103a7f758ef959",
+ "PROVENANCE.md": "e934527e52f5104e3f12fb6bd29f5df8fd8c7b0cf07e32023bb59f05680b0017",
  "accessibility/LICENSE": "c122223ac43e86421958e18623979942c21b642951e2e3736dcb63eff13587c3",
  "accessibility/SKILL.md": "9b07187cf8be19002d0716bcc63cea23a9c6ce875c1db5a5650a3f04ab96b54f",
  "accessibility/references/A11Y-PATTERNS.md": "f10e238dd4dd3c4f51134c2056bc02d3dd4f8fb6ccc9145c2c1ba7aab4d58140",
@@ -12,6 +12,11 @@
  "core-web-vitals/references/CLS.md": "c4fa0cd6311720b413018471a6ac9240e87db52af3b6e306ffb6684491f15898",
  "core-web-vitals/references/INP.md": "7d40cf6053e9bb8a8a77e02da7c6b25aa8e6c1c092b48d8f9c8f30e9b25cf3a7",
  "core-web-vitals/references/LCP.md": "522054d44b7a55409cbde511e8d365f7fa52399dd1e72b8d6b44a92ecddca81f",
+ "dialogue-systems/LICENSE": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+ "dialogue-systems/NOTICE": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8",
+ "dialogue-systems/SKILL.md": "7a51ad87b43b62b6d3d4f394ca8b1d1661cf0a6c952c4f9159abf415608c719c",
+ "dialogue-systems/references/ink-and-yarn.md": "c43275e04428ad8edb374f83477046a12d525b1535cc286d3f4c8e8e159c991e",
+ "dialogue-systems/references/runner.md": "9d70ca1cb7a518170300c06bfb88984230e71ee23ff0b7b225f3355a22cb4fe4",
  "false-green-gate/SKILL.md": "9583ab4e18ac052c851709f6fb99d6ba53f4ae7bf63598a9ea90989b4024a57d",
  "false-green-gate/fikstur/godot/betik-hatasi.log": "17c9fa8c71d6df70b4944455b7c7fe444399e34912f0cc626aeebc5f964528e7",
  "false-green-gate/fikstur/godot/derin-temiz.log": "7cb325214c5f05cdf0278f7734c7b0e6327a9af09b8a8343a42eccd839e934b3",
@@ -77,5 +82,9 @@
  "review-animations/LICENSE": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b",
  "review-animations/SKILL.md": "6ff590d29e436766135aa3d137be1fac2a867165c7257fc315b189361f1873af",
  "review-animations/STANDARDS.md": "e7d3605034acda54ca13e43aec9e64d65b53de20f75b11b8d694e373012fbe07",
- "test_kilit.py": "b35487f62fcbf3dea15e188dc211f4f69ab3993cd57a66155a45e446d41a4cf9"
+ "test_kilit.py": "b35487f62fcbf3dea15e188dc211f4f69ab3993cd57a66155a45e446d41a4cf9",
+ "visual-novel/LICENSE": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+ "visual-novel/NOTICE": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8",
+ "visual-novel/SKILL.md": "723482f4e777daad74eb4625d8ce21774f862ae621f22d8e0c081d412dc74e50",
+ "visual-novel/references/script-and-flow.md": "96460289165b387ddd13ab532dde58d8d47709b0afdcb9fc9183fb58cffdac76"
 }

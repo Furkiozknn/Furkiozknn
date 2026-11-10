@@ -51,6 +51,7 @@
       "guvenlik.yml",
       "haftalik.yml",
       "projeler.yml",
+      "skill-tarama.yml",
       "yenile.yml"
     ],
     "badge": "https://github.com/Furkiozknn/Furkiozknn/actions/workflows/ci.yml/badge.svg"

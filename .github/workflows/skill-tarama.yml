@@ -1,0 +1,84 @@
+name: Skill tarama
+
+# .claude/skills altindaki her skill'i SkillSpector (NVIDIA, Apache-2.0) ile
+# statik olarak tarar; baseline disinda HIGH/CRITICAL bulgu varsa kirmizi.
+#
+#   - Tarama `--no-llm`: skill icerigi hicbir modele gitmez, anahtar/secret
+#     kullanilmaz, taranan kod calistirilmaz.
+#   - Dis istekler: pip (PyPI, ozet pinli) ve github.com'dan pinli commit'in
+#     klonu. Tarama sirasinda yalnizca bir skill bagimlilik dosyasi tasiyorsa
+#     paket ad+surumleri api.osv.dev'e sorulur (bugun boyle bir skill yok).
+#   - Kapi gercek skill'lerden ONCE oz sinama ile kirmiziya donebildigini
+#     kanitlar (calisma aninda kurulan kotu bir skill; baseline onu bastiramaz).
+#
+# Pin yukseltme: yeni commit'in farkini oku -> gereksinimler.txt'yi o commit'in
+# uv.lock'undan yeniden uret -> baseline.yaml'daki her kaydi yeniden incele
+# (parmak izleri tarayici surumune bagli) -> asagidaki SHA'yi degistir.
+# Gerekceler ve olcumler: .claude/skills/PROVENANCE.md "Kabul taramasi".
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".claude/skills/**"
+      - ".github/skill-tarama/**"
+      - ".github/workflows/skill-tarama.yml"
+  pull_request:
+    paths:
+      - ".claude/skills/**"
+      - ".github/skill-tarama/**"
+      - ".github/workflows/skill-tarama.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: skill-tarama-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  skillspector:
+    name: SkillSpector (statik, LLM yok)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      SKILLSPECTOR_SHA: 16db7a03df98b6aee9e7052f75693aff46fba4b9
+      LANGSMITH_TRACING: "false"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          # Yalnizca taranan ve kapiyi kuran dizinler; assets/sosyal (~1.5 GB) inmez.
+          sparse-checkout: |
+            /.claude/skills/
+            /.github/skill-tarama/
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Skill kilidi (dosyalar kilit.json ile ayni mi)
+        run: python3 .claude/skills/kilit.py --kontrol
+
+      # Bagimliliklar upstream uv.lock'tan, surum + sha256 ile; SkillSpector'in
+      # kendisi tam commit SHA'siyla. Kurulan commit ayrica dogrulanir.
+      - name: SkillSpector kur (commit ve ozet pinli)
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --disable-pip-version-check --only-binary=:all: --require-hashes -r .github/skill-tarama/gereksinimler.txt
+          python3 -m pip install --quiet --disable-pip-version-check --no-deps --no-build-isolation "git+https://github.com/nvidia/skillspector@${SKILLSPECTOR_SHA}"
+          kurulan=$(python3 -c "import json, importlib.metadata as m; print(json.loads(m.distribution('skillspector').read_text('direct_url.json'))['vcs_info']['commit_id'])")
+          if [ "$kurulan" != "$SKILLSPECTOR_SHA" ]; then
+            echo "::error::SkillSpector commit'i beklenen degil: '$kurulan'"
+            exit 1
+          fi
+          skillspector --version
+
+      - name: Oz sinama (kapi kirmiziya donebiliyor mu)
+        run: python3 .github/skill-tarama/tara.py --oz-sinama
+
+      - name: Skill'leri tara
+        run: python3 .github/skill-tarama/tara.py
