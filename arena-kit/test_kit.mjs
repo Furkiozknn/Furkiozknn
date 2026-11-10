@@ -67,7 +67,7 @@ test('shareText joins title, lines and url', () => {
 });
 
 test('without DOM or storage the API still works (memory fallback)', () => {
-  assert.equal(A.version, '1.0.1');
+  assert.equal(A.version, '1.1.0');
   assert.equal(A.award('b1'), true);
   assert.equal(A.award('b1'), false);
   assert.ok(A.profile().badges.b1);
@@ -110,4 +110,81 @@ test('v1.0.1: quiet page (?auto) never touches localStorage', () => {
   assert.equal(Q.quiet, true);
   Q.award('x'); Q.daily('hamsi').complete(5);
   assert.deepEqual(writes, []);
+});
+
+// ---- v1.1: play events + feedback (handed to the page's own GoatCounter) ----
+function fakePage(search, store = {}) {
+  const listeners = {}, appended = [], counted = [];
+  const mk = (tag) => {
+    const e = { tag, attrs: {}, kids: [], textContent: '', parentNode: null, _l: {},
+      setAttribute(k, v) { this.attrs[k] = v; }, appendChild(c) { c.parentNode = this; this.kids.push(c); },
+      removeChild(c) { this.kids = this.kids.filter((k) => k !== c); c.parentNode = null; },
+      remove() { if (this.parentNode) this.parentNode.removeChild(this); },
+      addEventListener(n, f) { this._l[n] = f; }, classList: { add() {}, remove() {} } };
+    return e;
+  };
+  const body = mk('body');
+  const doc = { readyState: 'complete', body, head: mk('head'), createElement: mk,
+    addEventListener(n, f) { (listeners[n] = listeners[n] || []).push(f); },
+    removeEventListener(n, f) { listeners[n] = (listeners[n] || []).filter((x) => x !== f); },
+    documentElement: { lang: 'tr', style: { setProperty() {} }, toggleAttribute() {} }, querySelector: () => null };
+  const ls = { getItem: (k) => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = v; }, removeItem: (k) => { delete store[k]; } };
+  const gc = { count: (o) => counted.push(o) };
+  const A = load({ document: doc, localStorage: ls, location: { search, pathname: '/dolmus/' }, navigator: {},
+    matchMedia: () => ({ matches: false }), requestAnimationFrame() {}, goatcounter: gc });
+  const fire = (n, isTrusted = true) => (listeners[n] || []).slice().forEach((f) => f({ isTrusted }));
+  return { A, body, counted, store, fire };
+}
+
+test('v1.1: isReturn — earlier day of this game, or (old profile) any earlier play', () => {
+  assert.equal(C.isReturn(20261109, 3, 0, 20261110), true);
+  assert.equal(C.isReturn(20261110, 3, 0, 20261110), false);
+  assert.equal(C.isReturn(undefined, 0, 0, 20261110), false);
+  assert.equal(C.isReturn(undefined, 2, Date.UTC(2026, 10, 8), 20261110), true);
+  assert.equal(C.isReturn(undefined, 2, Date.UTC(2026, 10, 10, 5), 20261110), false);
+  assert.equal(C.eventName('Like!'), 'like');
+});
+
+test('v1.1: first real input sends <game>/start once; synthetic events do not', () => {
+  const p = fakePage('');
+  p.fire('pointerdown', false); assert.equal(p.counted.length, 0);
+  p.fire('pointerdown'); p.fire('keydown');
+  assert.deepEqual(p.counted.map((o) => [o.path, o.event]), [['dolmus/start', true]]);
+});
+
+test('v1.1: returning player (played on an earlier day) also sends <game>/return', () => {
+  const p = fakePage('', { 'arena.profile.v1': JSON.stringify({ plays: { dolmus: 2 }, badges: {}, lastDay: { dolmus: 20200101 }, last: null, first: 1 }) });
+  p.fire('touchstart');
+  assert.deepEqual(p.counted.map((o) => o.path), ['dolmus/start', 'dolmus/return']);
+  assert.equal(JSON.parse(p.store['arena.profile.v1']).lastDay.dolmus, C.dayKey());
+});
+
+test('v1.1: complete() counts once and shows 👍/👎 once a day; a vote is counted and remembered', () => {
+  const p = fakePage('');
+  p.A.complete(); p.A.complete();
+  assert.deepEqual(p.counted.map((o) => o.path), ['dolmus/complete']);
+  const panel = p.body.kids.find((k) => k.attrs.class === 'arena-fb');
+  assert.ok(panel, 'feedback panel shown');
+  const up = panel.kids.find((k) => k.textContent === '👍');
+  up._l.click();
+  assert.deepEqual(p.counted.map((o) => o.path), ['dolmus/complete', 'dolmus/like']);
+  assert.equal(JSON.parse(p.store['arena.feedback.v1']).dolmus, C.dayKey());
+  const again = fakePage('', p.store); again.A.complete();
+  assert.equal(again.body.kids.filter((k) => k.attrs.class === 'arena-fb').length, 0, 'not asked twice a day');
+});
+
+test('v1.1: quiet runs (?auto) send nothing and show nothing', () => {
+  const p = fakePage('?auto');
+  p.fire('pointerdown'); p.A.complete(); p.A.track('x');
+  assert.equal(p.counted.length, 0);
+  assert.equal(p.body.kids.length, 0);
+});
+
+test('v1.1: complete({mount}) puts the row inline in the game\'s end screen', () => {
+  const p = fakePage('');
+  const mount = { kids: [], appendChild(c) { c.parentNode = this; this.kids.push(c); }, removeChild(c) { this.kids = this.kids.filter((k) => k !== c); } };
+  p.A.complete({ mount });
+  assert.equal(mount.kids.length, 1);
+  assert.equal(mount.kids[0].attrs.class, 'arena-fb arena-fb-inline');
+  assert.equal(p.body.kids.filter((k) => /arena-fb/.test(k.attrs.class || '')).length, 0);
 });

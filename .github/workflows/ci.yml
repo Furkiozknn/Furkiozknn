@@ -75,7 +75,7 @@ jobs:
       # Taban: bir test sessizce kaybolursa sayi duser ve adim kirmiziya doner.
       - name: arena-kit testleri
         env:
-          NODE_TABANI: "12"
+          NODE_TABANI: "18"
           INJECT_TABANI: "7"
         run: |
           set -euo pipefail

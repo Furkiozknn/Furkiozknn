@@ -14,8 +14,12 @@ if the game mounts it, an accessibility button.
 | `Arena.share({...})` / `Arena.shareCard({...})` | Web Share or clipboard text; 1080×1350 PNG card. |
 | `Arena.profile()`, `Arena.award(id)` | Cross-game passport: plays per game, badges (games share one origin). |
 | `Arena.settings`, `Arena.openSettings()`, `Arena.mountSettingsButton()`, `Arena.on('pause'|'resume'|'settings', fn)` | Accessibility: text size, high contrast, reduced motion, vibration on/off, pause when the tab is hidden. |
+| `Arena.complete({mount, feedback})` | v1.1: call where the game shows its own end/win screen. Sends one `<game>/complete` event per page load and, once a day per game, shows a one-tap 👍/👎 row (44 px buttons, ✕ to close); a vote sends `<game>/like` or `<game>/dislike`. Pass `mount` (an element of the end screen) to place the row inline below the game's own buttons; without it a small pill floats at the top and hides after 20 s. `{feedback:false}` skips it. |
+| `Arena.track(name)` | v1.1: one `<game>/<name>` event per page load. Automatic: `start` on the first real (trusted) pointer/key/touch input, `return` when this game was last played on an earlier day. |
 
 On `?auto`, `?nosave` or `?demo` (`Arena.quiet === true`, v1.0.1) the kit writes nothing to localStorage: bot and demo runs never touch the player's profile, streaks or settings.
+
+**Play events (v1.1).** The kit opens no connection of its own: events go to the page's existing GoatCounter counter (`window.goatcounter.count({path, event: true})`, the `count.js` tag already on the game pages) and are dropped if it is not there. No cookies, no ids, no new service; nothing is sent or shown on quiet runs (`?auto`/`?nosave`/`?demo`). GoatCounter itself does not count `localhost`, `file://` or automated browsers. The dashboard lists them under events as `dolmus/start`, `dolmus/complete`, `dolmus/return`, `dolmus/like`, `dolmus/dislike`.
 
 Storage keys all start with `arena.` and carry a version (`profile.v1`, `daily.v1`, …); every access
 is wrapped in try/catch and falls back to memory.
