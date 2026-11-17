@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 19:35 UTC",
+ "guncellendi": "2026-11-17 19:40 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -266,7 +266,7 @@
    "bagimli": [
     "G-024"
    ],
-   "not": "reklam yeri birleşti: Peri Golf #18/#19, Dolmuş #25, Kale Savunması #21, Çay Ocağı #22, Pamukkale #26 (tarayıcı + gate; mutasyon Dolmuş/Kale/Çay). Sıradaki: Çarşı Kaçışı, Kırkpınar, Simit Fırını"
+   "not": "reklam yeri birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı (#23); Kırkpınar #23 ve Simit Fırını #22 CI/birleştirme döngüsünde. Hepsi tarayıcı testli (site taban ile aynı hız, paket adEnd sonrası)"
   },
   {
    "id": "G-030",
@@ -402,10 +402,25 @@
   {
    "id": "G-043",
    "baslik": "Reklam yeri: portal yoksa eylem senkron (Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı)",
-   "durum": "Test Ediliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "portal",
-   "not": "Pamukkale gate'i bir mikro görevlik gecikmeyi yakaladı (#26'da düzeltildi); diğer 4 oyunda gate geçti ama site bire bir aynı olsun"
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "peri-golf #21, dolmus #27, kale-savunmasi #22, cay-ocagi #23: doğrulamalı birleşti (4 kontrol + gate RESULT OK)",
+    "Tarayıcı testleri (site + paket) dördünde TAMAM"
+   ]
+  },
+  {
+   "id": "G-044",
+   "baslik": "Portal paketleri: reklam yeri hazır 8 oyunun CrazyGames paketlerini indirilebilir yayımla",
+   "durum": "Bekliyor",
+   "oncelik": "P1",
+   "alan": "portal",
+   "bagimli": [
+    "G-029"
+   ],
+   "not": "tools/portal.mjs; kapaklar G-026 (vitrin) ile"
   }
  ]
 }
