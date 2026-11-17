@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 20:05 UTC",
+ "guncellendi": "2026-11-17 20:40 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -320,10 +320,19 @@
   },
   {
    "id": "G-034",
-   "baslik": "4 oyunda dil yedeği 'tr' kenar durumu (boş/geçersiz dil)",
-   "durum": "Bekliyor",
+   "baslik": "Dil yedeği kenar durumu (boş/geçersiz dil): 10 oyunda düzeltildi",
+   "durum": "Tamamlandı",
    "oncelik": "P3",
-   "alan": "oyunlar"
+   "alan": "oyunlar",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "Tarayıcı dil denetimi 21 oyun x 4 senaryo (normal, boş navigator.language, ?lang=de, kayıtlı lang:de)",
+    "origin/main'de 10 oyun FAIL: boş dil Türkçe (Boğaz, Çay, Hamsi), ?lang=de Türkçe (Çay, Çini, Kervan, Lale), kayıtlı 'de' ile çökme (Martı, Mehter, Peri Golf: TypeError) ya da 'undefined' (Boğaz) ya da Türkçe (Simit)",
+    "Düzeltme sonrası aynı denetim 21/21 OK",
+    "PR: kervan#23, hamsi#19, lale-bahcesi#23, cini-ustasi#20, mehter#23, simit-firini#23, cay-ocagi#24, marti#21, peri-golf#22, bogaz-vapuru#22; hepsi 4 kontrol success + gate RESULT OK",
+    "Çay Ocağı, Peri Golf, Simit Fırını portal paketleri düzeltmeyle yenilendi (social-videos portal-paketleri a6ac251), yeniden test OK"
+   ],
+   "not": ""
   },
   {
    "id": "G-035",
