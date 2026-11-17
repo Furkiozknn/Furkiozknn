@@ -71,6 +71,13 @@ jobs:
       - name: politika ve degisim testleri
         run: python3 schema/test_politika.py
 
+      # Merkezi proje panosu: gorevler.json kurallari (kanit, engel nedeni, bagimlilik,
+      # tekrar) ve PANO.md'nin gorevler.json'dan uretilmis guncel hali.
+      - name: proje panosu
+        run: |
+          python3 yonetim/test_pano.py
+          python3 yonetim/pano.py --kontrol
+
       # arena-kit: oyunlara satir ici basilan ortak katman (node runner imajinda hazir).
       # Taban: bir test sessizce kaybolursa sayi duser ve adim kirmiziya doner.
       - name: arena-kit testleri
