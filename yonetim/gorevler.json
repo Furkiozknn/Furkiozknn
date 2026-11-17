@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 19:05 UTC",
+ "guncellendi": "2026-11-17 19:35 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -266,7 +266,7 @@
    "bagimli": [
     "G-024"
    ],
-   "not": "Dolmuş #25 (vardiyalar arası) ve Kale Savunması #21 (dalgalar arası) birleşti, tarayıcı + mutasyon testli; sıradakiler: Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar, Simit Fırını"
+   "not": "reklam yeri birleşti: Peri Golf #18/#19, Dolmuş #25, Kale Savunması #21, Çay Ocağı #22, Pamukkale #26 (tarayıcı + gate; mutasyon Dolmuş/Kale/Çay). Sıradaki: Çarşı Kaçışı, Kırkpınar, Simit Fırını"
   },
   {
    "id": "G-030",
@@ -390,9 +390,22 @@
   {
    "id": "G-042",
    "baslik": "inject.mjs için test yok (eski inject.py'nin 7 testi taşınmadı)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
-   "alan": "altyapı"
+   "alan": "altyapı",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "arena-core #8: tests/inject.test.mjs (yerleşim, --kit-only/--core-only/--check, CRLF, eksik blok); CI ok",
+    "Mutasyon: CRLF koruması ya da çekirdek yerleşimi bozulunca kırılıyor"
+   ]
+  },
+  {
+   "id": "G-043",
+   "baslik": "Reklam yeri: portal yoksa eylem senkron (Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı)",
+   "durum": "Test Ediliyor",
+   "oncelik": "P1",
+   "alan": "portal",
+   "not": "Pamukkale gate'i bir mikro görevlik gecikmeyi yakaladı (#26'da düzeltildi); diğer 4 oyunda gate geçti ama site bire bir aynı olsun"
   }
  ]
 }
