@@ -2,13 +2,13 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 18:50 UTC
+Güncellendi: 2026-11-17 19:10 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 1 | 11 | 3 | 14 |
+| 3 | 3 | 11 | 3 | 14 |
 
-**Sıradaki iş:** G-037 (P1) Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn
+**Sıradaki iş:** G-030 (P2) furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin
 
 ## Kalıcı kullanıcı onayları
 
@@ -19,17 +19,19 @@ Güncellendi: 2026-11-17 18:50 UTC
 | Id | Öncelik | Durum | İş | Alan | Bağımlı | Not |
 |---|---|---|---|---|---|---|
 | G-020 | P0 | Devam Ediyor | Video kuyruğu: Kale Savunması, Hamsi | video |  | toplu.sh; 2 sa arka plan sınırında yeniden başlatılır |
-| G-024 | P1 | Devam Ediyor | arena-kit v1.3.1'i kalan 20 oyuna yay | oyunlar |  | pilot peri-golf #18 geçti; degisim.py 20/20 PASS; kullanıcı kalıcı onayı 17 Kas |
+| G-024 | P1 | Devam Ediyor | arena-kit v1.3.1'i kalan 20 oyuna yay | oyunlar |  | 20 PR açık; doğrulamalı birleştirme döngüsü (4 kontrol + gate RESULT OK) çalışıyor; pilot #18, degisim.py 20/20 PASS |
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer ücretsiz plan en çok 10 zamanlanmış gönderi |
+| G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48: fikstür paketi sahte adla değişti, 58 test OK; uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-023 | P1 | Test Ediliyor | video-studio #15 (dalış/sis/başlık motoru) birleştir | video | G-021 | yeniden çekimler kare kare temiz çıkınca |
+| G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
 | G-021 | P0 | Bekliyor (hazır değil) | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
 | G-022 | P1 | Bekliyor (hazır değil) | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
 | G-026 | P1 | Bekliyor (hazır değil) | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
-| G-037 | P1 | Bekliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | şu an reels 'Önce iskelet' tel kafesle açılıyor; performans.json ile önce/sonra ölç |
 | G-029 | P2 | Bekliyor (hazır değil) | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 |  |
 | G-030 | P2 | Bekliyor | furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin | altyapı |  | iki kaynak = karışıklık riski; CI testi korunmalı |
 | G-031 | P2 | Bekliyor | arena-core testleri CI'da koşsun (şu an yalnız yerelde) | altyapı |  |  |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
+| G-040 | P2 | Bekliyor (hazır değil) | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 |  |
 | G-032 | P3 | Bekliyor (hazır değil) | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
 | G-034 | P3 | Bekliyor | 4 oyunda dil yedeği 'tr' kenar durumu (boş/geçersiz dil) | oyunlar |  |  |

@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 18:50 UTC",
+ "guncellendi": "2026-11-17 19:10 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -206,7 +206,7 @@
    "durum": "Devam Ediyor",
    "oncelik": "P1",
    "alan": "oyunlar",
-   "not": "pilot peri-golf #18 geçti; degisim.py 20/20 PASS; kullanıcı kalıcı onayı 17 Kas"
+   "not": "20 PR açık; doğrulamalı birleştirme döngüsü (4 kontrol + gate RESULT OK) çalışıyor; pilot #18, degisim.py 20/20 PASS"
   },
   {
    "id": "G-025",
@@ -330,10 +330,10 @@
   {
    "id": "G-037",
    "baslik": "Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn",
-   "durum": "Bekliyor",
+   "durum": "Test Ediliyor",
    "oncelik": "P1",
    "alan": "video",
-   "not": "şu an reels 'Önce iskelet' tel kafesle açılıyor; performans.json ile önce/sonra ölç"
+   "not": "uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek"
   },
   {
    "id": "G-038",
@@ -342,6 +342,24 @@
    "oncelik": "P2",
    "alan": "sosyal",
    "not": "G-037 sonrası önce/sonra karşılaştırması"
+  },
+  {
+   "id": "G-039",
+   "baslik": "Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0",
+   "durum": "Test Ediliyor",
+   "oncelik": "P0",
+   "alan": "güvenlik",
+   "not": "Furkiozknn #48: fikstür paketi sahte adla değişti, 58 test OK; uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403)"
+  },
+  {
+   "id": "G-040",
+   "baslik": "Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn)",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "video",
+   "bagimli": [
+    "G-021"
+   ]
   }
  ]
 }
