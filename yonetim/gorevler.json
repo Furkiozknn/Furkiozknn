@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 19:15 UTC",
+ "guncellendi": "2026-11-17 19:05 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -260,27 +260,37 @@
   {
    "id": "G-029",
    "baslik": "Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...)",
-   "durum": "Bekliyor",
+   "durum": "Devam Ediyor",
    "oncelik": "P2",
    "alan": "portal",
    "bagimli": [
     "G-024"
-   ]
+   ],
+   "not": "Dolmuş #25 (vardiyalar arası) ve Kale Savunması #21 (dalgalar arası) birleşti, tarayıcı + mutasyon testli; sıradakiler: Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar, Simit Fırını"
   },
   {
    "id": "G-030",
    "baslik": "furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "altyapı",
-   "not": "iki kaynak = karışıklık riski; CI testi korunmalı"
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "arena-core #7: 18 kit testi taşındı, v1.3.2 üstünde 18/18 (CI taban 18)",
+    "furkiozknn/arena-kit (v1.1.0 kopya) ve CI adımı kaldırıldı; tek kaynak arena-core"
+   ]
   },
   {
    "id": "G-031",
    "baslik": "arena-core testleri CI'da koşsun (şu an yalnız yerelde)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
-   "alan": "altyapı"
+   "alan": "altyapı",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "arena-core #6: test.yml her push/PR; her dosya \": ok\" basmalı",
+    "arena-core #7: node:test adımı taban 18"
+   ]
   },
   {
    "id": "G-032",
@@ -353,7 +363,7 @@
    "durum": "Test Ediliyor",
    "oncelik": "P0",
    "alan": "güvenlik",
-   "not": "Furkiozknn #48: fikstür paketi sahte adla değişti, 58 test OK; uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403)"
+   "not": "Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403)"
   },
   {
    "id": "G-040",
@@ -364,6 +374,25 @@
    "bagimli": [
     "G-021"
    ]
+  },
+  {
+   "id": "G-041",
+   "baslik": "arena-kit v1.3.2: reklam 'adstart'/'adend' yayar, 'pause' değil (17 oyun pause'da kilitleniyordu)",
+   "durum": "Tamamlandı",
+   "oncelik": "P0",
+   "alan": "portal",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "arena-core #5 (d1c5cd1); pilot kale-savunmasi #21 (gate RESULT OK, tarayıcı: reklamdan sonra dalga 2 başlıyor)",
+    "degisim.py 20/20 PASS; 20 PR doğrulamalı birleşti (bütün kontroller success + gate RESULT OK)"
+   ]
+  },
+  {
+   "id": "G-042",
+   "baslik": "inject.mjs için test yok (eski inject.py'nin 7 testi taşınmadı)",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "altyapı"
   }
  ]
 }
