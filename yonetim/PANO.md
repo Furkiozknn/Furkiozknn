@@ -2,11 +2,11 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 20:40 UTC
+Güncellendi: 2026-11-17 22:10 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 3 | 7 | 3 | 23 |
+| 2 | 3 | 8 | 3 | 23 |
 
 **Sıradaki iş:** G-021 (P0) Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını
 
@@ -23,9 +23,10 @@ Güncellendi: 2026-11-17 20:40 UTC
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-023 | P1 | Test Ediliyor | video-studio #15 (dalış/sis/başlık motoru) birleştir | video | G-021 | yeniden çekimler kare kare temiz çıkınca |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
-| G-021 | P0 | Bekliyor | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
+| G-021 | P0 | Bekliyor | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 | Dolmuş, Çay Ocağı, Ebru çekildi. Dolmuş (kur/tarama/minyatür binadan geçiyordu) ve Ebru (minyatür duvar arkası) kamera ayarıyla yeniden çekimde; Çay Ocağı yayına hazır (social-videos e2604fb). Kalan: Pamukkale, Mimar Sinan, Kapadokya, Kervan, Simit (kuyruk5) |
 | G-022 | P1 | Bekliyor (hazır değil) | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
 | G-026 | P1 | Bekliyor | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
+| G-045 | P1 | Bekliyor | Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey) | video |  | rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15). |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor (hazır değil) | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 |  |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |

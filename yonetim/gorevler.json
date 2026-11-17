@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 20:40 UTC",
+ "guncellendi": "2026-11-17 22:10 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -183,7 +183,8 @@
    "alan": "video",
    "bagimli": [
     "G-020"
-   ]
+   ],
+   "not": "Dolmuş, Çay Ocağı, Ebru çekildi. Dolmuş (kur/tarama/minyatür binadan geçiyordu) ve Ebru (minyatür duvar arkası) kamera ayarıyla yeniden çekimde; Çay Ocağı yayına hazır (social-videos e2604fb). Kalan: Pamukkale, Mimar Sinan, Kapadokya, Kervan, Simit (kuyruk5)"
   },
   {
    "id": "G-022",
@@ -444,6 +445,14 @@
     "Zip: unzip -t hatasız, index.html kökte; social-videos dalı portal-paketleri 8e1d1a9 (crazygames/2026-11-17/), raw URL 200",
     "GitHub release oluşturma bu oturum türünde 403; bu yüzden dal + doğrudan dosya teslimi"
    ]
+  },
+  {
+   "id": "G-045",
+   "baslik": "Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)",
+   "durum": "Bekliyor",
+   "oncelik": "P1",
+   "alan": "video",
+   "not": "rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15)."
   }
  ]
 }
