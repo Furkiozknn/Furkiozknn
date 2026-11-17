@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 19:10 UTC",
+ "guncellendi": "2026-11-17 19:15 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -203,10 +203,14 @@
   {
    "id": "G-024",
    "baslik": "arena-kit v1.3.1'i kalan 20 oyuna yay",
-   "durum": "Devam Ediyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "oyunlar",
-   "not": "20 PR açık; doğrulamalı birleştirme döngüsü (4 kontrol + gate RESULT OK) çalışıyor; pilot #18, degisim.py 20/20 PASS"
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "20 PR doğrulamalı birleşti (her biri bütün kontroller success + gate RESULT OK): bogaz-vapuru #20, carsi-kacisi #21, cay-ocagi #20, cini-ustasi #18, dolmus #24, ebru #19, fay-hatti #10, hamsi #17, kale-savunmasi #20, kapadokya-balonu #20, karagoz #19, kervan #21, kirkpinar #21, lale-bahcesi #21, marti #19, mehter #21, mimar-sinan #23, pamukkale #24, simit-firini #20, topkapi-gecesi #19",
+    "Pilot peri-golf #18; degisim.py 20/20 PASS"
+   ]
   },
   {
    "id": "G-025",

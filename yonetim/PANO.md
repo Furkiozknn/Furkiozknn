@@ -2,13 +2,13 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 19:10 UTC
+Güncellendi: 2026-11-17 19:15 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 3 | 11 | 3 | 14 |
+| 2 | 3 | 11 | 3 | 15 |
 
-**Sıradaki iş:** G-030 (P2) furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin
+**Sıradaki iş:** G-029 (P2) Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...)
 
 ## Kalıcı kullanıcı onayları
 
@@ -19,7 +19,6 @@ Güncellendi: 2026-11-17 19:10 UTC
 | Id | Öncelik | Durum | İş | Alan | Bağımlı | Not |
 |---|---|---|---|---|---|---|
 | G-020 | P0 | Devam Ediyor | Video kuyruğu: Kale Savunması, Hamsi | video |  | toplu.sh; 2 sa arka plan sınırında yeniden başlatılır |
-| G-024 | P1 | Devam Ediyor | arena-kit v1.3.1'i kalan 20 oyuna yay | oyunlar |  | 20 PR açık; doğrulamalı birleştirme döngüsü (4 kontrol + gate RESULT OK) çalışıyor; pilot #18, degisim.py 20/20 PASS |
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer ücretsiz plan en çok 10 zamanlanmış gönderi |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48: fikstür paketi sahte adla değişti, 58 test OK; uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-023 | P1 | Test Ediliyor | video-studio #15 (dalış/sis/başlık motoru) birleştir | video | G-021 | yeniden çekimler kare kare temiz çıkınca |
@@ -27,12 +26,12 @@ Güncellendi: 2026-11-17 19:10 UTC
 | G-021 | P0 | Bekliyor (hazır değil) | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
 | G-022 | P1 | Bekliyor (hazır değil) | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
 | G-026 | P1 | Bekliyor (hazır değil) | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
-| G-029 | P2 | Bekliyor (hazır değil) | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 |  |
+| G-029 | P2 | Bekliyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 |  |
 | G-030 | P2 | Bekliyor | furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin | altyapı |  | iki kaynak = karışıklık riski; CI testi korunmalı |
 | G-031 | P2 | Bekliyor | arena-core testleri CI'da koşsun (şu an yalnız yerelde) | altyapı |  |  |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor (hazır değil) | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 |  |
-| G-032 | P3 | Bekliyor (hazır değil) | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
+| G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
 | G-034 | P3 | Bekliyor | 4 oyunda dil yedeği 'tr' kenar durumu (boş/geçersiz dil) | oyunlar |  |  |
 
@@ -48,27 +47,27 @@ Güncellendi: 2026-11-17 19:10 UTC
 
 | Oyun | Kit | Video (TR hikâye+reels) | Instagram | Portal |
 |---|---|---|---|---|
-| bogaz-vapuru | 1.1.0 | hazır | zamanlandı 20 Kas 19:00/20:00 | kit 1.3.1 yayımını bekliyor |
-| carsi-kacisi | 1.1.0 | hazır | sırada | kit 1.3.1 yayımını bekliyor |
-| cay-ocagi | 1.2.0 | yeniden çekim (tarama, minyatür) | sırada | kit 1.3.1 yayımını bekliyor |
-| cini-ustasi | 1.2.0 | hazır | zamanlandı 18 Kas 19:00/20:00 | kit 1.3.1 yayımını bekliyor |
-| dolmus | 1.2.0 | yeniden çekim (tarama) | hikâye 19 Kas 19:00; reels bekliyor | kit 1.3.1 yayımını bekliyor |
-| ebru | 1.1.0 | yeniden çekim (dalış sonu) | zamanlandı 19 Kas 12:00/13:00 (reels eski sürüm) | kit 1.3.1 yayımını bekliyor |
-| fay-hatti | 1.2.0 | yok | - | kit 1.3.1 yayımını bekliyor |
-| hamsi | 1.2.0 | kuyrukta | sırada | kit 1.3.1 yayımını bekliyor |
-| kale-savunmasi | 1.2.0 | çekiliyor | sırada | kit 1.3.1 yayımını bekliyor |
-| kapadokya-balonu | 1.1.0 | yeniden çekim | sırada | kit 1.3.1 yayımını bekliyor |
-| karagoz | 1.1.0 | hazır | yayımlandı 17 Kas | kit 1.3.1 yayımını bekliyor |
-| kervan | 1.1.0 | yeniden çekim (gündüz) | sırada | kit 1.3.1 yayımını bekliyor |
-| kirkpinar | 1.1.0 | hazır | sırada | kit 1.3.1 yayımını bekliyor |
-| lale-bahcesi | 1.1.0 | hazır | yayımlandı 16 Kas | kit 1.3.1 yayımını bekliyor |
-| marti | 1.2.0 | hazır (reels v2) | yayımlandı 17 Kas | kit 1.3.1 yayımını bekliyor |
-| mehter | 1.1.0 | hazır | sırada | kit 1.3.1 yayımını bekliyor |
-| mimar-sinan | 1.1.0 | yeniden çekim (sis, dalış) | sırada | kit 1.3.1 yayımını bekliyor |
-| pamukkale | 1.2.0 | yeniden çekim (sis) | sırada | kit 1.3.1 yayımını bekliyor |
+| bogaz-vapuru | 1.3.1 | hazır | zamanlandı 20 Kas 19:00/20:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| carsi-kacisi | 1.3.1 | hazır | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| cay-ocagi | 1.3.1 | yeniden çekim (tarama, minyatür) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| cini-ustasi | 1.3.1 | hazır | zamanlandı 18 Kas 19:00/20:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| dolmus | 1.3.1 | yeniden çekim (tarama) | hikâye 19 Kas 19:00; reels bekliyor | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| ebru | 1.3.1 | yeniden çekim (dalış sonu) | zamanlandı 19 Kas 12:00/13:00 (reels eski sürüm) | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| fay-hatti | 1.3.1 | yok | - | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| hamsi | 1.3.1 | kuyrukta | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| kale-savunmasi | 1.3.1 | çekiliyor | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| kapadokya-balonu | 1.3.1 | yeniden çekim | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| karagoz | 1.3.1 | hazır | yayımlandı 17 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| kervan | 1.3.1 | yeniden çekim (gündüz) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| kirkpinar | 1.3.1 | hazır | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| lale-bahcesi | 1.3.1 | hazır | yayımlandı 16 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| marti | 1.3.1 | hazır (reels v2) | yayımlandı 17 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| mehter | 1.3.1 | hazır | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| mimar-sinan | 1.3.1 | yeniden çekim (sis, dalış) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| pamukkale | 1.3.1 | yeniden çekim (sis) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
 | peri-golf | 1.3.1 | hazır | sırada | hazır: CrazyGames paketi 0,77 MB; gönderim hesap bekliyor |
-| simit-firini | 1.1.0 | yeniden çekim (gündüz) | sırada | kit 1.3.1 yayımını bekliyor |
-| topkapi-gecesi | 1.1.0 | hazır | zamanlandı 18 Kas 12:00/13:00 | kit 1.3.1 yayımını bekliyor |
+| simit-firini | 1.3.1 | yeniden çekim (gündüz) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| topkapi-gecesi | 1.3.1 | hazır | zamanlandı 18 Kas 12:00/13:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
@@ -76,6 +75,9 @@ Güncellendi: 2026-11-17 19:10 UTC
   - video-studio (özel depo) kutuphane/uretim/performans.json + oyun-araclari/performans/performans.py: 20 gönderi
   - Ortalama: Instagram reels ~290 izlenme, izleme süresi 2.5-3.5 sn; hikâye ~40 izlenme; X ~0 (ayrıntı özel depoda)
   - Bulgu -> G-037
+- **G-024** 2026-11-17 · arena-kit v1.3.1'i kalan 20 oyuna yay
+  - 20 PR doğrulamalı birleşti (her biri bütün kontroller success + gate RESULT OK): bogaz-vapuru #20, carsi-kacisi #21, cay-ocagi #20, cini-ustasi #18, dolmus #24, ebru #19, fay-hatti #10, hamsi #17, kale-savunmasi #20, kapadokya-balonu #20, karagoz #19, kervan #21, kirkpinar #21, lale-bahcesi #21, marti #19, mehter #21, mimar-sinan #23, pamukkale #24, simit-firini #20, topkapi-gecesi #19
+  - Pilot peri-golf #18; degisim.py 20/20 PASS
 - **G-013** 2026-11-17 · İngilizce varsayılan + Türkçe otomatik algılama (TOP 10 #4)
   - 21 oyunda navigator.language kontrolü mevcut (tarama 17 Kas)
 - **G-012** 2026-11-17 · Dalış kamerası: kapalı/düz kadraj ölçümü, kahraman odağı, sis kaydırma, yörünge kontrolü
