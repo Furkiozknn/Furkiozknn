@@ -1,0 +1,169 @@
+{
+ "kolonlar": [
+  {
+   "anahtar": "kit",
+   "baslik": "Kit"
+  },
+  {
+   "anahtar": "video",
+   "baslik": "Video (TR hikâye+reels)"
+  },
+  {
+   "anahtar": "instagram",
+   "baslik": "Instagram"
+  },
+  {
+   "anahtar": "portal",
+   "baslik": "Portal"
+  }
+ ],
+ "oyunlar": [
+  {
+   "oyun": "lale-bahcesi",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "yayımlandı 16 Kas",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "karagoz",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "yayımlandı 17 Kas",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "marti",
+   "kit": "1.3.1",
+   "video": "hazır (reels v2)",
+   "instagram": "yayımlandı 17 Kas",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "topkapi-gecesi",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "zamanlandı 18 Kas 12:00/13:00",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "cini-ustasi",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "zamanlandı 18 Kas 19:00/20:00",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "ebru",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (dalış sonu)",
+   "instagram": "zamanlandı 19 Kas 12:00/13:00 (reels eski sürüm)",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "dolmus",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (tarama)",
+   "instagram": "hikâye 19 Kas 19:00; reels bekliyor",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "bogaz-vapuru",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "zamanlandı 20 Kas 19:00/20:00",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "cay-ocagi",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (tarama, minyatür)",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "peri-golf",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "sırada",
+   "portal": "hazır: CrazyGames paketi 0,77 MB; gönderim hesap bekliyor"
+  },
+  {
+   "oyun": "mehter",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "kirkpinar",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "carsi-kacisi",
+   "kit": "1.3.1",
+   "video": "hazır",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "pamukkale",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (sis)",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "mimar-sinan",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (sis, dalış)",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "kapadokya-balonu",
+   "kit": "1.3.1",
+   "video": "yeniden çekim",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "kervan",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (gündüz)",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "simit-firini",
+   "kit": "1.3.1",
+   "video": "yeniden çekim (gündüz)",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "kale-savunmasi",
+   "kit": "1.3.1",
+   "video": "çekiliyor",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "hamsi",
+   "kit": "1.3.1",
+   "video": "kuyrukta",
+   "instagram": "sırada",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  },
+  {
+   "oyun": "fay-hatti",
+   "kit": "1.3.1",
+   "video": "yok",
+   "instagram": "-",
+   "portal": "kit 1.3.1 hazır; oyun içi reklam kancaları yok"
+  }
+ ]
+}
