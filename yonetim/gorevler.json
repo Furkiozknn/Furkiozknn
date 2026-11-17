@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 18:30 UTC",
+ "guncellendi": "2026-11-17 18:50 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -243,9 +243,15 @@
   {
    "id": "G-028",
    "baslik": "Yayın performansını kaydet (Buffer ölçümleri) ve içeriğe geri besle",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
-   "alan": "sosyal"
+   "alan": "sosyal",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "video-studio (özel depo) kutuphane/uretim/performans.json + oyun-araclari/performans/performans.py: 20 gönderi",
+    "Ortalama: Instagram reels ~290 izlenme, izleme süresi 2.5-3.5 sn; hikâye ~40 izlenme; X ~0 (ayrıntı özel depoda)",
+    "Bulgu -> G-037"
+   ]
   },
   {
    "id": "G-029",
@@ -320,6 +326,22 @@
     "neden": "GitHub sabitleme API'si bu oturumdan kapalı (yalnız profil sahibi arayüzden)",
     "gereken": "Kullanıcı github.com/Furkiozknn > Customize your pins"
    }
+  },
+  {
+   "id": "G-037",
+   "baslik": "Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn",
+   "durum": "Bekliyor",
+   "oncelik": "P1",
+   "alan": "video",
+   "not": "şu an reels 'Önce iskelet' tel kafesle açılıyor; performans.json ile önce/sonra ölç"
+  },
+  {
+   "id": "G-038",
+   "baslik": "Performans ölçümünü haftalık yenile (Buffer -> performans.json)",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "sosyal",
+   "not": "G-037 sonrası önce/sonra karşılaştırması"
   }
  ]
 }

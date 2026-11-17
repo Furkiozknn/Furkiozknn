@@ -2,13 +2,13 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 18:30 UTC
+Güncellendi: 2026-11-17 18:50 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 1 | 10 | 3 | 13 |
+| 3 | 1 | 11 | 3 | 14 |
 
-**Sıradaki iş:** G-028 (P2) Yayın performansını kaydet (Buffer ölçümleri) ve içeriğe geri besle
+**Sıradaki iş:** G-037 (P1) Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn
 
 ## Kalıcı kullanıcı onayları
 
@@ -25,10 +25,11 @@ Güncellendi: 2026-11-17 18:30 UTC
 | G-021 | P0 | Bekliyor (hazır değil) | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
 | G-022 | P1 | Bekliyor (hazır değil) | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
 | G-026 | P1 | Bekliyor (hazır değil) | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
-| G-028 | P2 | Bekliyor | Yayın performansını kaydet (Buffer ölçümleri) ve içeriğe geri besle | sosyal |  |  |
+| G-037 | P1 | Bekliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | şu an reels 'Önce iskelet' tel kafesle açılıyor; performans.json ile önce/sonra ölç |
 | G-029 | P2 | Bekliyor (hazır değil) | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 |  |
 | G-030 | P2 | Bekliyor | furkiozknn/arena-kit (eski v1.1.0 kopya) ile arena-core tek kaynakta birleşsin | altyapı |  | iki kaynak = karışıklık riski; CI testi korunmalı |
 | G-031 | P2 | Bekliyor | arena-core testleri CI'da koşsun (şu an yalnız yerelde) | altyapı |  |  |
+| G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-032 | P3 | Bekliyor (hazır değil) | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
 | G-034 | P3 | Bekliyor | 4 oyunda dil yedeği 'tr' kenar durumu (boş/geçersiz dil) | oyunlar |  |  |
@@ -69,6 +70,10 @@ Güncellendi: 2026-11-17 18:30 UTC
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
+- **G-028** 2026-11-17 · Yayın performansını kaydet (Buffer ölçümleri) ve içeriğe geri besle
+  - video-studio (özel depo) kutuphane/uretim/performans.json + oyun-araclari/performans/performans.py: 20 gönderi
+  - Ortalama: Instagram reels ~290 izlenme, izleme süresi 2.5-3.5 sn; hikâye ~40 izlenme; X ~0 (ayrıntı özel depoda)
+  - Bulgu -> G-037
 - **G-013** 2026-11-17 · İngilizce varsayılan + Türkçe otomatik algılama (TOP 10 #4)
   - 21 oyunda navigator.language kontrolü mevcut (tarama 17 Kas)
 - **G-012** 2026-11-17 · Dalış kamerası: kapalı/düz kadraj ölçümü, kahraman odağı, sis kaydırma, yörünge kontrolü
