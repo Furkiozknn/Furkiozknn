@@ -2,11 +2,11 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 20:05 UTC
+Güncellendi: 2026-11-17 20:40 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 3 | 8 | 3 | 22 |
+| 2 | 3 | 7 | 3 | 23 |
 
 **Sıradaki iş:** G-021 (P0) Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını
 
@@ -30,7 +30,6 @@ Güncellendi: 2026-11-17 20:05 UTC
 | G-040 | P2 | Bekliyor (hazır değil) | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 |  |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
-| G-034 | P3 | Bekliyor | 4 oyunda dil yedeği 'tr' kenar durumu (boş/geçersiz dil) | oyunlar |  |  |
 
 ## Engellenen işler
 
@@ -83,6 +82,12 @@ Güncellendi: 2026-11-17 20:05 UTC
 - **G-041** 2026-11-17 · arena-kit v1.3.2: reklam 'adstart'/'adend' yayar, 'pause' değil (17 oyun pause'da kilitleniyordu)
   - arena-core #5 (d1c5cd1); pilot kale-savunmasi #21 (gate RESULT OK, tarayıcı: reklamdan sonra dalga 2 başlıyor)
   - degisim.py 20/20 PASS; 20 PR doğrulamalı birleşti (bütün kontroller success + gate RESULT OK)
+- **G-034** 2026-11-17 · Dil yedeği kenar durumu (boş/geçersiz dil): 10 oyunda düzeltildi
+  - Tarayıcı dil denetimi 21 oyun x 4 senaryo (normal, boş navigator.language, ?lang=de, kayıtlı lang:de)
+  - origin/main'de 10 oyun FAIL: boş dil Türkçe (Boğaz, Çay, Hamsi), ?lang=de Türkçe (Çay, Çini, Kervan, Lale), kayıtlı 'de' ile çökme (Martı, Mehter, Peri Golf: TypeError) ya da 'undefined' (Boğaz) ya da Türkçe (Simit)
+  - Düzeltme sonrası aynı denetim 21/21 OK
+  - PR: kervan#23, hamsi#19, lale-bahcesi#23, cini-ustasi#20, mehter#23, simit-firini#23, cay-ocagi#24, marti#21, peri-golf#22, bogaz-vapuru#22; hepsi 4 kontrol success + gate RESULT OK
+  - Çay Ocağı, Peri Golf, Simit Fırını portal paketleri düzeltmeyle yenilendi (social-videos portal-paketleri a6ac251), yeniden test OK
 - **G-031** 2026-11-17 · arena-core testleri CI'da koşsun (şu an yalnız yerelde)
   - arena-core #6: test.yml her push/PR; her dosya ": ok" basmalı
   - arena-core #7: node:test adımı taban 18
