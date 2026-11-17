@@ -15,6 +15,23 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/"><img src="https://img.shields.io/badge/All_projects-directory-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Project directory on GitHub Pages"></a>
 </p>
 
+## 00 · Start here · Buradan başla
+
+<sub>Four games to try first: the deepest ones, each with a bot that plays it end to end in CI. · Önce bu dört oyunu dene: en derinleri, her birini bir bot CI'da baştan sona oynuyor.</sub>
+
+| | Game · Oyun | What you do · Ne yaparsın | Made by |
+|---|---|---|---|
+| 🚐 | [**Dolmuş**](https://furkiozknn.github.io/dolmus/) | Drive a shared minibus through an Istanbul neighbourhood, pick up and drop off passengers on time. · İstanbul'da dolmuş sür, yolcuyu zamanında al ve indir. | Claude Sonnet 5.5 |
+| ⛳ | [**Peri Golf**](https://furkiozknn.github.io/peri-golf/) | Physics mini-golf among Cappadocia's fairy chimneys. · Kapadokya peribacaları arasında fizik tabanlı mini golf. | Claude Fable 5.1 |
+| 🏰 | [**Hisar**](https://furkiozknn.github.io/kale-savunmasi/) | Tower defense at a seaside fortress. · Deniz kıyısındaki kalede kule savunması. | Claude Opus 5.5 |
+| 🐟 | [**Hamsi**](https://furkiozknn.github.io/hamsi/) | Black Sea fishing: straight nets, trawls and the big purse seiner, shaped by players' feedback. · Karadeniz balıkçılığı: uzatma ağları, trol ve büyük gırgır; oyuncu geri bildirimiyle gelişiyor. | Claude Sonnet 5.5 |
+
+### How they are made and checked · Nasıl yapılıyor ve denetleniyor
+
+- **Claude writes the game code.** Each game started from one prompt to one Claude model, then went through redesign rounds. I pick the theme, steer the design, play it, bring in players' feedback and decide what ships. The prompts are in each repository's `prompts/` folder. · **Oyunun kodunu Claude yazıyor.** Her oyun tek bir modele verilen bir prompttan doğdu, sonra yeniden tasarım turlarından geçti. Temayı ben seçiyorum, tasarımı yönlendiriyorum, oynuyorum, oyuncu geri bildirimini getiriyorum ve neyin yayına çıkacağına karar veriyorum.
+- **Every change is played by a bot before it ships.** `tools/smoke.mjs` opens the game in Chromium, Firefox and WebKit and fails on any page error; `tools/gate.mjs` lets the game's own `?auto` bot play the old and the new build and fails if the bot does measurably worse, or if a phone button is off-screen. Both run in each repository's CI. · **Her değişikliği yayından önce bir bot oynuyor.** Smoke testi üç tarayıcıda hatasız açılışı, gate eski ve yeni sürümü botla oynatıp sonuç kötüleşirse ya da telefonda bir düğme ekran dışında kalırsa yayını durduruyor.
+- **No numbers without a source.** Claims about a game (levels, scenes, bot results) come from its README and its CI runs; if something is not shipped on `main`, it is written as "coming". · **Kaynaksız sayı yok.** Bir oyun hakkındaki iddialar README'sinden ve CI çalışmalarından gelir; `main`'de olmayan şey "yakında" diye yazılır.
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/profile/divider-games-dark.svg">
   <img src="assets/profile/divider-games-light.svg" width="100%" alt="01 · PLAY">
@@ -344,11 +361,11 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
 
 ## 03 · Now · Şu an
 
-<sub>Updated 2026-10-28 · Güncelleme 2026-10-28</sub>
+<sub>Updated 2026-11-16 · Güncelleme 2026-11-16</sub>
 
-- 🎮 **20 games are live on GitHub Pages**, four per round, and every model made five of them. · 20 oyun GitHub Pages'te yayında; her model beşer oyun yaptı.
-- 🆕 **Round 6 is out:** Topkapı Gecesi, Mimar Sinan, Hamsi and Pamukkale. · 6. tur yayında.
-- 🎬 **Next: promo videos for the Round 4, 5, 6 and 1 games.** Round 4 videos go out on 29-30 October, Round 5 from 31 October; until the rest exist, the GIFs above stand in. · Sıradaki iş: 4., 5., 6. ve 1. tur oyunlarının tanıtım videoları; 4. turunkiler 29-30 Ekim'de, 5. turunkiler 31 Ekim'den itibaren çıkıyor.
+- 🎬 **A short video for every game, on Instagram:** a ~20-second story with a play link and a ~40-second reel, every frame recorded from the game's own engine while its bot plays. Lale Bahçesi is out; the other games follow, two a day. · Her oyun için Instagram'da ~20 sn hikâye ve ~40 sn reels; her kare oyunun kendi motorundan, bot oynarken kaydedildi.
+- 🐟 **Hamsi follows its players:** straight nets, midwater and bottom trawls and a Black Sea purse seiner came from players' requests. · Hamsi'deki uzatma ağları, trol ve Karadeniz gırgırı oyuncuların isteğiyle geldi.
+- 🔥 **Streak freeze in daily challenges:** earned every 7 streak days, it saves the one day you miss. Live in 8 games, coming to the rest. · Günlük görevde seri dondurucu: 7 seri gününde bir kazanılır, kaçırılan tek günü kurtarır. 8 oyunda yayında, diğerlerine geliyor.
 - ☕ **Like the games? Support them:** every game stays free; if you want to help the next round, you can [buy me a coffee](https://buymeacoffee.com/furkiozkann). · Oyunları beğendiysen [bir kahve ısmarlayarak](https://buymeacoffee.com/furkiozkann) yeni oyunlara destek olabilirsin; oyunlar her zaman ücretsiz.
 - 🗂️ **Every repository on one page:** the [project directory](https://furkiozknn.github.io/) is built from each repository's own `project-meta.json`. · Bütün depolar tek sayfada.
 
