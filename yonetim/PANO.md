@@ -2,13 +2,13 @@
 
 <!-- yonetim/pano.py uretti; elle duzenleme: kaynak yonetim/gorevler.json -->
 
-Güncellendi: 2026-11-17 19:40 UTC
+Güncellendi: 2026-11-17 20:05 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 3 | 9 | 3 | 20 |
+| 2 | 3 | 8 | 3 | 22 |
 
-**Sıradaki iş:** G-038 (P2) Performans ölçümünü haftalık yenile (Buffer -> performans.json)
+**Sıradaki iş:** G-021 (P0) Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını
 
 ## Kalıcı kullanıcı onayları
 
@@ -18,16 +18,14 @@ Güncellendi: 2026-11-17 19:40 UTC
 
 | Id | Öncelik | Durum | İş | Alan | Bağımlı | Not |
 |---|---|---|---|---|---|---|
-| G-020 | P0 | Devam Ediyor | Video kuyruğu: Kale Savunması, Hamsi | video |  | toplu.sh; 2 sa arka plan sınırında yeniden başlatılır |
-| G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer ücretsiz plan en çok 10 zamanlanmış gönderi |
-| G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı (#23); Kırkpınar #23 ve Simit Fırını #22 CI/birleştirme döngüsünde. Hepsi tarayıcı testli (site taban ile aynı hız, paket adEnd sonrası) |
+| G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer 9/10 dolu (eski hatalı Çay Ocağı hikâyesi taslağa alındı). Boş yer Dolmuş reels v3 için ayrıldı; Hamsi ve Kale videoları hazır (social-videos e9683db), 18 Kasım 10:10Z hatırlatmasıyla yer açılınca zamanlanacak |
+| G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-023 | P1 | Test Ediliyor | video-studio #15 (dalış/sis/başlık motoru) birleştir | video | G-021 | yeniden çekimler kare kare temiz çıkınca |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
-| G-021 | P0 | Bekliyor (hazır değil) | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
+| G-021 | P0 | Bekliyor | Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını | video | G-020 |  |
 | G-022 | P1 | Bekliyor (hazır değil) | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
-| G-026 | P1 | Bekliyor (hazır değil) | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
-| G-044 | P1 | Bekliyor (hazır değil) | Portal paketleri: reklam yeri hazır 8 oyunun CrazyGames paketlerini indirilebilir yayımla | portal | G-029 | tools/portal.mjs; kapaklar G-026 (vitrin) ile |
+| G-026 | P1 | Bekliyor | Peri Golf portal kapakları (vitrin) | portal | G-020 |  |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor (hazır değil) | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 |  |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
@@ -70,6 +68,12 @@ Güncellendi: 2026-11-17 19:40 UTC
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
+- **G-044** 2026-11-17 · Portal paketleri: reklam yeri hazır 8 oyunun CrazyGames paketlerini indirilebilir yayımla
+  - Tarayıcı çevrimdışı denetimi 7 pakette fonts.googleapis.com isteği buldu -> arena-core #9 (8c67679): Google Fonts pakete katılır, test + 2 mutasyon
+  - Yeniden paketleme sonrası çevrimdışı denetim RESULT OK (8): dış istek, eksik dosya, sayfa hatası, yazı tipi hatası, boş ekran yok
+  - Mola/ödül tarayıcı testleri 8/8 TAMAM (site ve paket karşılaştırmalı)
+  - Zip: unzip -t hatasız, index.html kökte; social-videos dalı portal-paketleri 8e1d1a9 (crazygames/2026-11-17/), raw URL 200
+  - GitHub release oluşturma bu oturum türünde 403; bu yüzden dal + doğrudan dosya teslimi
 - **G-043** 2026-11-17 · Reklam yeri: portal yoksa eylem senkron (Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı)
   - peri-golf #21, dolmus #27, kale-savunmasi #22, cay-ocagi #23: doğrulamalı birleşti (4 kontrol + gate RESULT OK)
   - Tarayıcı testleri (site + paket) dördünde TAMAM
@@ -92,6 +96,10 @@ Güncellendi: 2026-11-17 19:40 UTC
 - **G-024** 2026-11-17 · arena-kit v1.3.1'i kalan 20 oyuna yay
   - 20 PR doğrulamalı birleşti (her biri bütün kontroller success + gate RESULT OK): bogaz-vapuru #20, carsi-kacisi #21, cay-ocagi #20, cini-ustasi #18, dolmus #24, ebru #19, fay-hatti #10, hamsi #17, kale-savunmasi #20, kapadokya-balonu #20, karagoz #19, kervan #21, kirkpinar #21, lale-bahcesi #21, marti #19, mehter #21, mimar-sinan #23, pamukkale #24, simit-firini #20, topkapi-gecesi #19
   - Pilot peri-golf #18; degisim.py 20/20 PASS
+- **G-020** 2026-11-17 · Video kuyruğu: Kale Savunması, Hamsi
+  - Kale Savunması hikâye -14.0 LUFS/-1.5 dBTP, reels -14.3/-1.5 (kontrol.py TAMAM)
+  - Hamsi hikâye -14.0/-1.1, reels -14.3/-1.5 (TAMAM); kareler pano görüntüsünde kontrol edildi
+  - social-videos e9683db: 4 video + IG hikâye kodlaması (-2.9 / -2.1 dBTP), raw URL 200
 - **G-013** 2026-11-17 · İngilizce varsayılan + Türkçe otomatik algılama (TOP 10 #4)
   - 21 oyunda navigator.language kontrolü mevcut (tarama 17 Kas)
 - **G-012** 2026-11-17 · Dalış kamerası: kapalı/düz kadraj ölçümü, kahraman odağı, sis kaydırma, yörünge kontrolü

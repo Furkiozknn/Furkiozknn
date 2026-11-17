@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 19:40 UTC",
+ "guncellendi": "2026-11-17 20:05 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -164,10 +164,16 @@
   {
    "id": "G-020",
    "baslik": "Video kuyruğu: Kale Savunması, Hamsi",
-   "durum": "Devam Ediyor",
+   "durum": "Tamamlandı",
    "oncelik": "P0",
    "alan": "video",
-   "not": "toplu.sh; 2 sa arka plan sınırında yeniden başlatılır"
+   "not": "",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "Kale Savunması hikâye -14.0 LUFS/-1.5 dBTP, reels -14.3/-1.5 (kontrol.py TAMAM)",
+    "Hamsi hikâye -14.0/-1.1, reels -14.3/-1.5 (TAMAM); kareler pano görüntüsünde kontrol edildi",
+    "social-videos e9683db: 4 video + IG hikâye kodlaması (-2.9 / -2.1 dBTP), raw URL 200"
+   ]
   },
   {
    "id": "G-021",
@@ -218,7 +224,7 @@
    "durum": "Devam Ediyor",
    "oncelik": "P1",
    "alan": "sosyal",
-   "not": "Buffer ücretsiz plan en çok 10 zamanlanmış gönderi"
+   "not": "Buffer 9/10 dolu (eski hatalı Çay Ocağı hikâyesi taslağa alındı). Boş yer Dolmuş reels v3 için ayrıldı; Hamsi ve Kale videoları hazır (social-videos e9683db), 18 Kasım 10:10Z hatırlatmasıyla yer açılınca zamanlanacak"
   },
   {
    "id": "G-026",
@@ -266,7 +272,7 @@
    "bagimli": [
     "G-024"
    ],
-   "not": "reklam yeri birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı (#23); Kırkpınar #23 ve Simit Fırını #22 CI/birleştirme döngüsünde. Hepsi tarayıcı testli (site taban ile aynı hız, paket adEnd sonrası)"
+   "not": "reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi"
   },
   {
    "id": "G-030",
@@ -414,13 +420,21 @@
   {
    "id": "G-044",
    "baslik": "Portal paketleri: reklam yeri hazır 8 oyunun CrazyGames paketlerini indirilebilir yayımla",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "portal",
    "bagimli": [
     "G-029"
    ],
-   "not": "tools/portal.mjs; kapaklar G-026 (vitrin) ile"
+   "not": "",
+   "kapandi": "2026-11-17",
+   "kanit": [
+    "Tarayıcı çevrimdışı denetimi 7 pakette fonts.googleapis.com isteği buldu -> arena-core #9 (8c67679): Google Fonts pakete katılır, test + 2 mutasyon",
+    "Yeniden paketleme sonrası çevrimdışı denetim RESULT OK (8): dış istek, eksik dosya, sayfa hatası, yazı tipi hatası, boş ekran yok",
+    "Mola/ödül tarayıcı testleri 8/8 TAMAM (site ve paket karşılaştırmalı)",
+    "Zip: unzip -t hatasız, index.html kökte; social-videos dalı portal-paketleri 8e1d1a9 (crazygames/2026-11-17/), raw URL 200",
+    "GitHub release oluşturma bu oturum türünde 403; bu yüzden dal + doğrudan dosya teslimi"
+   ]
   }
  ]
 }
