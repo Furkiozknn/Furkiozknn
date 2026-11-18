@@ -485,10 +485,28 @@
   {
    "id": "G-046",
    "baslik": "video-studio main'de eski lint/tip hataları (eslint 10 hata, tsc 47 hata)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "video",
-   "not": "PR'lardan değil, main'de var (2026-11-18 karşılaştırma). En çok: src/v2/Proof.tsx 9, src/samples/KancaChallenge.tsx 7, src/styles/comic 6. sahne/motor/*.mjs için eslint node ortamı tanımlı değil (window/console no-undef). CLAUDE.md 'kod değişikliğinden sonra pnpm lint' kuralı şu an kırmızı başlıyor."
+   "not": "Kalan 3 eslint uyarısı (@remotion/non-pure-animation: CSS transition) G-047'ye ayrıldı.",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "video-studio #17 birleşti (77daf39)",
+    "tsc --noEmit exit 0 (önce 47 hata: tsconfig lib es2015 ↔ hedef ES2018 çelişkisi + 4 kullanılmayan bağ)",
+    "pnpm lint exit 0, 0 hata (önce 10); main üzerinde birleşme sonrası yeniden koşuldu",
+    "Regresyon: 4 promo şablonu + çini promo + Ep30-v3-en 3 kare dal/main bayt bayt aynı (7/7 md5)"
+   ]
+  },
+  {
+   "id": "G-047",
+   "baslik": "video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo)",
+   "durum": "Bekliyor",
+   "oncelik": "P3",
+   "alan": "video",
+   "bagimli": [
+    "G-046"
+   ],
+   "not": "Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı."
   }
  ]
 }
