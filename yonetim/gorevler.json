@@ -196,11 +196,20 @@
   {
    "id": "G-022",
    "baslik": "Fay Hattı hikâye + reels (hiç çekilmedi)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "video",
    "bagimli": [
     "G-021"
+   ],
+   "kapandi": "2026-11-18",
+   "not": "Fay Hattı 2D (canvas) oyun; 3D sahne motoru yerine yeni 2D yol: clock_capture.mjs kaydı + sahne/motor/iki_boyut.py (oyun/kur/tarama/minyatur/dalis). Bilinen küçük kusur: bot ~1,8 sn'de çözdüğü için kazanma penceresi her ~2,4 sn'de iddia yazısının arkasında kısa görünür.",
+   "kanit": [
+    "video-studio #16 birleşti (8c49a78): sahne/motor/iki_boyut.py, fay-hatti.json, tekPrompt/ikiBoyut",
+    "social-videos sahne-videolar c7f774b: 2026-11-18-fay-hatti-{hikaye-ig,reels}-tr.mp4; raw URL'ler 200",
+    "kontrol.py: reels -14.0 LUFS / -1.1 dBTP, hikâye -14.3 / -1.5; IG hikâye kodlaması -14.7 / -2.9",
+    "Regresyon: dolmus-reels-tr kare 15 ve 400 dal ile main arasında bayt bayt aynı (md5 35f57f56…)",
+    "Kare kare QA: fps=1 temas sayfaları (HUD gizli, tahta yazı alanının altında, --kaydir 260)"
    ]
   },
   {
@@ -216,7 +225,7 @@
    "kapandi": "2026-11-18",
    "kanit": [
     "video-studio #15 birleşti (39438d4)",
-    "CI yok; yerel kanıt: pnpm lint ve tsc dal ile main'de birebir aynı (eslint 13 sorun, tsc 47 hata, liste diff boş); src/sahne içinde 0 tsc hatası; cek.mjs node --check ok; 21 oyun json okunuyor"
+    "CI yok; yerel kanıt: pnpm lint ve tsc dal ile main'de birebir aynı (eslint 13 sorun, tsc 47 hata, liste diff boş); src/sahne içinde 0 tsc hatası; cek.mjs node --check ok; o anki 20 oyun json okunuyor (Fay Hattı #16 ile 21. oldu)"
    ]
   },
   {
