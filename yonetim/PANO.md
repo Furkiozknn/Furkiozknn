@@ -6,7 +6,7 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 2 | 6 | 3 | 28 |
+| 3 | 2 | 6 | 1 | 29 |
 
 **Sıradaki iş:** G-045 (P1) Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)
 
@@ -20,22 +20,21 @@ Güncellendi: 2026-11-18 03:45 UTC
 |---|---|---|---|---|---|---|
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer 10/10 dolu. 18 Kas 10:10Z hatırlatması yer açıldıkça sırayla zamanlar: Hamsi, Kale, Çay, Mimar Sinan, Pamukkale, Simit, Kapadokya, Kervan, Kırkpınar (+ Mehter/Çarşı yeni reels, daha önce gönderilmediyse) |
 | G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi |
+| G-035 | P3 | Devam Ediyor | Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan | araştırma |  | Kullanıcı 18 Kas: PDF'e bağlı kalma, aynı bilgiyi ücretsiz kaynaklardan derle. Reel içeriğine giriş olmadan erişilemedi; rehber Instagram/Meta resmi kaynakları + veri çalışmalarından, kutuphane'ye yazılacak ve kurallar.md ile karşılaştırılacak. |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
 | G-045 | P1 | Bekliyor | Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey) | video |  | rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15). |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 | Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü) |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
-| G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
+| G-033 | P3 | Bekliyor | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal |  | G-027 (CrazyGames) iptal edildi; Poki/Playgama artık ona bağlı değil. |
 | G-047 | P3 | Bekliyor | video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo) | video | G-046 | Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı. |
 
 ## Engellenen işler
 
 | Id | Öncelik | İş | Gerçek neden | Gereken |
 |---|---|---|---|---|
-| G-027 | P1 | Peri Golf'ü CrazyGames'e gönder | CrazyGames geliştirici hesabına erişim yok; yükleme ve gönderim hesap sahibinin işlemi | Kullanıcı developer.crazygames.com hesabıyla paketi (peri-golf-crazygames.zip, 0,77 MB) ve kapakları yükler |
-| G-035 | P3 | Instagram PDF reel analizi | Reel içeriği ücretli PDF'e bağlı; ücretsiz kısım için açıklama metni/ekran görüntüsü yok | Kullanıcı reel açıklamasını ya da ekran görüntülerini paylaşır |
-| G-036 | P3 | Profilde 4 depoyu sabitle | GitHub sabitleme API'si bu oturumdan kapalı (yalnız profil sahibi arayüzden) | Kullanıcı github.com/Furkiozknn > Customize your pins |
+| G-036 | P3 | Profilde 4 depoyu sabitle | GitHub sabitleme API'si bu oturumdan kapalı (yalnız profil sahibi arayüzden) | Kullanıcı github.com/Furkiozknn > Customize your pins (kullanıcı 18 Kas: 'birazdan hallederim') |
 
 ## Portföy
 
@@ -70,6 +69,8 @@ Güncellendi: 2026-11-18 03:45 UTC
   - tsc --noEmit exit 0 (önce 47 hata: tsconfig lib es2015 ↔ hedef ES2018 çelişkisi + 4 kullanılmayan bağ)
   - pnpm lint exit 0, 0 hata (önce 10); main üzerinde birleşme sonrası yeniden koşuldu
   - Regresyon: 4 promo şablonu + çini promo + Ep30-v3-en 3 kare dal/main bayt bayt aynı (7/7 md5)
+- **G-027** 2026-11-18 · Peri Golf'ü CrazyGames'e gönder
+  - Kullanıcı 18 Kas: 'CrazyGames i es geçelim o sorun yaratıyor'
 - **G-026** 2026-11-18 · Peri Golf portal kapakları (vitrin)
   - vitrin.py ile Peri Golf kapakları: 1920x1080, 800x1200, 800x800, itch 630x500 (ffprobe ile boyut doğrulandı); göz kontrolü pano.jpg
   - social-videos portal-paketleri 6659bcf (crazygames/2026-11-17/peri-golf-kapaklar/), kullanıcıya teslim edildi

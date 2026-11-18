@@ -267,16 +267,17 @@
   {
    "id": "G-027",
    "baslik": "Peri Golf'ü CrazyGames'e gönder",
-   "durum": "Engellendi",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "portal",
    "bagimli": [
     "G-026"
    ],
-   "engel": {
-    "neden": "CrazyGames geliştirici hesabına erişim yok; yükleme ve gönderim hesap sahibinin işlemi",
-    "gereken": "Kullanıcı developer.crazygames.com hesabıyla paketi (peri-golf-crazygames.zip, 0,77 MB) ve kapakları yükler"
-   }
+   "kapandi": "2026-11-18",
+   "not": "İPTAL (kullanıcı kararı 2026-11-18): CrazyGames es geçildi. Paket hazır kaldı (portal-paketleri dalı), gönderilmeyecek.",
+   "kanit": [
+    "Kullanıcı 18 Kas: 'CrazyGames i es geçelim o sorun yaratıyor'"
+   ]
   },
   {
    "id": "G-028",
@@ -342,9 +343,8 @@
    "durum": "Bekliyor",
    "oncelik": "P3",
    "alan": "portal",
-   "bagimli": [
-    "G-027"
-   ]
+   "bagimli": [],
+   "not": "G-027 (CrazyGames) iptal edildi; Poki/Playgama artık ona bağlı değil."
   },
   {
    "id": "G-034",
@@ -364,14 +364,11 @@
   },
   {
    "id": "G-035",
-   "baslik": "Instagram PDF reel analizi",
-   "durum": "Engellendi",
+   "baslik": "Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan",
+   "durum": "Devam Ediyor",
    "oncelik": "P3",
    "alan": "araştırma",
-   "engel": {
-    "neden": "Reel içeriği ücretli PDF'e bağlı; ücretsiz kısım için açıklama metni/ekran görüntüsü yok",
-    "gereken": "Kullanıcı reel açıklamasını ya da ekran görüntülerini paylaşır"
-   }
+   "not": "Kullanıcı 18 Kas: PDF'e bağlı kalma, aynı bilgiyi ücretsiz kaynaklardan derle. Reel içeriğine giriş olmadan erişilemedi; rehber Instagram/Meta resmi kaynakları + veri çalışmalarından, kutuphane'ye yazılacak ve kurallar.md ile karşılaştırılacak."
   },
   {
    "id": "G-036",
@@ -381,7 +378,7 @@
    "alan": "profil",
    "engel": {
     "neden": "GitHub sabitleme API'si bu oturumdan kapalı (yalnız profil sahibi arayüzden)",
-    "gereken": "Kullanıcı github.com/Furkiozknn > Customize your pins"
+    "gereken": "Kullanıcı github.com/Furkiozknn > Customize your pins (kullanıcı 18 Kas: 'birazdan hallederim')"
    }
   },
   {
