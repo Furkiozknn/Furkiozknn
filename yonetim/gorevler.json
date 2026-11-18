@@ -295,13 +295,18 @@
   {
    "id": "G-029",
    "baslik": "Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...)",
-   "durum": "Devam Ediyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "portal",
    "bagimli": [
     "G-024"
    ],
-   "not": "reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi"
+   "not": "reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "docs/arastirma/portal-uygunluk-2026-11.md: 13 oyun sıralı (boyut, mola noktası, midgame yeri, ödüllü kanca adayı, uygunluk)",
+    "portfoy.json portal sütunu güncellendi (CrazyGames iptali, Kırkpınar/Simit birleşmiş reklam yeri)"
+   ]
   },
   {
    "id": "G-030",
@@ -545,6 +550,17 @@
     "G-035"
    ],
    "not": "Birincil sayfalar (about.fb.com, help.instagram.com, transparency.meta.com, buffer.com) bu oturumun ağında kapalı. Ortama bu alan adları eklenirse teyit edilebilir; Instagram uygulamasındaki 'AI etiketi' ve 'Hesap Durumu' kontrolü kullanıcı hesabında."
+  },
+  {
+   "id": "G-050",
+   "baslik": "Reklam kancası pilotu: Martı (koşu sonu midgame + 'devam et' ödüllü), sonra toplu değişiklik kapısı ve kullanıcı onayı ile 12 oyuna",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "portal",
+   "bagimli": [
+    "G-029"
+   ],
+   "not": "CLAUDE.md: önce tek repoda pilot, sonra schema/degisim.py, sonra kullanıcı onayı. Portal SDK'sı yoksa eylem senkron sürer (kale-savunmasi #22 deseni)."
   }
  ]
 }
