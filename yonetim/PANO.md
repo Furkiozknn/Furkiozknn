@@ -6,9 +6,9 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 2 | 7 | 3 | 26 |
+| 2 | 2 | 6 | 3 | 27 |
 
-**Sıradaki iş:** G-022 (P1) Fay Hattı hikâye + reels (hiç çekilmedi)
+**Sıradaki iş:** G-045 (P1) Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)
 
 ## Kalıcı kullanıcı onayları
 
@@ -22,7 +22,6 @@ Güncellendi: 2026-11-18 03:45 UTC
 | G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
-| G-022 | P1 | Bekliyor | Fay Hattı hikâye + reels (hiç çekilmedi) | video | G-021 |  |
 | G-045 | P1 | Bekliyor | Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey) | video |  | rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15). |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 | Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü) |
@@ -71,7 +70,13 @@ Güncellendi: 2026-11-18 03:45 UTC
   - social-videos portal-paketleri 6659bcf (crazygames/2026-11-17/peri-golf-kapaklar/), kullanıcıya teslim edildi
 - **G-023** 2026-11-18 · video-studio #15 (dalış/sis/başlık motoru) birleştir
   - video-studio #15 birleşti (39438d4)
-  - CI yok; yerel kanıt: pnpm lint ve tsc dal ile main'de birebir aynı (eslint 13 sorun, tsc 47 hata, liste diff boş); src/sahne içinde 0 tsc hatası; cek.mjs node --check ok; 21 oyun json okunuyor
+  - CI yok; yerel kanıt: pnpm lint ve tsc dal ile main'de birebir aynı (eslint 13 sorun, tsc 47 hata, liste diff boş); src/sahne içinde 0 tsc hatası; cek.mjs node --check ok; o anki 20 oyun json okunuyor (Fay Hattı #16 ile 21. oldu)
+- **G-022** 2026-11-18 · Fay Hattı hikâye + reels (hiç çekilmedi)
+  - video-studio #16 birleşti (8c49a78): sahne/motor/iki_boyut.py, fay-hatti.json, tekPrompt/ikiBoyut
+  - social-videos sahne-videolar c7f774b: 2026-11-18-fay-hatti-{hikaye-ig,reels}-tr.mp4; raw URL'ler 200
+  - kontrol.py: reels -14.0 LUFS / -1.1 dBTP, hikâye -14.3 / -1.5; IG hikâye kodlaması -14.7 / -2.9
+  - Regresyon: dolmus-reels-tr kare 15 ve 400 dal ile main arasında bayt bayt aynı (md5 35f57f56…)
+  - Kare kare QA: fps=1 temas sayfaları (HUD gizli, tahta yazı alanının altında, --kaydir 260)
 - **G-021** 2026-11-18 · Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını
   - 8 oyun yeni motorla yeniden çekildi; her hikâye+reels 1 kare/sn tabakada kontrol edildi, kontrol.py -14 LUFS / tepe ≤ -1 dBTP (Pamukkale kaynak hikâye -0.9 -> IG kodlaması -2.3)
   - Kare kontrolünde bulunan ve düzeltilen kusurlar: Dolmuş (şehirde yörünge binadan geçiyordu -> odak sahne), Ebru (kapalı oda minyatürü duvar arkası -> açık yay), Pamukkale (bulut katmanı -> alçak açık yay), Kapadokya (düz zemin, kahraman yok -> oyun kamerası), Kervan (geceye taşma -> hep gündüz kancası), Kırkpınar reels (boş çim dalış -> oyun kamerası, minyatür ön yay)
