@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncellendi": "2026-11-17 22:10 UTC",
+ "guncellendi": "2026-11-18 03:45 UTC",
  "kalici_onaylar": [
   {
    "tarih": "2026-11-17",
@@ -178,13 +178,20 @@
   {
    "id": "G-021",
    "baslik": "Yeni motorla yeniden çekim: Dolmuş, Çay Ocağı, Ebru, Pamukkale, Mimar Sinan, Kapadokya Balonu, Kervan, Simit Fırını",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P0",
    "alan": "video",
    "bagimli": [
     "G-020"
    ],
-   "not": "Dolmuş, Çay Ocağı, Ebru çekildi. Dolmuş (kur/tarama/minyatür binadan geçiyordu) ve Ebru (minyatür duvar arkası) kamera ayarıyla yeniden çekimde; Çay Ocağı yayına hazır (social-videos e2604fb). Kalan: Pamukkale, Mimar Sinan, Kapadokya, Kervan, Simit (kuyruk5)"
+   "not": "",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "8 oyun yeni motorla yeniden çekildi; her hikâye+reels 1 kare/sn tabakada kontrol edildi, kontrol.py -14 LUFS / tepe ≤ -1 dBTP (Pamukkale kaynak hikâye -0.9 -> IG kodlaması -2.3)",
+    "Kare kontrolünde bulunan ve düzeltilen kusurlar: Dolmuş (şehirde yörünge binadan geçiyordu -> odak sahne), Ebru (kapalı oda minyatürü duvar arkası -> açık yay), Pamukkale (bulut katmanı -> alçak açık yay), Kapadokya (düz zemin, kahraman yok -> oyun kamerası), Kervan (geceye taşma -> hep gündüz kancası), Kırkpınar reels (boş çim dalış -> oyun kamerası, minyatür ön yay)",
+    "social-videos sahne-videolar: Dolmuş 3cb3513, Çay e2604fb, Ebru 28021c1, Pamukkale 3c7d02c, Mimar Sinan d7b8ee5, Kapadokya db814d0, Kervan 9626767, Simit 80a54a6; reels yeniden kurgu: Mehter 85683da, Çarşı aab25cb, Kırkpınar fdc8741",
+    "Buffer: Dolmuş ve Ebru gönderileri v3 ile değiştirildi, Dolmuş reels 19 Kas 17:00Z zamanlandı"
+   ]
   },
   {
    "id": "G-022",
@@ -199,13 +206,18 @@
   {
    "id": "G-023",
    "baslik": "video-studio #15 (dalış/sis/başlık motoru) birleştir",
-   "durum": "Test Ediliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "video",
    "bagimli": [
     "G-021"
    ],
-   "not": "yeniden çekimler kare kare temiz çıkınca"
+   "not": "",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "video-studio #15 birleşti (39438d4)",
+    "CI yok; yerel kanıt: pnpm lint ve tsc dal ile main'de birebir aynı (eslint 13 sorun, tsc 47 hata, liste diff boş); src/sahne içinde 0 tsc hatası; cek.mjs node --check ok; 21 oyun json okunuyor"
+   ]
   },
   {
    "id": "G-024",
@@ -225,17 +237,23 @@
    "durum": "Devam Ediyor",
    "oncelik": "P1",
    "alan": "sosyal",
-   "not": "Buffer 9/10 dolu (eski hatalı Çay Ocağı hikâyesi taslağa alındı). Boş yer Dolmuş reels v3 için ayrıldı; Hamsi ve Kale videoları hazır (social-videos e9683db), 18 Kasım 10:10Z hatırlatmasıyla yer açılınca zamanlanacak"
+   "not": "Buffer 10/10 dolu. 18 Kas 10:10Z hatırlatması yer açıldıkça sırayla zamanlar: Hamsi, Kale, Çay, Mimar Sinan, Pamukkale, Simit, Kapadokya, Kervan, Kırkpınar (+ Mehter/Çarşı yeni reels, daha önce gönderilmediyse)"
   },
   {
    "id": "G-026",
    "baslik": "Peri Golf portal kapakları (vitrin)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "portal",
    "bagimli": [
     "G-020"
-   ]
+   ],
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "vitrin.py ile Peri Golf kapakları: 1920x1080, 800x1200, 800x800, itch 630x500 (ffprobe ile boyut doğrulandı); göz kontrolü pano.jpg",
+    "social-videos portal-paketleri 6659bcf (crazygames/2026-11-17/peri-golf-kapaklar/), kullanıcıya teslim edildi"
+   ],
+   "not": ""
   },
   {
    "id": "G-027",
@@ -389,7 +407,8 @@
    "alan": "video",
    "bagimli": [
     "G-021"
-   ]
+   ],
+   "not": "Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü)"
   },
   {
    "id": "G-041",
@@ -453,6 +472,14 @@
    "oncelik": "P1",
    "alan": "video",
    "not": "rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15)."
+  },
+  {
+   "id": "G-046",
+   "baslik": "video-studio main'de eski lint/tip hataları (eslint 10 hata, tsc 47 hata)",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "video",
+   "not": "PR'lardan değil, main'de var (2026-11-18 karşılaştırma). En çok: src/v2/Proof.tsx 9, src/samples/KancaChallenge.tsx 7, src/styles/comic 6. sahne/motor/*.mjs için eslint node ortamı tanımlı değil (window/console no-undef). CLAUDE.md 'kod değişikliğinden sonra pnpm lint' kuralı şu an kırmızı başlıyor."
   }
  ]
 }
