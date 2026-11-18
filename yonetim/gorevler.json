@@ -567,17 +567,19 @@
   {
    "id": "G-050",
    "baslik": "Reklam kancası pilotu: Martı (koşu sonu midgame + 'devam et' ödüllü), sonra toplu değişiklik kapısı ve kullanıcı onayı ile 12 oyuna",
-   "durum": "Engellendi",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "portal",
    "bagimli": [
     "G-029"
    ],
    "not": "CLAUDE.md: önce tek repoda pilot, sonra schema/degisim.py, sonra kullanıcı onayı. Portal SDK'sı yoksa eylem senkron sürer (kale-savunmasi #22 deseni).",
-   "engel": {
-    "neden": "Pilot tamam (marti #22 birleşti bf78ddd: koşu sonu midgame + ödüllü devam; sahte Poki SDK testi 15/15, kapı RESULT OK, 4/4 kontrol). CLAUDE.md: 12 oyuna yaymak toplu değişiklik, schema/degisim.py kapısı ve kullanıcı onayı gerekiyor.",
-    "gereken": "Kullanıcı onayı: kalan 12 oyuna (sıra docs/arastirma/portal-uygunluk-2026-11.md) aynı desenle reklam kancası"
-   }
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "Kullanıcı onayı 18 Kas; 12 oyun PR'ı + Martı pilotu (bf78ddd). Hepsi sahte SDK Playwright testiyle (dalda OK, main'de FAIL), degisim.py açık --silinebilir kalıplarıyla PASS (silinen satırlar yalnız mola düğmesi bağlantıları), CI 4/4 + kapı RESULT OK",
+    "Birleşen: fay-hatti 5967b48, karagoz 7977c54, kervan e8179f4, lale-bahcesi e49c04c, ebru 59744de, mehter 2e3c4f5, kapadokya-balonu d210a36, bogaz-vapuru 42310ca, mimar-sinan 3769263; cini-ustasi #21, topkapi-gecesi #21, hamsi #20 son CI'da (webkit zaman sınırı 30 dk ile)",
+    "Ödüllü kanca: Martı (devam), Çini (ipucu), Kapadokya (rüzgâr tablosu); diğerlerinde denge/kayıt riski nedeniyle yok"
+   ]
   },
   {
    "id": "G-051",
@@ -590,16 +592,18 @@
   {
    "id": "G-052",
    "baslik": "Poki'ye gönderim",
-   "durum": "Engellendi",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "portal",
    "bagimli": [
     "G-033"
    ],
-   "engel": {
-    "neden": "Poki for Developers geliştirici hesabı ve başvurusu kullanıcının işlemi",
-    "gereken": "Kullanıcı Poki geliştirici hesabı açar; paketler social-videos portal-paketleri poki/2026-11-18/"
-   }
+   "kapandi": "2026-11-18",
+   "not": "İPTAL (kullanıcı 18 Kas: Poki'den vazgeçildi). Paketler silindi, portal.mjs poki hedefi kaldırıldı (arena-core #11).",
+   "kanit": [
+    "social-videos portal-paketleri: poki/ kaldırıldı",
+    "arena-core #11 (ef57f4c)"
+   ]
   },
   {
    "id": "G-053",
@@ -615,10 +619,33 @@
   {
    "id": "G-054",
    "baslik": "Oyun CI: smoke (webkit) Ubuntu paket aynası yavaşlığında 15 dk sınırına takılıyor",
-   "durum": "Bekliyor",
+   "durum": "Devam Ediyor",
    "oncelik": "P3",
    "alan": "altyapı",
-   "not": "18 Kas marti #22 ve kale #23'te testlerden önce apt kurulumunda iptal; tek yeniden çalıştırmada geçti. Öneri: webkit bağımlılıklarını önbellekle ya da timeout'u 25 dk yap."
+   "not": "18 Kas: cini/topkapi/hamsi PR dallarında smoke webkit timeout 30 dk (öbürleri 15) ile geçti. Kalan 18 oyuna aynı satır: toplu değişiklik, pilot = bu 3 oyun."
+  },
+  {
+   "id": "G-055",
+   "baslik": "itch.io'ya yükleme: 21 oyun paketi hazır",
+   "durum": "Engellendi",
+   "oncelik": "P1",
+   "alan": "portal",
+   "engel": {
+    "neden": "itch.io bu ortamın ağında kapalı ve yükleme kullanıcının itch.io hesabıyla yapılır",
+    "gereken": "Kullanıcı zip'leri itch.io panelinden yükler (social-videos portal-paketleri b4f6f73 itch/2026-11-18/, adımlar NOTLAR.md) ya da otomatik yükleme için itch.io API anahtarı + ağ izni verir"
+   },
+   "not": "arena-core #11 itch hedefi, #12 CSS @import yazı tipi düzeltmesi; çevrimdışı denetim 21/21 OK."
+  },
+  {
+   "id": "G-056",
+   "baslik": "Video efekt analizi (YouTube t9MFvSJHLsI, 3:15 renk/stil) ve oturumlara duyuru",
+   "durum": "Engellendi",
+   "oncelik": "P2",
+   "alan": "video",
+   "engel": {
+    "neden": "YouTube bu ortamda kapalı; YouTube erişimli 'Furkiozknn oyun ve video' ortamında açılan oturum (session_01DF48NPTMAeH1rsd2gY4CUG) kullanıcının izin onayını bekliyor",
+    "gereken": "Kullanıcı o oturumda Get Environment ve googlevideo alan adı izinlerini onaylar"
+   }
   }
  ]
 }
