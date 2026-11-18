@@ -551,7 +551,7 @@
     "G-045",
     "G-040"
    ],
-   "not": "Kale ve Çay yeniden çekildi ve social-videos 5089b2f'ye kondu (reels 0/40 düz, 0/39 durgun; kontrol.py TAMAM), Buffer hatırlatması yeni dosyalara çevrildi. Hamsi oyunun kamerasıyla yeniden çekiliyor. Sonra: Peri Golf oyun (11/11 durgun), Çini tarama (düz duvar; yeni ölçüyle düzeldiği görüldü), Martı minyatür, Lale dalış başı."
+   "not": "Kale ve Çay yeniden çekildi (social-videos 5089b2f; reels 0/40 düz, 0/39 durgun); Kale Buffer'da 20 Kas 09:00/10:00, Çay 18 Kas 17:10Z hatırlatmasıyla sıraya girecek. Çini Ustası tarama yeniden çekildi (59e2af2; yeni rayAc ölçüsü varsayılan yolu düz bulup 180° çevirdi, tarama 0/9 düz, reels 1/40) ve 18 Kas 16:00/17:00 Buffer gönderilerinin videosu değiştirildi. video-studio #22 birleşti (0e32744). Hamsi beklemede: ham çekimler iyileşti (oyun/tarama/dalis OK) ama reels'te kur ve minyatür bölümü 16/40 düz (kurgu efektleri karanlık denizi eşiğin altına itiyor); sıradaki deneme: bu iki bölümde tekneye yakın kamera. Kalan: Peri Golf oyun (11/11 durgun), Martı minyatür, Lale dalış başı."
   },
   {
    "id": "G-049",
