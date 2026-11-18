@@ -6,7 +6,7 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 2 | 6 | 3 | 27 |
+| 2 | 2 | 6 | 3 | 28 |
 
 **Sıradaki iş:** G-045 (P1) Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)
 
@@ -25,9 +25,9 @@ Güncellendi: 2026-11-18 03:45 UTC
 | G-045 | P1 | Bekliyor | Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey) | video |  | rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15). |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-040 | P2 | Bekliyor | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 | Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü) |
-| G-046 | P2 | Bekliyor | video-studio main'de eski lint/tip hataları (eslint 10 hata, tsc 47 hata) | video |  | PR'lardan değil, main'de var (2026-11-18 karşılaştırma). En çok: src/v2/Proof.tsx 9, src/samples/KancaChallenge.tsx 7, src/styles/comic 6. sahne/motor/*.mjs için eslint node ortamı tanımlı değil (window/console no-undef). CLAUDE.md 'kod değişikliğinden sonra pnpm lint' kuralı şu an kırmızı başlıyor. |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor (hazır değil) | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal | G-027 |  |
+| G-047 | P3 | Bekliyor | video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo) | video | G-046 | Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı. |
 
 ## Engellenen işler
 
@@ -65,6 +65,11 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
+- **G-046** 2026-11-18 · video-studio main'de eski lint/tip hataları (eslint 10 hata, tsc 47 hata)
+  - video-studio #17 birleşti (77daf39)
+  - tsc --noEmit exit 0 (önce 47 hata: tsconfig lib es2015 ↔ hedef ES2018 çelişkisi + 4 kullanılmayan bağ)
+  - pnpm lint exit 0, 0 hata (önce 10); main üzerinde birleşme sonrası yeniden koşuldu
+  - Regresyon: 4 promo şablonu + çini promo + Ep30-v3-en 3 kare dal/main bayt bayt aynı (7/7 md5)
 - **G-026** 2026-11-18 · Peri Golf portal kapakları (vitrin)
   - vitrin.py ile Peri Golf kapakları: 1920x1080, 800x1200, 800x800, itch 630x500 (ffprobe ile boyut doğrulandı); göz kontrolü pano.jpg
   - social-videos portal-paketleri 6659bcf (crazygames/2026-11-17/peri-golf-kapaklar/), kullanıcıya teslim edildi
