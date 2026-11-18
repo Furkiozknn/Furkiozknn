@@ -6,9 +6,9 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 2 | 2 | 6 | 1 | 33 |
+| 4 | 2 | 4 | 3 | 35 |
 
-**Sıradaki iş:** G-038 (P2) Performans ölçümünü haftalık yenile (Buffer -> performans.json)
+**Sıradaki iş:** G-049 (P2) Instagram rehberi önerilerini teyit edip kurallara işle: YZ etiketi aracı, hikâye A/B, sıklık cümlesi, kenarlık denemesi, 5 hashtag + anahtar kelime, Hesap Durumu kontrolü
 
 ## Kalıcı kullanıcı onayları
 
@@ -19,20 +19,22 @@ Güncellendi: 2026-11-18 03:45 UTC
 | Id | Öncelik | Durum | İş | Alan | Bağımlı | Not |
 |---|---|---|---|---|---|---|
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer 10/10 dolu. 18 Kas 10:10Z hatırlatması yer açıldıkça sırayla zamanlar: Hamsi, Kale, Çay, Mimar Sinan, Pamukkale, Simit, Kapadokya, Kervan, Kırkpınar (+ Mehter/Çarşı yeni reels, daha önce gönderilmediyse) |
-| G-048 | P1 | Devam Ediyor | Kalite taramasında kusurlu çıkan çekimleri yeniden çek: Kale Savunması, Çay Ocağı (durgun oynanış), Hamsi (karanlık boş deniz); sonra Peri Golf oyun, Çini tarama, Martı minyatür, Lale dalış | video | G-045, G-040 | Kale/Çay/Hamsi Buffer hatırlatmasında beklemeye alındı (18 Kas 10:10Z). Kale: ?cam=15,12,10,4,2 + ısınma 63 -> durgun 2/11 (eskisi 10/11). Çay: zoom=1.7 -> 2/11 (eskisi 8/11). Motor hatası düzeltildi: plan.sorgu kullanılmıyordu. |
+| G-048 | P1 | Devam Ediyor | Kalite taramasında kusurlu çıkan çekimleri yeniden çek: Kale Savunması, Çay Ocağı (durgun oynanış), Hamsi (karanlık boş deniz); sonra Peri Golf oyun, Çini tarama, Martı minyatür, Lale dalış | video | G-045, G-040 | Kale ve Çay yeniden çekildi ve social-videos 5089b2f'ye kondu (reels 0/40 düz, 0/39 durgun; kontrol.py TAMAM), Buffer hatırlatması yeni dosyalara çevrildi. Hamsi oyunun kamerasıyla yeniden çekiliyor. Sonra: Peri Golf oyun (11/11 durgun), Çini tarama (düz duvar; yeni ölçüyle düzeldiği görüldü), Martı minyatür, Lale dalış başı. |
+| G-038 | P2 | Devam Ediyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | 18 Kas elle yenilendi: video-studio #20 (b485b66), 40 gönderi; IG reels n=15 ort. izlenme 503. Haftalık otomatik görev daha önce izin denetiminden geçmedi; sıradaki elle yenileme 25 Kas. |
+| G-032 | P3 | Devam Ediyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 | 18 Kas denetimi: Peri Golf (12 delik, yıldız, delik seçimi) ve Pamukkale (23 bölüm, 5 bölge haritası) meta-ilerlemeye zaten sahip; Dolmuş ve Çay'da yıldız var, seçim ekranı yok; Kale'de yoktu. Pilot: kale-savunmasi #23 birleşti (2a27eb9) zaferde kalan cana göre 1-3 yıldız, ödülsüz (Playwright 9/9, kapı RESULT OK). Sıradaki: Dolmuş vardiya seçimi ızgarası (faz3 dolmus.md:45), Çay rütbe -> görünür süs (cay-ocagi.md:61). |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
-| G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
-| G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
+| G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek 18 Kas ara ölçüm: yeni motor reels'leri (Lale, Karagöz, Martı) ort. izlenme 3,16 sn vs eski 8 reels 3,51 sn; ancak ölçüm 9-33 saatlik ve asıl açılış değişikliği Dolmuş/Ebru v3 ile 19 Kas'ta çıkıyor. Erişim 14-15 Kas ~1000'den 16-17 Kas 150-270'e düştü. |
 | G-049 | P2 | Bekliyor | Instagram rehberi önerilerini teyit edip kurallara işle: YZ etiketi aracı, hikâye A/B, sıklık cümlesi, kenarlık denemesi, 5 hashtag + anahtar kelime, Hesap Durumu kontrolü | sosyal | G-035 | Birincil sayfalar (about.fb.com, help.instagram.com, transparency.meta.com, buffer.com) bu oturumun ağında kapalı. Ortama bu alan adları eklenirse teyit edilebilir; Instagram uygulamasındaki 'AI etiketi' ve 'Hesap Durumu' kontrolü kullanıcı hesabında. |
-| G-050 | P2 | Bekliyor | Reklam kancası pilotu: Martı (koşu sonu midgame + 'devam et' ödüllü), sonra toplu değişiklik kapısı ve kullanıcı onayı ile 12 oyuna | portal | G-029 | CLAUDE.md: önce tek repoda pilot, sonra schema/degisim.py, sonra kullanıcı onayı. Portal SDK'sı yoksa eylem senkron sürer (kale-savunmasi #22 deseni). |
-| G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
-| G-033 | P3 | Bekliyor | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal |  | G-027 (CrazyGames) iptal edildi; Poki/Playgama artık ona bağlı değil. |
-| G-047 | P3 | Bekliyor | video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo) | video | G-046 | Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı. |
+| G-051 | P2 | Bekliyor | Test bayrakları oyuncu kaydına yazıyor: Dolmuş ve Pamukkale ?auto/?nosave'i yok sayıyor, Peri Golf ?auto'da, Kale ?nosave'de yazıyor (KARARLAR #3) | oyunlar |  | 18 Kas G-032 denetiminin yan bulgusu (dolmus lsSet 3013, pamukkale writeJSON 1703, peri-golf store.set 2571, kale store.set 2037). 4 depo: önce tek oyunda pilot. |
+| G-053 | P3 | Bekliyor | Playgama paketleri: playgama-bridge.js ve config (üçüncü taraf kod) incelenip sabitlenerek pakete eklenir | portal | G-033 | portal.mjs --portal playgama hazır; köprü dosyası Playgama SDK'sından, sürüm sabit ve SHA ile. |
+| G-054 | P3 | Bekliyor | Oyun CI: smoke (webkit) Ubuntu paket aynası yavaşlığında 15 dk sınırına takılıyor | altyapı |  | 18 Kas marti #22 ve kale #23'te testlerden önce apt kurulumunda iptal; tek yeniden çalıştırmada geçti. Öneri: webkit bağımlılıklarını önbellekle ya da timeout'u 25 dk yap. |
 
 ## Engellenen işler
 
 | Id | Öncelik | İş | Gerçek neden | Gereken |
 |---|---|---|---|---|
+| G-050 | P2 | Reklam kancası pilotu: Martı (koşu sonu midgame + 'devam et' ödüllü), sonra toplu değişiklik kapısı ve kullanıcı onayı ile 12 oyuna | Pilot tamam (marti #22 birleşti bf78ddd: koşu sonu midgame + ödüllü devam; sahte Poki SDK testi 15/15, kapı RESULT OK, 4/4 kontrol). CLAUDE.md: 12 oyuna yaymak toplu değişiklik, schema/degisim.py kapısı ve kullanıcı onayı gerekiyor. | Kullanıcı onayı: kalan 12 oyuna (sıra docs/arastirma/portal-uygunluk-2026-11.md) aynı desenle reklam kancası |
+| G-052 | P2 | Poki'ye gönderim | Poki for Developers geliştirici hesabı ve başvurusu kullanıcının işlemi | Kullanıcı Poki geliştirici hesabı açar; paketler social-videos portal-paketleri poki/2026-11-18/ |
 | G-036 | P3 | Profilde 4 depoyu sabitle | GitHub sabitleme API'si bu oturumdan kapalı (yalnız profil sahibi arayüzden) | Kullanıcı github.com/Furkiozknn > Customize your pins (kullanıcı 18 Kas: 'birazdan hallederim') |
 
 ## Portföy
@@ -63,6 +65,10 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
+- **G-047** 2026-11-18 · video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo)
+  - video-studio #21 birleşti (f6f97c8): 3 CSS transition kaldırıldı
+  - pnpm lint exit 0, 0 hata 0 uyarı
+  - Regresyon: VanCat-pilot 60/120, VanCat-lead 60/150, Promo-elight 200 dal/main bayt bayt aynı (5/5)
 - **G-046** 2026-11-18 · video-studio main'de eski lint/tip hataları (eslint 10 hata, tsc 47 hata)
   - video-studio #17 birleşti (77daf39)
   - tsc --noEmit exit 0 (önce 47 hata: tsconfig lib es2015 ↔ hedef ES2018 çelişkisi + 4 kullanılmayan bağ)
@@ -80,6 +86,10 @@ Güncellendi: 2026-11-18 03:45 UTC
 - **G-035** 2026-11-18 · Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan
   - video-studio #19 birleşti (0b694b4): kutuphane/arastirma/instagram-reels-2026-11.md (kanıt gücü işaretli, kurallarla 17 satır karşılaştırma)
   - Sınır: resmi sayfalar ağ izin listesi yüzünden açılamadı ([R] maddeler ikincil); kurallar.md değişmedi, öneriler teyit bekliyor (G-049)
+- **G-033** 2026-11-18 · Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch)
+  - arena-core #10 birleşti (397c224): paket yüklenince Arena.portal.loading(false) -> PokiSDK.gameLoadingFinished (önce hiç gitmiyordu); portal.test ok, değişiklik geri alınınca düşüyor
+  - 8 Poki paketi social-videos portal-paketleri 85bda9e poki/2026-11-18/ (NOTLAR.md); sahte Poki SDK çevrimdışı denetim 8/8 OK, SDK kaydı init+loaded
+  - Gönderim G-052, Playgama G-053
 - **G-029** 2026-11-18 · Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...)
   - docs/arastirma/portal-uygunluk-2026-11.md: 13 oyun sıralı (boyut, mola noktası, midgame yeri, ödüllü kanca adayı, uygunluk)
   - portfoy.json portal sütunu güncellendi (CrazyGames iptali, Kırkpınar/Simit birleşmiş reklam yeri)
