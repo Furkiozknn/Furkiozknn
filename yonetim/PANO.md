@@ -6,7 +6,7 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 2 | 5 | 1 | 32 |
+| 2 | 2 | 6 | 1 | 33 |
 
 **Sıradaki iş:** G-038 (P2) Performans ölçümünü haftalık yenile (Buffer -> performans.json)
 
@@ -20,11 +20,11 @@ Güncellendi: 2026-11-18 03:45 UTC
 |---|---|---|---|---|---|---|
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer 10/10 dolu. 18 Kas 10:10Z hatırlatması yer açıldıkça sırayla zamanlar: Hamsi, Kale, Çay, Mimar Sinan, Pamukkale, Simit, Kapadokya, Kervan, Kırkpınar (+ Mehter/Çarşı yeni reels, daha önce gönderilmediyse) |
 | G-048 | P1 | Devam Ediyor | Kalite taramasında kusurlu çıkan çekimleri yeniden çek: Kale Savunması, Çay Ocağı (durgun oynanış), Hamsi (karanlık boş deniz); sonra Peri Golf oyun, Çini tarama, Martı minyatür, Lale dalış | video | G-045, G-040 | Kale/Çay/Hamsi Buffer hatırlatmasında beklemeye alındı (18 Kas 10:10Z). Kale: ?cam=15,12,10,4,2 + ısınma 63 -> durgun 2/11 (eskisi 10/11). Çay: zoom=1.7 -> 2/11 (eskisi 8/11). Motor hatası düzeltildi: plan.sorgu kullanılmıyordu. |
-| G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
 | G-049 | P2 | Bekliyor | Instagram rehberi önerilerini teyit edip kurallara işle: YZ etiketi aracı, hikâye A/B, sıklık cümlesi, kenarlık denemesi, 5 hashtag + anahtar kelime, Hesap Durumu kontrolü | sosyal | G-035 | Birincil sayfalar (about.fb.com, help.instagram.com, transparency.meta.com, buffer.com) bu oturumun ağında kapalı. Ortama bu alan adları eklenirse teyit edilebilir; Instagram uygulamasındaki 'AI etiketi' ve 'Hesap Durumu' kontrolü kullanıcı hesabında. |
+| G-050 | P2 | Bekliyor | Reklam kancası pilotu: Martı (koşu sonu midgame + 'devam et' ödüllü), sonra toplu değişiklik kapısı ve kullanıcı onayı ile 12 oyuna | portal | G-029 | CLAUDE.md: önce tek repoda pilot, sonra schema/degisim.py, sonra kullanıcı onayı. Portal SDK'sı yoksa eylem senkron sürer (kale-savunmasi #22 deseni). |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal |  | G-027 (CrazyGames) iptal edildi; Poki/Playgama artık ona bağlı değil. |
 | G-047 | P3 | Bekliyor | video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo) | video | G-046 | Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı. |
@@ -39,27 +39,27 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Oyun | Kit | Video (TR hikâye+reels) | Instagram | Portal |
 |---|---|---|---|---|
-| bogaz-vapuru | 1.3.2 | hazır | zamanlandı 20 Kas 19:00/20:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| carsi-kacisi | 1.3.2 | hazır | sırada | reklam yeri var (midgame); kapak + paket bekliyor |
-| cay-ocagi | 1.3.2 | yeniden çekim (tarama, minyatür) | sırada | reklam yeri var (midgame); kapak + paket bekliyor |
-| cini-ustasi | 1.3.2 | hazır | zamanlandı 18 Kas 19:00/20:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| dolmus | 1.3.2 | yeniden çekim (tarama) | hikâye 19 Kas 19:00; reels bekliyor | reklam yeri var (midgame); kapak + paket bekliyor |
-| ebru | 1.3.2 | yeniden çekim (dalış sonu) | zamanlandı 19 Kas 12:00/13:00 (reels eski sürüm) | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| fay-hatti | 1.3.2 | yok | - | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| hamsi | 1.3.2 | kuyrukta | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| kale-savunmasi | 1.3.2 | çekiliyor | sırada | reklam yeri var (midgame); kapak + paket bekliyor |
-| kapadokya-balonu | 1.3.2 | yeniden çekim | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| karagoz | 1.3.2 | hazır | yayımlandı 17 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| kervan | 1.3.2 | yeniden çekim (gündüz) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| kirkpinar | 1.3.2 | hazır | sırada | reklam yeri PR'da (CI) |
-| lale-bahcesi | 1.3.2 | hazır | yayımlandı 16 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| marti | 1.3.2 | hazır (reels v2) | yayımlandı 17 Kas | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| mehter | 1.3.2 | hazır | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| mimar-sinan | 1.3.2 | yeniden çekim (sis, dalış) | sırada | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
-| pamukkale | 1.3.2 | yeniden çekim (sis) | sırada | reklam yeri var (midgame); kapak + paket bekliyor |
-| peri-golf | 1.3.2 | hazır | sırada | hazır: CrazyGames paketi 0,77 MB; gönderim hesap bekliyor |
-| simit-firini | 1.3.2 | yeniden çekim (gündüz) | sırada | reklam yeri PR'da (CI) |
-| topkapi-gecesi | 1.3.2 | hazır | zamanlandı 18 Kas 12:00/13:00 | kit 1.3.1 hazır; oyun içi reklam kancaları yok |
+| bogaz-vapuru | 1.3.2 | hazır | zamanlandı 20 Kas 19:00/20:00 | reklam kancası yok; uygunluk sırası 8/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| carsi-kacisi | 1.3.2 | hazır | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| cay-ocagi | 1.3.2 | yeniden çekim (tarama, minyatür) | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| cini-ustasi | 1.3.2 | hazır | zamanlandı 18 Kas 19:00/20:00 | reklam kancası yok; uygunluk sırası 2/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| dolmus | 1.3.2 | yeniden çekim (tarama) | hikâye 19 Kas 19:00; reels bekliyor | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| ebru | 1.3.2 | yeniden çekim (dalış sonu) | zamanlandı 19 Kas 12:00/13:00 (reels eski sürüm) | reklam kancası yok; uygunluk sırası 13/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| fay-hatti | 1.3.2 | yok | - | reklam kancası yok; uygunluk sırası 3/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| hamsi | 1.3.2 | kuyrukta | sırada | reklam kancası yok; uygunluk sırası 10/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| kale-savunmasi | 1.3.2 | çekiliyor | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| kapadokya-balonu | 1.3.2 | yeniden çekim | sırada | reklam kancası yok; uygunluk sırası 7/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| karagoz | 1.3.2 | hazır | yayımlandı 17 Kas | reklam kancası yok; uygunluk sırası 4/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| kervan | 1.3.2 | yeniden çekim (gündüz) | sırada | reklam kancası yok; uygunluk sırası 11/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| kirkpinar | 1.3.2 | hazır | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| lale-bahcesi | 1.3.2 | hazır | yayımlandı 16 Kas | reklam kancası yok; uygunluk sırası 12/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| marti | 1.3.2 | hazır (reels v2) | yayımlandı 17 Kas | reklam kancası yok; uygunluk sırası 1/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| mehter | 1.3.2 | hazır | sırada | reklam kancası yok; uygunluk sırası 6/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| mimar-sinan | 1.3.2 | yeniden çekim (sis, dalış) | sırada | reklam kancası yok; uygunluk sırası 9/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
+| pamukkale | 1.3.2 | yeniden çekim (sis) | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| peri-golf | 1.3.2 | hazır | sırada | paket hazır (0,77 MB); CrazyGames iptal (18 Kas), Poki/Playgama bekliyor (G-033) |
+| simit-firini | 1.3.2 | yeniden çekim (gündüz) | sırada | reklam yeri var (midgame); paket bekliyor (Poki/Playgama, G-033) |
+| topkapi-gecesi | 1.3.2 | hazır | zamanlandı 18 Kas 12:00/13:00 | reklam kancası yok; uygunluk sırası 5/13 (docs/arastirma/portal-uygunluk-2026-11.md) |
 
 ## Geçmiş (tamamlanan, en yeni önce)
 
@@ -80,6 +80,9 @@ Güncellendi: 2026-11-18 03:45 UTC
 - **G-035** 2026-11-18 · Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan
   - video-studio #19 birleşti (0b694b4): kutuphane/arastirma/instagram-reels-2026-11.md (kanıt gücü işaretli, kurallarla 17 satır karşılaştırma)
   - Sınır: resmi sayfalar ağ izin listesi yüzünden açılamadı ([R] maddeler ikincil); kurallar.md değişmedi, öneriler teyit bekliyor (G-049)
+- **G-029** 2026-11-18 · Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...)
+  - docs/arastirma/portal-uygunluk-2026-11.md: 13 oyun sıralı (boyut, mola noktası, midgame yeri, ödüllü kanca adayı, uygunluk)
+  - portfoy.json portal sütunu güncellendi (CrazyGames iptali, Kırkpınar/Simit birleşmiş reklam yeri)
 - **G-027** 2026-11-18 · Peri Golf'ü CrazyGames'e gönder
   - Kullanıcı 18 Kas: 'CrazyGames i es geçelim o sorun yaratıyor'
 - **G-026** 2026-11-18 · Peri Golf portal kapakları (vitrin)
