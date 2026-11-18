@@ -365,10 +365,15 @@
   {
    "id": "G-035",
    "baslik": "Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan",
-   "durum": "Devam Ediyor",
+   "durum": "Tamamlandı",
    "oncelik": "P3",
    "alan": "araştırma",
-   "not": "Kullanıcı 18 Kas: PDF'e bağlı kalma, aynı bilgiyi ücretsiz kaynaklardan derle. Reel içeriğine giriş olmadan erişilemedi; rehber Instagram/Meta resmi kaynakları + veri çalışmalarından, kutuphane'ye yazılacak ve kurallar.md ile karşılaştırılacak."
+   "not": "Kullanıcı 18 Kas: PDF'e bağlı kalma, aynı bilgiyi ücretsiz kaynaklardan derle. Reel içeriğine giriş olmadan erişilemedi; rehber Instagram/Meta resmi kaynakları + veri çalışmalarından, kutuphane'ye yazılacak ve kurallar.md ile karşılaştırılacak.",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "video-studio #19 birleşti (0b694b4): kutuphane/arastirma/instagram-reels-2026-11.md (kanıt gücü işaretli, kurallarla 17 satır karşılaştırma)",
+    "Sınır: resmi sayfalar ağ izin listesi yüzünden açılamadı ([R] maddeler ikincil); kurallar.md değişmedi, öneriler teyit bekliyor (G-049)"
+   ]
   },
   {
    "id": "G-036",
@@ -408,13 +413,19 @@
   {
    "id": "G-040",
    "baslik": "Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P2",
    "alan": "video",
    "bagimli": [
     "G-021"
    ],
-   "not": "Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü)"
+   "not": "Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü)",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "video-studio #18: kalite.mjs durgunluk ölçümü (saniyeler arası parlaklık farkı < 1,5), motor her çekimde çalıştırır; node sahne/motor/kalite.mjs <mp4> tek başına",
+    "105 mevcut çekim tarandı: Peri Golf oyun 11/11, Kale Savunması 10/11, Çay Ocağı 8/11 sn durgun; Kervan 3/11 (örnekler yakalandı)",
+    "Düzeltmeler G-048'de"
+   ]
   },
   {
    "id": "G-041",
@@ -474,10 +485,17 @@
   {
    "id": "G-045",
    "baslik": "Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)",
-   "durum": "Bekliyor",
+   "durum": "Tamamlandı",
    "oncelik": "P1",
    "alan": "video",
-   "not": "rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15)."
+   "not": "rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15).",
+   "kapandi": "2026-11-18",
+   "kanit": [
+    "video-studio #18 birleşti (32dc2f1): rayAc alan ortalamalı küçültme + tek renk cezası; sahne/motor/kalite.mjs",
+    "Etiketli kareler: Ebru duvarı eski ölçüyle 14-40 (yanlış 'ayrıntılı'), yeni ölçüyle 4,9-11,8 (düz); iyi kareler 12,6+",
+    "Gerçek çekim: Çini Ustası tarama varsayılan yolu yeni ölçüyle %1-7 bulundu, ray 180° döndü, çekim 0/9 düz (yayındaki 9/9 düz duvar)",
+    "Hareketli odak kör noktası: kayıt sonrası saniyede bir kare ölçülüyor, düz kare oranı json'a yazılıyor ve %15 üstünde UYARI"
+   ]
   },
   {
    "id": "G-046",
@@ -504,6 +522,29 @@
     "G-046"
    ],
    "not": "Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı."
+  },
+  {
+   "id": "G-048",
+   "baslik": "Kalite taramasında kusurlu çıkan çekimleri yeniden çek: Kale Savunması, Çay Ocağı (durgun oynanış), Hamsi (karanlık boş deniz); sonra Peri Golf oyun, Çini tarama, Martı minyatür, Lale dalış",
+   "durum": "Devam Ediyor",
+   "oncelik": "P1",
+   "alan": "video",
+   "bagimli": [
+    "G-045",
+    "G-040"
+   ],
+   "not": "Kale/Çay/Hamsi Buffer hatırlatmasında beklemeye alındı (18 Kas 10:10Z). Kale: ?cam=15,12,10,4,2 + ısınma 63 -> durgun 2/11 (eskisi 10/11). Çay: zoom=1.7 -> 2/11 (eskisi 8/11). Motor hatası düzeltildi: plan.sorgu kullanılmıyordu."
+  },
+  {
+   "id": "G-049",
+   "baslik": "Instagram rehberi önerilerini teyit edip kurallara işle: YZ etiketi aracı, hikâye A/B, sıklık cümlesi, kenarlık denemesi, 5 hashtag + anahtar kelime, Hesap Durumu kontrolü",
+   "durum": "Bekliyor",
+   "oncelik": "P2",
+   "alan": "sosyal",
+   "bagimli": [
+    "G-035"
+   ],
+   "not": "Birincil sayfalar (about.fb.com, help.instagram.com, transparency.meta.com, buffer.com) bu oturumun ağında kapalı. Ortama bu alan adları eklenirse teyit edilebilir; Instagram uygulamasındaki 'AI etiketi' ve 'Hesap Durumu' kontrolü kullanıcı hesabında."
   }
  ]
 }

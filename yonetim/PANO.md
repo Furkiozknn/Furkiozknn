@@ -6,9 +6,9 @@ Güncellendi: 2026-11-18 03:45 UTC
 
 | Devam Ediyor | Test Ediliyor | Bekliyor | Engellendi | Tamamlandı |
 |---|---|---|---|---|
-| 3 | 2 | 6 | 1 | 29 |
+| 3 | 2 | 5 | 1 | 32 |
 
-**Sıradaki iş:** G-045 (P1) Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)
+**Sıradaki iş:** G-038 (P2) Performans ölçümünü haftalık yenile (Buffer -> performans.json)
 
 ## Kalıcı kullanıcı onayları
 
@@ -19,13 +19,12 @@ Güncellendi: 2026-11-18 03:45 UTC
 | Id | Öncelik | Durum | İş | Alan | Bağımlı | Not |
 |---|---|---|---|---|---|---|
 | G-025 | P1 | Devam Ediyor | Instagram takvimi: Dolmuş reels, Ebru reels v3, sonra Çay Ocağı, Peri Golf, Mehter, Kırkpınar, Çarşı Kaçışı ... günde 2 oyun | sosyal |  | Buffer 10/10 dolu. 18 Kas 10:10Z hatırlatması yer açıldıkça sırayla zamanlar: Hamsi, Kale, Çay, Mimar Sinan, Pamukkale, Simit, Kapadokya, Kervan, Kırkpınar (+ Mehter/Çarşı yeni reels, daha önce gönderilmediyse) |
+| G-048 | P1 | Devam Ediyor | Kalite taramasında kusurlu çıkan çekimleri yeniden çek: Kale Savunması, Çay Ocağı (durgun oynanış), Hamsi (karanlık boş deniz); sonra Peri Golf oyun, Çini tarama, Martı minyatür, Lale dalış | video | G-045, G-040 | Kale/Çay/Hamsi Buffer hatırlatmasında beklemeye alındı (18 Kas 10:10Z). Kale: ?cam=15,12,10,4,2 + ısınma 63 -> durgun 2/11 (eskisi 10/11). Çay: zoom=1.7 -> 2/11 (eskisi 8/11). Motor hatası düzeltildi: plan.sorgu kullanılmıyordu. |
 | G-029 | P2 | Devam Ediyor | Portal sırası: kalan oyunlar için uygunluk/potansiyel listesi, midgame + ödüllü kancalar (Dolmuş, Kale Savunması ...) | portal | G-024 | reklam yeri 8 oyunda birleşti: Peri Golf, Dolmuş, Kale Savunması, Çay Ocağı, Pamukkale, Çarşı Kaçışı, Kırkpınar (#23), Simit Fırını (#22). Sıradaki: kalan 13 oyun için uygunluk listesi |
-| G-035 | P3 | Devam Ediyor | Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan | araştırma |  | Kullanıcı 18 Kas: PDF'e bağlı kalma, aynı bilgiyi ücretsiz kaynaklardan derle. Reel içeriğine giriş olmadan erişilemedi; rehber Instagram/Meta resmi kaynakları + veri çalışmalarından, kutuphane'ye yazılacak ve kurallar.md ile karşılaştırılacak. |
 | G-039 | P0 | Test Ediliyor | Profil deposunda 26 Dependabot uyarısı: politika fikstürlerindeki vite@7.1.0 | güvenlik |  | Furkiozknn #48 birleşti (72a47f7): vite@7.1.0 fikstürden çıktı, 58 test OK. Uyarıların kapandığı Security sekmesinden görülmeli (alerts API 403) |
 | G-037 | P1 | Test Ediliyor | Reels açılışı: 0. karede hareketli oynanış + tek iddia satırı (kurallar v2.1); ortalama izleme 2.5-3.5 sn | video |  | uygulandı (video-studio sahne-dalis-acikligi); yeni sırayla ilk yayınlardan sonra performans.json ile önce/sonra ölçülecek |
-| G-045 | P1 | Bekliyor | Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey) | video |  | rayAc yalnız çekim başındaki odakla ölçüyor (Dolmuş: dolmuş ilerleyince yörünge binalara girdi, ölçüm %18-36 dedi) ve sıvalı duvar dokusunu ayrıntı sayıyor (Ebru: düz hardal duvar %29-44). Öneri: ölçümü kayıt sırasında da yap (her saniye bir kare), ayrıntıyı renk çeşitliliği + büyük ölçekli kenarla ölç; düz kare oranı eşiği aşarsa planı uyar/yeniden dene. Geçici çözüm: dolmus.json odak sahne, ebru.json minyatür yayı (video-studio #15). |
 | G-038 | P2 | Bekliyor | Performans ölçümünü haftalık yenile (Buffer -> performans.json) | sosyal |  | G-037 sonrası önce/sonra karşılaştırması |
-| G-040 | P2 | Bekliyor | Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn) | video | G-021 | Örnek: Kervan oynanış bölümü harita görünümü, 11 sn neredeyse durağan (2026-11-18 kare kontrolü) |
+| G-049 | P2 | Bekliyor | Instagram rehberi önerilerini teyit edip kurallara işle: YZ etiketi aracı, hikâye A/B, sıklık cümlesi, kenarlık denemesi, 5 hashtag + anahtar kelime, Hesap Durumu kontrolü | sosyal | G-035 | Birincil sayfalar (about.fb.com, help.instagram.com, transparency.meta.com, buffer.com) bu oturumun ağında kapalı. Ortama bu alan adları eklenirse teyit edilebilir; Instagram uygulamasındaki 'AI etiketi' ve 'Hesap Durumu' kontrolü kullanıcı hesabında. |
 | G-032 | P3 | Bekliyor | Meta-ilerleme (TOP 10 #6): yıldız, harita, kozmetik açılımlar | oyunlar | G-024 |  |
 | G-033 | P3 | Bekliyor | Poki / Playgama paketleri (Playgama bridge dosyası, Poki pitch) | portal |  | G-027 (CrazyGames) iptal edildi; Poki/Playgama artık ona bağlı değil. |
 | G-047 | P3 | Bekliyor | video-studio: 3 CSS transition uyarısı (mascot/Captions, mascot/layouts/Lead, ELightPromo) | video | G-046 | Remotion kareleri ayrı çizer; transition kaldırılınca görüntü değişebilir, bu yüzden kare karşılaştırmasıyla yapılmalı. |
@@ -69,6 +68,18 @@ Güncellendi: 2026-11-18 03:45 UTC
   - tsc --noEmit exit 0 (önce 47 hata: tsconfig lib es2015 ↔ hedef ES2018 çelişkisi + 4 kullanılmayan bağ)
   - pnpm lint exit 0, 0 hata (önce 10); main üzerinde birleşme sonrası yeniden koşuldu
   - Regresyon: 4 promo şablonu + çini promo + Ep30-v3-en 3 kare dal/main bayt bayt aynı (7/7 md5)
+- **G-045** 2026-11-18 · Sahne motoru: rayAc kör noktaları (hareketli odak ve dokulu düz yüzey)
+  - video-studio #18 birleşti (32dc2f1): rayAc alan ortalamalı küçültme + tek renk cezası; sahne/motor/kalite.mjs
+  - Etiketli kareler: Ebru duvarı eski ölçüyle 14-40 (yanlış 'ayrıntılı'), yeni ölçüyle 4,9-11,8 (düz); iyi kareler 12,6+
+  - Gerçek çekim: Çini Ustası tarama varsayılan yolu yeni ölçüyle %1-7 bulundu, ray 180° döndü, çekim 0/9 düz (yayındaki 9/9 düz duvar)
+  - Hareketli odak kör noktası: kayıt sonrası saniyede bir kare ölçülüyor, düz kare oranı json'a yazılıyor ve %15 üstünde UYARI
+- **G-040** 2026-11-18 · Oyun bölümünde hareket ölçümü: durağan oynanış çekimlerini yakala (ör. Peri Golf ilk 12 sn)
+  - video-studio #18: kalite.mjs durgunluk ölçümü (saniyeler arası parlaklık farkı < 1,5), motor her çekimde çalıştırır; node sahne/motor/kalite.mjs <mp4> tek başına
+  - 105 mevcut çekim tarandı: Peri Golf oyun 11/11, Kale Savunması 10/11, Çay Ocağı 8/11 sn durgun; Kervan 3/11 (örnekler yakalandı)
+  - Düzeltmeler G-048'de
+- **G-035** 2026-11-18 · Instagram reels büyüme rehberi: ücretli PDF yerine ücretsiz/birincil kaynaklardan
+  - video-studio #19 birleşti (0b694b4): kutuphane/arastirma/instagram-reels-2026-11.md (kanıt gücü işaretli, kurallarla 17 satır karşılaştırma)
+  - Sınır: resmi sayfalar ağ izin listesi yüzünden açılamadı ([R] maddeler ikincil); kurallar.md değişmedi, öneriler teyit bekliyor (G-049)
 - **G-027** 2026-11-18 · Peri Golf'ü CrazyGames'e gönder
   - Kullanıcı 18 Kas: 'CrazyGames i es geçelim o sorun yaratıyor'
 - **G-026** 2026-11-18 · Peri Golf portal kapakları (vitrin)
