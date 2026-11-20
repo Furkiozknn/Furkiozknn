@@ -7,7 +7,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 </p>
 
 <p align="center">
-<a href="#01--play--oyna"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_THE_GAMES_%C2%B7_OYUNLARI_OYNA-3FD4DC?style=for-the-badge" width="46%" alt="Jump to the 21 games"></a>
+<a href="#01--play--oyna"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_THE_GAMES_%C2%B7_OYUNLARI_OYNA-3FD4DC?style=for-the-badge" width="56%" alt="Jump to the 21 games"></a>
 </p>
 
 <p align="center">
@@ -34,8 +34,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/banner.svg" width="100%" alt="Boğaz Vapuru: 3D ferry-captain game on a low-poly Bosphorus, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Captain an Istanbul ferry on the Bosphorus: keep the timetable and dock against the current.</b><br>
-<sub>Boğaz'da vapur kaptanı ol: tarifeye uy, akıntıya karşı iskeleye yanaş.</sub>
+<b>Sail a white ferry between six Bosphorus piers, keep the timetable and dock gently before passengers give up.</b><br>
+<sub>Altı Boğaz iskelesi arasında vapur sür, tarifeye uy ve yolcular vazgeçmeden iskeleye yumuşakça yanaş.</sub>
 <p>
 <a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Boğaz Vapuru in the browser"></a>
 </p>
@@ -48,8 +48,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/hamsi/"><img src="https://raw.githubusercontent.com/Furkiozknn/hamsi/main/docs/banner.svg" width="100%" alt="Hamsi: 3D Black Sea fishing and boat-management game, made by Claude Sonnet 5.5. Click to play in the browser."></a>
 <br>
-<b>Find the anchovy on the sonar, circle the net, beat the storm home and become reis of the harbour in 30 days.</b><br>
-<sub>Hamsiyi sonarda bul, ağı çevir, fırtınadan önce limana dön; 30 günde limanın reisi ol.</sub>
+<b>Track anchovy schools on the sonar, set the net around them and sell fresh at the market over a 30-day season.</b><br>
+<sub>Sonarda hamsi sürülerini bul, ağı etraflarına çevir ve 30 günlük sezon boyunca taze balığı pazarda sat.</sub>
 <p>
 <a href="https://furkiozknn.github.io/hamsi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hamsi in the browser"></a>
 </p>
@@ -64,8 +64,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/peri-golf/"><img src="https://raw.githubusercontent.com/Furkiozknn/peri-golf/main/docs/banner.svg" width="100%" alt="Peri Golf: 3D physics mini-golf among the fairy chimneys of Cappadocia, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Mini-golf among the fairy chimneys of Cappadocia: 12 holes, real physics, a pottery wheel and a donkey.</b><br>
-<sub>Kapadokya peribacaları arasında mini golf: 12 delik, gerçek fizik, çömlek tezgâhı ve eşek.</sub>
+<b>Putt through twelve hand-designed holes among Cappadocia's fairy chimneys, with rolling physics and hidden shortcuts.</b><br>
+<sub>Kapadokya peribacaları arasında on iki özel tasarım delikte gerçek fizikle golf oyna, gizli kestirmeleri bul.</sub>
 <p>
 <a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Peri Golf in the browser"></a>
 </p>
@@ -78,8 +78,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/banner.svg" width="100%" alt="Hisar: Low-poly 3D tower defense at a seaside fortress, made by Claude Opus 5.5. Click to play in the browser."></a>
 <br>
-<b>Hold a seaside fortress for 15 waves with archers, cannons and boiling tar.</b><br>
-<sub>Okçu, top ve katranla sahil kalesini 15 dalga boyunca savun.</sub>
+<b>Defend a seaside fortress with archers, cannons and tar cauldrons before a battering ram breaks through the gate.</b><br>
+<sub>Okçu, top ve katran kazanıyla sahil kalesini savun, koçbaşı kapıyı kırıp içeri girmeden onu durdur.</sub>
 <p>
 <a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hisar in the browser"></a>
 </p>
@@ -94,8 +94,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/simit-firini/"><img src="https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/banner.svg" width="100%" alt="Simit Fırını: 3D simit bakery tycoon on an old Istanbul street, made by Claude Sonnet 5.5. Click to play in the browser."></a>
 <br>
-<b>Run a simit bakery in Istanbul: bake, staff the oven and send simit sellers across town.</b><br>
-<sub>İstanbul'da simit fırını işlet: fırınla, ustaları yerleştir, simitçileri sokağa gönder.</sub>
+<b>Knead, shape and bake simit, staff the oven so the bread never burns and send sellers across the neighbourhood.</b><br>
+<sub>Simidi yoğur, şekil ver ve pişir, ekmek yanmasın diye fırına işçi koy, simitçileri mahalleye dağıt.</sub>
 <p>
 <a href="https://furkiozknn.github.io/simit-firini/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Simit Fırını in the browser"></a>
 </p>
@@ -108,8 +108,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/kervan/"><img src="https://raw.githubusercontent.com/Furkiozknn/kervan/main/docs/banner.svg" width="100%" alt="Kervan: 3D Silk Road trade strategy on a low-poly map of Anatolia, made by Claude Opus 5.5. Click to play in the browser."></a>
 <br>
-<b>Lead camel caravans across Anatolia: buy low, sell high, build caravanserais.</b><br>
-<sub>Deve kervanlarıyla Anadolu'da ucuza al, pahalıya sat, kervansaray kur.</sub>
+<b>Lead camel caravans between seven Anatolian cities, buy low, sell high and build three caravanserais in five years.</b><br>
+<sub>Yedi Anadolu şehri arasında deve kervanı yönet, ucuza alıp pahalıya sat, beş yıl içinde üç kervansaray kur.</sub>
 <p>
 <a href="https://furkiozknn.github.io/kervan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kervan in the browser"></a>
 </p>
@@ -124,8 +124,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/banner.svg" width="100%" alt="Çini Ustası: Calm 3D Iznik tile edge-matching puzzle, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Rotate, swap and flip Iznik tiles until every motif connects, then fire the panel.</b><br>
-<sub>İznik çinilerini çevir, desenleri birleştir, panoyu fırında pişir.</sub>
+<b>Rotate, swap and flip hand-painted Iznik tiles until every motif connects, then fire the panel in a glowing kiln.</b><br>
+<sub>İznik çinilerini çevir, yer değiştir, ters çevir; desenler birleşince panoyu kor gibi parlayan fırında pişir.</sub>
 <p>
 <a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çini Ustası in the browser"></a>
 </p>
@@ -138,8 +138,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/dolmus/"><img src="https://raw.githubusercontent.com/Furkiozknn/dolmus/main/docs/banner.svg" width="100%" alt="Dolmuş: 3D arcade driving game with a yellow shared minibus in a low-poly Istanbul neighbourhood, made by Claude Sonnet 5.5. Click to play in the browser."></a>
 <br>
-<b>Drive a yellow dolmuş through Istanbul: pick up passengers, learn their stops, earn fares and tips.</b><br>
-<sub>Sarı dolmuşla İstanbul'da yolcu al, durağını öğren, ücret ve bahşiş topla.</sub>
+<b>Drive a yellow dolmuş around an Istanbul neighbourhood, pick up waving riders, drop them off and earn fares and tips.</b><br>
+<sub>Sarı dolmuşla bir İstanbul mahallesinde el sallayan yolcuları al, durağında indir, ücret ve bahşiş kazan.</sub>
 <p>
 <a href="https://furkiozknn.github.io/dolmus/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Dolmuş in the browser"></a>
 </p>
@@ -154,8 +154,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://raw.githubusercontent.com/Furkiozknn/mimar-sinan/main/docs/banner.svg" width="100%" alt="Mimar Sinan: 3D construction-physics puzzle about building Ottoman mosques, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Place piers, arches and half-domes, pull the scaffolding, and let the thrust lines decide if the dome stands.</b><br>
-<sub>Ayak, kemer ve yarım kubbe yerleştir, iskeleyi sök; kubbenin ayakta kalıp kalmayacağına itki çizgileri karar versin.</sub>
+<b>Build an Ottoman mosque from piers, arches and half-domes, then pull the scaffolding and see if the dome stands.</b><br>
+<sub>Ayak, kemer ve yarım kubbelerle bir Osmanlı camisi kur, iskeleyi sök ve kubbenin ayakta kalıp kalmadığını gör.</sub>
 <p>
 <a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Mimar Sinan in the browser"></a>
 </p>
@@ -168,8 +168,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://raw.githubusercontent.com/Furkiozknn/topkapi-gecesi/main/docs/banner.svg" width="100%" alt="Topkapı Gecesi: 3D night stealth game in an Ottoman palace, made by Claude Opus 5.5. Click to play in the browser."></a>
 <br>
-<b>Sneak through the palace by night and put the real Spoon-maker's Diamond back before dawn, unseen.</b><br>
-<sub>Gece sarayda gizlice dolaş, gerçek Kaşıkçı Elması'nı şafaktan önce görünmeden yerine koy.</sub>
+<b>Sneak through the palace at night and put the real Spoon-maker's Diamond back before dawn without being caught.</b><br>
+<sub>Geceleyin sarayda gizlice ilerle, gerçek Kaşıkçı Elması'nı şafaktan önce yakalanmadan yerine koy.</sub>
 <p>
 <a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Topkapı Gecesi in the browser"></a>
 </p>
@@ -184,8 +184,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/kirkpinar/"><img src="https://raw.githubusercontent.com/Furkiozknn/kirkpinar/main/docs/banner.svg" width="100%" alt="Kırkpınar: 3D physics oil-wrestling game inspired by Kırkpınar, made by Claude Sonnet 5.5. Click to play in the browser."></a>
 <br>
-<b>Oil wrestling with real physics: grip, pull and throw until your rival's back touches the grass.</b><br>
-<sub>Fizikli yağlı güreş: tut, çek, at; rakibin sırtını yere getir.</sub>
+<b>Wrestle in oil, grip and throw your rival until his back touches the grass, then work toward the golden belt.</b><br>
+<sub>Yağlı güreşte rakibi tut, çek ve at; sırtı çimene değene kadar sürdür, altın kemere doğru yüksel.</sub>
 <p>
 <a href="https://furkiozknn.github.io/kirkpinar/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Kırkpınar in the browser"></a>
 </p>
@@ -198,8 +198,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/marti/"><img src="https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/banner.svg" width="100%" alt="Martı: Endless 3D seagull run over the Istanbul strait, made by Claude Haiku 5.5. Click to play in the browser."></a>
 <br>
-<b>Fly a seagull over the Bosphorus: snatch simit from ferries, dodge the bridge.</b><br>
-<sub>Boğaz üstünde uç, vapurdan simit kap, köprüden kaç.</sub>
+<b>Fly a seagull over the Bosphorus, snatch simit from ferries, dodge the bridges and raise a chick that grows.</b><br>
+<sub>Boğaz üstünde martıyla uç, vapurlardan simit kap, köprülerden kaç ve uçuştan uçuşa büyüyen yavruyu besle.</sub>
 <p>
 <a href="https://furkiozknn.github.io/marti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Martı in the browser"></a>
 </p>
@@ -214,8 +214,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/kapadokya-balonu/"><img src="https://raw.githubusercontent.com/Furkiozknn/kapadokya-balonu/main/docs/banner.svg" width="100%" alt="Kapadokya Balonu: 3D hot-air balloon wind puzzle over Cappadocia at sunrise, made by Claude Opus 5.5. Click to play in the browser."></a>
 <br>
-<b>Steer a hot-air balloon with no rudder over Cappadocia: pick the wind layer that blows your way.</b><br>
-<sub>Kapadokya'da dümensiz balonu yönet: gitmek istediğin yöne esen rüzgâr katmanını seç.</sub>
+<b>Pilot a hot-air balloon with no rudder over Cappadocia and ride the wind layer that blows toward your goal.</b><br>
+<sub>Kapadokya'da dümensiz sıcak hava balonunu uçur, hedefe doğru esen rüzgâr katmanını bulup ona bin.</sub>
 <p>
 <a href="https://furkiozknn.github.io/kapadokya-balonu/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kapadokya Balonu in the browser"></a>
 </p>
@@ -228,8 +228,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/carsi-kacisi/"><img src="https://raw.githubusercontent.com/Furkiozknn/carsi-kacisi/main/docs/banner.svg" width="100%" alt="Çarşı Kaçışı: 3D rooftop runner over an Istanbul covered bazaar, made by Claude Haiku 5.5. Click to play in the browser."></a>
 <br>
-<b>Chase the cat that stole the jeweller's ring across the domes of an Istanbul bazaar.</b><br>
-<sub>Kuyumcunun yüzüğünü çalan kediyi çarşının kubbeleri üzerinde kovala.</sub>
+<b>Chase the cat that stole a jeweller's ring over bazaar domes, rooftops and laundry lines across ten levels.</b><br>
+<sub>Kuyumcunun yüzüğünü çalan kediyi çarşının kubbeleri, çatıları ve çamaşır ipleri üzerinde on bölümde kovala.</sub>
 <p>
 <a href="https://furkiozknn.github.io/carsi-kacisi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çarşı Kaçışı in the browser"></a>
 </p>
@@ -244,8 +244,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/ebru/"><img src="https://raw.githubusercontent.com/Furkiozknn/ebru/main/docs/banner.svg" width="100%" alt="Ebru: 3D paper-marbling art puzzle, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Marble the water: sprinkle, comb and shape paint until it matches the master's pattern, then lay the paper.</b><br>
-<sub>Suyu ebrula: boya serp, tara, şekil ver; desen ustanınkine uyunca kâğıdı yatır.</sub>
+<b>Marble thickened water with awl and comb until the pattern matches the master's, then lay the paper on the tray.</b><br>
+<sub>Kıvamlı suya boya damlat, bizle ve tarakla şekil ver; desen ustanınkine uyunca kâğıdı tekneye yatır.</sub>
 <p>
 <a href="https://furkiozknn.github.io/ebru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Ebru in the browser"></a>
 </p>
@@ -258,8 +258,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/karagoz/"><img src="https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/banner.svg" width="100%" alt="Karagöz: 3D shadow-theatre light puzzle with Karagöz and Hacivat, made by Claude Opus 5.5. Click to play in the browser."></a>
 <br>
-<b>Light the shadow theatre: move puppets and lamps until Karagöz and Hacivat match the picture.</b><br>
-<sub>Gölge oyununu aydınlat: tasvirleri ve kandilleri oynat, Karagöz ile Hacivat sahneye çıksın.</sub>
+<b>Slide leather puppets of Karagöz and Hacivat and move oil lamps until their shadows match the story picture.</b><br>
+<sub>Karagöz ile Hacivat tasvirlerini kaydır, yağ kandillerini oynat; perdedeki gölgeler hikâye resmine uysun.</sub>
 <p>
 <a href="https://furkiozknn.github.io/karagoz/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Karagöz in the browser"></a>
 </p>
@@ -274,8 +274,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/banner.svg" width="100%" alt="Çay Ocağı: 3D tea house time-management game on an Istanbul quay, made by Claude Sonnet 5.5. Click to play in the browser."></a>
 <br>
-<b>Run a tiny Istanbul tea house: brew tea, warm simit, serve every table in time.</b><br>
-<sub>Küçük bir çay ocağı işlet: çay demle, simit ısıt, her masaya yetiş.</sub>
+<b>Brew tea, warm simit and keep Turkish coffee from boiling over while ferry rushes bring two or three parties at once.</b><br>
+<sub>Çay demle, simit ısıt, Türk kahvesini taşırma ve vapurla bir anda gelen iki üç müşteri grubuna yetiş.</sub>
 <p>
 <a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Çay Ocağı in the browser"></a>
 </p>
@@ -288,8 +288,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/banner.svg" width="100%" alt="Lale Bahçesi: Cosy 3D tulip garden builder in the Ottoman Tulip Era, made by Claude Haiku 5.5. Click to play in the browser."></a>
 <br>
-<b>Grow a tulip garden in the Ottoman Tulip Era: breed new varieties and win the Sultan's festival.</b><br>
-<sub>Lale Devri'nde bahçe kur: yeni çeşitler melezle, Sultan'ın şenliğini kazan.</sub>
+<b>Plant tulip bulbs on a palace terrace, cross neighbouring blooms for new varieties and win the Sultan's festival.</b><br>
+<sub>Saray terasına lale soğanı dik, komşu çiçekleri melezleyip yeni çeşitler üret, Sultan'ın şenliğini kazan.</sub>
 <p>
 <a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Lale Bahçesi in the browser"></a>
 </p>
@@ -302,10 +302,10 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://raw.githubusercontent.com/Furkiozknn/fay-hatti/main/docs/screenshot.png" width="100%" alt="Fay Hattı: daily sliding-tile puzzle on a map of Anatolia, made for GitHub Game Off 2026. Click to play in the browser."></a>
+<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://raw.githubusercontent.com/Furkiozknn/fay-hatti/main/docs/banner.svg" width="100%" alt="Fay Hattı: daily sliding-tile puzzle on a map of Anatolia, made for GitHub Game Off 2026. Click to play in the browser."></a>
 <br>
-<b>Slide rows and columns to bring rivers and roads to the villages while a quake shifts the map after every move. New puzzle every day.</b><br>
-<sub>Satır ve sütunları kaydırıp köylere nehir ve yol götür; her hamleden sonra bir deprem haritayı oynatır. Her gün yeni bulmaca.</sub>
+<b>Shift rows and columns to bring water and roads to the villages while a quake moves one row after every move.</b><br>
+<sub>Satır ve sütunları kaydırıp köylere su ve yol ulaştır; her hamleden sonra bir deprem bir satırı oynatır.</sub>
 <p>
 <a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Fay Hattı in the browser"></a>
 </p>
@@ -313,11 +313,12 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://github.com/Furkiozknn/fay-hatti"><img src="https://img.shields.io/badge/Source-fay--hatti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Fay Hattı source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/fay-hatti/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Game_Off-2026-D97757?style=for-the-badge&logo=github&logoColor=white" alt="Made for GitHub Game Off 2026"></a>
 </p>
+<sub><a href="https://raw.githubusercontent.com/Furkiozknn/fay-hatti/main/docs/gameplay.gif">gameplay GIF</a> (1.5 MB)</sub>
 </td>
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/pamukkale/"><img src="https://raw.githubusercontent.com/Furkiozknn/pamukkale/main/docs/banner.svg" width="100%" alt="Pamukkale: calm 3D water-flow puzzle on the travertine terraces of Pamukkale, made by Claude Haiku 5.5. Click to play in the browser."></a>
 <br>
-<b>Guide warm spring water down the white terraces with stones, dams and splitters; still water grows new rims.</b><br>
+<b>Guide warm spring water down the white terraces with stones, dams and splitters while still water builds new rims.</b><br>
 <sub>Ilık kaynak suyunu taş, set ve ayırıcıyla beyaz teraslardan havuzlara indir; duran su yeni kenarlar örer.</sub>
 <p>
 <a href="https://furkiozknn.github.io/pamukkale/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Pamukkale in the browser"></a>
@@ -333,8 +334,8 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/mehter/"><img src="https://raw.githubusercontent.com/Furkiozknn/mehter/main/docs/banner.svg" width="100%" alt="Mehter: 3D rhythm march with an Ottoman mehter band on a parade avenue, made by Claude Haiku 5.5. Click to play in the browser."></a>
 <br>
-<b>March with the Ottoman mehter band: hit the davul, kös, zurna and zil on the beat.</b><br>
-<sub>Mehter takımıyla yürü: davul, kös, zurna ve zili tam vuruşta çal.</sub>
+<b>Play six Ottoman mehter marches, hit davul, kös, zurna and zil notes on the beat and keep the band's spirit up.</b><br>
+<sub>Altı Osmanlı mehter marşında davul, kös, zurna ve zil notalarını tam vuruşta çal, takımın moralini yüksek tut.</sub>
 <p>
 <a href="https://furkiozknn.github.io/mehter/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Mehter in the browser"></a>
 </p>
