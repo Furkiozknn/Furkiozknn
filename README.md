@@ -40,7 +40,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Boğaz Vapuru in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/bogaz-vapuru"><img src="https://img.shields.io/badge/Source-bogaz--vapuru-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Boğaz Vapuru source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/bogaz-vapuru"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Boğaz Vapuru source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/bogaz-vapuru/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/bogaz-vapuru/main/docs/gameplay.gif">gameplay GIF</a> (5.4 MB)</sub>
@@ -54,7 +54,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/hamsi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hamsi in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/hamsi"><img src="https://img.shields.io/badge/Source-hamsi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hamsi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/hamsi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hamsi source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/hamsi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/hamsi/main/docs/gameplay.gif">gameplay GIF</a> (5.4 MB)</sub>
@@ -70,7 +70,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Peri Golf in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/peri-golf"><img src="https://img.shields.io/badge/Source-peri--golf-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Peri Golf source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/peri-golf"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Peri Golf source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/peri-golf/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/peri-golf/main/docs/gameplay.gif">gameplay GIF</a> (8.0 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-peri-golf-tr.mp4">TR</a></sub>
@@ -84,7 +84,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hisar in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/kale-savunmasi"><img src="https://img.shields.io/badge/Source-kale--savunmasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hisar source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kale-savunmasi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hisar source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/kale-savunmasi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
 </p>
 <sub>15 waves · 60 fps on Intel UHD with 37-42 draw calls · <a href="https://raw.githubusercontent.com/Furkiozknn/kale-savunmasi/main/docs/gameplay.gif">gameplay GIF</a> (2.1 MB)</sub>
@@ -100,7 +100,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/simit-firini/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Simit Fırını in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/simit-firini"><img src="https://img.shields.io/badge/Source-simit--firini-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Simit Fırını source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/simit-firini"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Simit Fırını source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/simit-firini/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/simit-firini/main/docs/gameplay.gif">gameplay GIF</a> (3.7 MB)</sub>
@@ -114,7 +114,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/kervan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kervan in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/kervan"><img src="https://img.shields.io/badge/Source-kervan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kervan source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kervan"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kervan source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/kervan/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/kervan/main/docs/gameplay.gif">gameplay GIF</a> (6.6 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-27-kervan-tr.mp4">TR</a></sub>
@@ -130,7 +130,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çini Ustası in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/cini-ustasi"><img src="https://img.shields.io/badge/Source-cini--ustasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çini Ustası source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/cini-ustasi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çini Ustası source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/cini-ustasi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
 </p>
 <sub>30 levels · 345/345 core tests pass · bot run 90 of 90 stars · <a href="https://raw.githubusercontent.com/Furkiozknn/cini-ustasi/main/docs/gameplay.gif">gameplay GIF</a> (6.9 MB)</sub>
@@ -144,7 +144,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/dolmus/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Dolmuş in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/dolmus"><img src="https://img.shields.io/badge/Source-dolmus-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Dolmuş source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/dolmus"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Dolmuş source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/dolmus/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/dolmus/main/docs/gameplay.gif">gameplay GIF</a> (5.2 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-dolmus-tr.mp4">TR</a></sub>
@@ -160,7 +160,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Mimar Sinan in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/mimar-sinan"><img src="https://img.shields.io/badge/Source-mimar--sinan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mimar Sinan source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/mimar-sinan"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mimar Sinan source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/mimar-sinan/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/mimar-sinan/main/docs/gameplay.gif">gameplay GIF</a> (3.4 MB)</sub>
@@ -174,7 +174,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Topkapı Gecesi in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/topkapi-gecesi"><img src="https://img.shields.io/badge/Source-topkapi--gecesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Topkapı Gecesi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/topkapi-gecesi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Topkapı Gecesi source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/topkapi-gecesi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/topkapi-gecesi/main/docs/gameplay.gif">gameplay GIF</a> (5.6 MB)</sub>
@@ -190,7 +190,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/kirkpinar/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Kırkpınar in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/kirkpinar"><img src="https://img.shields.io/badge/Source-kirkpinar-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kırkpınar source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kirkpinar"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kırkpınar source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/kirkpinar/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/kirkpinar/main/docs/gameplay.gif">gameplay GIF</a> (6.1 MB)</sub>
@@ -204,7 +204,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/marti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Martı in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/marti"><img src="https://img.shields.io/badge/Source-marti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Martı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/marti"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Martı source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/marti/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
 </p>
 <sub>A bot run in a real browser flew 796 s · <a href="https://raw.githubusercontent.com/Furkiozknn/marti/main/docs/gameplay.gif">gameplay GIF</a> (5.0 MB)</sub>
@@ -220,7 +220,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/kapadokya-balonu/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kapadokya Balonu in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/kapadokya-balonu"><img src="https://img.shields.io/badge/Source-kapadokya--balonu-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kapadokya Balonu source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/kapadokya-balonu"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kapadokya Balonu source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/kapadokya-balonu/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/kapadokya-balonu/main/docs/gameplay.gif">gameplay GIF</a> (6.2 MB)</sub>
@@ -234,7 +234,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/carsi-kacisi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çarşı Kaçışı in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/carsi-kacisi"><img src="https://img.shields.io/badge/Source-carsi--kacisi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çarşı Kaçışı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/carsi-kacisi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çarşı Kaçışı source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/carsi-kacisi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/carsi-kacisi/main/docs/gameplay.gif">gameplay GIF</a> (6.2 MB)</sub>
@@ -250,7 +250,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/ebru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Ebru in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/ebru"><img src="https://img.shields.io/badge/Source-ebru-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Ebru source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/ebru"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Ebru source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/ebru/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Fable_5.1-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Fable 5.1"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/ebru/main/docs/gameplay.gif">gameplay GIF</a> (2.9 MB)</sub>
@@ -264,7 +264,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/karagoz/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Karagöz in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/karagoz"><img src="https://img.shields.io/badge/Source-karagoz-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Karagöz source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/karagoz"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Karagöz source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/karagoz/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Opus_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Opus 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/karagoz/main/docs/gameplay.gif">gameplay GIF</a> (5.1 MB)</sub>
@@ -280,7 +280,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Çay Ocağı in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/cay-ocagi"><img src="https://img.shields.io/badge/Source-cay--ocagi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çay Ocağı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/cay-ocagi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çay Ocağı source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/cay-ocagi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Sonnet_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Sonnet 5.5"></a>
 </p>
 <sub>The ?auto bot won 84 of 90 seeded games · <a href="https://raw.githubusercontent.com/Furkiozknn/cay-ocagi/main/docs/gameplay.gif">gameplay GIF</a> (1.2 MB)</sub>
@@ -294,7 +294,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Lale Bahçesi in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/lale-bahcesi"><img src="https://img.shields.io/badge/Source-lale--bahcesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Lale Bahçesi source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/lale-bahcesi"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Lale Bahçesi source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/lale-bahcesi/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/lale-bahcesi/main/docs/gameplay.gif">gameplay GIF</a> (3.0 MB)</sub>
@@ -310,7 +310,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Fay Hattı in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/fay-hatti"><img src="https://img.shields.io/badge/Source-fay--hatti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Fay Hattı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/fay-hatti"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Fay Hattı source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/fay-hatti/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Game_Off-2026-D97757?style=for-the-badge&logo=github&logoColor=white" alt="Made for GitHub Game Off 2026"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/fay-hatti/main/docs/gameplay.gif">gameplay GIF</a> (1.5 MB)</sub>
@@ -324,7 +324,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/pamukkale/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Pamukkale in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/pamukkale"><img src="https://img.shields.io/badge/Source-pamukkale-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Pamukkale source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/pamukkale"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Pamukkale source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/pamukkale/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/pamukkale/main/docs/gameplay.gif">gameplay GIF</a> (2.2 MB)</sub>
@@ -340,7 +340,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <a href="https://furkiozknn.github.io/mehter/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Mehter in the browser"></a>
 </p>
 <p>
-<a href="https://github.com/Furkiozknn/mehter"><img src="https://img.shields.io/badge/Source-mehter-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mehter source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/mehter"><img src="https://img.shields.io/badge/Source-code-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mehter source code on GitHub"></a>
 <a href="https://github.com/Furkiozknn/mehter/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Claude-Haiku_5.5-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Made by Claude Haiku 5.5"></a>
 </p>
 <sub><a href="https://raw.githubusercontent.com/Furkiozknn/mehter/main/docs/gameplay.gif">gameplay GIF</a> (4.3 MB) · promo video <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-en.mp4">EN</a> · <a href="https://github.com/Furkiozknn/social-videos/releases/download/promo-2026-10/2026-10-28-mehter-tr.mp4">TR</a></sub>
