@@ -64,7 +64,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <td width="50%" valign="top">
 <a href="https://furkiozknn.github.io/peri-golf/"><img src="https://raw.githubusercontent.com/Furkiozknn/peri-golf/main/docs/banner.svg" width="100%" alt="Peri Golf: 3D physics mini-golf among the fairy chimneys of Cappadocia, made by Claude Fable 5.1. Click to play in the browser."></a>
 <br>
-<b>Putt through twelve hand-designed holes among Cappadocia's fairy chimneys, with rolling physics and hidden shortcuts.</b><br>
+<b>Putt twelve hand-designed holes among Cappadocia's fairy chimneys, with real physics and hidden shortcuts.</b><br>
 <sub>Kapadokya peribacaları arasında on iki özel tasarım delikte gerçek fizikle golf oyna, gizli kestirmeleri bul.</sub>
 <p>
 <a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Peri Golf in the browser"></a>
