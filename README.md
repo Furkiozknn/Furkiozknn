@@ -7,7 +7,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 </p>
 
 <p align="center">
-<a href="#01--play--oyna"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_THE_GAMES_%C2%B7_OYUNLARI_OYNA-3FD4DC?style=for-the-badge" height="56" alt="Jump to the 21 games"></a>
+<a href="#01--play--oyna"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_THE_GAMES_%C2%B7_OYUNLARI_OYNA-3FD4DC?style=for-the-badge" width="46%" alt="Jump to the 21 games"></a>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Captain an Istanbul ferry on the Bosphorus: keep the timetable and dock against the current.</b><br>
 <sub>Boğaz'da vapur kaptanı ol: tarifeye uy, akıntıya karşı iskeleye yanaş.</sub>
 <p>
-<a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Boğaz Vapuru in the browser"></a>
+<a href="https://furkiozknn.github.io/bogaz-vapuru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Boğaz Vapuru in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/bogaz-vapuru"><img src="https://img.shields.io/badge/Source-bogaz--vapuru-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Boğaz Vapuru source code on GitHub"></a>
@@ -51,7 +51,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Find the anchovy on the sonar, circle the net, beat the storm home and become reis of the harbour in 30 days.</b><br>
 <sub>Hamsiyi sonarda bul, ağı çevir, fırtınadan önce limana dön; 30 günde limanın reisi ol.</sub>
 <p>
-<a href="https://furkiozknn.github.io/hamsi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Hamsi in the browser"></a>
+<a href="https://furkiozknn.github.io/hamsi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hamsi in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/hamsi"><img src="https://img.shields.io/badge/Source-hamsi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hamsi source code on GitHub"></a>
@@ -67,7 +67,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Mini-golf among the fairy chimneys of Cappadocia: 12 holes, real physics, a pottery wheel and a donkey.</b><br>
 <sub>Kapadokya peribacaları arasında mini golf: 12 delik, gerçek fizik, çömlek tezgâhı ve eşek.</sub>
 <p>
-<a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Peri Golf in the browser"></a>
+<a href="https://furkiozknn.github.io/peri-golf/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Peri Golf in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/peri-golf"><img src="https://img.shields.io/badge/Source-peri--golf-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Peri Golf source code on GitHub"></a>
@@ -81,7 +81,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Hold a seaside fortress for 15 waves with archers, cannons and boiling tar.</b><br>
 <sub>Okçu, top ve katranla sahil kalesini 15 dalga boyunca savun.</sub>
 <p>
-<a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Hisar in the browser"></a>
+<a href="https://furkiozknn.github.io/kale-savunmasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Hisar in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/kale-savunmasi"><img src="https://img.shields.io/badge/Source-kale--savunmasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Hisar source code on GitHub"></a>
@@ -97,7 +97,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Run a simit bakery in Istanbul: bake, staff the oven and send simit sellers across town.</b><br>
 <sub>İstanbul'da simit fırını işlet: fırınla, ustaları yerleştir, simitçileri sokağa gönder.</sub>
 <p>
-<a href="https://furkiozknn.github.io/simit-firini/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Simit Fırını in the browser"></a>
+<a href="https://furkiozknn.github.io/simit-firini/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Simit Fırını in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/simit-firini"><img src="https://img.shields.io/badge/Source-simit--firini-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Simit Fırını source code on GitHub"></a>
@@ -111,7 +111,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Lead camel caravans across Anatolia: buy low, sell high, build caravanserais.</b><br>
 <sub>Deve kervanlarıyla Anadolu'da ucuza al, pahalıya sat, kervansaray kur.</sub>
 <p>
-<a href="https://furkiozknn.github.io/kervan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Kervan in the browser"></a>
+<a href="https://furkiozknn.github.io/kervan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kervan in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/kervan"><img src="https://img.shields.io/badge/Source-kervan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kervan source code on GitHub"></a>
@@ -127,7 +127,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Rotate, swap and flip Iznik tiles until every motif connects, then fire the panel.</b><br>
 <sub>İznik çinilerini çevir, desenleri birleştir, panoyu fırında pişir.</sub>
 <p>
-<a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Çini Ustası in the browser"></a>
+<a href="https://furkiozknn.github.io/cini-ustasi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çini Ustası in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/cini-ustasi"><img src="https://img.shields.io/badge/Source-cini--ustasi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çini Ustası source code on GitHub"></a>
@@ -141,7 +141,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Drive a yellow dolmuş through Istanbul: pick up passengers, learn their stops, earn fares and tips.</b><br>
 <sub>Sarı dolmuşla İstanbul'da yolcu al, durağını öğren, ücret ve bahşiş topla.</sub>
 <p>
-<a href="https://furkiozknn.github.io/dolmus/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Dolmuş in the browser"></a>
+<a href="https://furkiozknn.github.io/dolmus/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Dolmuş in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/dolmus"><img src="https://img.shields.io/badge/Source-dolmus-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Dolmuş source code on GitHub"></a>
@@ -157,7 +157,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Place piers, arches and half-domes, pull the scaffolding, and let the thrust lines decide if the dome stands.</b><br>
 <sub>Ayak, kemer ve yarım kubbe yerleştir, iskeleyi sök; kubbenin ayakta kalıp kalmayacağına itki çizgileri karar versin.</sub>
 <p>
-<a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Mimar Sinan in the browser"></a>
+<a href="https://furkiozknn.github.io/mimar-sinan/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Mimar Sinan in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/mimar-sinan"><img src="https://img.shields.io/badge/Source-mimar--sinan-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mimar Sinan source code on GitHub"></a>
@@ -171,7 +171,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Sneak through the palace by night and put the real Spoon-maker's Diamond back before dawn, unseen.</b><br>
 <sub>Gece sarayda gizlice dolaş, gerçek Kaşıkçı Elması'nı şafaktan önce görünmeden yerine koy.</sub>
 <p>
-<a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Topkapı Gecesi in the browser"></a>
+<a href="https://furkiozknn.github.io/topkapi-gecesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Topkapı Gecesi in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/topkapi-gecesi"><img src="https://img.shields.io/badge/Source-topkapi--gecesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Topkapı Gecesi source code on GitHub"></a>
@@ -187,7 +187,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Oil wrestling with real physics: grip, pull and throw until your rival's back touches the grass.</b><br>
 <sub>Fizikli yağlı güreş: tut, çek, at; rakibin sırtını yere getir.</sub>
 <p>
-<a href="https://furkiozknn.github.io/kirkpinar/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Kırkpınar in the browser"></a>
+<a href="https://furkiozknn.github.io/kirkpinar/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Kırkpınar in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/kirkpinar"><img src="https://img.shields.io/badge/Source-kirkpinar-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kırkpınar source code on GitHub"></a>
@@ -201,7 +201,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Fly a seagull over the Bosphorus: snatch simit from ferries, dodge the bridge.</b><br>
 <sub>Boğaz üstünde uç, vapurdan simit kap, köprüden kaç.</sub>
 <p>
-<a href="https://furkiozknn.github.io/marti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Martı in the browser"></a>
+<a href="https://furkiozknn.github.io/marti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Martı in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/marti"><img src="https://img.shields.io/badge/Source-marti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Martı source code on GitHub"></a>
@@ -217,7 +217,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Steer a hot-air balloon with no rudder over Cappadocia: pick the wind layer that blows your way.</b><br>
 <sub>Kapadokya'da dümensiz balonu yönet: gitmek istediğin yöne esen rüzgâr katmanını seç.</sub>
 <p>
-<a href="https://furkiozknn.github.io/kapadokya-balonu/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Kapadokya Balonu in the browser"></a>
+<a href="https://furkiozknn.github.io/kapadokya-balonu/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Kapadokya Balonu in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/kapadokya-balonu"><img src="https://img.shields.io/badge/Source-kapadokya--balonu-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Kapadokya Balonu source code on GitHub"></a>
@@ -231,7 +231,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Chase the cat that stole the jeweller's ring across the domes of an Istanbul bazaar.</b><br>
 <sub>Kuyumcunun yüzüğünü çalan kediyi çarşının kubbeleri üzerinde kovala.</sub>
 <p>
-<a href="https://furkiozknn.github.io/carsi-kacisi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Çarşı Kaçışı in the browser"></a>
+<a href="https://furkiozknn.github.io/carsi-kacisi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Çarşı Kaçışı in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/carsi-kacisi"><img src="https://img.shields.io/badge/Source-carsi--kacisi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çarşı Kaçışı source code on GitHub"></a>
@@ -247,7 +247,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Marble the water: sprinkle, comb and shape paint until it matches the master's pattern, then lay the paper.</b><br>
 <sub>Suyu ebrula: boya serp, tara, şekil ver; desen ustanınkine uyunca kâğıdı yatır.</sub>
 <p>
-<a href="https://furkiozknn.github.io/ebru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Ebru in the browser"></a>
+<a href="https://furkiozknn.github.io/ebru/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Ebru in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/ebru"><img src="https://img.shields.io/badge/Source-ebru-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Ebru source code on GitHub"></a>
@@ -261,7 +261,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Light the shadow theatre: move puppets and lamps until Karagöz and Hacivat match the picture.</b><br>
 <sub>Gölge oyununu aydınlat: tasvirleri ve kandilleri oynat, Karagöz ile Hacivat sahneye çıksın.</sub>
 <p>
-<a href="https://furkiozknn.github.io/karagoz/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Karagöz in the browser"></a>
+<a href="https://furkiozknn.github.io/karagoz/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Karagöz in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/karagoz"><img src="https://img.shields.io/badge/Source-karagoz-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Karagöz source code on GitHub"></a>
@@ -277,7 +277,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Run a tiny Istanbul tea house: brew tea, warm simit, serve every table in time.</b><br>
 <sub>Küçük bir çay ocağı işlet: çay demle, simit ısıt, her masaya yetiş.</sub>
 <p>
-<a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Çay Ocağı in the browser"></a>
+<a href="https://furkiozknn.github.io/cay-ocagi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Çay Ocağı in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/cay-ocagi"><img src="https://img.shields.io/badge/Source-cay--ocagi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Çay Ocağı source code on GitHub"></a>
@@ -291,7 +291,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Grow a tulip garden in the Ottoman Tulip Era: breed new varieties and win the Sultan's festival.</b><br>
 <sub>Lale Devri'nde bahçe kur: yeni çeşitler melezle, Sultan'ın şenliğini kazan.</sub>
 <p>
-<a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Lale Bahçesi in the browser"></a>
+<a href="https://furkiozknn.github.io/lale-bahcesi/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Lale Bahçesi in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/lale-bahcesi"><img src="https://img.shields.io/badge/Source-lale--bahcesi-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Lale Bahçesi source code on GitHub"></a>
@@ -307,7 +307,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Slide rows and columns to bring rivers and roads to the villages while a quake shifts the map after every move. New puzzle every day.</b><br>
 <sub>Satır ve sütunları kaydırıp köylere nehir ve yol götür; her hamleden sonra bir deprem haritayı oynatır. Her gün yeni bulmaca.</sub>
 <p>
-<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" height="52" alt="Play Fay Hattı in the browser"></a>
+<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-3FD4DC?style=for-the-badge" width="60%" alt="Play Fay Hattı in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/fay-hatti"><img src="https://img.shields.io/badge/Source-fay--hatti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Fay Hattı source code on GitHub"></a>
@@ -320,7 +320,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>Guide warm spring water down the white terraces with stones, dams and splitters; still water grows new rims.</b><br>
 <sub>Ilık kaynak suyunu taş, set ve ayırıcıyla beyaz teraslardan havuzlara indir; duran su yeni kenarlar örer.</sub>
 <p>
-<a href="https://furkiozknn.github.io/pamukkale/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" height="52" alt="Play Pamukkale in the browser"></a>
+<a href="https://furkiozknn.github.io/pamukkale/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-FFC21A?style=for-the-badge" width="60%" alt="Play Pamukkale in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/pamukkale"><img src="https://img.shields.io/badge/Source-pamukkale-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Pamukkale source code on GitHub"></a>
@@ -336,7 +336,7 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 <b>March with the Ottoman mehter band: hit the davul, kös, zurna and zil on the beat.</b><br>
 <sub>Mehter takımıyla yürü: davul, kös, zurna ve zili tam vuruşta çal.</sub>
 <p>
-<a href="https://furkiozknn.github.io/mehter/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" height="52" alt="Play Mehter in the browser"></a>
+<a href="https://furkiozknn.github.io/mehter/"><img src="https://img.shields.io/badge/%E2%96%B6_PLAY_%C2%B7_OYNA-F0386B?style=for-the-badge" width="60%" alt="Play Mehter in the browser"></a>
 </p>
 <p>
 <a href="https://github.com/Furkiozknn/mehter"><img src="https://img.shields.io/badge/Source-mehter-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Mehter source code on GitHub"></a>
