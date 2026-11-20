@@ -1,13 +1,13 @@
-<a href="https://furkiozknn.github.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 20 browser games, 4 Claude models, Three.js r170."></a>
+<a href="https://furkiozknn.github.io/"><img src="assets/profile/hero.svg" width="100%" alt="Furki Özkan: I make free browser games with AI (Claude Code). Yapay zekâ (Claude Code) ile ücretsiz tarayıcı oyunları yapıyorum. 21 browser games, 4 Claude models, Three.js r170."></a>
 
 <p align="center">
-<b>20 free browser games, each one made by a single Claude model: Opus 5.5, Sonnet 5.5, Fable 5.1 or Haiku 5.5.</b><br>
+<b>21 free browser games, each one made by a single Claude model: Opus 5.5, Sonnet 5.5, Fable 5.1 or Haiku 5.5.</b><br>
 Each game's code is one <code>index.html</code> on Three.js r170: no install, no account, it opens in a browser tab.<br>
 <sub>Her oyunu tek bir Claude modeli yaptı. Her oyunun kodu Three.js r170 ile tek bir <code>index.html</code>: kurulum yok, hesap yok, tarayıcı sekmesinde açılır.</sub>
 </p>
 
 <p align="center">
-<a href="#01--play--oyna"><img src="https://img.shields.io/badge/Play_the_games-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Jump to the 20 games"></a>
+<a href="#01--play--oyna"><img src="https://img.shields.io/badge/Play_the_games-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Jump to the 21 games"></a>
 <a href="https://www.youtube.com/channel/UCoMTPUVFzVZLUltVWAGRDQA"><img src="https://img.shields.io/badge/YouTube-EN-FF0033?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube channel, in English"></a>
 <a href="https://www.instagram.com/furkiozkan/"><img src="https://img.shields.io/badge/Instagram-TR-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram @furkiozkan, in Turkish"></a>
 <a href="https://x.com/Furkiozkann"><img src="https://img.shields.io/badge/X-%40Furkiozkann-000000?style=for-the-badge&logo=x&logoColor=white" alt="X @Furkiozkann, in English"></a>
@@ -40,6 +40,25 @@ Each game's code is one <code>index.html</code> on Three.js r170: no install, no
 ## 01 · Play · Oyna
 
 <sub>Claude Game Arena: one Claude model per game, and the model is named in each repository's <code>project-meta.json</code>. Click a banner to play. · Her oyunu tek bir model yaptı; model her deponun <code>project-meta.json</code> dosyasında yazıyor. Oynamak için afişe tıkla.</sub>
+
+### Round 7 · Tur 7
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://raw.githubusercontent.com/Furkiozknn/fay-hatti/main/docs/screenshot.png" width="100%" alt="Fay Hattı: daily sliding-tile puzzle on a map of Anatolia, made for GitHub Game Off 2026. Click to play in the browser."></a>
+<br>
+<b>Slide rows and columns to bring rivers and roads to the villages while a quake shifts the map after every move. New puzzle every day.</b><br>
+<sub>Satır ve sütunları kaydırıp köylere nehir ve yol götür; her hamleden sonra bir deprem haritayı oynatır. Her gün yeni bulmaca.</sub>
+<p>
+<a href="https://furkiozknn.github.io/fay-hatti/"><img src="https://img.shields.io/badge/Play-3FD4DC?style=for-the-badge&logo=threedotjs&logoColor=0E0D0B" alt="Play Fay Hattı in the browser"></a>
+<a href="https://github.com/Furkiozknn/fay-hatti"><img src="https://img.shields.io/badge/Source-fay--hatti-1A1712?style=for-the-badge&logo=github&logoColor=F1ECE2" alt="Fay Hattı source code on GitHub"></a>
+<a href="https://github.com/Furkiozknn/fay-hatti/blob/main/project-meta.json"><img src="https://img.shields.io/badge/Game_Off-2026-D97757?style=for-the-badge&logo=github&logoColor=white" alt="Made for GitHub Game Off 2026"></a>
+</p>
+</td>
+<td width="50%" valign="top"></td>
+</tr>
+</table>
 
 ### Round 6 · Tur 6
 
@@ -361,7 +380,9 @@ Short videos about how the games are made: English on YouTube and X, Turkish on 
 
 ## 03 · Now · Şu an
 
-<sub>Updated 2026-11-16 · Güncelleme 2026-11-16</sub>
+<sub>Updated 2026-11-20 · Güncelleme 2026-11-20</sub>
+
+- 🆕 **November 2026 update, every game:** each of the 21 games got a what's-new window, a version label and a new local feature (achievements, a ledger or personal records), plus a link back to the [games hub](https://furkiozknn.github.io/). Fay Hattı is the 21st game. · Kasım 2026 güncellemesi: 21 oyunun her birine Yenilikler penceresi, sürüm etiketi ve yeni bir yerel özellik (başarım, defter ya da kişisel rekor) geldi; Fay Hattı 21. oyun.
 
 - 🎬 **A short video for every game, on Instagram:** a ~20-second story with a play link and a ~40-second reel, every frame recorded from the game's own engine while its bot plays. Lale Bahçesi is out; the other games follow, two a day. · Her oyun için Instagram'da ~20 sn hikâye ve ~40 sn reels; her kare oyunun kendi motorundan, bot oynarken kaydedildi.
 - 🐟 **Hamsi follows its players:** straight nets, midwater and bottom trawls and a Black Sea purse seiner came from players' requests. · Hamsi'deki uzatma ağları, trol ve Karadeniz gırgırı oyuncuların isteğiyle geldi.
